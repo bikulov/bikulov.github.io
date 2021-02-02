@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>c&#43;&#43; on Kenarius Octonotes</title>
+    <link>https://bikulov.org/tags/c&#43;&#43;/</link>
+    <description>Recent content in c&#43;&#43; on Kenarius Octonotes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 24 Dec 2013 22:44:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/c++/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Example of CMake file for CUDA&#43;CPP code</title>
+      <link>https://bikulov.org/blog/2013/12/24/example-of-cmake-file-for-cuda-cpp-code/</link>
+      <pubDate>Tue, 24 Dec 2013 22:44:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/12/24/example-of-cmake-file-for-cuda-cpp-code/</guid>
+      <description>&lt;p&gt;Makefiles are quite straightforward and easy to write (in reasonable situations). But GNU Make is not crossplafrom. CMake is cross-platform, cross-application (it can generate projects for different IDEs and Makefile itself).&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>throw() in function signature in C&#43;&#43;</title>
+      <link>https://bikulov.org/blog/2013/11/23/throw-in-function-signature-in-c-/</link>
+      <pubDate>Sat, 23 Nov 2013 17:42:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/11/23/throw-in-function-signature-in-c-/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;http://www.cplusplus.com/doc/tutorial/exceptions/&#34;&gt;There is&lt;/a&gt; base class &lt;code&gt;exception&lt;/code&gt; in standard library (header &lt;code&gt;&amp;lt;exception&amp;gt;&lt;/code&gt;). It &lt;a href=&#34;http://en.cppreference.com/w/cpp/error/exception&#34;&gt;has&lt;/a&gt; default constructor, copy constructor, copy operator and destructor and virtual &lt;code&gt;what()&lt;/code&gt; function. Latter returns string with additional information about exception.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Sort strings from file in C&#43;&#43;</title>
+      <link>https://bikulov.org/blog/2013/11/19/sort-strings-from-file-in-c-/</link>
+      <pubDate>Tue, 19 Nov 2013 23:53:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/11/19/sort-strings-from-file-in-c-/</guid>
+      <description>&lt;p&gt;The very simple and common test program is to read bunch of strings from input file (let it be &lt;code&gt;input.txt&lt;/code&gt;), sort them and write down to another file (&lt;code&gt;output.txt&lt;/code&gt;). There is an &lt;a href=&#34;http://www.cyberforum.ru/post1673221.html&#34;&gt;implementation&lt;/a&gt; with small bug: it adds extra empty line. I&amp;rsquo;ve modified original code a bit, so now it works correctly (note: if have last empty line in the input, you will have an empty line in the output). Fixed code is provided below.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Using CUDA C&#43;&#43; functions in Python via `*.so` and ctypes</title>
+      <link>https://bikulov.org/blog/2013/10/01/using-cuda-c-functions-in-python-via-.so-and-ctypes/</link>
+      <pubDate>Tue, 01 Oct 2013 08:33:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/10/01/using-cuda-c-functions-in-python-via-.so-and-ctypes/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;d like to show how to use HPC part written on C++ with CUDA in Python code. So, every heavy part may be done on GPU with CUDA, all gluing tasks (with beautiful matplotlib plots) are done on CPU with Python.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

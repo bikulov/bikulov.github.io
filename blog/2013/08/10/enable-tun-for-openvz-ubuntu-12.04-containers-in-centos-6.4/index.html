@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="yandex-verification" content="761bc4bf6044da39" />
+	<title>Enable tun for OpenVZ Ubuntu 12.04 containers in CentOS 6.4 - Kenarius Octonotes</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.80.0" />
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		 <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="Kenarius Octonotes" rel="home">
+				<div class="logo__title">Kenarius Octonotes</div>
+				<div class="logo__tagline">Static notes about information technologies</div>
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">Home</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/resume">Resume</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Enable tun for OpenVZ Ubuntu 12.04 containers in CentOS 6.4</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2013-08-10T09:14:00">2013-08-10</time>
+</div>
+</div>
+		</header><div class="content post__content clearfix">
+			<p>To enable tun device in OpenVZ containers tun module</p>
+<ul>
+<li>needs to be loaded in the host system (in my case CentOS 6.4)</li>
+<li>containter (in my case Ubuntu Server 12.04) must be allowed to use tun</li>
+</ul>
+<p>I&rsquo;ve grabbed container configuration from <a href="http://askubuntu.com/questions/278238/openvpn-on-ubuntu-openvz">askbuntu</a>.</p>
+<h2 id="load-tun-after-boot-automatically">Load tun after boot automatically</h2>
+<p>Edit <code>tun.modules</code>:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#60a0b0;font-style:italic"># vim /etc/sysconfig/modules/tun.modules</span>
+<span style="color:#60a0b0;font-style:italic">#!/bin/sh</span>
+/sbin/modprobe tun
+</code></pre></div><p>Set permissions for tun.modules:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">chmod <span style="color:#40a070">755</span> /etc/sysconfig/modules/tun.modules
+</code></pre></div><p>Reboot host system and test tun module loaded:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ lsmod | grep tun
+tun                    <span style="color:#40a070">15493</span>  <span style="color:#40a070">2</span>
+</code></pre></div><h2 id="edit-container-configuration">Edit container configuration</h2>
+<p>Issue following commands in host terminal as root (change &lsquo;101&rsquo; to your container id):</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vzctl <span style="color:#007020">set</span> <span style="color:#40a070">101</span> --devnodes net/tun:rw --save
+vzctl <span style="color:#007020">set</span> <span style="color:#40a070">101</span> --devices c:10:200:rw --save
+vzctl <span style="color:#007020">set</span> <span style="color:#40a070">101</span> --capability net_admin:on --save
+vzctl <span style="color:#007020">exec</span> <span style="color:#40a070">101</span> mkdir -p /dev/net
+vzctl <span style="color:#007020">exec</span> <span style="color:#40a070">101</span> mknod /dev/net/tun c <span style="color:#40a070">10</span> <span style="color:#40a070">200</span>
+vzctl <span style="color:#007020">exec</span> <span style="color:#40a070">101</span> chmod <span style="color:#40a070">600</span> /dev/net/tun
+</code></pre></div><p>Now <a href="https://help.ubuntu.com/lts/serverguide/openvpn.html">configured</a> OpenVPN will work correctly.</p>
+		</div>
+		
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/tun/" rel="tag">tun</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/server/" rel="tag">server</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/openvz/" rel="tag">openvz</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/vpn/" rel="tag">vpn</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/ubuntu/" rel="tag">ubuntu</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/centos/" rel="tag">centos</a></li>
+	</ul>
+</div>
+	</article>
+</main>
+
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/blog/2013/08/08/configuring-ubuntu-12.04-in-openvz-on-centos-6.4/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Configuring Ubuntu 12.04 in OpenVZ on CentOS 6.4</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/blog/2013/08/16/cudasafecall-application-snippet/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">CudaSafeCall application snippet</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 Kenarius Octonotes.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script> <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { id:22777879, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</body>
+</html>

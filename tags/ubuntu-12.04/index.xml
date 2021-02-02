@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ubuntu 12.04 on Kenarius Octonotes</title>
+    <link>https://bikulov.org/tags/ubuntu-12.04/</link>
+    <description>Recent content in ubuntu 12.04 on Kenarius Octonotes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 31 Jul 2013 09:31:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/ubuntu-12.04/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Creating Zip With VPN Client Keys and Configuration Files</title>
+      <link>https://bikulov.org/blog/2013/07/31/creating-zip-with-vpn-client-keys-and-configuration-files/</link>
+      <pubDate>Wed, 31 Jul 2013 09:31:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/07/31/creating-zip-with-vpn-client-keys-and-configuration-files/</guid>
+      <description>&lt;p&gt;Depends on server configuration, each OpenVPN client needs configuration file (client.conf for *nix and client.ovpn for windows), certificate authority (ca.crt), [optional] tls auth file (ta.key), user crt and key.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Get rid of Desktop window while launching Nautilus in i3</title>
+      <link>https://bikulov.org/blog/2012/11/08/get-rid-of-desktop-window-while-launching-nautilus-in-i3/</link>
+      <pubDate>Thu, 08 Nov 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2012/11/08/get-rid-of-desktop-window-while-launching-nautilus-in-i3/</guid>
+      <description>&lt;p&gt;In i3 window manager by default Nautilus actually opens two windows: Desktop window and Nautilus itself. The former can’t be closed by the default shortcut &lt;code&gt;$Mod+Shift+Q&lt;/code&gt;.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Setting up RhodeCode on Ubuntu 12.04</title>
+      <link>https://bikulov.org/blog/2012/10/29/setting-up-rhodecode-on-ubuntu-12.04/</link>
+      <pubDate>Mon, 29 Oct 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2012/10/29/setting-up-rhodecode-on-ubuntu-12.04/</guid>
+      <description>&lt;p&gt;This howto is based on a great guide with modifications. All settings are made for server domain hg.kenarius.org. You can replace it with your one easily.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Fixing missing icons in PCManFM</title>
+      <link>https://bikulov.org/blog/2012/08/24/fixing-missing-icons-in-pcmanfm/</link>
+      <pubDate>Fri, 24 Aug 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2012/08/24/fixing-missing-icons-in-pcmanfm/</guid>
+      <description>&lt;p&gt;After moving to i3 I’ve installed PCManFM as GUI file manager. To fix missing icons one have to define icon theme. These instructions are tested on Ubuntu 12.04, but it must work with other distros.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

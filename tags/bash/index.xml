@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>bash on Kenarius Octonotes</title>
+    <link>https://bikulov.org/tags/bash/</link>
+    <description>Recent content in bash on Kenarius Octonotes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 12 Oct 2013 15:33:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/bash/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hybrid symmetric-asymmetric encryption for large files</title>
+      <link>https://bikulov.org/blog/2013/10/12/hybrid-symmetric-asymmetric-encryption-for-large-files/</link>
+      <pubDate>Sat, 12 Oct 2013 15:33:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/10/12/hybrid-symmetric-asymmetric-encryption-for-large-files/</guid>
+      <description>&lt;p&gt;Assymetric encryption is useful if you want to encrypt data at remote server via script. In case you use bash script for symmetric encryption job, you have to store password inside this script. So, if remote server is compromized, you will loose both the encrypted data and the key to decrypt it. Assymetric encryption allows you not to store decryption key at remote machine. So, data will be in safe even if server is hacked.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Using CUDA C&#43;&#43; functions in Python via `*.so` and ctypes</title>
+      <link>https://bikulov.org/blog/2013/10/01/using-cuda-c-functions-in-python-via-.so-and-ctypes/</link>
+      <pubDate>Tue, 01 Oct 2013 08:33:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/10/01/using-cuda-c-functions-in-python-via-.so-and-ctypes/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;d like to show how to use HPC part written on C++ with CUDA in Python code. So, every heavy part may be done on GPU with CUDA, all gluing tasks (with beautiful matplotlib plots) are done on CPU with Python.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Universal screen capturing with scrot, imagemagick and ffmpeg</title>
+      <link>https://bikulov.org/blog/2013/01/23/universal-screen-capturing-with-scrot-imagemagick-and-ffmpeg/</link>
+      <pubDate>Wed, 23 Jan 2013 09:31:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/01/23/universal-screen-capturing-with-scrot-imagemagick-and-ffmpeg/</guid>
+      <description>&lt;p&gt;You can record your screen using only command line in Linux. Workflow will look like: &lt;code&gt;Create a bunch of screenshots -&amp;gt; Crop screenshots -&amp;gt; Make a movie from images&lt;/code&gt;.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Tools for tracing a pcap file in linux bash</title>
+      <link>https://bikulov.org/blog/2012/11/03/tools-for-tracing-a-pcap-file-in-linux-bash/</link>
+      <pubDate>Sat, 03 Nov 2012 09:31:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2012/11/03/tools-for-tracing-a-pcap-file-in-linux-bash/</guid>
+      <description>&lt;p&gt;Pcap files are pocket capture files. They usually contain raw log of network connections and packets. It is the most popular format and it available in almost all network analysis tool.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Show N biggest directories in linux bash</title>
+      <link>https://bikulov.org/blog/2012/11/01/show-n-biggest-directories-in-linux-bash/</link>
+      <pubDate>Thu, 01 Nov 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2012/11/01/show-n-biggest-directories-in-linux-bash/</guid>
+      <description>&lt;p&gt;du (disk usage) utility in linux bash summarizes disk usage of each directory or file. By default, it outputs only directories. Just enter some dir and type&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;$ du ./
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Toggling string case in linux bash</title>
+      <link>https://bikulov.org/blog/2012/10/31/toggling-string-case-in-linux-bash/</link>
+      <pubDate>Wed, 31 Oct 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2012/10/31/toggling-string-case-in-linux-bash/</guid>
+      <description>&lt;p&gt;It’s quite an academic task, but anyway useful sometimes. I’ve collected different ways to do it in terminal in linux. Some of them work with UTF-8 characters (some it will toggle case for &amp;ldquo;й&amp;rdquo;, &amp;ldquo;ё&amp;rdquo; and so on. It will not in general handle special ligatures, such as &amp;ldquo;ß&amp;rdquo;&amp;quot; and &amp;ldquo;ﬁ&amp;rdquo;.)&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Montage png into single one</title>
+      <link>https://bikulov.org/blog/2012/07/18/montage-png-into-single-one/</link>
+      <pubDate>Wed, 18 Jul 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2012/07/18/montage-png-into-single-one/</guid>
+      <description>&lt;p&gt;Glue several png’s into one png &lt;code&gt;[1]+[2]+[3]+[4] = [[1][2][3][4]]&lt;/code&gt; with montage from ImageMagick:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;montage -geometry +1+1 -tile 4x1 image*.png final.png
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

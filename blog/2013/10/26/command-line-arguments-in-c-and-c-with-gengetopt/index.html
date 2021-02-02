@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="yandex-verification" content="761bc4bf6044da39" />
+	<title>Command line arguments in C and C&#43;&#43; with gengetopt - Kenarius Octonotes</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.80.0" />
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		 <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="Kenarius Octonotes" rel="home">
+				<div class="logo__title">Kenarius Octonotes</div>
+				<div class="logo__tagline">Static notes about information technologies</div>
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">Home</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/resume">Resume</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Command line arguments in C and C&#43;&#43; with gengetopt</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2013-10-26T00:03:00">2013-10-26</time>
+</div>
+</div>
+		</header><div class="content post__content clearfix">
+			<p><a href="http://www.gnu.org/software/gengetopt/gengetopt.html">Gengetopt</a> is a tool for parsing command line arguments in C and C++ applications. It generates <code>cmdline.c</code> and <code>cmdline.h</code> files in pure C, which contain parser, helper functions, error handling and structure to store argument values. Arguments to be included in auto-generated file are defined in config. I usually gengetopt config file as <code>cmdline.ggo</code>. In this note I provide an example of gengetopt config file and arguments usage in code.</p>
+<p>Header of config file contains information about version, app name and description. You can use the following template:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#4070a0">version &#34;13.10.25&#34;</span>
+<span style="color:#4070a0">package &#34;app&#34;</span>
+<span style="color:#4070a0">purpose &#34;Sample application description.</span>
+
+<span style="color:#4070a0">By John Doe &lt;sample@example.com&gt;&#34;</span>
+</code></pre></div><p>Arguments are listed after header in the same config file. Even if no options given below the header, two default ones are defined: <code>-h</code> shows help message and <code>-V</code> shows app version string. You can specify long option name (in call it can be used as <code>--long-option</code>), short option name, option type and whether option is required.</p>
+<p>String option with long name <code>filename</code> and short name <code>f</code>, description <code>String argument</code> and it is required. Option can be called as <code>-f myfile</code> or <code>--filename myfile</code>.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#4070a0">option &#34;filename&#34; f &#34;String argument&#34; string required</span>
+</code></pre></div><p>It is possible to define options that takes several values, separated by comma. The following opition takes exactly 3 arguments with type <code>int</code>:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#4070a0">option &#34;size&#34; s &#34;Optional argument, takes exactly 3 int values separated by commas&#34; multiple(3) optional int</span>
+</code></pre></div><p>Option can take «one (two, etc) or more» arguments:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#4070a0">option &#34;array&#34; a &#34;Required argument, takes 1 or more args&#34; multiple(1-) required int</span>
+</code></pre></div><p>It is possible not to specify short name:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#4070a0">option &#34;long-option&#34; - &#34;Option without short version&#34; optional float</span>
+</code></pre></div><p>You can provide default value for an option. The default value is used if option is not used in app call.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#4070a0">option &#34;default-value&#34; d &#34;Argument with default value&#34; optional float default</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;0.003&#34;</span>
+</code></pre></div><p>There is flags. If flag is provided in app call, it&rsquo;s value triggered to opposite:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#4070a0">option &#34;console&#34; c &#34;Flag with default &#39;off&#39;&#34; flag off</span>
+</code></pre></div><p>The whole config file:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#4070a0">version &#34;13.10.25&#34;</span>
+<span style="color:#4070a0">package &#34;app&#34;</span>
+<span style="color:#4070a0">purpose &#34;Sample application description.</span>
+
+<span style="color:#4070a0">By John Doe &lt;sample@example.com&gt;&#34;</span>
+
+<span style="color:#60a0b0;font-style:italic"># Options</span>
+<span style="color:#4070a0">option &#34;filename&#34; f &#34;String argument&#34; string required</span>
+<span style="color:#4070a0">option &#34;size&#34; s &#34;Optional argument, takes exactly 3 int values separated by commas&#34; multiple(3) optional int</span>
+<span style="color:#4070a0">option &#34;array&#34; a &#34;Required argument, takes 1 or more args&#34; multiple(1-) required int</span>
+<span style="color:#4070a0">option &#34;long-option&#34; - &#34;Option without short version&#34; optional float</span>
+<span style="color:#4070a0">option &#34;default-value&#34; d &#34;Argument with default value&#34; optional float default</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;0.003&#34;</span>
+<span style="color:#4070a0">option &#34;console&#34; c &#34;Flag with default &#39;off&#39;&#34; flag off</span>
+</code></pre></div><p>Arguments are used in source code via gengeopt_args_info structure defined in cmdline.h. Example:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#007020">#include</span> <span style="color:#007020">&lt;iostream&gt;</span><span style="color:#007020">
+</span><span style="color:#007020">#include</span> <span style="color:#007020">&lt;cstdlib&gt;</span><span style="color:#007020">
+</span><span style="color:#007020"></span>
+<span style="color:#007020">#include</span> <span style="color:#007020">&#34;cmdline.h&#34;</span><span style="color:#007020">
+</span><span style="color:#007020"></span>
+<span style="color:#902000">int</span> <span style="color:#06287e">main</span>(<span style="color:#902000">int</span> argc, <span style="color:#902000">char</span> <span style="color:#666">*</span>argv[])
+{
+    gengetopt_args_info ai;
+    <span style="color:#007020;font-weight:bold">if</span> (cmdline_parser (argc, argv, <span style="color:#666">&amp;</span>ai) <span style="color:#666">!=</span> <span style="color:#40a070">0</span>) {
+        exit(<span style="color:#40a070">1</span>);
+    }
+
+    std<span style="color:#666">::</span>cout <span style="color:#666">&lt;&lt;</span> ai.filename_arg <span style="color:#666">&lt;&lt;</span> std<span style="color:#666">::</span>endl;
+
+    <span style="color:#007020;font-weight:bold">if</span> (ai.size_given) {
+        std<span style="color:#666">::</span>cout <span style="color:#666">&lt;&lt;</span> ai.size_arg[<span style="color:#40a070">0</span>] <span style="color:#666">&lt;&lt;</span> <span style="color:#4070a0">&#34; &#34;</span>
+                  <span style="color:#666">&lt;&lt;</span> ai.size_arg[<span style="color:#40a070">1</span>] <span style="color:#666">&lt;&lt;</span> <span style="color:#4070a0">&#34; &#34;</span>
+                  <span style="color:#666">&lt;&lt;</span> ai.size_arg[<span style="color:#40a070">2</span>] <span style="color:#666">&lt;&lt;</span> std<span style="color:#666">::</span>endl;
+    }
+
+    <span style="color:#007020;font-weight:bold">for</span> (<span style="color:#902000">int</span> i<span style="color:#666">=</span><span style="color:#40a070">0</span>; i<span style="color:#666">&lt;</span>ai.array_given; <span style="color:#666">++</span>i) {
+        std<span style="color:#666">::</span>cout <span style="color:#666">&lt;&lt;</span> ai.array_arg[i] <span style="color:#666">&lt;&lt;</span> <span style="color:#4070a0">&#34; &#34;</span>;
+    }
+    std<span style="color:#666">::</span>cout <span style="color:#666">&lt;&lt;</span> std<span style="color:#666">::</span>endl;
+
+    <span style="color:#007020;font-weight:bold">if</span> (ai.long_option_given) {
+        std<span style="color:#666">::</span>cout <span style="color:#666">&lt;&lt;</span> ai.long_option_arg <span style="color:#666">&lt;&lt;</span> std<span style="color:#666">::</span>endl;
+    }
+
+    std<span style="color:#666">::</span>cout <span style="color:#666">&lt;&lt;</span> ai.default_value_arg <span style="color:#666">&lt;&lt;</span> std<span style="color:#666">::</span>endl;
+    std<span style="color:#666">::</span>cout <span style="color:#666">&lt;&lt;</span> ai.console_flag <span style="color:#666">&lt;&lt;</span> std<span style="color:#666">::</span>endl;
+
+    <span style="color:#007020;font-weight:bold">return</span> <span style="color:#40a070">0</span>;
+}
+</code></pre></div><p>And Makefile to make them all (you need gengetopt to be installed):</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#bb60d5">APPNAME</span> <span style="color:#666">=</span> app
+<span style="color:#bb60d5">OBJECTS</span> <span style="color:#666">=</span> main.o cmdline.o
+
+<span style="color:#bb60d5">CC</span> <span style="color:#666">=</span> gcc
+<span style="color:#bb60d5">CXX</span> <span style="color:#666">=</span> g++
+
+all: <span style="color:#007020;font-weight:bold">$(</span>OBJECTS<span style="color:#007020;font-weight:bold">)</span>
+	<span style="color:#007020;font-weight:bold">$(</span>CXX<span style="color:#007020;font-weight:bold">)</span> <span style="color:#007020;font-weight:bold">$(</span>OBJECTS<span style="color:#007020;font-weight:bold">)</span> -o <span style="color:#007020;font-weight:bold">$(</span>APPNAME<span style="color:#007020;font-weight:bold">)</span>
+cmdline.o: cmdline.c
+	<span style="color:#007020;font-weight:bold">$(</span>CC<span style="color:#007020;font-weight:bold">)</span> -c $&lt; -o <span style="color:#bb60d5">$@</span>
+main.o: main.cpp
+	<span style="color:#007020;font-weight:bold">$(</span>CXX<span style="color:#007020;font-weight:bold">)</span> -c $&lt; -o <span style="color:#bb60d5">$@</span>
+cmdline.c: cmdline.ggo
+	gengetopt --input<span style="color:#666">=</span>cmdline.ggo --include-getopt
+clean:
+	rm -rf *.o <span style="color:#007020;font-weight:bold">$(</span>APPNAME<span style="color:#007020;font-weight:bold">)</span>
+</code></pre></div><p>Place <code>main.cpp</code>, <code>cmdline.ggo</code> and <code>Makefile</code> in one folder and build this example.</p>
+<p>Output samples:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ./app -a 1,2,3,4,5,6 -f <span style="color:#007020">test</span> -s 16,32,64 --long-option 0.4 -d 0.8
+<span style="color:#007020">test</span>
+<span style="color:#40a070">16</span> <span style="color:#40a070">32</span> <span style="color:#40a070">64</span>
+<span style="color:#40a070">1</span> <span style="color:#40a070">2</span> <span style="color:#40a070">3</span> <span style="color:#40a070">4</span> <span style="color:#40a070">5</span> <span style="color:#40a070">6</span>
+0.4
+0.8
+<span style="color:#40a070">0</span>
+</code></pre></div><div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ./app -a <span style="color:#40a070">1</span> -f <span style="color:#007020">test</span> -c
+<span style="color:#007020">test</span>
+<span style="color:#40a070">1</span>
+0.003
+<span style="color:#40a070">1</span>
+</code></pre></div><div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ./app
+./app: <span style="color:#4070a0">&#39;--filename&#39;</span> <span style="color:#666">(</span><span style="color:#4070a0">&#39;-f&#39;</span><span style="color:#666">)</span> option required
+./app: <span style="color:#4070a0">&#39;--array&#39;</span> <span style="color:#666">(</span><span style="color:#4070a0">&#39;-a&#39;</span><span style="color:#666">)</span> option required
+</code></pre></div><p>Have fun!</p>
+		</div>
+		
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/howto/" rel="tag">howto</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/tutorial/" rel="tag">tutorial</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/gengetopt/" rel="tag">gengetopt</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/cpp/" rel="tag">cpp</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/c/" rel="tag">c</a></li>
+	</ul>
+</div>
+	</article>
+</main>
+
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/blog/2013/10/12/hybrid-symmetric-asymmetric-encryption-for-large-files/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Hybrid symmetric-asymmetric encryption for large files</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/blog/2013/11/02/set-application-version-in-gengetopt-config-based-on-mercurial-revision/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">Set application version in gengetopt config based on Mercurial revision</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 Kenarius Octonotes.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script> <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { id:22777879, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</body>
+</html>

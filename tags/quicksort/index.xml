@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>quicksort on Kenarius Octonotes</title>
+    <link>https://bikulov.org/tags/quicksort/</link>
+    <description>Recent content in quicksort on Kenarius Octonotes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 07 Nov 2013 18:27:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/quicksort/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Randomized quicksort implementation in C&#43;&#43;</title>
+      <link>https://bikulov.org/blog/2013/11/07/randomized-quicksort-implementation-in-c-/</link>
+      <pubDate>Thu, 07 Nov 2013 18:27:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/11/07/randomized-quicksort-implementation-in-c-/</guid>
+      <description>&lt;p&gt;Quicksort has $O(N\log(N))$ computational complexity in best and average cases, $O(N^{2})$ for bad case. Extremely bad cases may be avoided by using randomized Quicksort.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

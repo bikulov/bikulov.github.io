@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>fatnode on Kenarius Octonotes</title>
+    <link>https://bikulov.org/tags/fatnode/</link>
+    <description>Recent content in fatnode on Kenarius Octonotes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 18 Jun 2013 09:00:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/fatnode/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Ubuntu Server 12.04 &#43; Slurm 2.5.7 fatnodes</title>
+      <link>https://bikulov.org/blog/2013/06/18/ubuntu-server-12.04-slurm-2.5.7-fatnodes/</link>
+      <pubDate>Tue, 18 Jun 2013 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/06/18/ubuntu-server-12.04-slurm-2.5.7-fatnodes/</guid>
+      <description>&lt;p&gt;SLURM (Simple Linux Utility for Resource Management) — job scheduler and resource manager usually installed on supercomputers. For example, it runs on Lomonosov supercomputer in MSU, Moscow, Russia.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

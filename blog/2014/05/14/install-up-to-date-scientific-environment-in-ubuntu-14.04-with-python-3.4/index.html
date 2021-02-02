@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="yandex-verification" content="761bc4bf6044da39" />
+	<title>Install up-to-date scientific environment in Ubuntu 14.04 with Python 3.4 - Kenarius Octonotes</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.80.0" />
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		 <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="Kenarius Octonotes" rel="home">
+				<div class="logo__title">Kenarius Octonotes</div>
+				<div class="logo__tagline">Static notes about information technologies</div>
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">Home</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/resume">Resume</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Install up-to-date scientific environment in Ubuntu 14.04 with Python 3.4</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2014-05-14T16:16:00">2014-05-14</time>
+</div>
+</div>
+		</header><div class="content post__content clearfix">
+			<p><strong>Note</strong>: I&rsquo;ve created an <a href="/blog/2015/11/07/install-jupyter-notebook-and-scientific-environment-in-ubuntu-14-dot-04-with-python-3/">updated page</a> with most recent instructions for <a href="http://jupyter.org/">Jupyter Notebook</a>.</p>
+<p>I use IPython notebook for processing numerical experiments results and plotting. The default Python 3 in Ubuntu 14.04 is 3.4, so it is easier to install really up-to-date bunch of software.</p>
+<p>Full set of commands you need to install recent ipython notebook, numpy, scipy, etc in virtual environment almost without affecting shiny-new Ubuntu 14.04.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007020">#!/usr/bin/env bash
+</span><span style="color:#007020"></span>
+sudo su
+<span style="color:#60a0b0;font-style:italic"># install python development packages and g++</span>
+apt-get install -y python3-dev g++
+
+<span style="color:#60a0b0;font-style:italic"># install dependencies for scipy</span>
+apt-get install -y libblas-dev liblapack-dev gfortran
+
+<span style="color:#60a0b0;font-style:italic"># install dependencies for matplotlib</span>
+apt-get install -y libfreetype6-dev libpng-dev
+<span style="color:#007020">exit</span>
+
+<span style="color:#60a0b0;font-style:italic"># ipython notebook has bug:</span>
+<span style="color:#60a0b0;font-style:italic"># https://bugs.launchpad.net/ubuntu/+source/python3.4/+bug/1290847</span>
+
+python3 -m venv --clear --without-pip venv/ipython-notebook
+
+<span style="color:#60a0b0;font-style:italic"># activate virtual env and install pip</span>
+<span style="color:#007020">source</span> venv/ipython-notebook/bin/activate
+
+wget https://bootstrap.pypa.io/get-pip.py
+python get-pip.py
+rm get-pip.py
+
+<span style="color:#60a0b0;font-style:italic"># install scientific packages</span>
+pip install numpy sympy matplotlib scipy pandas
+
+<span style="color:#60a0b0;font-style:italic"># install ipython notebook and dependencies</span>
+pip install ipython pyzmq jinja2 pygments bokeh
+
+<span style="color:#60a0b0;font-style:italic"># install latest dev scikit-learn and build it</span>
+pip install cython https://github.com/scikit-learn/scikit-learn/archive/master.zip
+
+<span style="color:#60a0b0;font-style:italic"># install prettyplotlib by Olga Botvinnik for beauty plots</span>
+pip install brewer2mpl prettyplotlib
+
+<span style="color:#60a0b0;font-style:italic"># deactivate venv</span>
+deactivate
+</code></pre></div><p>Now create profile for ipython notebook and change there some settings. Activate virtual environment:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">bikulov@kbux:~$ <span style="color:#007020">source</span> venv/ipython-notebook/bin/activate
+</code></pre></div><p>Generate password and exit ipython:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ipython
+from IPython.lib import passwd; passwd<span style="color:#666">()</span>
+exit<span style="color:#666">()</span>
+</code></pre></div><p>Copy password hash to clipboard. Create profile with desired name:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ipython profile create <span style="color:#666">[</span>name<span style="color:#666">]</span>
+</code></pre></div><p>Open <code>~/.ipython/profile_[name]/ipython_notebook_config.py</code> and  change settings:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">c<span style="color:#666">.</span>NotebookApp<span style="color:#666">.</span>port <span style="color:#666">=</span> <span style="color:#40a070">8888</span>
+c<span style="color:#666">.</span>NotebookApp<span style="color:#666">.</span>ip <span style="color:#666">=</span> <span style="color:#4070a0">&#39;0.0.0.0&#39;</span>
+c<span style="color:#666">.</span>NotebookApp<span style="color:#666">.</span>open_browser <span style="color:#666">=</span> False
+c<span style="color:#666">.</span>NotebookApp<span style="color:#666">.</span>password <span style="color:#666">=</span> [password <span style="color:#007020">hash</span>]
+</code></pre></div><p>Start ipython notebook server:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">ipython notebook <span style="color:#666">--</span>profile<span style="color:#666">=</span>[name]
+</code></pre></div><p>And open http://127.0.0.1:8888/ in your browser.</p>
+		</div>
+		
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/ubuntu/" rel="tag">ubuntu</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/howto/" rel="tag">howto</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/python/" rel="tag">python</a></li>
+	</ul>
+</div>
+	</article>
+</main>
+
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/blog/2014/02/13/research-papers-management-with-zotero-and-yandex.disk/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Research Papers Management With Zotero and Yandex.Disk</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/blog/2014/08/09/setup-drupal-7-with-nginx-and-postgresql-on-ubuntu-14.04/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">Setup Drupal 7 with nginx and PostgreSQL on Ubuntu 14.04</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 Kenarius Octonotes.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script> <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { id:22777879, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</body>
+</html>

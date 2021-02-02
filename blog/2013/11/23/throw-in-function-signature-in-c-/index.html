@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="yandex-verification" content="761bc4bf6044da39" />
+	<title>throw() in function signature in C&#43;&#43; - Kenarius Octonotes</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.80.0" />
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		 <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="Kenarius Octonotes" rel="home">
+				<div class="logo__title">Kenarius Octonotes</div>
+				<div class="logo__tagline">Static notes about information technologies</div>
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">Home</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/resume">Resume</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">throw() in function signature in C&#43;&#43;</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2013-11-23T17:42:00">2013-11-23</time>
+</div>
+</div>
+		</header><div class="content post__content clearfix">
+			<p><a href="http://www.cplusplus.com/doc/tutorial/exceptions/">There is</a> base class <code>exception</code> in standard library (header <code>&lt;exception&gt;</code>). It <a href="http://en.cppreference.com/w/cpp/error/exception">has</a> default constructor, copy constructor, copy operator and destructor and virtual <code>what()</code> function. Latter returns string with additional information about exception.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#007020">#include</span> <span style="color:#007020">&lt;exception&gt;</span><span style="color:#007020">
+</span><span style="color:#007020"></span><span style="color:#007020;font-weight:bold">class</span> <span style="color:#0e84b5;font-weight:bold">MyException</span><span style="color:#666">:</span> <span style="color:#007020;font-weight:bold">public</span> std<span style="color:#666">::</span>exception
+{
+    <span style="color:#007020;font-weight:bold">virtual</span> <span style="color:#007020;font-weight:bold">const</span> <span style="color:#902000">char</span><span style="color:#666">*</span> <span style="color:#06287e">what</span>() <span style="color:#007020;font-weight:bold">const</span> <span style="color:#007020;font-weight:bold">throw</span>()
+    {
+        <span style="color:#007020;font-weight:bold">return</span> <span style="color:#4070a0">&#34;My Exception happened&#34;</span>;
+    }
+}
+</code></pre></div><p>The most confusing part in the above code is <code>throw()</code>. It assures no exception will be thrown from the <code>what()</code> function. For example, if you want to allow exception <code>int</code> and <code>float</code> to be raised in this function, you must write <code>throw(int,float)</code> (you can not do it in the above example, this fucntion definition is fixed in base class). Ok, this example is mostly unchangable, so let&rsquo;s write own <code>MyException</code> class without derivation from any standard library class.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#007020">#include</span> <span style="color:#007020">&lt;iostream&gt;</span><span style="color:#007020">
+</span><span style="color:#007020">#include</span> <span style="color:#007020">&lt;string&gt;</span><span style="color:#007020">
+</span><span style="color:#007020"></span>
+<span style="color:#007020;font-weight:bold">class</span> <span style="color:#0e84b5;font-weight:bold">MyException</span>
+{
+<span style="color:#007020;font-weight:bold">public</span><span style="color:#666">:</span>
+    std<span style="color:#666">::</span>string what()
+    {
+        <span style="color:#007020;font-weight:bold">return</span> <span style="color:#4070a0">&#34;MyException happened&#34;</span>;
+    }
+};
+
+<span style="color:#902000">int</span> <span style="color:#06287e">main</span>(<span style="color:#902000">int</span> argc, <span style="color:#902000">char</span> <span style="color:#666">**</span>argv)
+{
+    MyException a;
+    <span style="color:#007020;font-weight:bold">try</span> {
+        <span style="color:#007020;font-weight:bold">throw</span> a;
+    } <span style="color:#007020;font-weight:bold">catch</span> (MyException <span style="color:#666">&amp;</span>e) {
+        std<span style="color:#666">::</span>cout <span style="color:#666">&lt;&lt;</span> e.what() <span style="color:#666">&lt;&lt;</span> std<span style="color:#666">::</span>endl;
+    } <span style="color:#007020;font-weight:bold">catch</span> (<span style="color:#902000">int</span> a) {
+        std<span style="color:#666">::</span>cout <span style="color:#666">&lt;&lt;</span> <span style="color:#4070a0">&#34;int thrown &#34;</span> <span style="color:#666">&lt;&lt;</span> a <span style="color:#666">&lt;&lt;</span> std<span style="color:#666">::</span>endl;
+    }
+
+    <span style="color:#007020;font-weight:bold">return</span> <span style="color:#40a070">0</span>;
+}
+</code></pre></div><p>Ok, if you copy source code, compile and run it, you&rsquo;ll see:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ g++ main.cpp -o throw
+$ ./throw
+MyException happened
+</code></pre></div><p>This behaviour is predictable. Exception thrown and caught by <code>catch (MyException &amp;e)</code>. No special modifiers is presented.</p>
+<p>Lets change example a little (throwing exception from <code>what()</code>):</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#007020">#include</span> <span style="color:#007020">&lt;iostream&gt;</span><span style="color:#007020">
+</span><span style="color:#007020">#include</span> <span style="color:#007020">&lt;string&gt;</span><span style="color:#007020">
+</span><span style="color:#007020"></span>
+<span style="color:#007020;font-weight:bold">class</span> <span style="color:#0e84b5;font-weight:bold">MyException</span>
+{
+<span style="color:#007020;font-weight:bold">public</span><span style="color:#666">:</span>
+    std<span style="color:#666">::</span>string what()
+    {
+        <span style="color:#007020;font-weight:bold">throw</span> <span style="color:#40a070">10</span>;
+        <span style="color:#007020;font-weight:bold">return</span> <span style="color:#4070a0">&#34;MyException happened&#34;</span>;
+    }
+};
+
+<span style="color:#902000">int</span> <span style="color:#06287e">main</span>(<span style="color:#902000">int</span> argc, <span style="color:#902000">char</span> <span style="color:#666">**</span>argv)
+{
+    <span style="color:#007020;font-weight:bold">try</span> {
+        MyException a;
+        <span style="color:#007020;font-weight:bold">throw</span> a;
+    } <span style="color:#007020;font-weight:bold">catch</span> (MyException <span style="color:#666">&amp;</span>e) {
+        std<span style="color:#666">::</span>cout <span style="color:#666">&lt;&lt;</span> e.what() <span style="color:#666">&lt;&lt;</span> std<span style="color:#666">::</span>endl;
+    }
+    <span style="color:#007020;font-weight:bold">return</span> <span style="color:#40a070">0</span>;
+}
+</code></pre></div><p>Throwing exception from <code>what()</code> causes unhandled exception:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ./throw
+terminate called after throwing an instance of <span style="color:#4070a0">&#39;int&#39;</span>
+Aborted <span style="color:#666">(</span>core dumped<span style="color:#666">)</span>
+</code></pre></div><p>Usage of throw() in function declaration is considered as a <a href="http://stackoverflow.com/questions/1055387/throw-keyword-in-functions-signature-c">bad idea</a>. But in this particular situation it is allowed: <code>what()</code> returns additional description, it must not send any other exception, as there is no guarantee this exception will behandled. Restrict exceptions from <code>what()</code>:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#007020">#include</span> <span style="color:#007020">&lt;iostream&gt;</span><span style="color:#007020">
+</span><span style="color:#007020">#include</span> <span style="color:#007020">&lt;string&gt;</span><span style="color:#007020">
+</span><span style="color:#007020"></span>
+<span style="color:#007020;font-weight:bold">class</span> <span style="color:#0e84b5;font-weight:bold">MyException</span>
+{
+<span style="color:#007020;font-weight:bold">public</span><span style="color:#666">:</span>
+    std<span style="color:#666">::</span>string what() <span style="color:#007020;font-weight:bold">throw</span>()
+    {
+        <span style="color:#007020;font-weight:bold">throw</span> <span style="color:#40a070">10</span>;
+        <span style="color:#007020;font-weight:bold">return</span> <span style="color:#4070a0">&#34;MyException happened&#34;</span>;
+    }
+};
+
+<span style="color:#902000">int</span> <span style="color:#06287e">main</span>(<span style="color:#902000">int</span> argc, <span style="color:#902000">char</span> <span style="color:#666">**</span>argv)
+{
+    <span style="color:#007020;font-weight:bold">try</span> {
+        MyException a;
+        a.what();
+    } <span style="color:#007020;font-weight:bold">catch</span> (...) {
+        std<span style="color:#666">::</span>cout <span style="color:#666">&lt;&lt;</span> <span style="color:#4070a0">&#34;exception handled&#34;</span> <span style="color:#666">&lt;&lt;</span> std<span style="color:#666">::</span>endl;
+    }
+    <span style="color:#007020;font-weight:bold">return</span> <span style="color:#40a070">0</span>;
+}
+</code></pre></div><p>Finally we get what we came from: this class is pretty like std::exception, isn&rsquo;t it? <code>throw()</code> ensures no exceptions can be sent from <code>show()</code> function. So, compiler will fail? No! Compiler reports no errors. But an error occures in runtime:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ./throw
+terminate called after throwing an instance of <span style="color:#4070a0">&#39;int&#39;</span>
+Aborted <span style="color:#666">(</span>core dumped<span style="color:#666">)</span>
+</code></pre></div><p>There is a little information why the code have failed. No exception (even raised in functions called from <code>show()</code>) will pass through <code>show() throw()</code>. Error will appear only at runtime.</p>
+<p>So, <code>throw()</code> is used to ensure no additional exceptions will be raised from <code>show()</code> function and will escape <code>catch()</code>. But in general case such behaviour is difficult to predict and <em>is</em> a bad practice. Try not to use <code>throw()</code> in function signature without high necessity. Try not to use throw with particular allowed exceptions (like <code>throw(A, B)</code>) in any situation. Standart <code>std::exception</code> is very good to derive your exceptions in huge amount of sutuations.</p>
+		</div>
+		
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/c&#43;&#43;/" rel="tag">c&#43;&#43;</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/exceptions/" rel="tag">exceptions</a></li>
+	</ul>
+</div>
+	</article>
+</main>
+
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/blog/2013/11/19/sort-strings-from-file-in-c-/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Sort strings from file in C&#43;&#43;</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/blog/2013/12/24/example-of-cmake-file-for-cuda-cpp-code/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">Example of CMake file for CUDA&#43;CPP code</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 Kenarius Octonotes.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script> <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { id:22777879, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</body>
+</html>

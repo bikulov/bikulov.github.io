@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>PCManFM on Kenarius Octonotes</title>
+    <link>https://bikulov.org/tags/pcmanfm/</link>
+    <description>Recent content in PCManFM on Kenarius Octonotes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 24 Aug 2012 09:00:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/pcmanfm/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Fixing missing icons in PCManFM</title>
+      <link>https://bikulov.org/blog/2012/08/24/fixing-missing-icons-in-pcmanfm/</link>
+      <pubDate>Fri, 24 Aug 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2012/08/24/fixing-missing-icons-in-pcmanfm/</guid>
+      <description>&lt;p&gt;After moving to i3 I’ve installed PCManFM as GUI file manager. To fix missing icons one have to define icon theme. These instructions are tested on Ubuntu 12.04, but it must work with other distros.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="yandex-verification" content="761bc4bf6044da39" />
+	<title>Creation of paper-ready plots with matlotlib - Kenarius Octonotes</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.80.0" />
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		 <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="Kenarius Octonotes" rel="home">
+				<div class="logo__title">Kenarius Octonotes</div>
+				<div class="logo__tagline">Static notes about information technologies</div>
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">Home</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/resume">Resume</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Creation of paper-ready plots with matlotlib</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2013-10-03T10:37:00">2013-10-03</time>
+</div>
+</div>
+		</header><div class="content post__content clearfix">
+			<p>I used to utilize gnuplot for creation of plots with arbitrary data. The main problem was to postprocess data before plotting: I had to integrate postprocess into calculation code itself or to write additional script to do so. I&rsquo;d like to provide an example of good-looking plotting with Python and matplotlib. Python has bataries included, so there will be no problem with preparation of data to be plotted.</p>
+<p>Example script <code>plot_example.py</code>:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#60a0b0;font-style:italic">#~/usr/bin/env python</span>
+<span style="color:#60a0b0;font-style:italic">#-*- coding: utf-8 -*-</span>
+
+<span style="color:#007020;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">matplotlib.pyplot</span> <span style="color:#007020;font-weight:bold">as</span> <span style="color:#0e84b5;font-weight:bold">plt</span>
+
+<span style="color:#60a0b0;font-style:italic"># set global settings</span>
+<span style="color:#007020;font-weight:bold">def</span> <span style="color:#06287e">init_plotting</span>():
+    plt<span style="color:#666">.</span>rcParams[<span style="color:#4070a0">&#39;figure.figsize&#39;</span>] <span style="color:#666">=</span> (<span style="color:#40a070">8</span>, <span style="color:#40a070">3</span>)
+    plt<span style="color:#666">.</span>rcParams[<span style="color:#4070a0">&#39;font.size&#39;</span>] <span style="color:#666">=</span> <span style="color:#40a070">10</span>
+    plt<span style="color:#666">.</span>rcParams[<span style="color:#4070a0">&#39;font.family&#39;</span>] <span style="color:#666">=</span> <span style="color:#4070a0">&#39;Times New Roman&#39;</span>
+    plt<span style="color:#666">.</span>rcParams[<span style="color:#4070a0">&#39;axes.labelsize&#39;</span>] <span style="color:#666">=</span> plt<span style="color:#666">.</span>rcParams[<span style="color:#4070a0">&#39;font.size&#39;</span>]
+    plt<span style="color:#666">.</span>rcParams[<span style="color:#4070a0">&#39;axes.titlesize&#39;</span>] <span style="color:#666">=</span> <span style="color:#40a070">1.5</span><span style="color:#666">*</span>plt<span style="color:#666">.</span>rcParams[<span style="color:#4070a0">&#39;font.size&#39;</span>]
+    plt<span style="color:#666">.</span>rcParams[<span style="color:#4070a0">&#39;legend.fontsize&#39;</span>] <span style="color:#666">=</span> plt<span style="color:#666">.</span>rcParams[<span style="color:#4070a0">&#39;font.size&#39;</span>]
+    plt<span style="color:#666">.</span>rcParams[<span style="color:#4070a0">&#39;xtick.labelsize&#39;</span>] <span style="color:#666">=</span> plt<span style="color:#666">.</span>rcParams[<span style="color:#4070a0">&#39;font.size&#39;</span>]
+    plt<span style="color:#666">.</span>rcParams[<span style="color:#4070a0">&#39;ytick.labelsize&#39;</span>] <span style="color:#666">=</span> plt<span style="color:#666">.</span>rcParams[<span style="color:#4070a0">&#39;font.size&#39;</span>]
+    plt<span style="color:#666">.</span>rcParams[<span style="color:#4070a0">&#39;savefig.dpi&#39;</span>] <span style="color:#666">=</span> <span style="color:#40a070">2</span><span style="color:#666">*</span>plt<span style="color:#666">.</span>rcParams[<span style="color:#4070a0">&#39;savefig.dpi&#39;</span>]
+    plt<span style="color:#666">.</span>rcParams[<span style="color:#4070a0">&#39;xtick.major.size&#39;</span>] <span style="color:#666">=</span> <span style="color:#40a070">3</span>
+    plt<span style="color:#666">.</span>rcParams[<span style="color:#4070a0">&#39;xtick.minor.size&#39;</span>] <span style="color:#666">=</span> <span style="color:#40a070">3</span>
+    plt<span style="color:#666">.</span>rcParams[<span style="color:#4070a0">&#39;xtick.major.width&#39;</span>] <span style="color:#666">=</span> <span style="color:#40a070">1</span>
+    plt<span style="color:#666">.</span>rcParams[<span style="color:#4070a0">&#39;xtick.minor.width&#39;</span>] <span style="color:#666">=</span> <span style="color:#40a070">1</span>
+    plt<span style="color:#666">.</span>rcParams[<span style="color:#4070a0">&#39;ytick.major.size&#39;</span>] <span style="color:#666">=</span> <span style="color:#40a070">3</span>
+    plt<span style="color:#666">.</span>rcParams[<span style="color:#4070a0">&#39;ytick.minor.size&#39;</span>] <span style="color:#666">=</span> <span style="color:#40a070">3</span>
+    plt<span style="color:#666">.</span>rcParams[<span style="color:#4070a0">&#39;ytick.major.width&#39;</span>] <span style="color:#666">=</span> <span style="color:#40a070">1</span>
+    plt<span style="color:#666">.</span>rcParams[<span style="color:#4070a0">&#39;ytick.minor.width&#39;</span>] <span style="color:#666">=</span> <span style="color:#40a070">1</span>
+    plt<span style="color:#666">.</span>rcParams[<span style="color:#4070a0">&#39;legend.frameon&#39;</span>] <span style="color:#666">=</span> False
+    plt<span style="color:#666">.</span>rcParams[<span style="color:#4070a0">&#39;legend.loc&#39;</span>] <span style="color:#666">=</span> <span style="color:#4070a0">&#39;center left&#39;</span>
+    plt<span style="color:#666">.</span>rcParams[<span style="color:#4070a0">&#39;axes.linewidth&#39;</span>] <span style="color:#666">=</span> <span style="color:#40a070">1</span>
+
+    plt<span style="color:#666">.</span>gca()<span style="color:#666">.</span>spines[<span style="color:#4070a0">&#39;right&#39;</span>]<span style="color:#666">.</span>set_color(<span style="color:#4070a0">&#39;none&#39;</span>)
+    plt<span style="color:#666">.</span>gca()<span style="color:#666">.</span>spines[<span style="color:#4070a0">&#39;top&#39;</span>]<span style="color:#666">.</span>set_color(<span style="color:#4070a0">&#39;none&#39;</span>)
+    plt<span style="color:#666">.</span>gca()<span style="color:#666">.</span>xaxis<span style="color:#666">.</span>set_ticks_position(<span style="color:#4070a0">&#39;bottom&#39;</span>)
+    plt<span style="color:#666">.</span>gca()<span style="color:#666">.</span>yaxis<span style="color:#666">.</span>set_ticks_position(<span style="color:#4070a0">&#39;left&#39;</span>)
+
+init_plotting()
+
+<span style="color:#60a0b0;font-style:italic"># plotting example data</span>
+<span style="color:#007020;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">math</span> <span style="color:#007020;font-weight:bold">import</span> sin
+<span style="color:#007020;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">math</span> <span style="color:#007020;font-weight:bold">import</span> cos
+
+x <span style="color:#666">=</span> [<span style="color:#40a070">0.31415</span><span style="color:#666">*</span>xi <span style="color:#007020;font-weight:bold">for</span> xi <span style="color:#007020;font-weight:bold">in</span> <span style="color:#007020">xrange</span>(<span style="color:#40a070">0</span>,<span style="color:#40a070">10</span>)]
+y1 <span style="color:#666">=</span> [sin(xi) <span style="color:#007020;font-weight:bold">for</span> xi <span style="color:#007020;font-weight:bold">in</span> x]
+y2 <span style="color:#666">=</span> [cos(xi <span style="color:#666">+</span> <span style="color:#40a070">0.5</span>) <span style="color:#007020;font-weight:bold">for</span> xi <span style="color:#007020;font-weight:bold">in</span> x]
+y3 <span style="color:#666">=</span> [cos(xi <span style="color:#666">+</span> <span style="color:#40a070">0.5</span>) <span style="color:#666">+</span> sin(xi) <span style="color:#007020;font-weight:bold">for</span> xi <span style="color:#007020;font-weight:bold">in</span> x]
+
+<span style="color:#60a0b0;font-style:italic"># begin subplots region</span>
+plt<span style="color:#666">.</span>subplot(<span style="color:#40a070">121</span>)
+plt<span style="color:#666">.</span>gca()<span style="color:#666">.</span>margins(<span style="color:#40a070">0.1</span>, <span style="color:#40a070">0.1</span>)
+plt<span style="color:#666">.</span>plot(x, y1, linestyle<span style="color:#666">=</span><span style="color:#4070a0">&#39;-&#39;</span>, marker<span style="color:#666">=</span><span style="color:#4070a0">&#39;.&#39;</span>, linewidth<span style="color:#666">=</span><span style="color:#40a070">1</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#39;r&#39;</span>, label<span style="color:#666">=</span><span style="color:#4070a0">&#39;sin&#39;</span>)
+plt<span style="color:#666">.</span>plot(x, y2, linestyle<span style="color:#666">=</span><span style="color:#4070a0">&#39;.&#39;</span>, marker<span style="color:#666">=</span><span style="color:#4070a0">&#39;o&#39;</span>, linewidth<span style="color:#666">=</span><span style="color:#40a070">1</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#39;b&#39;</span>, label<span style="color:#666">=</span><span style="color:#4070a0">&#39;cos&#39;</span>)
+
+plt<span style="color:#666">.</span>gca()<span style="color:#666">.</span>annotate(<span style="color:#4070a0">u</span><span style="color:#4070a0">&#39;point $</span><span style="color:#4070a0;font-weight:bold">\\</span><span style="color:#4070a0">frac{</span><span style="color:#4070a0;font-weight:bold">\\</span><span style="color:#4070a0">tau}{2}$&#39;</span>, xy<span style="color:#666">=</span>(x[<span style="color:#40a070">2</span>], y1[<span style="color:#40a070">2</span>]),  xycoords<span style="color:#666">=</span><span style="color:#4070a0">&#39;data&#39;</span>,
+                xytext<span style="color:#666">=</span>(<span style="color:#40a070">30</span>, <span style="color:#666">-</span><span style="color:#40a070">10</span>), textcoords<span style="color:#666">=</span><span style="color:#4070a0">&#39;offset points&#39;</span>, size<span style="color:#666">=</span><span style="color:#40a070">8</span>,
+                arrowprops<span style="color:#666">=</span><span style="color:#007020">dict</span>(arrowstyle<span style="color:#666">=</span><span style="color:#4070a0">&#39;simple&#39;</span>, fc<span style="color:#666">=</span><span style="color:#4070a0">&#39;g&#39;</span>, ec<span style="color:#666">=</span><span style="color:#4070a0">&#39;none&#39;</span>))
+
+plt<span style="color:#666">.</span>xlabel(<span style="color:#4070a0">u</span><span style="color:#4070a0">&#39;x label&#39;</span>)
+plt<span style="color:#666">.</span>ylabel(<span style="color:#4070a0">u</span><span style="color:#4070a0">&#39;y label&#39;</span>)
+plt<span style="color:#666">.</span>title(<span style="color:#4070a0">u</span><span style="color:#4070a0">&#39;First plot title&#39;</span>)
+
+plt<span style="color:#666">.</span>gca()<span style="color:#666">.</span>legend(bbox_to_anchor <span style="color:#666">=</span> (<span style="color:#40a070">0.0</span>, <span style="color:#40a070">0.1</span>))
+
+plt<span style="color:#666">.</span>subplot(<span style="color:#40a070">122</span>)
+plt<span style="color:#666">.</span>gca()<span style="color:#666">.</span>margins(<span style="color:#40a070">0.1</span>, <span style="color:#40a070">0.1</span>)
+plt<span style="color:#666">.</span>plot(x, y3, linestyle<span style="color:#666">=</span><span style="color:#4070a0">&#39;--&#39;</span>, marker<span style="color:#666">=</span><span style="color:#4070a0">&#39;.&#39;</span>, linewidth<span style="color:#666">=</span><span style="color:#40a070">1</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#39;g&#39;</span>, label<span style="color:#666">=</span><span style="color:#4070a0">&#39;sum&#39;</span>)
+
+plt<span style="color:#666">.</span>gca()<span style="color:#666">.</span>annotate(<span style="color:#4070a0">u</span><span style="color:#4070a0">&#39;$y_x$&#39;</span>, xy<span style="color:#666">=</span>(x[<span style="color:#40a070">2</span>], y3[<span style="color:#40a070">2</span>]),  xycoords<span style="color:#666">=</span><span style="color:#4070a0">&#39;data&#39;</span>,
+                xytext<span style="color:#666">=</span>(<span style="color:#666">-</span><span style="color:#40a070">30</span>, <span style="color:#666">-</span><span style="color:#40a070">20</span>), textcoords<span style="color:#666">=</span><span style="color:#4070a0">&#39;offset points&#39;</span>, size<span style="color:#666">=</span><span style="color:#40a070">8</span>,
+                arrowprops<span style="color:#666">=</span><span style="color:#007020">dict</span>(arrowstyle<span style="color:#666">=</span><span style="color:#4070a0">&#39;simple&#39;</span>, fc<span style="color:#666">=</span><span style="color:#4070a0">&#39;orange&#39;</span>, ec<span style="color:#666">=</span><span style="color:#4070a0">&#39;none&#39;</span>))
+
+plt<span style="color:#666">.</span>xlabel(<span style="color:#4070a0">u</span><span style="color:#4070a0">&#39;x label&#39;</span>)
+plt<span style="color:#666">.</span>ylabel(<span style="color:#4070a0">u</span><span style="color:#4070a0">&#39;y label&#39;</span>)
+plt<span style="color:#666">.</span>title(<span style="color:#4070a0">u</span><span style="color:#4070a0">&#39;Second plot title&#39;</span>)
+
+plt<span style="color:#666">.</span>gca()<span style="color:#666">.</span>legend(bbox_to_anchor <span style="color:#666">=</span> (<span style="color:#40a070">0.0</span>, <span style="color:#40a070">0.1</span>))
+<span style="color:#60a0b0;font-style:italic"># end subplots region</span>
+
+<span style="color:#60a0b0;font-style:italic"># output resulting plot to file</span>
+plt<span style="color:#666">.</span>tight_layout()
+plt<span style="color:#666">.</span>savefig(<span style="color:#4070a0">&#39;graph.png&#39;</span>)
+</code></pre></div><p>I&rsquo;ve set all important parameters for me: font, size of font, width of different types of lines, titles, labels, so you can change them to fit yourself. PNG output can be changed to EPS or PDF ones.</p>
+<p>First part of script is an init function. It sets some global matplotlib parameters (so you do not need to edit your matplotlib rc file). You can edit parameters.</p>
+<p>Second part is preparation of data to be plotted. You can replace it completely with your own code. For example, to load data from file.</p>
+<p>Third part is creating plots. You can add only one plot at figure (to do so, remove second plot and <code>subplot</code> statements). You can add more plots at one figure (change <code>subplot</code> accordingly. Three numbers are rows of plots, columns of plots and the plot number. For 2x2 plots use <code>subplot(22x)</code> where <code>x</code> is plot number.)</p>
+<p>Result:
+<img src="/images/2013/matplotlib_example.png" alt=""></p>
+		</div>
+		
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/matplotlib/" rel="tag">matplotlib</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/python/" rel="tag">python</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/howto/" rel="tag">howto</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/latex/" rel="tag">latex</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/plots/" rel="tag">plots</a></li>
+	</ul>
+</div>
+	</article>
+</main>
+
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/blog/2013/10/01/using-cuda-c-functions-in-python-via-.so-and-ctypes/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Using CUDA C&#43;&#43; functions in Python via `*.so` and ctypes</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/blog/2013/10/12/hybrid-symmetric-asymmetric-encryption-for-large-files/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">Hybrid symmetric-asymmetric encryption for large files</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 Kenarius Octonotes.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script> <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { id:22777879, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</body>
+</html>

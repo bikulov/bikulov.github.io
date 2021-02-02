@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="yandex-verification" content="761bc4bf6044da39" />
+	<title>Install and configure btsync in Ubuntu 12.04 - Kenarius Octonotes</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.80.0" />
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		 <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="Kenarius Octonotes" rel="home">
+				<div class="logo__title">Kenarius Octonotes</div>
+				<div class="logo__tagline">Static notes about information technologies</div>
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">Home</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/resume">Resume</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Install and configure btsync in Ubuntu 12.04</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2013-08-26T18:42:00">2013-08-26</time>
+</div>
+</div>
+		</header><div class="content post__content clearfix">
+			<p>This note describes installation of Bittorrent Sync on Ubuntu. Tutorial was tested on Ubuntu 12.04, but it must work for all Debian-based systems. Read full btsync  <a href="http://btsync.s3-website-us-east-1.amazonaws.com/BitTorrentSyncUserGuide.pdf">manual</a> for advanced information.</p>
+<h2 id="download-and-install-btsync">Download and install btsync</h2>
+<p>Btsync is provided as single binary file. We will place it into <code>/usr/bin</code> directory. So, download archive with binary file, extract it, remove archive, move binary:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">wget http://btsync.s3-website-us-east-1.amazonaws.com/btsync_x64.tar.gz
+tar xf btsync_x64.tar.gz
+rm btsync_x64.tar.gz
+sudo mv btsync /usr/bin/btsync
+</code></pre></div><h2 id="configure-shared-folder">Configure shared folder</h2>
+<p>We will use configuration file instead of web interface. Create <code>~/.sync/config.json</code> (for <code>&lt;home folder&gt;</code> for user <code>username</code> is <code>/home/username</code>) with content provided below. If you have several users you want to use btsync, create config in their home folders.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#062873;font-weight:bold">&#34;device_name&#34;</span>: <span style="color:#4070a0">&#34;&lt;computer name&gt;&#34;</span>,
+  <span style="color:#062873;font-weight:bold">&#34;pid_file&#34;</span> : <span style="color:#4070a0">&#34;&lt;home folder&gt;/.sync/btsync.pid&#34;</span>,
+  <span style="color:#062873;font-weight:bold">&#34;storage_path&#34;</span>: <span style="color:#4070a0">&#34;&lt;home folder&gt;/.sync&#34;</span>,
+
+  <span style="color:#062873;font-weight:bold">&#34;listening_port&#34;</span> : <span style="color:#40a070">0</span>,
+  <span style="color:#062873;font-weight:bold">&#34;check_for_updates&#34;</span> : <span style="color:#007020;font-weight:bold">true</span>,
+  <span style="color:#062873;font-weight:bold">&#34;use_upnp&#34;</span> : <span style="color:#007020;font-weight:bold">true</span>,
+  <span style="color:#062873;font-weight:bold">&#34;download_limit&#34;</span> : <span style="color:#40a070">0</span>,
+  <span style="color:#062873;font-weight:bold">&#34;upload_limit&#34;</span> : <span style="color:#40a070">0</span>,
+  <span style="color:#062873;font-weight:bold">&#34;lan_encrypt_data&#34;</span>: <span style="color:#007020;font-weight:bold">true</span>,
+
+  <span style="color:#062873;font-weight:bold">&#34;shared_folders&#34;</span> :
+  [
+    {
+      <span style="color:#062873;font-weight:bold">&#34;secret&#34;</span> : <span style="color:#4070a0">&#34;&lt;secret key&gt;&#34;</span>,
+      <span style="color:#062873;font-weight:bold">&#34;dir&#34;</span> : <span style="color:#4070a0">&#34;&lt;dir path&gt;&#34;</span>,
+
+      <span style="color:#062873;font-weight:bold">&#34;use_relay_server&#34;</span> : <span style="color:#007020;font-weight:bold">true</span>,
+      <span style="color:#062873;font-weight:bold">&#34;use_tracker&#34;</span> : <span style="color:#007020;font-weight:bold">true</span>,
+      <span style="color:#062873;font-weight:bold">&#34;use_dht&#34;</span> : <span style="color:#007020;font-weight:bold">false</span>,
+      <span style="color:#062873;font-weight:bold">&#34;search_lan&#34;</span> : <span style="color:#007020;font-weight:bold">true</span>,
+      <span style="color:#062873;font-weight:bold">&#34;use_sync_trash&#34;</span> : <span style="color:#007020;font-weight:bold">true</span>
+    }
+  ]
+}
+</code></pre></div><h2 id="init-script">Init script</h2>
+<p>Create file <code>/etc/init.d/btsync</code> with content (thanks to <a href="https://gist.github.com/MendelGusmao/5398362">Mendel</a>, you need to list users who will use btsync in <code>BTSYNC_USERS</code> variable, every user must have config file from previous section in home folder):</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007020">#!/bin/sh
+</span><span style="color:#007020"></span><span style="color:#60a0b0;font-style:italic">### BEGIN INIT INFO</span>
+<span style="color:#60a0b0;font-style:italic"># Provides: btsync</span>
+<span style="color:#60a0b0;font-style:italic"># Required-Start: $local_fs $remote_fs</span>
+<span style="color:#60a0b0;font-style:italic"># Required-Stop: $local_fs $remote_fs</span>
+<span style="color:#60a0b0;font-style:italic"># Should-Start: $network</span>
+<span style="color:#60a0b0;font-style:italic"># Should-Stop: $network</span>
+<span style="color:#60a0b0;font-style:italic"># Default-Start: 2 3 4 5</span>
+<span style="color:#60a0b0;font-style:italic"># Default-Stop: 0 1 6</span>
+<span style="color:#60a0b0;font-style:italic"># Short-Description: Multi-user daemonized version of btsync.</span>
+<span style="color:#60a0b0;font-style:italic"># Description: Starts the btsync daemon for all registered users.</span>
+<span style="color:#60a0b0;font-style:italic">### END INIT INFO</span>
+
+<span style="color:#60a0b0;font-style:italic"># Source: https://gist.github.com/MendelGusmao/5398362</span>
+
+<span style="color:#60a0b0;font-style:italic"># Replace with linux users you want to run BTSync clients for</span>
+<span style="color:#bb60d5">BTSYNC_USERS</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;kenarius&#34;</span>
+<span style="color:#bb60d5">DAEMON</span><span style="color:#666">=</span>/usr/bin/btsync
+
+start<span style="color:#666">()</span> <span style="color:#666">{</span>
+  <span style="color:#007020;font-weight:bold">for</span> btsuser in <span style="color:#bb60d5">$BTSYNC_USERS</span>; <span style="color:#007020;font-weight:bold">do</span>
+    <span style="color:#bb60d5">HOMEDIR</span><span style="color:#666">=</span><span style="color:#4070a0">`</span>getent passwd <span style="color:#bb60d5">$btsuser</span> | cut -d: -f6<span style="color:#4070a0">`</span>
+    <span style="color:#bb60d5">config</span><span style="color:#666">=</span><span style="color:#bb60d5">$HOMEDIR</span>/.sync/config.json
+    <span style="color:#007020;font-weight:bold">if</span> <span style="color:#666">[</span> -f <span style="color:#bb60d5">$config</span> <span style="color:#666">]</span>; <span style="color:#007020;font-weight:bold">then</span>
+      <span style="color:#007020">echo</span> <span style="color:#4070a0">&#34;Starting BTSync for </span><span style="color:#bb60d5">$btsuser</span><span style="color:#4070a0">&#34;</span>
+      start-stop-daemon -b -o -c <span style="color:#bb60d5">$btsuser</span> -S -u <span style="color:#bb60d5">$btsuser</span> -x <span style="color:#bb60d5">$DAEMON</span> -- --config <span style="color:#bb60d5">$config</span>
+    <span style="color:#007020;font-weight:bold">else</span>
+      <span style="color:#007020">echo</span> <span style="color:#4070a0">&#34;Couldn&#39;t start BTSync for </span><span style="color:#bb60d5">$btsuser</span><span style="color:#4070a0"> (no </span><span style="color:#bb60d5">$config</span><span style="color:#4070a0"> found)&#34;</span>
+    <span style="color:#007020;font-weight:bold">fi</span>
+  <span style="color:#007020;font-weight:bold">done</span>
+<span style="color:#666">}</span>
+
+stop<span style="color:#666">()</span> <span style="color:#666">{</span>
+  <span style="color:#007020;font-weight:bold">for</span> btsuser in <span style="color:#bb60d5">$BTSYNC_USERS</span>; <span style="color:#007020;font-weight:bold">do</span>
+    <span style="color:#bb60d5">dbpid</span><span style="color:#666">=</span><span style="color:#4070a0">`</span>pgrep -fu <span style="color:#bb60d5">$btsuser</span> <span style="color:#bb60d5">$DAEMON</span><span style="color:#4070a0">`</span>
+    <span style="color:#007020;font-weight:bold">if</span> <span style="color:#666">[</span> ! -z <span style="color:#4070a0">&#34;</span><span style="color:#bb60d5">$dbpid</span><span style="color:#4070a0">&#34;</span> <span style="color:#666">]</span>; <span style="color:#007020;font-weight:bold">then</span>
+      <span style="color:#007020">echo</span> <span style="color:#4070a0">&#34;Stopping btsync for </span><span style="color:#bb60d5">$btsuser</span><span style="color:#4070a0">&#34;</span>
+      start-stop-daemon -o -c <span style="color:#bb60d5">$btsuser</span> -K -u <span style="color:#bb60d5">$btsuser</span> -x <span style="color:#bb60d5">$DAEMON</span>
+    <span style="color:#007020;font-weight:bold">fi</span>
+  <span style="color:#007020;font-weight:bold">done</span>
+<span style="color:#666">}</span>
+
+status<span style="color:#666">()</span> <span style="color:#666">{</span>
+  <span style="color:#007020;font-weight:bold">for</span> btsuser in <span style="color:#bb60d5">$BTSYNC_USERS</span>; <span style="color:#007020;font-weight:bold">do</span>
+    <span style="color:#bb60d5">dbpid</span><span style="color:#666">=</span><span style="color:#4070a0">`</span>pgrep -fu <span style="color:#bb60d5">$btsuser</span> <span style="color:#bb60d5">$DAEMON</span><span style="color:#4070a0">`</span>
+    <span style="color:#007020;font-weight:bold">if</span> <span style="color:#666">[</span> -z <span style="color:#4070a0">&#34;</span><span style="color:#bb60d5">$dbpid</span><span style="color:#4070a0">&#34;</span> <span style="color:#666">]</span>; <span style="color:#007020;font-weight:bold">then</span>
+      <span style="color:#007020">echo</span> <span style="color:#4070a0">&#34;btsync for USER </span><span style="color:#bb60d5">$btsuser</span><span style="color:#4070a0">: not running.&#34;</span>
+    <span style="color:#007020;font-weight:bold">else</span>
+      <span style="color:#007020">echo</span> <span style="color:#4070a0">&#34;btsync for USER </span><span style="color:#bb60d5">$btsuser</span><span style="color:#4070a0">: running (pid </span><span style="color:#bb60d5">$dbpid</span><span style="color:#4070a0">)&#34;</span>
+    <span style="color:#007020;font-weight:bold">fi</span>
+  <span style="color:#007020;font-weight:bold">done</span>
+<span style="color:#666">}</span>
+
+<span style="color:#007020;font-weight:bold">case</span> <span style="color:#4070a0">&#34;</span><span style="color:#bb60d5">$1</span><span style="color:#4070a0">&#34;</span> in
+ start<span style="color:#666">)</span>
+start
+;;
+stop<span style="color:#666">)</span>
+stop
+;;
+restart|reload|force-reload<span style="color:#666">)</span>
+stop
+start
+;;
+status<span style="color:#666">)</span>
+status
+;;
+*<span style="color:#666">)</span>
+<span style="color:#007020">echo</span> <span style="color:#4070a0">&#34;Usage: /etc/init.d/btsync {start|stop|reload|force-reload|restart|status}&#34;</span>
+<span style="color:#007020">exit</span> <span style="color:#40a070">1</span>
+<span style="color:#007020;font-weight:bold">esac</span>
+
+<span style="color:#007020">exit</span> <span style="color:#40a070">0</span>
+</code></pre></div><p>That&rsquo;s all. Now make btsync executable, register init script with <code>update-rc.d</code> and start service. Issue as <code>root</code>:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> /etc/init.d/
+chmod +x btsync
+update-rc.d btsync defaults
+service btsync start
+</code></pre></div>
+		</div>
+		
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/ubuntu/" rel="tag">ubuntu</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/btsync/" rel="tag">btsync</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/howto/" rel="tag">howto</a></li>
+	</ul>
+</div>
+	</article>
+</main>
+
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/blog/2013/08/19/setting-up-joomla-3.1.5-with-postgresql-on-ubuntu-13.04/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Setting up Joomla 3.1.5 with PostgreSQL on Ubuntu 13.04</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/blog/2013/09/02/universal-simple-makefile/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">Universal simple Makefile</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 Kenarius Octonotes.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script> <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { id:22777879, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</body>
+</html>

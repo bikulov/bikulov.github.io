@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="yandex-verification" content="761bc4bf6044da39" />
+	<title>Ubuntu Server 12.04 &#43; Drupal 7 &#43; nginx &#43; MySQL - Kenarius Octonotes</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.80.0" />
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		 <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="Kenarius Octonotes" rel="home">
+				<div class="logo__title">Kenarius Octonotes</div>
+				<div class="logo__tagline">Static notes about information technologies</div>
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">Home</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/resume">Resume</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Ubuntu Server 12.04 &#43; Drupal 7 &#43; nginx &#43; MySQL</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2013-04-28T09:00:00">2013-04-28</time>
+</div>
+</div>
+		</header><div class="content post__content clearfix">
+			<p>Default Drupal package in Ubuntu installs Apache, but I prefer nginx as a webserver. In this note I’ll describe steps necessary to get Drupal 7 work.</p>
+<p>All variables in square brackets must be replaced by your names or passwords.</p>
+<p>Site will be available at url [sitename].</p>
+<h2 id="installing-packages">Installing packages</h2>
+<p>Install all necessary packages:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get install -y nginx php5-fpm php-apc php5-mysql mysql-client-core-5.5 mysql-server php5-gd
+</code></pre></div><p>During the installation MySQL will ask you for root password. Rememer it, I will refer to it as [mysqlpwd] further.</p>
+<h2 id="set-up-mysql">Set up MySQL</h2>
+<p>Login to MySQL console:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mysql -u root --password<span style="color:#666">=[</span>mysqlpwd<span style="color:#666">]</span>
+</code></pre></div><p>and issue the following commands (create user, create database, allow user to work with database):</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-mysql" data-lang="mysql"><span style="color:#007020;font-weight:bold">CREATE</span> <span style="color:#007020;font-weight:bold">USER</span> <span style="color:#4070a0">&#39;[dbuser]&#39;</span><span style="color:#666">@</span><span style="color:#4070a0">&#39;localhost&#39;</span> <span style="color:#007020;font-weight:bold">IDENTIFIED</span> <span style="color:#007020;font-weight:bold">BY</span> <span style="color:#4070a0">&#39;[dbpwd]&#39;</span>;
+<span style="color:#007020;font-weight:bold">CREATE</span> <span style="color:#007020;font-weight:bold">DATABASE</span> [dbname];
+<span style="color:#007020;font-weight:bold">GRANT</span> <span style="color:#007020;font-weight:bold">SELECT</span>, <span style="color:#007020;font-weight:bold">INSERT</span>, <span style="color:#007020;font-weight:bold">UPDATE</span>, <span style="color:#007020;font-weight:bold">DELETE</span>, <span style="color:#007020;font-weight:bold">CREATE</span>, <span style="color:#007020;font-weight:bold">DROP</span>, <span style="color:#007020;font-weight:bold">INDEX</span>, <span style="color:#007020;font-weight:bold">ALTER</span>, <span style="color:#007020;font-weight:bold">LOCK</span> <span style="color:#007020">TABLES</span>, <span style="color:#007020;font-weight:bold">CREATE</span> TEMPORARY <span style="color:#007020">TABLES</span> <span style="color:#007020;font-weight:bold">ON</span> <span style="color:#666">`</span>[dbname]<span style="color:#666">`</span>.<span style="color:#666">*</span> <span style="color:#007020;font-weight:bold">TO</span> <span style="color:#4070a0">&#39;[dbuser]&#39;</span><span style="color:#666">@</span><span style="color:#4070a0">&#39;localhost&#39;</span> <span style="color:#007020;font-weight:bold">IDENTIFIED</span> <span style="color:#007020;font-weight:bold">BY</span> <span style="color:#4070a0">&#39;[dbpwd]&#39;</span>;
+<span style="color:#007020;font-weight:bold">FLUSH</span> <span style="color:#007020;font-weight:bold">PRIVILEGES</span>;
+<span style="color:#007020;font-weight:bold">EXIT</span>
+</code></pre></div><h2 id="set-up-nginx">Set up nginx</h2>
+<p>Here we will make a configurational file for nginx.</p>
+<p>As create file in <code>sites-available</code> directory with content:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#4070a0">server {</span>
+  <span style="color:#4070a0">listen 80;</span>
+  <span style="color:#4070a0">server_name [sitename];</span>
+  <span style="color:#4070a0">access_log /var/log/[sitename].access.log;</span>
+  <span style="color:#4070a0">error_log /var/log/[sitename].error.log;</span>
+
+  <span style="color:#4070a0">root /srv/[sitename];</span>
+  <span style="color:#4070a0">index index.php;</span>
+
+  <span style="color:#4070a0">location / {</span>
+    <span style="color:#4070a0">try_files $uri $uri/ /index.php;</span>
+  <span style="color:#4070a0">}</span>
+
+  <span style="color:#4070a0">location</span> <span style="color:#666">=</span> <span style="color:#4070a0">/favicon.ico {
+</span><span style="color:#4070a0">    empty_gif;
+</span><span style="color:#4070a0">  }</span>
+
+  <span style="color:#4070a0">location ~ \.php$ {</span>
+    <span style="color:#4070a0">include /etc/nginx/fastcgi_params;</span>
+    <span style="color:#4070a0">fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;</span>
+    <span style="color:#4070a0">fastcgi_pass 127.0.0.1:9000;</span>
+  <span style="color:#4070a0">}</span>
+<span style="color:#4070a0">}</span>
+</code></pre></div><p>and add link for nginx to enable site:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo ln /etc/nginx/sites-available/<span style="color:#666">[</span>sitename<span style="color:#666">]</span> /etc/nginx/sites-enabled/<span style="color:#666">[</span>sitename<span style="color:#666">]</span>
+sudo service nginx restart
+</code></pre></div><h2 id="set-up-drupal">Set up Drupal</h2>
+<p>We will store Drupal in  folder in <code>/srv</code>. Issue following commands in bash:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo -s
+<span style="color:#007020">cd</span> /srv
+wget http://ftp.drupal.org/files/projects/drupal-7.22.tar.gz
+tar xvf drupal-7.22.tar.gz
+mv drupal-7.22 <span style="color:#666">[</span>sitename<span style="color:#666">]</span>
+chown -R www-data:www-data <span style="color:#666">[</span>sitename<span style="color:#666">]</span>
+<span style="color:#007020">exit</span>
+</code></pre></div>
+		</div>
+		
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/drupal/" rel="tag">drupal</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/nginx/" rel="tag">nginx</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/mysql/" rel="tag">mysql</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/server/" rel="tag">server</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/ubuntu/" rel="tag">ubuntu</a></li>
+	</ul>
+</div>
+	</article>
+</main>
+
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/blog/2013/01/23/universal-screen-capturing-with-scrot-imagemagick-and-ffmpeg/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Universal screen capturing with scrot, imagemagick and ffmpeg</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/blog/2013/06/18/ubuntu-server-12.04-slurm-2.5.7-fatnodes/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">Ubuntu Server 12.04 &#43; Slurm 2.5.7 fatnodes</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 Kenarius Octonotes.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script> <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { id:22777879, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</body>
+</html>

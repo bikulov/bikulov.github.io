@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ssh on Kenarius Octonotes</title>
+    <link>https://bikulov.org/tags/ssh/</link>
+    <description>Recent content in ssh on Kenarius Octonotes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 25 Jan 2014 16:32:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/ssh/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SSH config for multiple hops in Linux</title>
+      <link>https://bikulov.org/blog/2014/01/25/ssh-config-for-multiple-hops-in-linux/</link>
+      <pubDate>Sat, 25 Jan 2014 16:32:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2014/01/25/ssh-config-for-multiple-hops-in-linux/</guid>
+      <description>&lt;p&gt;Often some hosts in corporate network are available only from several gateway machines. The scheme looks like that: you connect to gateway &lt;code&gt;ssh -A gateway.public.net&lt;/code&gt; and then to desired host from gateway machines &lt;code&gt;ssh -A host.private.net&lt;/code&gt;. But the problem arises when you want to copy or download something from &lt;em&gt;host.private.net&lt;/em&gt;. You have to do it in two hops, because &lt;code&gt;host.private.net&lt;/code&gt; is not available from your machine directly. The solution is ssh forwarding.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Configuration of hosts for convenient ssh connections</title>
+      <link>https://bikulov.org/blog/2013/07/12/configuration-of-hosts-for-convenient-ssh-connections/</link>
+      <pubDate>Fri, 12 Jul 2013 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/07/12/configuration-of-hosts-for-convenient-ssh-connections/</guid>
+      <description>&lt;p&gt;It is possible to save configuration of ssh connection for later usage. For example, one had to type&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;ssh &amp;lt;username&amp;gt;@&amp;lt;ip address&amp;gt; -p &amp;lt;port&amp;gt; -i &amp;lt;path to key file&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;every time one wants to connect to server.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

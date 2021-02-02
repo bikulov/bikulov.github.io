@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>i3 on Kenarius Octonotes</title>
+    <link>https://bikulov.org/tags/i3/</link>
+    <description>Recent content in i3 on Kenarius Octonotes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 08 Nov 2012 09:00:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/i3/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Get rid of Desktop window while launching Nautilus in i3</title>
+      <link>https://bikulov.org/blog/2012/11/08/get-rid-of-desktop-window-while-launching-nautilus-in-i3/</link>
+      <pubDate>Thu, 08 Nov 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2012/11/08/get-rid-of-desktop-window-while-launching-nautilus-in-i3/</guid>
+      <description>&lt;p&gt;In i3 window manager by default Nautilus actually opens two windows: Desktop window and Nautilus itself. The former can’t be closed by the default shortcut &lt;code&gt;$Mod+Shift+Q&lt;/code&gt;.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

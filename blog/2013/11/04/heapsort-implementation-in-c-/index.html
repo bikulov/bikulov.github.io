@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="yandex-verification" content="761bc4bf6044da39" />
+	<title>Heapsort implementation in C&#43;&#43; - Kenarius Octonotes</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.80.0" />
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		 <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="Kenarius Octonotes" rel="home">
+				<div class="logo__title">Kenarius Octonotes</div>
+				<div class="logo__tagline">Static notes about information technologies</div>
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">Home</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/resume">Resume</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Heapsort implementation in C&#43;&#43;</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2013-11-04T21:33:00">2013-11-04</time>
+</div>
+</div>
+		</header><div class="content post__content clearfix">
+			<p>Heapsort is one of the fastest sorting algorithms. The best and the worst cases for heapsort have same $O(n\log(n))$ performance.</p>
+<p>At first heapsort creates heap from data with <code>buildHeap</code> function. Heap is organized in linear array as follows. Every $i$-th element has two children: $(2i)$-th element and $(2i+1)$-th one. The biggest element of the array is placed on the top of the heap.</p>
+<p>After heap building top element is swapped with the latest in the array, then heap is rebuilt for the array with size decreased by one. These operations repeat till array size is bigger than one. Note that array indexes have to start from one for this implementation to work correctly (that is why I use <code>size+1</code> for array size).</p>
+<p>My implementation of heapsort is presented below. <code>heapsort.cpp</code>:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#007020">#include</span> <span style="color:#007020">&lt;iostream&gt;</span><span style="color:#007020">
+</span><span style="color:#007020">#include</span> <span style="color:#007020">&lt;cstdlib&gt;</span><span style="color:#007020">
+</span><span style="color:#007020">#include</span> <span style="color:#007020">&lt;algorithm&gt;</span><span style="color:#007020">
+</span><span style="color:#007020"></span>
+<span style="color:#007020;font-weight:bold">template</span> <span style="color:#666">&lt;</span><span style="color:#007020;font-weight:bold">typename</span> T<span style="color:#666">&gt;</span>
+<span style="color:#902000">void</span> checkRootNode(T <span style="color:#666">*</span>array, size_t root, size_t size) {
+	size_t left <span style="color:#666">=</span> <span style="color:#40a070">2</span><span style="color:#666">*</span>root;
+	size_t right <span style="color:#666">=</span> <span style="color:#40a070">2</span><span style="color:#666">*</span>root <span style="color:#666">+</span> <span style="color:#40a070">1</span>;
+	<span style="color:#007020;font-weight:bold">if</span> (left <span style="color:#666">&lt;</span> size <span style="color:#666">&amp;&amp;</span> array[root] <span style="color:#666">&lt;</span> array[left]) {
+		std<span style="color:#666">::</span>swap(array[root], array[left]);
+		checkRootNode(array, left, size);
+	}
+	<span style="color:#007020;font-weight:bold">if</span> (right <span style="color:#666">&lt;</span> size <span style="color:#666">&amp;&amp;</span> array[root] <span style="color:#666">&lt;</span> array[right]) {
+		std<span style="color:#666">::</span>swap(array[root], array[right]);
+		checkRootNode(array, right, size);
+	}
+}
+
+<span style="color:#007020;font-weight:bold">template</span> <span style="color:#666">&lt;</span><span style="color:#007020;font-weight:bold">typename</span> T<span style="color:#666">&gt;</span>
+<span style="color:#902000">void</span> buildHeap(T <span style="color:#666">*</span>array, size_t size) {
+	<span style="color:#007020;font-weight:bold">for</span> (size_t i<span style="color:#666">=</span>size<span style="color:#666">/</span><span style="color:#40a070">2</span>; i<span style="color:#666">&gt;</span><span style="color:#40a070">0</span>; <span style="color:#666">--</span>i) {
+		checkRootNode(array, i, size);
+	}
+}
+
+<span style="color:#007020;font-weight:bold">template</span> <span style="color:#666">&lt;</span><span style="color:#007020;font-weight:bold">typename</span> T<span style="color:#666">&gt;</span>
+<span style="color:#902000">void</span> heapSort(T <span style="color:#666">*</span>array, size_t size) {
+	<span style="color:#007020;font-weight:bold">while</span> (size <span style="color:#666">&gt;</span> <span style="color:#40a070">1</span>) {
+		std<span style="color:#666">::</span>swap(array[<span style="color:#40a070">1</span>], array[size<span style="color:#666">-</span><span style="color:#40a070">1</span>]);
+		checkRootNode(array, <span style="color:#40a070">1</span>, <span style="color:#666">--</span>size);
+	}
+}
+
+<span style="color:#007020;font-weight:bold">template</span> <span style="color:#666">&lt;</span><span style="color:#007020;font-weight:bold">typename</span> T<span style="color:#666">&gt;</span>
+<span style="color:#902000">void</span> printArray(T <span style="color:#666">*</span>array, size_t size) {
+	<span style="color:#007020;font-weight:bold">for</span> (size_t i<span style="color:#666">=</span><span style="color:#40a070">1</span>; i <span style="color:#666">&lt;</span> size; <span style="color:#666">++</span>i) {
+		std<span style="color:#666">::</span>cout <span style="color:#666">&lt;&lt;</span> array[i] <span style="color:#666">&lt;&lt;</span> <span style="color:#4070a0">&#39; &#39;</span>;
+	}
+	std<span style="color:#666">::</span>cout <span style="color:#666">&lt;&lt;</span> std<span style="color:#666">::</span>endl;
+}
+
+<span style="color:#902000">int</span> <span style="color:#06287e">main</span>(<span style="color:#902000">void</span>) {
+	size_t size <span style="color:#666">=</span> <span style="color:#40a070">23</span>;
+	<span style="color:#902000">int</span> <span style="color:#666">*</span>array <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">new</span> <span style="color:#902000">int</span>[size<span style="color:#666">+</span><span style="color:#40a070">1</span>];
+
+	<span style="color:#007020;font-weight:bold">for</span> (<span style="color:#902000">int</span> i<span style="color:#666">=</span><span style="color:#40a070">1</span>; i<span style="color:#666">&lt;</span>size<span style="color:#666">+</span><span style="color:#40a070">1</span>; <span style="color:#666">++</span>i) {
+		array[i] <span style="color:#666">=</span> (<span style="color:#40a070">100.0</span><span style="color:#666">*</span>rand())<span style="color:#666">/</span>RAND_MAX;
+	}
+
+	printArray(array, size);
+	buildHeap(array, size);
+	heapSort(array, size);
+	printArray(array, size);
+
+	<span style="color:#007020;font-weight:bold">delete</span> [] array;
+
+	<span style="color:#007020;font-weight:bold">return</span> <span style="color:#40a070">0</span>;
+}
+</code></pre></div><p>Results:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#666">[</span>kenarius@cudasus<span style="color:#666">]</span>$ g++ heapsort.cpp
+<span style="color:#666">[</span>kenarius@cudasus<span style="color:#666">]</span>$ ./a.out
+<span style="color:#40a070">84</span> <span style="color:#40a070">39</span> <span style="color:#40a070">78</span> <span style="color:#40a070">79</span> <span style="color:#40a070">91</span> <span style="color:#40a070">19</span> <span style="color:#40a070">33</span> <span style="color:#40a070">76</span> <span style="color:#40a070">27</span> <span style="color:#40a070">55</span> <span style="color:#40a070">47</span> <span style="color:#40a070">62</span> <span style="color:#40a070">36</span> <span style="color:#40a070">51</span> <span style="color:#40a070">95</span> <span style="color:#40a070">91</span> <span style="color:#40a070">63</span> <span style="color:#40a070">71</span> <span style="color:#40a070">14</span> <span style="color:#40a070">60</span> <span style="color:#40a070">1</span> <span style="color:#40a070">24</span>
+<span style="color:#40a070">1</span> <span style="color:#40a070">14</span> <span style="color:#40a070">19</span> <span style="color:#40a070">24</span> <span style="color:#40a070">27</span> <span style="color:#40a070">33</span> <span style="color:#40a070">36</span> <span style="color:#40a070">39</span> <span style="color:#40a070">47</span> <span style="color:#40a070">51</span> <span style="color:#40a070">55</span> <span style="color:#40a070">60</span> <span style="color:#40a070">62</span> <span style="color:#40a070">63</span> <span style="color:#40a070">71</span> <span style="color:#40a070">76</span> <span style="color:#40a070">78</span> <span style="color:#40a070">79</span> <span style="color:#40a070">84</span> <span style="color:#40a070">91</span> <span style="color:#40a070">91</span> <span style="color:#40a070">95</span>
+</code></pre></div>
+		</div>
+		
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/cpp/" rel="tag">cpp</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/heapsort/" rel="tag">heapsort</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/howto/" rel="tag">howto</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/snippet/" rel="tag">snippet</a></li>
+	</ul>
+</div>
+	</article>
+</main>
+
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/blog/2013/11/02/set-application-version-in-gengetopt-config-based-on-mercurial-revision/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Set application version in gengetopt config based on Mercurial revision</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/blog/2013/11/07/randomized-quicksort-implementation-in-c-/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">Randomized quicksort implementation in C&#43;&#43;</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 Kenarius Octonotes.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script> <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { id:22777879, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</body>
+</html>

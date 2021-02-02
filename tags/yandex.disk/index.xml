@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>yandex.disk on Kenarius Octonotes</title>
+    <link>https://bikulov.org/tags/yandex.disk/</link>
+    <description>Recent content in yandex.disk on Kenarius Octonotes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 13 Feb 2014 10:00:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/yandex.disk/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Research Papers Management With Zotero and Yandex.Disk</title>
+      <link>https://bikulov.org/blog/2014/02/13/research-papers-management-with-zotero-and-yandex.disk/</link>
+      <pubDate>Thu, 13 Feb 2014 10:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2014/02/13/research-papers-management-with-zotero-and-yandex.disk/</guid>
+      <description>&lt;p&gt;Zotero is an open source plugin for Firefox for managing research papers collections. You can use online zotero storage (pretty small) or use third-party sync application. I use Yandex Disk for this purpose: 10 Gb it quite enough for a moderate research library. zotero can automatically fetch article metadata (author, year, etc) from the web (like Mendeley and similar software do).&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Daily backups (files &#43; mysql) to yandex.disk in Ubuntu 12.04</title>
+      <link>https://bikulov.org/blog/2012/08/30/daily-backups-files-mysql-to-yandex.disk-in-ubuntu-12.04/</link>
+      <pubDate>Thu, 30 Aug 2012 09:30:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2012/08/30/daily-backups-files-mysql-to-yandex.disk-in-ubuntu-12.04/</guid>
+      <description>&lt;p&gt;We all do backups. This note is about doing them on Ubuntu 12.04.&lt;/p&gt;
+&lt;p&gt;Tasks:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;archive important folders&lt;/li&gt;
+&lt;li&gt;dump mysql databases&lt;/li&gt;
+&lt;li&gt;upload all to yandex.disk (online web storage with 10GB space)&lt;/li&gt;
+&lt;li&gt;delete old backups&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I’ll save only backups for last five days.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

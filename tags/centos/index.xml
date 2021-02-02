@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>centos on Kenarius Octonotes</title>
+    <link>https://bikulov.org/tags/centos/</link>
+    <description>Recent content in centos on Kenarius Octonotes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 10 Aug 2013 09:14:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/centos/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Enable tun for OpenVZ Ubuntu 12.04 containers in CentOS 6.4</title>
+      <link>https://bikulov.org/blog/2013/08/10/enable-tun-for-openvz-ubuntu-12.04-containers-in-centos-6.4/</link>
+      <pubDate>Sat, 10 Aug 2013 09:14:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/08/10/enable-tun-for-openvz-ubuntu-12.04-containers-in-centos-6.4/</guid>
+      <description>&lt;p&gt;To enable tun device in OpenVZ containers tun module&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;needs to be loaded in the host system (in my case CentOS 6.4)&lt;/li&gt;
+&lt;li&gt;containter (in my case Ubuntu Server 12.04) must be allowed to use tun&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>Configuring Ubuntu 12.04 in OpenVZ on CentOS 6.4</title>
+      <link>https://bikulov.org/blog/2013/08/08/configuring-ubuntu-12.04-in-openvz-on-centos-6.4/</link>
+      <pubDate>Thu, 08 Aug 2013 20:54:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/08/08/configuring-ubuntu-12.04-in-openvz-on-centos-6.4/</guid>
+      <description>&lt;p&gt;This howto is based on two sources: &lt;a href=&#34;http://openvz.org/Quick_Installation_CentOS_6&#34;&gt;Official wiki&lt;/a&gt; and Amutu blog &lt;a href=&#34;http://amutu.com/blog/2013/03/centos_bridge_devic/&#34;&gt;entry&lt;/a&gt;. In short, the main difficulty is in bridge network configuration: correct network configuration doesn&amp;rsquo;t work in CentOS 6.4 while NetworkManager is running. I compiled official documentation and fix found in Amutu blog here in one entry.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

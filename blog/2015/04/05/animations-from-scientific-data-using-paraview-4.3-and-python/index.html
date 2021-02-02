@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="yandex-verification" content="761bc4bf6044da39" />
+	<title>Animations from scientific data using Paraview 4.3 and python - Kenarius Octonotes</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.80.0" />
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		 <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="Kenarius Octonotes" rel="home">
+				<div class="logo__title">Kenarius Octonotes</div>
+				<div class="logo__tagline">Static notes about information technologies</div>
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">Home</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/resume">Resume</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Animations from scientific data using Paraview 4.3 and python</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2015-04-05T16:31:00">2015-04-05</time>
+</div>
+</div>
+		</header><div class="content post__content clearfix">
+			<h3 id="create-frames">Create frames</h3>
+<p>This note describes usage of Paraview 4.3 (contrary to previous <a href="/blog/2014/11/15/create-video-illustrations-from-numerical-experiments-data-with-paraview-and-python-2/">note</a> with Paraview before 4.1). Some changes were made:</p>
+<ul>
+<li>command line arguments were added to make code more reusable</li>
+<li>it works with Paraview extracted from the archive (4.3.1)</li>
+<li>white background must be specified manually (<code>SetViewProperties(view, Background = [1, 1, 1])</code> in the code)</li>
+</ul>
+<p>Script is tested under Ubuntu 14.04 with Paraview 4.3.1. Paraview was downloaded from official <a href="http://www.paraview.org/download/">site</a> and extracted to <code>/home/bikulov/bin/ParaView-4.3.1-Linux-64bit/lib/paraview-4.3</code> (you have to change this line in script to your destination). State file must be prepared in the same Paraview 4.3.1 to avoid compatibility issues (or you may have errors about <code>ColorArrayName</code>).</p>
+<p>Script (also available as a <a href="https://gist.github.com/bikulov/60ab87063ca6a1ae1bf2">gist</a>):</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#60a0b0;font-style:italic">#!/usr/bin/env python</span>
+
+<span style="color:#007020;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">os</span><span style="color:#666">,</span> <span style="color:#0e84b5;font-weight:bold">sys</span>
+<span style="color:#007020;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">glob</span><span style="color:#666">,</span> <span style="color:#0e84b5;font-weight:bold">natsort</span><span style="color:#666">,</span> <span style="color:#0e84b5;font-weight:bold">argparse</span>
+
+ParaviewPath<span style="color:#666">=</span><span style="color:#4070a0">&#34;/home/bikulov/bin/ParaView-4.3.1-Linux-64bit/lib/paraview-4.3&#34;</span>
+<span style="color:#007020;font-weight:bold">print</span>(<span style="color:#4070a0">&#34;export LD_LIBRARY_PATH={ParaviewPath}:$LD_LIBRARY_PATH&#34;</span><span style="color:#666">.</span>format(ParaviewPath<span style="color:#666">=</span>ParaviewPath))
+
+sys<span style="color:#666">.</span>path<span style="color:#666">.</span>append(os<span style="color:#666">.</span>path<span style="color:#666">.</span>join(ParaviewPath, <span style="color:#4070a0">&#34;site-packages&#34;</span>))
+sys<span style="color:#666">.</span>path<span style="color:#666">.</span>append(os<span style="color:#666">.</span>path<span style="color:#666">.</span>join(ParaviewPath, <span style="color:#4070a0">&#34;site-packages/vtk&#34;</span>))
+<span style="color:#007020;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">paraview.simple</span> <span style="color:#007020;font-weight:bold">import</span> <span style="color:#666">*</span>
+
+<span style="color:#007020;font-weight:bold">def</span> <span style="color:#06287e">main</span>(pipeline, state, files, output):
+    filenames <span style="color:#666">=</span> natsort<span style="color:#666">.</span>natsorted(files)
+    servermanager<span style="color:#666">.</span>LoadState(state)
+    view <span style="color:#666">=</span> servermanager<span style="color:#666">.</span>GetRenderView()
+    camera <span style="color:#666">=</span> view<span style="color:#666">.</span>GetActiveCamera()
+    phase <span style="color:#666">=</span> FindSource(pipeline)
+
+    <span style="color:#60a0b0;font-style:italic"># Set white background</span>
+    SetViewProperties(view, Background <span style="color:#666">=</span> [<span style="color:#40a070">1</span>, <span style="color:#40a070">1</span>, <span style="color:#40a070">1</span>])
+
+    <span style="color:#007020;font-weight:bold">try</span>:
+         os<span style="color:#666">.</span>makedirs(output)
+    <span style="color:#007020;font-weight:bold">except</span>:
+        <span style="color:#007020;font-weight:bold">pass</span>
+
+    imgNum <span style="color:#666">=</span> <span style="color:#40a070">0</span>
+
+    <span style="color:#007020;font-weight:bold">for</span> f <span style="color:#007020;font-weight:bold">in</span> filenames:
+        phase<span style="color:#666">.</span>FilePrefix <span style="color:#666">=</span> f
+        phase<span style="color:#666">.</span>FileNameChanged()
+        view<span style="color:#666">.</span>WriteImage(os<span style="color:#666">.</span>path<span style="color:#666">.</span>join(output, <span style="color:#007020">str</span>(imgNum)<span style="color:#666">.</span>zfill(<span style="color:#40a070">6</span>) <span style="color:#666">+</span> <span style="color:#4070a0">&#34;.png&#34;</span>), <span style="color:#4070a0">&#34;vtkPNGWriter&#34;</span>, <span style="color:#40a070">1</span>)
+        imgNum <span style="color:#666">+=</span> <span style="color:#40a070">1</span>
+
+<span style="color:#007020;font-weight:bold">if</span> __name__ <span style="color:#666">==</span> <span style="color:#4070a0">&#34;__main__&#34;</span>:
+    parser <span style="color:#666">=</span> argparse<span style="color:#666">.</span>ArgumentParser(prog<span style="color:#666">=</span><span style="color:#4070a0">&#34;PROG&#34;</span>, description<span style="color:#666">=</span><span style="color:#4070a0">&#34;Draw With Paraview&#34;</span>)
+    parser<span style="color:#666">.</span>add_argument(<span style="color:#4070a0">&#34;--state&#34;</span>, <span style="color:#007020">type</span><span style="color:#666">=</span><span style="color:#007020">str</span>, help<span style="color:#666">=</span><span style="color:#4070a0">&#34;State file to load&#34;</span>, default<span style="color:#666">=</span><span style="color:#4070a0">&#34;state.pvsm&#34;</span>)
+    parser<span style="color:#666">.</span>add_argument(<span style="color:#4070a0">&#34;--pipeline&#34;</span>, <span style="color:#007020">type</span><span style="color:#666">=</span><span style="color:#007020">str</span>, help<span style="color:#666">=</span><span style="color:#4070a0">&#34;Pipiline name for changing file&#34;</span>, default<span style="color:#666">=</span><span style="color:#4070a0">&#34;data&#34;</span>)
+    parser<span style="color:#666">.</span>add_argument(<span style="color:#4070a0">&#34;--output&#34;</span>, <span style="color:#007020">type</span><span style="color:#666">=</span><span style="color:#007020">str</span>, help<span style="color:#666">=</span><span style="color:#4070a0">&#34;Output path for images&#34;</span>, default<span style="color:#666">=</span><span style="color:#4070a0">&#34;img&#34;</span>)
+    parser<span style="color:#666">.</span>add_argument(<span style="color:#4070a0">&#34;files&#34;</span>, nargs<span style="color:#666">=</span><span style="color:#4070a0">&#34;*&#34;</span>, help<span style="color:#666">=</span><span style="color:#4070a0">&#34;Files to be used in the pipeline&#34;</span>)
+
+    args <span style="color:#666">=</span> parser<span style="color:#666">.</span>parse_args()
+
+    main(pipeline<span style="color:#666">=</span>args<span style="color:#666">.</span>pipeline, state<span style="color:#666">=</span>args<span style="color:#666">.</span>state, files<span style="color:#666">=</span>args<span style="color:#666">.</span>files, output<span style="color:#666">=</span>args<span style="color:#666">.</span>output)
+</code></pre></div><p>Command line arguments explanation:</p>
+<ul>
+<li><code>--state</code> is filename with state to be loaded (<code>File-&gt;Save State in Paraview</code>)</li>
+<li><code>--pipeline</code> is the name of pipeline inside state (item in <code>Pipeline browser</code>, for which you want to change <code>File Prefix</code>)</li>
+<li><code>--output</code> is path to dir where images will be saved</li>
+<li>files are bunch of raw binary images you whant to visualize as video</li>
+</ul>
+<p>Example run (will process all <code>*-phase.raw</code> files in directory and save resulting images into <code>imgtest</code> directory):</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">./draw_with_paraview.py --state state.pvsm --pipeline data --output imgtest *-phase.raw
+</code></pre></div><p>Note: you must add path to paraview libraries in <code>LD_LIBRARY_PATH</code> before run (script prints out this line for convenience):</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007020">export</span> <span style="color:#bb60d5">LD_LIBRARY_PATH</span><span style="color:#666">=</span>/home/bikulov/bin/ParaView-4.3.1-Linux-64bit/lib/paraview-4.3:<span style="color:#bb60d5">$LD_LIBRARY_PATH</span>
+</code></pre></div><h3 id="postprocess-frames">Postprocess frames</h3>
+<p>You may want to crop images in the output folder. For mp4 width and height must be divisible by two, so you may need to <a href="http://www.alecjacobson.com/weblog/?p=2872">crop</a> for identify them accordingly (in <a href="http://superuser.com/questions/745523/how-can-i-run-mogrify-over-the-3-million-jpg-files">parallel</a> for speed):</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#bb60d5">img</span><span style="color:#666">=</span><span style="color:#007020;font-weight:bold">$(</span>ls *.png|head -n 1<span style="color:#007020;font-weight:bold">)</span>
+<span style="color:#bb60d5">width</span><span style="color:#666">=</span><span style="color:#007020;font-weight:bold">$(($(</span>identify -format <span style="color:#4070a0">&#34;(%[fx:w]/2)*2&#34;</span> <span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">img</span><span style="color:#70a0d0;font-style:italic">}</span><span style="color:#007020;font-weight:bold">)))</span>
+<span style="color:#bb60d5">height</span><span style="color:#666">=</span><span style="color:#007020;font-weight:bold">$(($(</span>identify -format <span style="color:#4070a0">&#34;(%[fx:h]/2)*2&#34;</span> <span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">img</span><span style="color:#70a0d0;font-style:italic">}</span><span style="color:#007020;font-weight:bold">)))</span>
+find -name <span style="color:#4070a0">&#39;*.png&#39;</span> -exec mogrify -crop <span style="color:#4070a0">&#34;</span><span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">width</span><span style="color:#70a0d0;font-style:italic">}</span><span style="color:#4070a0">x</span><span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">height</span><span style="color:#70a0d0;font-style:italic">}</span><span style="color:#4070a0">+0+0&#34;</span> <span style="color:#666">{}</span> +
+</code></pre></div><p>Or the same commands in one line:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#bb60d5">img</span><span style="color:#666">=</span><span style="color:#007020;font-weight:bold">$(</span>ls *.png|head -n 1<span style="color:#007020;font-weight:bold">)</span>; <span style="color:#bb60d5">width</span><span style="color:#666">=</span><span style="color:#007020;font-weight:bold">$(($(</span>identify -format <span style="color:#4070a0">&#34;(%[fx:w]/2)*2&#34;</span> <span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">img</span><span style="color:#70a0d0;font-style:italic">}</span><span style="color:#007020;font-weight:bold">)))</span>; <span style="color:#bb60d5">height</span><span style="color:#666">=</span><span style="color:#007020;font-weight:bold">$(($(</span>identify -format <span style="color:#4070a0">&#34;(%[fx:h]/2)*2&#34;</span> <span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">img</span><span style="color:#70a0d0;font-style:italic">}</span><span style="color:#007020;font-weight:bold">)))</span>; find -name <span style="color:#4070a0">&#39;*.png&#39;</span> -exec mogrify -crop <span style="color:#4070a0">&#34;</span><span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">width</span><span style="color:#70a0d0;font-style:italic">}</span><span style="color:#4070a0">x</span><span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">height</span><span style="color:#70a0d0;font-style:italic">}</span><span style="color:#4070a0">+0+0&#34;</span> <span style="color:#666">{}</span> +
+</code></pre></div><p>You may also need to crop images to some specific size, just use the final line:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">find -name <span style="color:#4070a0">&#39;*.png&#39;</span> -exec mogrify -crop &lt;width&gt;x&lt;height&gt;+&lt;x_shift&gt;+&lt;y_shift&gt; <span style="color:#666">{}</span> +
+</code></pre></div><h3 id="create-animation-from-the-frames">Create animation from the frames</h3>
+<p>Create video from images (<a href="http://bikulov.org/blog/2013/01/23/universal-screen-capturing-with-scrot-imagemagick-and/">ffmpeg</a> no longer supported, so use avconv):</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">avconf -qscale <span style="color:#40a070">1</span> -r <span style="color:#40a070">20</span> -b <span style="color:#40a070">9600</span> -i %06d.png output_file.mp4
+</code></pre></div>
+		</div>
+		
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/paraview/" rel="tag">paraview</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/python/" rel="tag">python</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/ubuntu/" rel="tag">ubuntu</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/howto/" rel="tag">howto</a></li>
+	</ul>
+</div>
+	</article>
+</main>
+
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/blog/2015/02/28/install-cuda-6.5-on-clean-ubuntu-14.04/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Install CUDA 6.5 on clean Ubuntu 14.04</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/blog/2015/09/26/scan-images-from-command-line-in-linux/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">Scan images from command line in Linux</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 Kenarius Octonotes.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script> <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { id:22777879, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</body>
+</html>

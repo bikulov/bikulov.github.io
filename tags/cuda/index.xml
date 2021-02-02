@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>cuda on Kenarius Octonotes</title>
+    <link>https://bikulov.org/tags/cuda/</link>
+    <description>Recent content in cuda on Kenarius Octonotes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 28 Feb 2015 08:54:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/cuda/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Install CUDA 6.5 on clean Ubuntu 14.04</title>
+      <link>https://bikulov.org/blog/2015/02/28/install-cuda-6.5-on-clean-ubuntu-14.04/</link>
+      <pubDate>Sat, 28 Feb 2015 08:54:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2015/02/28/install-cuda-6.5-on-clean-ubuntu-14.04/</guid>
+      <description>&lt;p&gt;Lately NVIDIA added repository for Ubuntu 12.04 and Ubuntu 14.04. Recently I hit problem with missing dependencies for &lt;code&gt;libcheese-gtk23&lt;/code&gt; and &lt;code&gt;libcheese7&lt;/code&gt; libraries while installing latest CUDA 6.5 on clean Ubuntu 14.04. Remedy to this can be found on &lt;a href=&#34;http://askubuntu.com/questions/587977/unmet-dependences-when-install-cuda-6-5-on-a-freshly-installed-ubuntu-14-04&#34;&gt;askubuntu&lt;/a&gt;. So, the complete set of commands is below.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Example of CMake file for CUDA&#43;CPP code</title>
+      <link>https://bikulov.org/blog/2013/12/24/example-of-cmake-file-for-cuda-cpp-code/</link>
+      <pubDate>Tue, 24 Dec 2013 22:44:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/12/24/example-of-cmake-file-for-cuda-cpp-code/</guid>
+      <description>&lt;p&gt;Makefiles are quite straightforward and easy to write (in reasonable situations). But GNU Make is not crossplafrom. CMake is cross-platform, cross-application (it can generate projects for different IDEs and Makefile itself).&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Using CUDA C&#43;&#43; functions in Python via `*.so` and ctypes</title>
+      <link>https://bikulov.org/blog/2013/10/01/using-cuda-c-functions-in-python-via-.so-and-ctypes/</link>
+      <pubDate>Tue, 01 Oct 2013 08:33:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/10/01/using-cuda-c-functions-in-python-via-.so-and-ctypes/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;d like to show how to use HPC part written on C++ with CUDA in Python code. So, every heavy part may be done on GPU with CUDA, all gluing tasks (with beautiful matplotlib plots) are done on CPU with Python.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>CudaSafeCall application snippet</title>
+      <link>https://bikulov.org/blog/2013/08/16/cudasafecall-application-snippet/</link>
+      <pubDate>Fri, 16 Aug 2013 12:14:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/08/16/cudasafecall-application-snippet/</guid>
+      <description>&lt;p&gt;It is a good tone to check CUDA API errors while calling cudaMalloc() and other functions. It also helps to find floating bugs caused by hardware (lack of memory, etc). I provide below an adapted version of CudaSafeCall I found many weeks ago in the &lt;a href=&#34;http://choorucode.com/2011/03/02/cuda-error-checking/&#34;&gt;Internet&lt;/a&gt;. Simply remove &lt;code&gt;#define CUDA_ERROR_CHECK&lt;/code&gt; in production if unneeded.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

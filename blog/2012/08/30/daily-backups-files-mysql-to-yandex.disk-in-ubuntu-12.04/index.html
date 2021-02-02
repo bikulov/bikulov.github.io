@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="yandex-verification" content="761bc4bf6044da39" />
+	<title>Daily backups (files &#43; mysql) to yandex.disk in Ubuntu 12.04 - Kenarius Octonotes</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.80.0" />
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		 <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="Kenarius Octonotes" rel="home">
+				<div class="logo__title">Kenarius Octonotes</div>
+				<div class="logo__tagline">Static notes about information technologies</div>
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">Home</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/resume">Resume</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Daily backups (files &#43; mysql) to yandex.disk in Ubuntu 12.04</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2012-08-30T09:30:00">2012-08-30</time>
+</div>
+</div>
+		</header><div class="content post__content clearfix">
+			<p>We all do backups. This note is about doing them on Ubuntu 12.04.</p>
+<p>Tasks:</p>
+<ul>
+<li>archive important folders</li>
+<li>dump mysql databases</li>
+<li>upload all to yandex.disk (online web storage with 10GB space)</li>
+<li>delete old backups</li>
+</ul>
+<p>I’ll save only backups for last five days.</p>
+<h2 id="archiving">Archiving</h2>
+<p>There are many different backup tools, see wiki list. I’ve chosen DAR.</p>
+<p>One can install it in Ubuntu 12.04 by typing</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#60a0b0;font-style:italic"># apt-get install dar</span>
+</code></pre></div><p>It is a console utility and it can be confusing for beginner. Here is great short how-to with explanations.</p>
+<p>I will perform full backups every day. For incremental ones read manual.</p>
+<p>I need to backup <code>/srv</code> folder, so my command is:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">dar -m <span style="color:#40a070">256</span> -z -s 600M -D -R /srv -c <span style="color:#4070a0">`</span>date -I<span style="color:#4070a0">`</span>_data -Z <span style="color:#4070a0">&#34;*.gz&#34;</span> -Z <span style="color:#4070a0">&#34;*.bz2&#34;</span> -Z <span style="color:#4070a0">&#34;*.zip&#34;</span> -Z <span style="color:#4070a0">&#34;*.png&#34;</span>
+</code></pre></div><p>It creates file currentdate_data.X.dar, for example 2012-08-30_data.1.dar, with a backup. If archive is bigger than 600M (-s 600M), it splits in two slices. <code>X</code> in the filename represents slice number. For the full description read how-to.</p>
+<h2 id="dumping-mysql">Dumping MySQL</h2>
+<p>Dumping MySQL is performed by mysqldump utility. You can list your databases in MySQL by entering into console with</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-mysql" data-lang="mysql">mysql <span style="color:#666">-</span>uroot <span style="color:#666">-</span>ppassword
+</code></pre></div><p>and type there</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-mysql" data-lang="mysql"><span style="color:#007020;font-weight:bold">SHOW</span> <span style="color:#007020;font-weight:bold">DATABASES</span>;
+</code></pre></div><p>I have drupal database I want to backup. So, I type:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mysqldump -u root -ppassword drupal &gt; <span style="color:#4070a0">`</span>date -I<span style="color:#4070a0">`</span>_drupal.mysqldump
+</code></pre></div><p>It creates file with all necessary stuff to create the same table from nothing.</p>
+<h2 id="uploading">Uploading</h2>
+<p>Yandex.Disk can be accessed by WebDAV. Install vebdavfs2:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#60a0b0;font-style:italic"># apt-get install davfs2</span>
+</code></pre></div><p>Then edit /etc/davfs2/secrets. Just add line with address, login and password:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">https://webdav.yandex.ru username@yandex.ru <span style="color:#4070a0">&#34;userpass&#34;</span>
+</code></pre></div><p>Now you cat mount yandex.disk as an ordinary drive to folder /mount/yandex:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mount -t davfs https://webdav.yandex.ru /media/yandex
+</code></pre></div><p>Now it is possible to store backups in cloud.</p>
+<p>Old files can be removed by:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">rm <span style="color:#4070a0">`</span>ls *.dar | head -n -5<span style="color:#4070a0">`</span>
+</code></pre></div><p>It leaves only last five backups.</p>
+<h2 id="adding-to-cron">Adding to cron</h2>
+<p>All commands from above in one script backup.sh:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007020">#!/bin/bash
+</span><span style="color:#007020"></span>mount -t davfs https://webdav.yandex.ru /media/yandex
+<span style="color:#007020">cd</span> /media/yandex/cudacer
+dar -m <span style="color:#40a070">256</span> -z -s 600M -D -R /srv -c <span style="color:#4070a0">`</span>date -I<span style="color:#4070a0">`</span>_data -Z <span style="color:#4070a0">&#34;*.gz&#34;</span> -Z <span style="color:#4070a0">&#34;*.bz2&#34;</span> -Z <span style="color:#4070a0">&#34;*.zip&#34;</span> -Z <span style="color:#4070a0">&#34;*.png&#34;</span>
+rm <span style="color:#4070a0">`</span>ls *.dar | head -n -5<span style="color:#4070a0">`</span>
+mysqldump -u root -p&lt;password&gt; &lt;dbname&gt;l &gt; <span style="color:#4070a0">`</span>date -I<span style="color:#4070a0">`</span>_drupal.mysqldump
+rm <span style="color:#4070a0">`</span>ls *.mysqldump | head -n -5<span style="color:#4070a0">`</span>
+</code></pre></div><p>Run it every day at 1am. Open cron tasks</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#60a0b0;font-style:italic"># crontab -e</span>
+</code></pre></div><p>and paste there line:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"> <span style="color:#40a070">0</span> <span style="color:#40a070">1</span> * * * /home/kenarius/backup.sh
+</code></pre></div><p>Now you have backups.</p>
+		</div>
+		
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/backup/" rel="tag">backup</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/ubuntu/" rel="tag">ubuntu</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/yandex.disk/" rel="tag">yandex.disk</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/server/" rel="tag">server</a></li>
+	</ul>
+</div>
+	</article>
+</main>
+
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/blog/2012/08/24/fixing-missing-icons-in-pcmanfm/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Fixing missing icons in PCManFM</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/blog/2012/10/25/awk-a-powerful-tool-for-programmer/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">AWK: a powerful tool for programmer</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 Kenarius Octonotes.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script> <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { id:22777879, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</body>
+</html>

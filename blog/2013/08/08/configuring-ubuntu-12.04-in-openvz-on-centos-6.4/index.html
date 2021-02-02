@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="yandex-verification" content="761bc4bf6044da39" />
+	<title>Configuring Ubuntu 12.04 in OpenVZ on CentOS 6.4 - Kenarius Octonotes</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.80.0" />
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		 <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="Kenarius Octonotes" rel="home">
+				<div class="logo__title">Kenarius Octonotes</div>
+				<div class="logo__tagline">Static notes about information technologies</div>
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">Home</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/resume">Resume</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Configuring Ubuntu 12.04 in OpenVZ on CentOS 6.4</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2013-08-08T20:54:00">2013-08-08</time>
+</div>
+</div>
+		</header><div class="content post__content clearfix">
+			<p>This howto is based on two sources: <a href="http://openvz.org/Quick_Installation_CentOS_6">Official wiki</a> and Amutu blog <a href="http://amutu.com/blog/2013/03/centos_bridge_devic/">entry</a>. In short, the main difficulty is in bridge network configuration: correct network configuration doesn&rsquo;t work in CentOS 6.4 while NetworkManager is running. I compiled official documentation and fix found in Amutu blog here in one entry.</p>
+<p>I assume you have clean installed CentOS. I tried all on x32 hardware, so you may need to fix container type in container creation section if you use x64 CentOS. All commands below need to be issued as root.</p>
+<h2 id="installation-of-openvz">Installation of OpenVZ</h2>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">wget -O /etc/yum.repos.d/openvz.repo http://download.openvz.org/openvz.repo
+rpm --import http://download.openvz.org/RPM-GPG-Key-OpenVZ
+yum install vzkernel vzctl vzquota
+</code></pre></div><p>Add next two lines at the end of <code>sysctl.conf</code>:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#60a0b0;font-style:italic"># vim /etc/sysctl.conf</span>
+net.ipv4.icmp_echo_ignore_broadcasts<span style="color:#666">=</span><span style="color:#40a070">1</span>
+net.ipv4.conf.default.forwarding<span style="color:#666">=</span><span style="color:#40a070">1</span>
+</code></pre></div><p>Create bridge device (edit file <code>ifcfg-vmbr0</code>):</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#60a0b0;font-style:italic"># vim /etc/sysconfig/network-scripts/ifcfg-vmbr0</span>
+<span style="color:#bb60d5">DEVICE</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;vmbr0&#34;</span>
+<span style="color:#bb60d5">BOOTPROTO</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;static&#34;</span>
+<span style="color:#bb60d5">IPV6INIT</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;no&#34;</span>
+<span style="color:#bb60d5">ONBOOT</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;yes&#34;</span>
+<span style="color:#bb60d5">TYPE</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;Bridge&#34;</span>
+<span style="color:#bb60d5">DELAY</span><span style="color:#666">=</span><span style="color:#40a070">0</span>
+<span style="color:#bb60d5">IPADDR</span><span style="color:#666">=[</span>your host ip<span style="color:#666">]</span>
+<span style="color:#bb60d5">NETMASK</span><span style="color:#666">=</span>255.255.255.0
+<span style="color:#bb60d5">GATEWAY</span><span style="color:#666">=[</span>your gateway<span style="color:#666">]</span>
+</code></pre></div><p>Connect bridge to ethernet device (in my case it is <code>eth0</code>, so edit <code>ifcfg-eth0</code>):</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#60a0b0;font-style:italic"># vim /etc/sysconfig/network-scripts/ifcfg-eth0</span>
+<span style="color:#bb60d5">DEVICE</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;eth0&#34;</span>
+<span style="color:#bb60d5">ONBOOT</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;yes&#34;</span>
+<span style="color:#bb60d5">IPV6INIT</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;no&#34;</span>
+<span style="color:#bb60d5">TYPE</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;Ethernet&#34;</span>
+<span style="color:#bb60d5">BRIDGE</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;vmbr0&#34;</span>
+</code></pre></div><p>Allowing automated configuration of bridge for containers in <code>vznet.conf</code>:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#60a0b0;font-style:italic"># vim /etc/vz/vznet.conf</span>
+<span style="color:#60a0b0;font-style:italic">#!/bin/bash</span>
+<span style="color:#bb60d5">EXTERNAL_SCRIPT</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;/usr/sbin/vznetaddbr&#34;</span>
+</code></pre></div><h2 id="fixing-networkmanager-issue">Fixing NetworkManager issue</h2>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">chkconfig NetworkManager off
+chkconfig --levels <span style="color:#40a070">35</span> network on
+service NetworkManager stop
+service network restart
+</code></pre></div><p>Reboot OpenVZ host system.</p>
+<h2 id="creation-of-container-with-bridged-connection">Creation of container with bridged connection</h2>
+<p>All commands below need to be issued as root. Create a container:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vzctl create <span style="color:#40a070">101</span> --ostemplate ubuntu-12.04-x86 --config vswap-1g
+</code></pre></div><p>Configure the container, type in terminal:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vzctl <span style="color:#007020">set</span> <span style="color:#40a070">101</span> --save --name container101
+vzctl <span style="color:#007020">set</span> <span style="color:#40a070">101</span> --save --onboot yes
+vzctl <span style="color:#007020">set</span> <span style="color:#40a070">101</span> --save --hostname container101.domain.com
+vzctl <span style="color:#007020">set</span> <span style="color:#40a070">101</span> --save --netif_add eth0,,,FE:FF:FF:FF:FF:FF
+vzctl <span style="color:#007020">set</span> <span style="color:#40a070">101</span> --save --searchdomain domain.com
+vzctl <span style="color:#007020">set</span> <span style="color:#40a070">101</span> --save --nameserver 8.8.8.8 --nameserver 8.8.4.4
+vzctl <span style="color:#007020">set</span> <span style="color:#40a070">101</span> --save --cpus <span style="color:#40a070">1</span>
+vzctl <span style="color:#007020">set</span> <span style="color:#40a070">101</span> --save --ram 1G
+vzctl <span style="color:#007020">set</span> <span style="color:#40a070">101</span> --save --swap 512M
+vzctl <span style="color:#007020">set</span> <span style="color:#40a070">101</span> --save --diskspace 10G
+vzctl start <span style="color:#40a070">101</span>
+vzctl <span style="color:#007020">exec</span> <span style="color:#40a070">101</span> passwd
+</code></pre></div><p>Official wiki recommends to use big MAC.</p>
+<p>To configure network in container, edit interfaces:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#60a0b0;font-style:italic"># vim /vz/root/101/etc/network/interfaces</span>
+auto lo eth0
+iface lo inet loopback
+iface eth0 inet static
+	address <span style="color:#666">[</span>your container ip<span style="color:#666">]</span>
+	netmask 255.255.255.0
+	gateway <span style="color:#666">[</span>your gateway<span style="color:#666">]</span>
+</code></pre></div><p>Enter container and reboot it:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vzctl enter <span style="color:#40a070">101</span>
+reboot
+</code></pre></div>
+		</div>
+		
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/server/" rel="tag">server</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/ubuntu/" rel="tag">ubuntu</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/openvz/" rel="tag">openvz</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/centos/" rel="tag">centos</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/howto/" rel="tag">howto</a></li>
+	</ul>
+</div>
+	</article>
+</main>
+
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/blog/2013/07/31/creating-zip-with-vpn-client-keys-and-configuration-files/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Creating Zip With VPN Client Keys and Configuration Files</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/blog/2013/08/10/enable-tun-for-openvz-ubuntu-12.04-containers-in-centos-6.4/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">Enable tun for OpenVZ Ubuntu 12.04 containers in CentOS 6.4</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 Kenarius Octonotes.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script> <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { id:22777879, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</body>
+</html>

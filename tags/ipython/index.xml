@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ipython on Kenarius Octonotes</title>
+    <link>https://bikulov.org/tags/ipython/</link>
+    <description>Recent content in ipython on Kenarius Octonotes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 07 Nov 2015 11:24:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/ipython/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Install Jupyter Notebook and Scientific Environment in Ubuntu 14.04 With Python 3</title>
+      <link>https://bikulov.org/blog/2015/11/07/install-jupyter-notebook-and-scientific-environment-in-ubuntu-14.04-with-python-3/</link>
+      <pubDate>Sat, 07 Nov 2015 11:24:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2015/11/07/install-jupyter-notebook-and-scientific-environment-in-ubuntu-14.04-with-python-3/</guid>
+      <description>&lt;p&gt;Several changes occured since my last &lt;a href=&#34;https://bikulov.org/blog/2014/05/14/install-up-to-date-scientific-environment-in-ubuntu-14-dot-04-with-python-3-dot-4/&#34;&gt;note&lt;/a&gt; about installing python scientific environment:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://ipython.org/notebook&#34;&gt;IPython Notebook&lt;/a&gt; was succeeded by &lt;a href=&#34;http://jupyter.org/&#34;&gt;Jupyter Notebook&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://stanford.edu/~mwaskom/software/seaborn/&#34;&gt;seaborn&lt;/a&gt; package is used for the pretty matplotlib plots&lt;/li&gt;
+&lt;li&gt;raw &lt;a href=&#34;https://virtualenv.readthedocs.org/en/latest/&#34;&gt;virtualenv&lt;/a&gt; was replaced by &lt;a href=&#34;https://virtualenvwrapper.readthedocs.org/en/latest/&#34;&gt;virtualenvwrapper&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;procedure of notebook profiles creation and edition has been changed&lt;/li&gt;
+&lt;li&gt;ipython &lt;a href=&#34;https://bugs.launchpad.net/ubuntu/+source/python3.4/+bug/1290847&#34;&gt;bug&lt;/a&gt; about pip in virtualenv is obsolete. But now another &lt;a href=&#34;https://github.com/matplotlib/matplotlib/issues/3029/&#34;&gt;workaround&lt;/a&gt; is needed for packahes installation&lt;/li&gt;
+&lt;li&gt;pip installation from &lt;a href=&#34;https://bootstrap.pypa.io/get-pip.py&#34;&gt;pypa&lt;/a&gt; is now one-liner&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="yandex-verification" content="761bc4bf6044da39" />
+	<title>AWK: a powerful tool for programmer - Kenarius Octonotes</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.80.0" />
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		 <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="Kenarius Octonotes" rel="home">
+				<div class="logo__title">Kenarius Octonotes</div>
+				<div class="logo__tagline">Static notes about information technologies</div>
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">Home</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/resume">Resume</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">AWK: a powerful tool for programmer</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2012-10-25T09:00:00">2012-10-25</time>
+</div>
+</div>
+		</header><div class="content post__content clearfix">
+			<p>AWK is an acronym of first letters of its authors (Aho, Weinberger and Kernighan). It is a data-manipulating scripting language with huge possibilities.  There are several implementations of it: awk is a canonical one, nawk (new awk), mawk (default in Ubuntu 12.04), gawk is GNU awk. I recommend latter one, because it works correct with unicode symbols in example:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ <span style="color:#007020">echo</span> юникод | gawk <span style="color:#4070a0">&#34;{res = toupper(\$1); print res;}&#34;</span>
+ЮНИКОД
+</code></pre></div><h3 id="basic-usage">Basic usage</h3>
+<p>Most useful feature is writing script files to be loaded in awk later. One can execute script file by</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">gawk <span style="color:#666">[</span>options<span style="color:#666">]</span> -f script_file.awk input_file
+</code></pre></div><p>If there is no input file awk will read standard input stream.</p>
+<p>Let’s take a look at an example. It reads input stream, writes down first argument to history, increases counter by 1 and prints &ldquo;”. Code of script.awk:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007020">#!/usr/bin/gawk -f
+</span><span style="color:#007020"></span><span style="color:#60a0b0;font-style:italic"># BEGIN block executes only once after running awk</span>
+BEGIN <span style="color:#666">{</span>
+    print <span style="color:#4070a0">&#34;\nBegin printing args\n&#34;</span>;
+    <span style="color:#bb60d5">i</span> <span style="color:#666">=</span> 0;
+<span style="color:#666">}</span>
+
+<span style="color:#60a0b0;font-style:italic"># Main block executes for every argument</span>
+<span style="color:#666">{</span>
+    i++;
+    history<span style="color:#666">[</span>i<span style="color:#666">]</span> <span style="color:#666">=</span> <span style="color:#bb60d5">$1</span>;
+    print i, <span style="color:#bb60d5">$1</span>;
+    <span style="color:#007020;font-weight:bold">if</span> <span style="color:#666">(</span><span style="color:#bb60d5">$1</span> <span style="color:#666">==</span> 0<span style="color:#666">)</span>
+        exit<span style="color:#666">(</span>0<span style="color:#666">)</span>;
+<span style="color:#666">}</span>
+
+<span style="color:#60a0b0;font-style:italic"># END block executes only once at finishing awk</span>
+END <span style="color:#666">{</span>
+    print <span style="color:#4070a0">&#34;\nArguments were: &#34;</span>;
+    <span style="color:#007020;font-weight:bold">for</span> <span style="color:#666">(</span><span style="color:#bb60d5">n</span><span style="color:#666">=</span>1; n&lt;<span style="color:#666">=</span>i; ++n<span style="color:#666">)</span>
+        print history<span style="color:#666">[</span>n<span style="color:#666">]</span>,<span style="color:#4070a0">&#34; &#34;</span>;
+    print <span style="color:#4070a0">&#34;\nEnd printing args\n&#34;</span>
+<span style="color:#666">}</span>
+</code></pre></div><p>Then, make script executable and run it:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#bb60d5">$chmod</span> +x ./script.awk
+$./script.awk
+</code></pre></div><p>Output will be like (&ldquo;one&rdquo;-enter, “cat&rdquo;-enter, “dog&quot;-enter, “0&quot;-enter):</p>
+<pre><code>Begin printing args
+
+one
+1 one
+cat
+2 cat
+dog
+3 dog
+0
+4 0
+
+Arguments were:
+one
+cat
+dog
+0
+
+End printing args
+</code></pre><p>Awk can be launched with script inline:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">gawk <span style="color:#666">[</span>options<span style="color:#666">]</span> <span style="color:#4070a0">&#39;&#39;</span>script_text<span style="color:#4070a0">&#39;&#39;</span> file<span style="color:#666">(</span>s<span style="color:#666">)</span>
+</code></pre></div><p>Example counts “block&quot; words in code listed above:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">awk <span style="color:#4070a0">&#34;BEGIN{blocks=0} /block/{blocks++} END{ print blocks}&#34;</span> script.awk
+</code></pre></div><p>Where <code>/regular expression/</code> controls whether block after it will be executed.</p>
+<h3 id="user-defined-functions">User-defined functions</h3>
+<p>In awk user-defined functions can be added as follows:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007020">#!/usr/bin/gawk -f
+</span><span style="color:#007020"></span>
+<span style="color:#60a0b0;font-style:italic"># returns sum of numbers</span>
+<span style="color:#007020;font-weight:bold">function</span> sum<span style="color:#666">(</span>a, b, c<span style="color:#666">)</span> <span style="color:#666">{</span>
+    <span style="color:#bb60d5">res</span> <span style="color:#666">=</span> a + b + c;
+
+    <span style="color:#007020;font-weight:bold">return</span> res;
+<span style="color:#666">}</span>
+
+<span style="color:#60a0b0;font-style:italic"># main program, for testing</span>
+<span style="color:#666">{</span>
+    print sum<span style="color:#666">(</span><span style="color:#bb60d5">$1</span>, <span style="color:#bb60d5">$2</span>, <span style="color:#bb60d5">$3</span><span style="color:#666">)</span>;
+<span style="color:#666">}</span>
+</code></pre></div>
+		</div>
+		
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/awk/" rel="tag">awk</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/programmer-tools/" rel="tag">programmer tools</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/console/" rel="tag">console</a></li>
+	</ul>
+</div>
+	</article>
+</main>
+
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/blog/2012/08/30/daily-backups-files-mysql-to-yandex.disk-in-ubuntu-12.04/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Daily backups (files &#43; mysql) to yandex.disk in Ubuntu 12.04</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/blog/2012/10/29/setting-up-rhodecode-on-ubuntu-12.04/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">Setting up RhodeCode on Ubuntu 12.04</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 Kenarius Octonotes.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script> <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { id:22777879, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</body>
+</html>

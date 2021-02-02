@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="yandex-verification" content="761bc4bf6044da39" />
+	<title>Create video illustrations from numerical experiments data with Paraview and Python 2 - Kenarius Octonotes</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.80.0" />
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		 <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="Kenarius Octonotes" rel="home">
+				<div class="logo__title">Kenarius Octonotes</div>
+				<div class="logo__tagline">Static notes about information technologies</div>
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">Home</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/resume">Resume</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Create video illustrations from numerical experiments data with Paraview and Python 2</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2014-11-15T01:56:00">2014-11-15</time>
+</div>
+</div>
+		</header><div class="content post__content clearfix">
+			<p>See <a href="http://bikulov.org/blog/2015/04/05/animations-from-scientific-data-using-paraview-4-dot-3-and-python/">updated</a> note.</p>
+<p>One of the common tasks in computer modeling is visualization of numerical experiment as a movie. Usually it is one datafile per frame and target is to create frame-by-frame animation. If these files can be loaded and visualized in Paraview, it is easy to create the full video: load file in paraview with predefined parameters, create screenshot, load second file, etc. This process may be automated.</p>
+<p>We will use latest stable build of Paraview from official <a href="http://www.paraview.org/download/">site</a>. Note: latest version of Paraview has strange error: it loses color while rendering. You may use previous Paraview 4.1 without this bug.</p>
+<p>Extract tarball into <code>~/bin/paraview</code> folder. Run paraview and prepare scene as you like. Remember the name of the pipeline with file you want to change every frame (in my case it is <code>data</code>). Save state (<code>File-&gt;Save State</code>) in folder with datafiles you want to visualize as <code>state.pvsm</code>.</p>
+<p>Paraview with prepared state: <img src="/images/2014/paraview-state.png" alt="Paraview State"></p>
+<p>Now we need for every file:</p>
+<ul>
+<li>change pipeline <code>data</code> file for frame</li>
+<li>render it</li>
+<li>save frame picture</li>
+</ul>
+<p>It can be done with following python 2 script:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#60a0b0;font-style:italic">#!/usr/bin/env python</span>
+<span style="color:#007020;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">sys</span> <span style="color:#007020;font-weight:bold">import</span> path
+path<span style="color:#666">.</span>append(<span style="color:#4070a0">&#34;/home/bikulov/bin/paraview/lib/paraview-4.2/site-packages&#34;</span>)
+path<span style="color:#666">.</span>append(<span style="color:#4070a0">&#34;/home/bikulov/bin/paraview/lib/paraview-4.2/site-packages/vtk&#34;</span>)
+path<span style="color:#666">.</span>append(<span style="color:#4070a0">&#34;/home/bikulov/bin/paraview/lib/paraview-4.2&#34;</span>)
+
+<span style="color:#007020;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">glob</span><span style="color:#666">,</span> <span style="color:#0e84b5;font-weight:bold">natsort</span><span style="color:#666">,</span> <span style="color:#0e84b5;font-weight:bold">os</span>
+<span style="color:#007020;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">paraview.simple</span> <span style="color:#007020;font-weight:bold">import</span> <span style="color:#666">*</span>
+
+filenames <span style="color:#666">=</span> natsort<span style="color:#666">.</span>natsorted(glob<span style="color:#666">.</span>glob(<span style="color:#4070a0">&#34;*.raw&#34;</span>))
+
+servermanager<span style="color:#666">.</span>LoadState(<span style="color:#4070a0">&#34;state.pvsm&#34;</span>)
+view <span style="color:#666">=</span> servermanager<span style="color:#666">.</span>GetRenderView()
+camera <span style="color:#666">=</span> view<span style="color:#666">.</span>GetActiveCamera()
+phase <span style="color:#666">=</span> FindSource(<span style="color:#4070a0">&#39;data&#39;</span>)
+
+<span style="color:#007020;font-weight:bold">try</span>:
+	os<span style="color:#666">.</span>makedirs(<span style="color:#4070a0">&#34;img&#34;</span>)
+<span style="color:#007020;font-weight:bold">except</span>:
+	<span style="color:#007020;font-weight:bold">pass</span>
+
+imgNum <span style="color:#666">=</span> <span style="color:#40a070">0</span>
+
+phase<span style="color:#666">.</span>FilePrefix <span style="color:#666">=</span> filenames[<span style="color:#40a070">0</span>]
+phase<span style="color:#666">.</span>FileNameChanged()
+view<span style="color:#666">.</span>WriteImage(<span style="color:#4070a0">&#34;img/&#34;</span><span style="color:#666">+</span><span style="color:#007020">str</span>(imgNum)<span style="color:#666">.</span>zfill(<span style="color:#40a070">6</span>)<span style="color:#666">+</span><span style="color:#4070a0">&#34;.png&#34;</span>,<span style="color:#4070a0">&#34;vtkPNGWriter&#34;</span>,<span style="color:#40a070">1</span>)
+
+<span style="color:#007020;font-weight:bold">for</span> <span style="color:#007020">file</span> <span style="color:#007020;font-weight:bold">in</span> filenames:
+    phase<span style="color:#666">.</span>FilePrefix <span style="color:#666">=</span> <span style="color:#007020">file</span>
+    phase<span style="color:#666">.</span>FileNameChanged()
+    view<span style="color:#666">.</span>WriteImage(<span style="color:#4070a0">&#34;img/&#34;</span><span style="color:#666">+</span><span style="color:#007020">str</span>(imgNum)<span style="color:#666">.</span>zfill(<span style="color:#40a070">6</span>)<span style="color:#666">+</span><span style="color:#4070a0">&#34;.png&#34;</span>,<span style="color:#4070a0">&#34;vtkPNGWriter&#34;</span>,<span style="color:#40a070">1</span>)
+    imgNum <span style="color:#666">+=</span> <span style="color:#40a070">1</span>
+</code></pre></div><p>All images will be created in <code>img</code> folder, crop them and build video with <a href="http://bikulov.org/blog/2013/01/23/universal-screen-capturing-with-scrot-imagemagick-and/">mogrify and ffmpeg</a> (you may need to replace <code>ffmpeg</code> with <code>avconv</code> in newer versions of Ubuntu).</p>
+		</div>
+		
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/paraview/" rel="tag">paraview</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/python/" rel="tag">python</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/science/" rel="tag">science</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/visualization/" rel="tag">visualization</a></li>
+	</ul>
+</div>
+	</article>
+</main>
+
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/blog/2014/10/09/tips-for-lxc-creation-autostart-openvpn-and-port-forwarding-to-containers/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Tips for LXC: creation, autostart, OpenVPN and port forwarding to containers</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/blog/2015/02/28/install-cuda-6.5-on-clean-ubuntu-14.04/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">Install CUDA 6.5 on clean Ubuntu 14.04</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 Kenarius Octonotes.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script> <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { id:22777879, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="yandex-verification" content="761bc4bf6044da39" />
+	<title>backup - Kenarius Octonotes</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.80.0" />
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="alternate" type="application/rss+xml" href="/tags/backup/index.xml" title="Kenarius Octonotes">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		 <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="Kenarius Octonotes" rel="home">
+				<div class="logo__title">Kenarius Octonotes</div>
+				<div class="logo__tagline">Static notes about information technologies</div>
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">Home</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/resume">Resume</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main list" role="main">
+	<header class="main__header">
+		<h1 class="main__title">backup</h1>
+	</header><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/blog/2012/08/30/daily-backups-files-mysql-to-yandex.disk-in-ubuntu-12.04/" rel="bookmark">
+			Daily backups (files &#43; mysql) to yandex.disk in Ubuntu 12.04
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2012-08-30T09:30:00">2012-08-30</time>
+</div>
+</div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		<p>We all do backups. This note is about doing them on Ubuntu 12.04.</p>
+<p>Tasks:</p>
+<ul>
+<li>archive important folders</li>
+<li>dump mysql databases</li>
+<li>upload all to yandex.disk (online web storage with 10GB space)</li>
+<li>delete old backups</li>
+</ul>
+<p>I’ll save only backups for last five days.</p>
+	</div>
+</article>
+</main>
+
+
+			</div>
+			
+<aside class="sidebar">
+<div class="widget-social widget">
+	<h4 class="widget-social__title widget__title">Social</h4>
+	<div class="widget-social__content widget__content">
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="LinkedIn" rel="noopener noreferrer" href="https://linkedin.com/in/bikulov" target="_blank">
+				<svg class="widget-social__link-icon icon-linkedin" viewBox="0 0 352 352" width="24" height="24" fill="#e64946"><path d="M0,40v272c0,21.9,18.1,40,40,40h272c21.9,0,40-18.1,40-40V40c0-21.9-18.1-40-40-40H40C18.1,0,0,18.1,0,40z M312,32 c4.6,0,8,3.4,8,8v272c0,4.6-3.4,8-8,8H40c-4.6,0-8-3.4-8-8V40c0-4.6,3.4-8,8-8H312z M59.5,87c0,15.2,12.3,27.5,27.5,27.5 c15.2,0,27.5-12.3,27.5-27.5c0-15.2-12.3-27.5-27.5-27.5C71.8,59.5,59.5,71.8,59.5,87z M187,157h-1v-21h-45v152h47v-75 c0-19.8,3.9-39,28.5-39c24.2,0,24.5,22.4,24.5,40v74h47v-83.5c0-40.9-8.7-72-56.5-72C208.5,132.5,193.3,145.1,187,157z M64,288h47.5 V136H64V288z"/></svg>
+				<span>LinkedIn</span>
+			</a>
+		</div>
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="GitHub" rel="noopener noreferrer" href="https://github.com/bikulov" target="_blank">
+				<svg class="widget-social__link-icon icon-github" viewBox="0 0 384 374" width="24" height="24" fill="#e64946"><path d="m192 0c-106.1 0-192 85.8-192 191.7 0 84.7 55 156.6 131.3 181.9 9.6 1.8 13.1-4.2 13.1-9.2 0-4.6-.2-16.6-.3-32.6-53.4 11.6-64.7-25.7-64.7-25.7-8.7-22.1-21.3-28-21.3-28-17.4-11.9 1.3-11.6 1.3-11.6 19.3 1.4 29.4 19.8 29.4 19.8 17.1 29.3 44.9 20.8 55.9 15.9 1.7-12.4 6.7-20.8 12.2-25.6-42.6-4.8-87.5-21.3-87.5-94.8 0-20.9 7.5-38 19.8-51.4-2-4.9-8.6-24.3 1.9-50.7 0 0 16.1-5.2 52.8 19.7 15.3-4.2 31.7-6.4 48.1-6.5 16.3.1 32.7 2.2 48.1 6.5 36.7-24.8 52.8-19.7 52.8-19.7 10.5 26.4 3.9 45.9 1.9 50.7 12.3 13.4 19.7 30.5 19.7 51.4 0 73.7-44.9 89.9-87.7 94.6 6.9 5.9 13 17.6 13 35.5 0 25.6-.2 46.3-.2 52.6 0 5.1 3.5 11.1 13.2 9.2 76.2-25.5 131.2-97.3 131.2-182 0-105.9-86-191.7-192-191.7z"/></svg>
+				<span>GitHub</span>
+			</a>
+		</div>
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="Bitbucket" rel="noopener noreferrer" href="https://bitbucket.org/bikulov" target="_blank">
+				<svg class="widget-social__link-icon icon-bitbucket" viewBox="0 0 256 231" width="24" height="24" fill="#e64946"><path d="M8.308 0A8.202 8.202 0 0 0 .106 9.516l34.819 211.373a11.155 11.155 0 0 0 10.909 9.31h167.04a8.202 8.202 0 0 0 8.201-6.89l34.82-213.752a8.202 8.202 0 0 0-8.203-9.514L8.308 0zm146.616 152.768h-53.315l-14.436-75.42h80.67l-12.919 75.42z"/></svg>
+				<span>Bitbucket</span>
+			</a>
+		</div>
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="Email" href="mailto:blog@bikulov.org">
+				<svg class="widget-social__link-icon icon-mail" viewBox="0 0 416 288" width="24" height="24" fill="#e64946"><path d="m0 16v256 16h16 384 16v-16-256-16h-16-384-16zm347 16-139 92.5-139-92.5zm-148 125.5 9 5.5 9-5.5 167-111.5v210h-352v-210z"/></svg>
+				<span>blog@bikulov.org</span>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/awk" title="Awk">Awk</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/backup" title="Backup">Backup</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/bash" title="Bash">Bash</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/blender" title="Blender">Blender</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/btsync" title="Btsync">Btsync</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c" title="C">C</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c&#43;&#43;" title="C&#43;&#43;">C&#43;&#43;</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/centos" title="Centos">Centos</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cmake" title="Cmake">Cmake</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/config" title="Config">Config</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/console" title="Console">Console</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cpp" title="Cpp">Cpp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cron" title="Cron">Cron</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cuda" title="Cuda">Cuda</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/dd" title="Dd">Dd</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/docker" title="Docker">Docker</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/dokuwiki" title="Dokuwiki">Dokuwiki</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/drupal" title="Drupal">Drupal</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/du" title="Du">Du</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/exceptions" title="Exceptions">Exceptions</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/fatnode" title="Fatnode">Fatnode</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ffmpeg" title="Ffmpeg">Ffmpeg</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/firefox" title="Firefox">Firefox</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/gengetopt" title="Gengetopt">Gengetopt</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/heapsort" title="Heapsort">Heapsort</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/howto" title="Howto">Howto</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/i3" title="I3">I3</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/imagemagick" title="Imagemagick">Imagemagick</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ip" title="Ip">Ip</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/iptables" title="Iptables">Iptables</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ipython" title="Ipython">Ipython</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/joomla" title="Joomla">Joomla</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/jupyter" title="Jupyter">Jupyter</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/latex" title="Latex">Latex</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/libcheese" title="Libcheese">Libcheese</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/linux" title="Linux">Linux</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/lxc" title="Lxc">Lxc</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/makefile" title="Makefile">Makefile</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/matplotlib" title="Matplotlib">Matplotlib</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mercurial" title="Mercurial">Mercurial</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/montage" title="Montage">Montage</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mysql" title="Mysql">Mysql</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nautilus" title="Nautilus">Nautilus</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nginx" title="Nginx">Nginx</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/numpy" title="Numpy">Numpy</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/openvpn" title="Openvpn">Openvpn</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/openvz" title="Openvz">Openvz</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/paraview" title="Paraview">Paraview</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/pcap" title="Pcap">Pcap</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/pcmanfm" title="Pcmanfm">Pcmanfm</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/pdf" title="Pdf">Pdf</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/perl" title="Perl">Perl</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/plots" title="Plots">Plots</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/png" title="Png">Png</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/postgres" title="Postgres">Postgres</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/postgresql" title="Postgresql">Postgresql</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/programmer-tools" title="Programmer tools">Programmer tools</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python" title="Python">Python</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/quicksort" title="Quicksort">Quicksort</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/research" title="Research">Research</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/rhodecode" title="Rhodecode">Rhodecode</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/scan" title="Scan">Scan</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/scanimage" title="Scanimage">Scanimage</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/science" title="Science">Science</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/scipy" title="Scipy">Scipy</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/screen-capture" title="Screen capture">Screen capture</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/script" title="Script">Script</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/scrot" title="Scrot">Scrot</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/seaborn" title="Seaborn">Seaborn</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/sed" title="Sed">Sed</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/selfhosted" title="Selfhosted">Selfhosted</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/server" title="Server">Server</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/slurm" title="Slurm">Slurm</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/snippet" title="Snippet">Snippet</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ssh" title="Ssh">Ssh</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tcpdump" title="Tcpdump">Tcpdump</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tcptrace" title="Tcptrace">Tcptrace</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/template" title="Template">Template</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/terminal" title="Terminal">Terminal</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tiff" title="Tiff">Tiff</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tips-and-tricks" title="Tips and tricks">Tips and tricks</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tpick" title="Tpick">Tpick</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tr" title="Tr">Tr</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tshark" title="Tshark">Tshark</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tun" title="Tun">Tun</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tutorial" title="Tutorial">Tutorial</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu" title="Ubuntu">Ubuntu</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu-12.04" title="Ubuntu 12.04">Ubuntu 12.04</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu-server" title="Ubuntu server">Ubuntu server</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/visualization" title="Visualization">Visualization</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/vpn" title="Vpn">Vpn</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/yandex.disk" title="Yandex.disk">Yandex.disk</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/zotero" title="Zotero">Zotero</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/zotfile" title="Zotfile">Zotfile</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 Kenarius Octonotes.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script> <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { id:22777879, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</body>
+</html>

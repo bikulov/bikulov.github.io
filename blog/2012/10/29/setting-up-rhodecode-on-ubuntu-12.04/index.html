@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="yandex-verification" content="761bc4bf6044da39" />
+	<title>Setting up RhodeCode on Ubuntu 12.04 - Kenarius Octonotes</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.80.0" />
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		 <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="Kenarius Octonotes" rel="home">
+				<div class="logo__title">Kenarius Octonotes</div>
+				<div class="logo__tagline">Static notes about information technologies</div>
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">Home</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/resume">Resume</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Setting up RhodeCode on Ubuntu 12.04</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2012-10-29T09:00:00">2012-10-29</time>
+</div>
+</div>
+		</header><div class="content post__content clearfix">
+			<p>This howto is based on a great guide with modifications. All settings are made for server domain hg.kenarius.org. You can replace it with your one easily.</p>
+<h2 id="preparation">Preparation</h2>
+<h3 id="ubuntu">Ubuntu</h3>
+<p>Update Ubuntu with the commands:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get update
+sudo apt-get upgrade
+</code></pre></div><p>Install pip and virtualenv with the commands:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get install python-pip
+sudo pip install virtualenv
+</code></pre></div><h3 id="nginx">Nginx</h3>
+<p>Install nginx:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get install nginx
+</code></pre></div><p>Add create ssl certificates:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo openssl req -new -x509 -days <span style="color:#40a070">9999</span> -nodes -out host.pem -keyout host.key
+</code></pre></div><p>Create /etc/nginx/ssl.conf file:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#60a0b0;font-style:italic"># Sert generation:</span>
+<span style="color:#60a0b0;font-style:italic"># openssl req -new -x509 -days 9999 -nodes -out cert.pem -keyout     cert.key</span>
+
+ssl         on;
+ssl_protocols       SSLv3 TLSv1;
+ssl_certificate     /etc/nginx/ssl/host.pem;
+ssl_certificate_key /etc/nginx/ssl/host.key;
+</code></pre></div><h2 id="installing-rhodecode">Installing RhodeCode</h2>
+<p>Install Python sources:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get install python-dev
+</code></pre></div><p>Create the base directory and temporarily give yourself ownership:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo mkdir /srv/hg.kenarius.org
+sudo su
+<span style="color:#007020">cd</span> /srv/hg.kenarius.org
+</code></pre></div><p>Create the data directory, virtual environment, and install RhodeCode:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">virtualenv --no-site-packages /srv/hg.kenarius.org/venv
+<span style="color:#007020">source</span> /srv/hg.kenarius.org/venv/bin/activate
+<span style="color:#666">(</span>venv<span style="color:#666">)</span> pip install pastescript
+<span style="color:#666">(</span>venv<span style="color:#666">)</span> easy_install rhodecode
+</code></pre></div><p>Create directories and the production configuraton:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir /home/repository
+mkdir /srv/hg.kenarius.org/data
+<span style="color:#007020">cd</span> /srv/hg.kenarius.org/data
+<span style="color:#666">(</span>venv<span style="color:#666">)</span> paster make-config RhodeCode production.ini
+</code></pre></div><p>Generate the RhodeCode database and create the initial admin account:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#666">(</span>venv<span style="color:#666">)</span> paster setup-rhodecode production.ini
+</code></pre></div><h2 id="starting-rhodecode-on-boot">Starting RhodeCode on boot</h2>
+<p>Create <code>start.sh</code> in <code>/srv/hg.kenarius.org</code>:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007020">#!/bin/bash
+</span><span style="color:#007020"></span><span style="color:#60a0b0;font-style:italic"># run this as the rhodecode user!</span>
+
+<span style="color:#bb60d5">WDIR</span><span style="color:#666">=</span>/srv/hg.kenarius.org
+<span style="color:#bb60d5">VIRTUALENV_DIR</span><span style="color:#666">=</span>/srv/hg.kenarius.org/venv
+
+<span style="color:#007020">source</span> <span style="color:#bb60d5">$VIRTUALENV_DIR</span>/bin/activate
+
+<span style="color:#007020">cd</span> <span style="color:#bb60d5">$WDIR</span>
+paster serve <span style="color:#bb60d5">$WDIR</span>/data/production.ini 1&gt; debug.log 2&gt; error.log
+</code></pre></div><p>Create rhodecode in <code>/etc/init.d</code>:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007020">#!/bin/sh -e
+</span><span style="color:#007020"></span><span style="color:#60a0b0;font-style:italic">########################################</span>
+<span style="color:#60a0b0;font-style:italic">#### THIS IS A DEBIAN INIT.D SCRIPT ####</span>
+<span style="color:#60a0b0;font-style:italic">########################################</span>
+
+<span style="color:#60a0b0;font-style:italic">### BEGIN INIT INFO</span>
+<span style="color:#60a0b0;font-style:italic"># Provides:          rhodecode</span>
+<span style="color:#60a0b0;font-style:italic"># Required-Start:    $all</span>
+<span style="color:#60a0b0;font-style:italic"># Required-Stop:     $all</span>
+<span style="color:#60a0b0;font-style:italic"># Default-Start:     2 3 4 5</span>
+<span style="color:#60a0b0;font-style:italic"># Default-Stop:      0 1 6</span>
+<span style="color:#60a0b0;font-style:italic"># Short-Description: starts instance of rhodecode</span>
+<span style="color:#60a0b0;font-style:italic"># Description:       starts instance of rhodecode using start-stop-    daemon</span>
+<span style="color:#60a0b0;font-style:italic">### EN    D INIT INFO</span>
+
+<span style="color:#bb60d5">APP_NAME</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;rhodecode&#34;</span>
+<span style="color:#bb60d5">APP_HOMEDIR</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;hg.kenarius.org&#34;</span>
+<span style="color:#bb60d5">APP_PATH</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;/srv/</span><span style="color:#bb60d5">$APP_HOMEDIR</span><span style="color:#4070a0">&#34;</span>
+
+<span style="color:#bb60d5">CONF_NAME</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;data/production.ini&#34;</span>
+
+<span style="color:#bb60d5">PID_PATH</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;</span><span style="color:#bb60d5">$APP_PATH</span><span style="color:#4070a0">/</span><span style="color:#bb60d5">$APP_NAME</span><span style="color:#4070a0">.pid&#34;</span>
+<span style="color:#bb60d5">LOG_PATH</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;</span><span style="color:#bb60d5">$APP_PATH</span><span style="color:#4070a0">/</span><span style="color:#bb60d5">$APP_NAME</span><span style="color:#4070a0">.log&#34;</span>
+
+<span style="color:#bb60d5">PYTHON_PATH</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;/srv/</span><span style="color:#bb60d5">$APP_HOMEDIR</span><span style="color:#4070a0">/venv&#34;</span>
+
+<span style="color:#bb60d5">RUN_AS</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;www-data&#34;</span>
+
+<span style="color:#bb60d5">DAEMON</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;</span><span style="color:#bb60d5">$PYTHON_PATH</span><span style="color:#4070a0">/bin/paster&#34;</span>
+
+<span style="color:#bb60d5">DAEMON_OPTS</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;serve --daemon \
+</span><span style="color:#4070a0">  --user=</span><span style="color:#bb60d5">$RUN_AS</span><span style="color:#4070a0"> \
+</span><span style="color:#4070a0">  --group=</span><span style="color:#bb60d5">$RUN_AS</span><span style="color:#4070a0"> \
+</span><span style="color:#4070a0">  --pid-file=</span><span style="color:#bb60d5">$PID_PATH</span><span style="color:#4070a0"> \
+</span><span style="color:#4070a0">  --log-file=</span><span style="color:#bb60d5">$LOG_PATH</span><span style="color:#4070a0">  </span><span style="color:#bb60d5">$APP_PATH</span><span style="color:#4070a0">/</span><span style="color:#bb60d5">$CONF_NAME</span><span style="color:#4070a0">&#34;</span>
+
+
+start<span style="color:#666">()</span> <span style="color:#666">{</span>
+  <span style="color:#007020">echo</span> <span style="color:#4070a0">&#34;Starting </span><span style="color:#bb60d5">$APP_NAME</span><span style="color:#4070a0">&#34;</span>
+  <span style="color:#bb60d5">PYTHON_EGG_CACHE</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;/tmp&#34;</span> start-stop-daemon -d <span style="color:#bb60d5">$APP_PATH</span> <span style="color:#4070a0;font-weight:bold">\
+</span><span style="color:#4070a0;font-weight:bold"></span>      --start --quiet <span style="color:#4070a0;font-weight:bold">\
+</span><span style="color:#4070a0;font-weight:bold"></span>      --pidfile <span style="color:#bb60d5">$PID_PATH</span> <span style="color:#4070a0;font-weight:bold">\
+</span><span style="color:#4070a0;font-weight:bold"></span>      --user <span style="color:#bb60d5">$RUN_AS</span> <span style="color:#4070a0;font-weight:bold">\
+</span><span style="color:#4070a0;font-weight:bold"></span>      --exec <span style="color:#bb60d5">$DAEMON</span> -- <span style="color:#bb60d5">$DAEMON_OPTS</span>
+<span style="color:#666">}</span>
+
+stop<span style="color:#666">()</span> <span style="color:#666">{</span>
+  <span style="color:#007020">echo</span> <span style="color:#4070a0">&#34;Stopping </span><span style="color:#bb60d5">$APP_NAME</span><span style="color:#4070a0">&#34;</span>
+  start-stop-daemon -d <span style="color:#bb60d5">$APP_PATH</span> <span style="color:#4070a0;font-weight:bold">\
+</span><span style="color:#4070a0;font-weight:bold"></span>      --stop --quiet <span style="color:#4070a0;font-weight:bold">\
+</span><span style="color:#4070a0;font-weight:bold"></span>      --pidfile <span style="color:#bb60d5">$PID_PATH</span> <span style="color:#666">||</span> <span style="color:#007020">echo</span> <span style="color:#4070a0">&#34;</span><span style="color:#bb60d5">$APP_NAME</span><span style="color:#4070a0"> - Not running!&#34;</span>
+
+  <span style="color:#007020;font-weight:bold">if</span> <span style="color:#666">[</span> -f <span style="color:#bb60d5">$PID_PATH</span> <span style="color:#666">]</span>; <span style="color:#007020;font-weight:bold">then</span>
+    rm <span style="color:#bb60d5">$PID_PATH</span>
+  <span style="color:#007020;font-weight:bold">fi</span>
+<span style="color:#666">}</span>
+
+<span style="color:#007020;font-weight:bold">case</span> <span style="color:#4070a0">&#34;</span><span style="color:#bb60d5">$1</span><span style="color:#4070a0">&#34;</span> in
+  start<span style="color:#666">)</span>
+    start
+    ;;
+  stop<span style="color:#666">)</span>
+    stop
+    ;;
+  restart<span style="color:#666">)</span>
+    <span style="color:#007020">echo</span> <span style="color:#4070a0">&#34;Restarting </span><span style="color:#bb60d5">$APP_NAME</span><span style="color:#4070a0">&#34;</span>
+    <span style="color:#60a0b0;font-style:italic">### stop ###</span>
+    stop
+    <span style="color:#007020">wait</span>
+    <span style="color:#60a0b0;font-style:italic">### start ###</span>
+    start
+    ;;
+  *<span style="color:#666">)</span>
+    <span style="color:#007020">echo</span> <span style="color:#4070a0">&#34;Usage: </span><span style="color:#bb60d5">$0</span><span style="color:#4070a0"> {start|stop|restart}&#34;</span>
+    <span style="color:#007020">exit</span> <span style="color:#40a070">1</span>
+<span style="color:#007020;font-weight:bold">esac</span>
+</code></pre></div><p>Allow to execute the script:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> /etc/init.d
+chmod +x rhodecode
+sudo ./rhodecode-init.d.sh start
+</code></pre></div><p>Install the script:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo update-rc.d rhodecode defaults <span style="color:#40a070">90</span>
+</code></pre></div><p>Test the script once more:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo service rhodecode start
+sudo service rhodecode stop
+</code></pre></div><h2 id="adding-nginx-as-a-front-end-for-ssl">Adding Nginx as a front-end for SSL</h2>
+<p>Create <code>/etc/nginx/proxy.conf</code> file:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">proxy_redirect              off;
+proxy_set_header            Host <span style="color:#bb60d5">$host</span>;
+proxy_set_header            X-Url-Scheme <span style="color:#bb60d5">$scheme</span>;
+proxy_set_header            X-Host <span style="color:#bb60d5">$http_host</span>;
+proxy_set_header            X-Real-IP <span style="color:#bb60d5">$remote_addr</span>;
+proxy_set_header            X-Forwarded-For <span style="color:#bb60d5">$proxy_add_x_forwarded_for</span>;
+proxy_set_header            Proxy-host <span style="color:#bb60d5">$proxy_host</span>;
+client_max_body_size        400m;
+client_body_buffer_size     128k;
+proxy_buffering             off;
+proxy_connect_timeout       7200;
+proxy_send_timeout          7200;
+proxy_read_timeout          7200;
+proxy_buffers               <span style="color:#40a070">8</span> 32k;
+</code></pre></div><p>Create <code>/etc/nginx/sites-enabled/hg.kenarius.org</code> file (assuming you already have ssl settings for nginx):</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">server <span style="color:#666">{</span>
+    listen          80;
+    server_name     hg.kenarius.org;
+    rewrite        ^ https://<span style="color:#bb60d5">$server_name$request_uri</span>? permanent;
+<span style="color:#666">}</span>
+
+server <span style="color:#666">{</span>
+    listen          443;
+    server_name     hg.kenarius.org;
+    access_log      /var/log/nginx/rhodecode.access.log;
+    error_log       /var/log/nginx/rhodecode.error.log;
+    include         /etc/nginx/proxy.conf;
+
+    include      /etc/nginx/ssl.conf;
+
+    location / <span style="color:#666">{</span>
+         try_files <span style="color:#bb60d5">$uri</span> @rhode;
+    <span style="color:#666">}</span>
+
+    location @rhode <span style="color:#666">{</span>
+         proxy_pass      http://127.0.0.1:5000;
+    <span style="color:#666">}</span>
+<span style="color:#666">}</span>
+</code></pre></div><p>Reload nginx settings:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">nginx -s reload
+</code></pre></div>
+		</div>
+		
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/rhodecode/" rel="tag">rhodecode</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/mercurial/" rel="tag">mercurial</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/ubuntu-12.04/" rel="tag">ubuntu 12.04</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/ubuntu-server/" rel="tag">ubuntu server</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/howto/" rel="tag">howto</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/server/" rel="tag">server</a></li>
+	</ul>
+</div>
+	</article>
+</main>
+
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/blog/2012/10/25/awk-a-powerful-tool-for-programmer/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">AWK: a powerful tool for programmer</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/blog/2012/10/31/toggling-string-case-in-linux-bash/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">Toggling string case in linux bash</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 Kenarius Octonotes.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script> <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { id:22777879, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</body>
+</html>

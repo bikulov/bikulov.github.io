@@ -1,0 +1,857 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Kenarius Octonotes</title>
+    <link>https://bikulov.org/tags/</link>
+    <description>Recent content in Tags on Kenarius Octonotes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 02 Feb 2021 09:30:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>docker</title>
+      <link>https://bikulov.org/tags/docker/</link>
+      <pubDate>Tue, 02 Feb 2021 09:30:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/docker/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>dokuwiki</title>
+      <link>https://bikulov.org/tags/dokuwiki/</link>
+      <pubDate>Tue, 02 Feb 2021 09:30:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/dokuwiki/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>howto</title>
+      <link>https://bikulov.org/tags/howto/</link>
+      <pubDate>Tue, 02 Feb 2021 09:30:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/howto/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>selfhosted</title>
+      <link>https://bikulov.org/tags/selfhosted/</link>
+      <pubDate>Tue, 02 Feb 2021 09:30:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/selfhosted/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>server</title>
+      <link>https://bikulov.org/tags/server/</link>
+      <pubDate>Tue, 02 Feb 2021 09:30:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/server/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ubuntu</title>
+      <link>https://bikulov.org/tags/ubuntu/</link>
+      <pubDate>Tue, 02 Feb 2021 09:30:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/ubuntu/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>vpn</title>
+      <link>https://bikulov.org/tags/vpn/</link>
+      <pubDate>Sun, 22 Dec 2019 02:30:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/vpn/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>python</title>
+      <link>https://bikulov.org/tags/python/</link>
+      <pubDate>Fri, 22 Feb 2019 00:30:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>lxc</title>
+      <link>https://bikulov.org/tags/lxc/</link>
+      <pubDate>Fri, 19 Aug 2016 18:26:36 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/lxc/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>openvpn</title>
+      <link>https://bikulov.org/tags/openvpn/</link>
+      <pubDate>Tue, 05 Jan 2016 23:07:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/openvpn/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>script</title>
+      <link>https://bikulov.org/tags/script/</link>
+      <pubDate>Tue, 05 Jan 2016 23:07:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/script/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ipython</title>
+      <link>https://bikulov.org/tags/ipython/</link>
+      <pubDate>Sat, 07 Nov 2015 11:24:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/ipython/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>jupyter</title>
+      <link>https://bikulov.org/tags/jupyter/</link>
+      <pubDate>Sat, 07 Nov 2015 11:24:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/jupyter/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>numpy</title>
+      <link>https://bikulov.org/tags/numpy/</link>
+      <pubDate>Sat, 07 Nov 2015 11:24:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/numpy/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>scipy</title>
+      <link>https://bikulov.org/tags/scipy/</link>
+      <pubDate>Sat, 07 Nov 2015 11:24:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/scipy/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>seaborn</title>
+      <link>https://bikulov.org/tags/seaborn/</link>
+      <pubDate>Sat, 07 Nov 2015 11:24:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/seaborn/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>linux</title>
+      <link>https://bikulov.org/tags/linux/</link>
+      <pubDate>Sat, 26 Sep 2015 20:05:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/linux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>pdf</title>
+      <link>https://bikulov.org/tags/pdf/</link>
+      <pubDate>Sat, 26 Sep 2015 20:05:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/pdf/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>scan</title>
+      <link>https://bikulov.org/tags/scan/</link>
+      <pubDate>Sat, 26 Sep 2015 20:05:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/scan/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>scanimage</title>
+      <link>https://bikulov.org/tags/scanimage/</link>
+      <pubDate>Sat, 26 Sep 2015 20:05:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/scanimage/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tiff</title>
+      <link>https://bikulov.org/tags/tiff/</link>
+      <pubDate>Sat, 26 Sep 2015 20:05:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/tiff/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>paraview</title>
+      <link>https://bikulov.org/tags/paraview/</link>
+      <pubDate>Sun, 05 Apr 2015 16:31:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/paraview/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cuda</title>
+      <link>https://bikulov.org/tags/cuda/</link>
+      <pubDate>Sat, 28 Feb 2015 08:54:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/cuda/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>libcheese</title>
+      <link>https://bikulov.org/tags/libcheese/</link>
+      <pubDate>Sat, 28 Feb 2015 08:54:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/libcheese/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>science</title>
+      <link>https://bikulov.org/tags/science/</link>
+      <pubDate>Sat, 15 Nov 2014 01:56:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/science/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>visualization</title>
+      <link>https://bikulov.org/tags/visualization/</link>
+      <pubDate>Sat, 15 Nov 2014 01:56:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/visualization/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>iptables</title>
+      <link>https://bikulov.org/tags/iptables/</link>
+      <pubDate>Thu, 09 Oct 2014 10:02:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/iptables/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>nginx</title>
+      <link>https://bikulov.org/tags/nginx/</link>
+      <pubDate>Sat, 09 Aug 2014 17:34:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/nginx/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>postgresql</title>
+      <link>https://bikulov.org/tags/postgresql/</link>
+      <pubDate>Sat, 09 Aug 2014 17:34:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/postgresql/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>firefox</title>
+      <link>https://bikulov.org/tags/firefox/</link>
+      <pubDate>Thu, 13 Feb 2014 10:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/firefox/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>research</title>
+      <link>https://bikulov.org/tags/research/</link>
+      <pubDate>Thu, 13 Feb 2014 10:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/research/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>yandex.disk</title>
+      <link>https://bikulov.org/tags/yandex.disk/</link>
+      <pubDate>Thu, 13 Feb 2014 10:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/yandex.disk/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>zotero</title>
+      <link>https://bikulov.org/tags/zotero/</link>
+      <pubDate>Thu, 13 Feb 2014 10:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/zotero/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>zotfile</title>
+      <link>https://bikulov.org/tags/zotfile/</link>
+      <pubDate>Thu, 13 Feb 2014 10:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/zotfile/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>config</title>
+      <link>https://bikulov.org/tags/config/</link>
+      <pubDate>Sat, 25 Jan 2014 16:32:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/config/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ssh</title>
+      <link>https://bikulov.org/tags/ssh/</link>
+      <pubDate>Sat, 25 Jan 2014 16:32:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/ssh/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>c&#43;&#43;</title>
+      <link>https://bikulov.org/tags/c&#43;&#43;/</link>
+      <pubDate>Tue, 24 Dec 2013 22:44:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/c&#43;&#43;/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cmake</title>
+      <link>https://bikulov.org/tags/cmake/</link>
+      <pubDate>Tue, 24 Dec 2013 22:44:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/cmake/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>exceptions</title>
+      <link>https://bikulov.org/tags/exceptions/</link>
+      <pubDate>Sat, 23 Nov 2013 17:42:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/exceptions/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>snippet</title>
+      <link>https://bikulov.org/tags/snippet/</link>
+      <pubDate>Tue, 19 Nov 2013 23:53:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/snippet/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cpp</title>
+      <link>https://bikulov.org/tags/cpp/</link>
+      <pubDate>Thu, 07 Nov 2013 18:27:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/cpp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>quicksort</title>
+      <link>https://bikulov.org/tags/quicksort/</link>
+      <pubDate>Thu, 07 Nov 2013 18:27:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/quicksort/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>heapsort</title>
+      <link>https://bikulov.org/tags/heapsort/</link>
+      <pubDate>Mon, 04 Nov 2013 21:33:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/heapsort/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>gengetopt</title>
+      <link>https://bikulov.org/tags/gengetopt/</link>
+      <pubDate>Sat, 02 Nov 2013 21:53:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/gengetopt/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>mercurial</title>
+      <link>https://bikulov.org/tags/mercurial/</link>
+      <pubDate>Sat, 02 Nov 2013 21:53:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/mercurial/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>c</title>
+      <link>https://bikulov.org/tags/c/</link>
+      <pubDate>Sat, 26 Oct 2013 00:03:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/c/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tutorial</title>
+      <link>https://bikulov.org/tags/tutorial/</link>
+      <pubDate>Sat, 26 Oct 2013 00:03:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/tutorial/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>bash</title>
+      <link>https://bikulov.org/tags/bash/</link>
+      <pubDate>Sat, 12 Oct 2013 15:33:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/bash/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>latex</title>
+      <link>https://bikulov.org/tags/latex/</link>
+      <pubDate>Thu, 03 Oct 2013 10:37:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/latex/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>matplotlib</title>
+      <link>https://bikulov.org/tags/matplotlib/</link>
+      <pubDate>Thu, 03 Oct 2013 10:37:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/matplotlib/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>plots</title>
+      <link>https://bikulov.org/tags/plots/</link>
+      <pubDate>Thu, 03 Oct 2013 10:37:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/plots/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cron</title>
+      <link>https://bikulov.org/tags/cron/</link>
+      <pubDate>Mon, 09 Sep 2013 23:24:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/cron/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ip</title>
+      <link>https://bikulov.org/tags/ip/</link>
+      <pubDate>Mon, 09 Sep 2013 23:24:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/ip/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>makefile</title>
+      <link>https://bikulov.org/tags/makefile/</link>
+      <pubDate>Mon, 02 Sep 2013 18:05:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/makefile/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>btsync</title>
+      <link>https://bikulov.org/tags/btsync/</link>
+      <pubDate>Mon, 26 Aug 2013 18:42:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/btsync/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>joomla</title>
+      <link>https://bikulov.org/tags/joomla/</link>
+      <pubDate>Mon, 19 Aug 2013 16:15:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/joomla/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>postgres</title>
+      <link>https://bikulov.org/tags/postgres/</link>
+      <pubDate>Mon, 19 Aug 2013 16:15:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/postgres/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>template</title>
+      <link>https://bikulov.org/tags/template/</link>
+      <pubDate>Fri, 16 Aug 2013 12:14:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/template/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>centos</title>
+      <link>https://bikulov.org/tags/centos/</link>
+      <pubDate>Sat, 10 Aug 2013 09:14:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/centos/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>openvz</title>
+      <link>https://bikulov.org/tags/openvz/</link>
+      <pubDate>Sat, 10 Aug 2013 09:14:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/openvz/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tun</title>
+      <link>https://bikulov.org/tags/tun/</link>
+      <pubDate>Sat, 10 Aug 2013 09:14:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/tun/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ubuntu 12.04</title>
+      <link>https://bikulov.org/tags/ubuntu-12.04/</link>
+      <pubDate>Wed, 31 Jul 2013 09:31:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/ubuntu-12.04/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>console</title>
+      <link>https://bikulov.org/tags/console/</link>
+      <pubDate>Fri, 12 Jul 2013 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/console/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tips and tricks</title>
+      <link>https://bikulov.org/tags/tips-and-tricks/</link>
+      <pubDate>Fri, 12 Jul 2013 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/tips-and-tricks/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>fatnode</title>
+      <link>https://bikulov.org/tags/fatnode/</link>
+      <pubDate>Tue, 18 Jun 2013 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/fatnode/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>slurm</title>
+      <link>https://bikulov.org/tags/slurm/</link>
+      <pubDate>Tue, 18 Jun 2013 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/slurm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ubuntu server</title>
+      <link>https://bikulov.org/tags/ubuntu-server/</link>
+      <pubDate>Tue, 18 Jun 2013 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/ubuntu-server/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>drupal</title>
+      <link>https://bikulov.org/tags/drupal/</link>
+      <pubDate>Sun, 28 Apr 2013 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/drupal/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>mysql</title>
+      <link>https://bikulov.org/tags/mysql/</link>
+      <pubDate>Sun, 28 Apr 2013 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/mysql/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ffmpeg</title>
+      <link>https://bikulov.org/tags/ffmpeg/</link>
+      <pubDate>Wed, 23 Jan 2013 09:31:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/ffmpeg/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>screen capture</title>
+      <link>https://bikulov.org/tags/screen-capture/</link>
+      <pubDate>Wed, 23 Jan 2013 09:31:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/screen-capture/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>scrot</title>
+      <link>https://bikulov.org/tags/scrot/</link>
+      <pubDate>Wed, 23 Jan 2013 09:31:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/scrot/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>i3</title>
+      <link>https://bikulov.org/tags/i3/</link>
+      <pubDate>Thu, 08 Nov 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/i3/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>nautilus</title>
+      <link>https://bikulov.org/tags/nautilus/</link>
+      <pubDate>Thu, 08 Nov 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/nautilus/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>pcap</title>
+      <link>https://bikulov.org/tags/pcap/</link>
+      <pubDate>Sat, 03 Nov 2012 09:31:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/pcap/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tcpdump</title>
+      <link>https://bikulov.org/tags/tcpdump/</link>
+      <pubDate>Sat, 03 Nov 2012 09:31:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/tcpdump/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tcptrace</title>
+      <link>https://bikulov.org/tags/tcptrace/</link>
+      <pubDate>Sat, 03 Nov 2012 09:31:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/tcptrace/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tpick</title>
+      <link>https://bikulov.org/tags/tpick/</link>
+      <pubDate>Sat, 03 Nov 2012 09:31:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/tpick/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tshark</title>
+      <link>https://bikulov.org/tags/tshark/</link>
+      <pubDate>Sat, 03 Nov 2012 09:31:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/tshark/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>awk</title>
+      <link>https://bikulov.org/tags/awk/</link>
+      <pubDate>Thu, 01 Nov 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/awk/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>du</title>
+      <link>https://bikulov.org/tags/du/</link>
+      <pubDate>Thu, 01 Nov 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/du/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>sed</title>
+      <link>https://bikulov.org/tags/sed/</link>
+      <pubDate>Thu, 01 Nov 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/sed/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>terminal</title>
+      <link>https://bikulov.org/tags/terminal/</link>
+      <pubDate>Thu, 01 Nov 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/terminal/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>dd</title>
+      <link>https://bikulov.org/tags/dd/</link>
+      <pubDate>Wed, 31 Oct 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/dd/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>perl</title>
+      <link>https://bikulov.org/tags/perl/</link>
+      <pubDate>Wed, 31 Oct 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/perl/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tr</title>
+      <link>https://bikulov.org/tags/tr/</link>
+      <pubDate>Wed, 31 Oct 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/tr/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>rhodecode</title>
+      <link>https://bikulov.org/tags/rhodecode/</link>
+      <pubDate>Mon, 29 Oct 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/rhodecode/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>programmer tools</title>
+      <link>https://bikulov.org/tags/programmer-tools/</link>
+      <pubDate>Thu, 25 Oct 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/programmer-tools/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>backup</title>
+      <link>https://bikulov.org/tags/backup/</link>
+      <pubDate>Thu, 30 Aug 2012 09:30:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/backup/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>PCManFM</title>
+      <link>https://bikulov.org/tags/pcmanfm/</link>
+      <pubDate>Fri, 24 Aug 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/pcmanfm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>imagemagick</title>
+      <link>https://bikulov.org/tags/imagemagick/</link>
+      <pubDate>Wed, 18 Jul 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/imagemagick/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>montage</title>
+      <link>https://bikulov.org/tags/montage/</link>
+      <pubDate>Wed, 18 Jul 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/montage/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>png</title>
+      <link>https://bikulov.org/tags/png/</link>
+      <pubDate>Wed, 18 Jul 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/png/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>blender</title>
+      <link>https://bikulov.org/tags/blender/</link>
+      <pubDate>Wed, 11 Apr 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/blender/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>research on Kenarius Octonotes</title>
+    <link>https://bikulov.org/tags/research/</link>
+    <description>Recent content in research on Kenarius Octonotes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 13 Feb 2014 10:00:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/research/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Research Papers Management With Zotero and Yandex.Disk</title>
+      <link>https://bikulov.org/blog/2014/02/13/research-papers-management-with-zotero-and-yandex.disk/</link>
+      <pubDate>Thu, 13 Feb 2014 10:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2014/02/13/research-papers-management-with-zotero-and-yandex.disk/</guid>
+      <description>&lt;p&gt;Zotero is an open source plugin for Firefox for managing research papers collections. You can use online zotero storage (pretty small) or use third-party sync application. I use Yandex Disk for this purpose: 10 Gb it quite enough for a moderate research library. zotero can automatically fetch article metadata (author, year, etc) from the web (like Mendeley and similar software do).&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

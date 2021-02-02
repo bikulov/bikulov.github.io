@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>cmake on Kenarius Octonotes</title>
+    <link>https://bikulov.org/tags/cmake/</link>
+    <description>Recent content in cmake on Kenarius Octonotes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 24 Dec 2013 22:44:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/cmake/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Example of CMake file for CUDA&#43;CPP code</title>
+      <link>https://bikulov.org/blog/2013/12/24/example-of-cmake-file-for-cuda-cpp-code/</link>
+      <pubDate>Tue, 24 Dec 2013 22:44:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/12/24/example-of-cmake-file-for-cuda-cpp-code/</guid>
+      <description>&lt;p&gt;Makefiles are quite straightforward and easy to write (in reasonable situations). But GNU Make is not crossplafrom. CMake is cross-platform, cross-application (it can generate projects for different IDEs and Makefile itself).&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

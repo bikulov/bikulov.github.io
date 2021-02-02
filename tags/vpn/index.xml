@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>vpn on Kenarius Octonotes</title>
+    <link>https://bikulov.org/tags/vpn/</link>
+    <description>Recent content in vpn on Kenarius Octonotes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 22 Dec 2019 02:30:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/vpn/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>WireGuard on Ubuntu (server) and Android (client)</title>
+      <link>https://bikulov.org/blog/2019/12/22/wireguard-on-ubuntu-server-and-android-client/</link>
+      <pubDate>Sun, 22 Dec 2019 02:30:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2019/12/22/wireguard-on-ubuntu-server-and-android-client/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://www.wireguard.com/&#34;&gt;WireGuard&lt;/a&gt; is lightweight VPN with extremely simple configuration. All below was tested on Ubuntu 18.04 as server and Anroid 8.0.0 as client.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Enable tun for OpenVZ Ubuntu 12.04 containers in CentOS 6.4</title>
+      <link>https://bikulov.org/blog/2013/08/10/enable-tun-for-openvz-ubuntu-12.04-containers-in-centos-6.4/</link>
+      <pubDate>Sat, 10 Aug 2013 09:14:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/08/10/enable-tun-for-openvz-ubuntu-12.04-containers-in-centos-6.4/</guid>
+      <description>&lt;p&gt;To enable tun device in OpenVZ containers tun module&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;needs to be loaded in the host system (in my case CentOS 6.4)&lt;/li&gt;
+&lt;li&gt;containter (in my case Ubuntu Server 12.04) must be allowed to use tun&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>Creating Zip With VPN Client Keys and Configuration Files</title>
+      <link>https://bikulov.org/blog/2013/07/31/creating-zip-with-vpn-client-keys-and-configuration-files/</link>
+      <pubDate>Wed, 31 Jul 2013 09:31:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/07/31/creating-zip-with-vpn-client-keys-and-configuration-files/</guid>
+      <description>&lt;p&gt;Depends on server configuration, each OpenVPN client needs configuration file (client.conf for *nix and client.ovpn for windows), certificate authority (ca.crt), [optional] tls auth file (ta.key), user crt and key.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

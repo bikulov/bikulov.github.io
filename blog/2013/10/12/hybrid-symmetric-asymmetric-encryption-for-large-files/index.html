@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="yandex-verification" content="761bc4bf6044da39" />
+	<title>Hybrid symmetric-asymmetric encryption for large files - Kenarius Octonotes</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.80.0" />
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		 <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="Kenarius Octonotes" rel="home">
+				<div class="logo__title">Kenarius Octonotes</div>
+				<div class="logo__tagline">Static notes about information technologies</div>
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">Home</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/resume">Resume</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Hybrid symmetric-asymmetric encryption for large files</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2013-10-12T15:33:00">2013-10-12</time>
+</div>
+</div>
+		</header><div class="content post__content clearfix">
+			<p>Assymetric encryption is useful if you want to encrypt data at remote server via script. In case you use bash script for symmetric encryption job, you have to store password inside this script. So, if remote server is compromized, you will loose both the encrypted data and the key to decrypt it. Assymetric encryption allows you not to store decryption key at remote machine. So, data will be in safe even if server is hacked.</p>
+<p>Assymetric encryption is slow and cannot be applied for large files. The solution is to use hybrid symmetric-assymetric encryption for big data situation. It works as follows: big file is encrypted with symmetric algorythm with on the fly generated key. Key is stored in the file and encrypted with assymetric algorythm.</p>
+<p>Bash scripts to encrypt and decrypt files are provided below. To simulate situation with local and remote machines, create <code>local</code> and <code>remote</code> folders side by side. Change directory to <code>local</code> folder, create public and private keys pair and copy public key (keynames are <code>keyfile.key</code> for private and <code>keyfile.pub</code> for <code>public</code>) to remote folder:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> <span style="color:#007020">local</span>
+openssl genrsa -out keyfile.key <span style="color:#40a070">4096</span>
+openssl rsa -in keyfile.key -pubout -out keyfile.pub
+cp keyfile.pub ../remote/
+</code></pre></div><p>Now change directory to <code>remote</code> folder. Create bash script <code>encrypt.sh</code>:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007020">#!/bin/bash
+</span><span style="color:#007020"></span>
+<span style="color:#bb60d5">file</span><span style="color:#666">=</span><span style="color:#bb60d5">$1</span>
+<span style="color:#bb60d5">passfile</span><span style="color:#666">=</span><span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">file</span><span style="color:#70a0d0;font-style:italic">}</span>_pwd
+<span style="color:#bb60d5">pubkey</span><span style="color:#666">=</span>keyfile.pub
+
+openssl rand <span style="color:#40a070">256</span> &gt; <span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">passfile</span><span style="color:#70a0d0;font-style:italic">}</span>
+
+tar cz <span style="color:#bb60d5">$file</span> | openssl enc -aes-256-cbc -salt -out <span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">file</span><span style="color:#70a0d0;font-style:italic">}</span>.enc -pass file:./<span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">passfile</span><span style="color:#70a0d0;font-style:italic">}</span>
+openssl rsautl -encrypt -pubin -inkey <span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">pubkey</span><span style="color:#70a0d0;font-style:italic">}</span> -in <span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">passfile</span><span style="color:#70a0d0;font-style:italic">}</span> -out <span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">passfile</span><span style="color:#70a0d0;font-style:italic">}</span>.enc
+
+rm <span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">file</span><span style="color:#70a0d0;font-style:italic">}</span> <span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">passfile</span><span style="color:#70a0d0;font-style:italic">}</span>
+cp <span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">file</span><span style="color:#70a0d0;font-style:italic">}</span>.enc <span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">passfile</span><span style="color:#70a0d0;font-style:italic">}</span>.enc ../local
+</code></pre></div><p>Make it executable:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">chmod +x ./encrypt.sh
+</code></pre></div><p>Now you can create <code>testfile</code> with text &ldquo;secret data&rdquo; and encrypt it with script <code>encrypt.sh</code>. Resulting encrypted files will be copied to <code>../local</code> folder.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007020">echo</span> <span style="color:#4070a0">&#34;secret data&#34;</span> &gt; testfile
+./encrypt.sh testfile
+</code></pre></div><p>Now change directory to <code>local</code> folder. Create bash script <code>decrypt.sh</code>:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007020">#!/bin/bash
+</span><span style="color:#007020"></span>
+<span style="color:#bb60d5">file</span><span style="color:#666">=</span><span style="color:#bb60d5">$1</span>
+<span style="color:#bb60d5">passfile</span><span style="color:#666">=</span><span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">file</span>%.enc<span style="color:#70a0d0;font-style:italic">}</span>_pwd.enc
+<span style="color:#bb60d5">privatekey</span><span style="color:#666">=</span>keyfile.key
+
+openssl rsautl -decrypt -inkey <span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">privatekey</span><span style="color:#70a0d0;font-style:italic">}</span> -in <span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">passfile</span><span style="color:#70a0d0;font-style:italic">}</span> -out <span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">passfile</span>%.enc<span style="color:#70a0d0;font-style:italic">}</span>
+openssl enc -d -aes-256-cbc -in <span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">file</span><span style="color:#70a0d0;font-style:italic">}</span> -pass file:./<span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">passfile</span>%.enc<span style="color:#70a0d0;font-style:italic">}</span> | tar xz
+
+rm <span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">file</span><span style="color:#70a0d0;font-style:italic">}</span> <span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">passfile</span><span style="color:#70a0d0;font-style:italic">}</span> <span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">passfile</span>%.enc<span style="color:#70a0d0;font-style:italic">}</span>
+</code></pre></div><p>Make it executable:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">chmod +x ./decrypt.sh
+</code></pre></div><p>Now decrypt <code>testfile</code>:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">./decrypt.sh testfile.enc
+</code></pre></div><p>Decypted <code>testfile</code> will be placed into <code>local</code> directory.</p>
+		</div>
+		
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/bash/" rel="tag">bash</a></li>
+	</ul>
+</div>
+	</article>
+</main>
+
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/blog/2013/10/03/creation-of-paper-ready-plots-with-matlotlib/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Creation of paper-ready plots with matlotlib</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/blog/2013/10/26/command-line-arguments-in-c-and-c-with-gengetopt/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">Command line arguments in C and C&#43;&#43; with gengetopt</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 Kenarius Octonotes.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script> <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { id:22777879, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</body>
+</html>

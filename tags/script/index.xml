@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>script on Kenarius Octonotes</title>
+    <link>https://bikulov.org/tags/script/</link>
+    <description>Recent content in script on Kenarius Octonotes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 05 Jan 2016 23:07:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/script/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Script for user configurations generation and sending at Ubuntu OpenVPN server</title>
+      <link>https://bikulov.org/blog/2016/01/05/script-for-user-configurations-generation-and-sending-at-ubuntu-openvpn-server/</link>
+      <pubDate>Tue, 05 Jan 2016 23:07:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2016/01/05/script-for-user-configurations-generation-and-sending-at-ubuntu-openvpn-server/</guid>
+      <description>&lt;p&gt;Ubuntu has a very detailed documentation about &lt;a href=&#34;https://help.ubuntu.com/lts/serverguide/openvpn.html&#34;&gt;OpenVPN server&lt;/a&gt; configuration. The key feature of this note is script for automatic generation of single-file client configurations (keys and certs are embedded) and sending them by email. Looks interesting? Read below!&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>blender on Kenarius Octonotes</title>
+    <link>https://bikulov.org/tags/blender/</link>
+    <description>Recent content in blender on Kenarius Octonotes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 11 Apr 2012 09:00:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/blender/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Blender and Python molecules visualization</title>
+      <link>https://bikulov.org/blog/2012/04/11/blender-and-python-molecules-visualization/</link>
+      <pubDate>Wed, 11 Apr 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2012/04/11/blender-and-python-molecules-visualization/</guid>
+      <description>&lt;p&gt;Blender is a free software for 3D graphics. In old virsions many operations were binded to hotkeys, so it was believed that Blender is very hard to master. Now it has more userfriendly interface with button in addition to hotkeys.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

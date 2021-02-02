@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="yandex-verification" content="761bc4bf6044da39" />
+	<title>Setting up Joomla 3.1.5 with PostgreSQL on Ubuntu 13.04 - Kenarius Octonotes</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.80.0" />
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		 <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="Kenarius Octonotes" rel="home">
+				<div class="logo__title">Kenarius Octonotes</div>
+				<div class="logo__tagline">Static notes about information technologies</div>
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">Home</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/resume">Resume</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Setting up Joomla 3.1.5 with PostgreSQL on Ubuntu 13.04</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2013-08-19T16:15:00">2013-08-19</time>
+</div>
+</div>
+		</header><div class="content post__content clearfix">
+			<h2 id="installing-dependencies">Installing dependencies</h2>
+<p>Firstly you need to install webserver, php-related stuff and database server (we use PostgreSQL).</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">apt-get install -y php5-fpm nginx postgresql php5-pgsql
+</code></pre></div><p>Now download and install Joomla (currently 3.1.5 is the latest). Please, update following lines with latest version if nescessary:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> /srv
+wget http://joomlacode.org/gf/download/frsrelease/18622/83487/Joomla_3.1.5-Stable-Full_Package.zip
+unzip Joomla_3.1.5-Stable-Full_Package.zip -d joomla
+chown -R www-data:www-data joomla
+</code></pre></div><h2 id="database-setup">Database setup</h2>
+<p>The only two things you need to do is to create user (<code>joomla</code> in example) and database (<code>joomla</code> in example). To do it under <code>postgres</code> user:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo -u postgres -i
+createuser joomla --pwprompt --encrypted
+createdb joomla
+<span style="color:#007020">exit</span>
+</code></pre></div><p>Output should look like:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ createuser joomla --pwprompt --encrypted
+Enter password <span style="color:#007020;font-weight:bold">for</span> new role:
+Enter it again:
+Shall the new role be a superuser? <span style="color:#666">(</span>y/n<span style="color:#666">)</span> n
+Shall the new role be allowed to create databases? <span style="color:#666">(</span>y/n<span style="color:#666">)</span> y
+Shall the new role be allowed to create more new roles? <span style="color:#666">(</span>y/n<span style="color:#666">)</span> n
+</code></pre></div><h2 id="nginx-setup">nginx setup</h2>
+<p>Create file <code>joomla</code> with content (you may want to adjust <code>server_name</code> and <code>root</code>):</p>
+<pre><code># vim /etc/nginx/sites-available/joomla
+server {
+  listen 80;
+  server_name joomla.lan;
+  access_log /var/log/nginx/localhost.access.log;
+  error_log /var/log/nginx/localhost.error.log;
+  root /srv/joomla;
+  index index.php index.html index.htm default.html default.htm;
+  # Support Clean (aka Search Engine Friendly) URLs
+  location / {
+    try_files $uri $uri/ /index.php?$args;
+  }
+  # deny running scripts inside writable directories
+  location ~* /(images|cache|media|logs|tmp)/.*\.(php|pl|py|jsp|asp|sh|cgi)$ {
+    return 403;
+    error_page 403 /403_error.html;
+  }
+  location ~ \.php$ {
+    fastcgi_pass  unix:/var/run/php5-fpm.sock;
+    fastcgi_index index.php;
+    include fastcgi_params;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    include /etc/nginx/fastcgi.conf;
+  }
+  # caching of files
+  location ~* \.(ico|pdf|flv)$ {
+    expires 1y;
+  }
+  location ~* \.(js|css|png|jpg|jpeg|gif|swf|xml|txt)$ {
+    expires 14d;
+  }
+}
+</code></pre><p>Enable site by creating link to config:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ln -s /etc/nginx/sites-available/joomla /etc/nginx/sites-enabled/
+</code></pre></div><p>And add FastCGI options (create <code>fastcgi.conf</code> file):</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#60a0b0;font-style:italic"># vim /etc/nginx/fastcgi.conf</span>
+fastcgi_param   QUERY_STRING            <span style="color:#bb60d5">$query_string</span>;
+fastcgi_param   REQUEST_METHOD          <span style="color:#bb60d5">$request_method</span>;
+fastcgi_param   CONTENT_TYPE            <span style="color:#bb60d5">$content_type</span>;
+fastcgi_param   CONTENT_LENGTH          <span style="color:#bb60d5">$content_length</span>;
+
+fastcgi_param   SCRIPT_FILENAME         <span style="color:#bb60d5">$document_root$fastcgi_script_name</span>;
+fastcgi_param   SCRIPT_NAME             <span style="color:#bb60d5">$fastcgi_script_name</span>;
+fastcgi_param   PATH_INFO               <span style="color:#bb60d5">$fastcgi_path_info</span>;
+fastcgi_param   REQUEST_URI             <span style="color:#bb60d5">$request_uri</span>;
+fastcgi_param   DOCUMENT_URI            <span style="color:#bb60d5">$document_uri</span>;
+fastcgi_param   DOCUMENT_ROOT           <span style="color:#bb60d5">$document_root</span>;
+fastcgi_param   SERVER_PROTOCOL         <span style="color:#bb60d5">$server_protocol</span>;
+
+fastcgi_param   GATEWAY_INTERFACE       CGI/1.1;
+fastcgi_param   SERVER_SOFTWARE         nginx/<span style="color:#bb60d5">$nginx_version</span>;
+
+fastcgi_param   REMOTE_ADDR             <span style="color:#bb60d5">$remote_addr</span>;
+fastcgi_param   REMOTE_PORT             <span style="color:#bb60d5">$remote_port</span>;
+fastcgi_param   SERVER_ADDR             <span style="color:#bb60d5">$server_addr</span>;
+fastcgi_param   SERVER_PORT             <span style="color:#bb60d5">$server_port</span>;
+fastcgi_param   SERVER_NAME             <span style="color:#bb60d5">$server_name</span>;
+
+fastcgi_param   HTTPS                   <span style="color:#bb60d5">$https</span>;
+
+<span style="color:#60a0b0;font-style:italic"># PHP only, required if PHP was built with --enable-force-cgi-redirect</span>
+fastcgi_param   REDIRECT_STATUS         200;
+</code></pre></div><h2 id="hosts-setup">hosts setup</h2>
+<p>Now you need to point <code>joomla.lan</code> to <code>127.0.0.1</code> ip address. To do it, add line to <code>/etc/hosts</code>:</p>
+<p>{% codeblock%}
+127.0.0.1 joomla.lan</p>
+<pre><code>
+Now restart and go to http://joomla.lan</code></pre>
+		</div>
+		
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/ubuntu/" rel="tag">ubuntu</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/server/" rel="tag">server</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/joomla/" rel="tag">joomla</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/postgres/" rel="tag">postgres</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/howto/" rel="tag">howto</a></li>
+	</ul>
+</div>
+	</article>
+</main>
+
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/blog/2013/08/16/cudasafecall-application-snippet/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">CudaSafeCall application snippet</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/blog/2013/08/26/install-and-configure-btsync-in-ubuntu-12.04/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">Install and configure btsync in Ubuntu 12.04</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 Kenarius Octonotes.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script> <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { id:22777879, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</body>
+</html>

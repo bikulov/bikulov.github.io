@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="yandex-verification" content="761bc4bf6044da39" />
+	<title>Toggling string case in linux bash - Kenarius Octonotes</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.80.0" />
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		 <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="Kenarius Octonotes" rel="home">
+				<div class="logo__title">Kenarius Octonotes</div>
+				<div class="logo__tagline">Static notes about information technologies</div>
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">Home</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/resume">Resume</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Toggling string case in linux bash</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2012-10-31T09:00:00">2012-10-31</time>
+</div>
+</div>
+		</header><div class="content post__content clearfix">
+			<p>It’s quite an academic task, but anyway useful sometimes. I’ve collected different ways to do it in terminal in linux. Some of them work with UTF-8 characters (some it will toggle case for &ldquo;й&rdquo;, &ldquo;ё&rdquo; and so on. It will not in general handle special ligatures, such as &ldquo;ß&rdquo;&quot; and &ldquo;ﬁ&rdquo;.)</p>
+<p>Ways are: sed, perl, python, awk, tr, bash, dd.</p>
+<h2 id="using-sed">Using sed</h2>
+<p>Works with UTF-8 characters.</p>
+<p>It is quite straightforward and allows to add custom rules easily. For example, I’ve added special handling for ligatures &ldquo;ß&rdquo;&quot; and &ldquo;ﬁ&rdquo;. I should note that conversion SS -&gt; ß is not correct in general. So you may want to remove it.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ <span style="color:#007020">echo</span> <span style="color:#4070a0">&#39;&#39;</span>Wie hйЮёßen Sieﬁ тест<span style="color:#4070a0">&#39;&#39;</span> | sed <span style="color:#4070a0">&#39;&#39;</span>s/.*/<span style="color:#4070a0;font-weight:bold">\U</span>&amp;/;s/ß/SS/g;s/ﬁ/FI/g<span style="color:#4070a0">&#39;&#39;</span>
+WIE HЙЮЁSSEN SIEFI ТЕСТ
+
+$ <span style="color:#007020">echo</span> <span style="color:#4070a0">&#39;&#39;</span>WIE HЙЮЁSSEN SIEFI ТЕСТ<span style="color:#4070a0">&#39;&#39;</span> | sed <span style="color:#4070a0">&#39;&#39;</span>s/ß/SS/g;s/ﬁ/FI/g;s/.*/<span style="color:#4070a0;font-weight:bold">\L</span>&amp;/<span style="color:#4070a0">&#39;&#39;</span>
+wie hйюёssen siefi тест
+</code></pre></div><h2 id="using-perl">Using perl</h2>
+<p>Doesn’t work with UTF-8 characters.</p>
+<p>I’m not a perl-ninja, may be there is a more efficient way. But it works.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ <span style="color:#007020">echo</span> <span style="color:#4070a0">&#39;&#39;</span>Wie hйЮёßen Sieﬁ тест<span style="color:#4070a0">&#39;&#39;</span> | perl -ne <span style="color:#4070a0">&#39;&#39;</span>print uc<span style="color:#666">(</span><span style="color:#bb60d5">$_</span><span style="color:#666">)</span><span style="color:#4070a0">&#39;&#39;</span>
+WIE HйЮёßEN SIEﬁ тест
+
+$ <span style="color:#007020">echo</span> <span style="color:#4070a0">&#39;&#39;</span>WIE HЙЮЁSSEN SIEFI ТЕСТ<span style="color:#4070a0">&#39;&#39;</span> | perl -ne <span style="color:#4070a0">&#39;&#39;</span>print lc<span style="color:#666">(</span><span style="color:#bb60d5">$_</span><span style="color:#666">)</span><span style="color:#4070a0">&#39;&#39;</span>
+wie hЙЮЁssen siefi ТЕСТ
+</code></pre></div><h2 id="using-python">Using python</h2>
+<p>Doesn’t work with UTF-8 characters.</p>
+<p>Python nowadays sometimes said to be replacement for perl. It can not convert Cyrillic letters (UTF-8) too.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ <span style="color:#007020">echo</span> <span style="color:#4070a0">&#39;&#39;</span>Wie hйЮёßen Sieﬁ тест<span style="color:#4070a0">&#39;&#39;</span> | python -c <span style="color:#4070a0">&#34;import sys; [sys.stdout.write(arg.upper()) for arg in raw_input()]; print &#34;</span><span style="color:#4070a0;font-weight:bold">\n</span><span style="color:#4070a0">&#34;&#34;</span>
+WIE HйЮёßEN SIEﬁ тест
+
+$ <span style="color:#007020">echo</span> <span style="color:#4070a0">&#39;&#39;</span>WIE HЙЮЁSSEN SIEFI ТЕСТ<span style="color:#4070a0">&#39;&#39;</span> | python -c <span style="color:#4070a0">&#34;import sys; [sys.stdout.write(arg.lower()) for arg in raw_input()]; print &#34;</span><span style="color:#4070a0;font-weight:bold">\n</span><span style="color:#4070a0">&#34;&#34;</span>
+wie hЙЮЁssen siefi ТЕСТ
+</code></pre></div><h2 id="using-awk">Using awk</h2>
+<p>Doesn’t work with UTF-8 characters in mawk, works with UTF-8 characters in gawk.</p>
+<p>Default awk in Ubuntu 12.04 is mawk. To get UTF-8 support you have to install gawk and use it.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ <span style="color:#007020">echo</span> <span style="color:#4070a0">&#39;&#39;</span>Wie hйЮёßen Sieﬁ тест<span style="color:#4070a0">&#39;&#39;</span> | gawk <span style="color:#4070a0">&#39;&#39;</span><span style="color:#666">{</span><span style="color:#007020;font-weight:bold">for</span> <span style="color:#666">(</span><span style="color:#bb60d5">i</span><span style="color:#666">=</span>1; i&lt;<span style="color:#666">=</span>NF; i++<span style="color:#666">)</span> <span style="color:#007020">printf</span> toupper<span style="color:#666">(</span><span style="color:#bb60d5">$i</span><span style="color:#666">)</span><span style="color:#4070a0">&#34; &#34;</span><span style="color:#666">}</span> END <span style="color:#666">{</span>print <span style="color:#4070a0">&#34;&#34;</span><span style="color:#666">}</span><span style="color:#4070a0">&#39;&#39;</span>
+WIE HЙЮЁßEN SIEﬁ ТЕСТ
+
+$ <span style="color:#007020">echo</span> <span style="color:#4070a0">&#39;&#39;</span>WIE HЙЮЁSSEN SIEFI ТЕСТ<span style="color:#4070a0">&#39;&#39;</span> | gawk <span style="color:#4070a0">&#39;&#39;</span><span style="color:#666">{</span><span style="color:#007020;font-weight:bold">for</span> <span style="color:#666">(</span><span style="color:#bb60d5">i</span><span style="color:#666">=</span>1; i&lt;<span style="color:#666">=</span>NF; i++<span style="color:#666">)</span> <span style="color:#007020">printf</span> tolower<span style="color:#666">(</span><span style="color:#bb60d5">$i</span><span style="color:#666">)</span><span style="color:#4070a0">&#34; &#34;</span><span style="color:#666">}</span> END <span style="color:#666">{</span>print <span style="color:#4070a0">&#34;&#34;</span><span style="color:#666">}</span><span style="color:#4070a0">&#39;&#39;</span>
+wie hйюёssen siefi тест
+</code></pre></div><h2 id="using-tr">Using tr</h2>
+<p>Doesn’t work with UTF-8 characters.</p>
+<p>It works with current locale. But I work in us locale and my native language is Russian.</p>
+<p>It is the easiest way I believe. It also fits the purpose of tr — to translate and delete characters. It is possible to add custom rules such as “tr ‘ё’ ‘Ё’&quot;, but it caused new strange symbols to appear in the output.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ <span style="color:#007020">echo</span> <span style="color:#4070a0">&#39;&#39;</span>Wie hйЮёßen Sieﬁ тест<span style="color:#4070a0">&#39;&#39;</span> | tr <span style="color:#4070a0">&#39;&#39;</span><span style="color:#666">[</span>:lower:<span style="color:#666">]</span><span style="color:#4070a0">&#39;&#39;</span> <span style="color:#4070a0">&#39;&#39;</span><span style="color:#666">[</span>:upper:<span style="color:#666">]</span><span style="color:#4070a0">&#39;&#39;</span>
+WIE HйЮёßEN SIEﬁ тест
+
+$ <span style="color:#007020">echo</span> <span style="color:#4070a0">&#39;&#39;</span>WIE HЙЮЁSSEN SIEFI ТЕСТ<span style="color:#4070a0">&#39;&#39;</span> | tr <span style="color:#4070a0">&#39;&#39;</span><span style="color:#666">[</span>:upper:<span style="color:#666">]</span><span style="color:#4070a0">&#39;&#39;</span> <span style="color:#4070a0">&#39;&#39;</span><span style="color:#666">[</span>:lower:<span style="color:#666">]</span><span style="color:#4070a0">&#39;&#39;</span>
+wie hЙЮЁssen siefi ТЕСТ
+</code></pre></div><h2 id="using-bash">Using bash</h2>
+<p>Doesn’t work with UTF-8 characters.</p>
+<p>Warning! It’s weird way for converting strings, but a good way to convert variables in bash scripts.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ <span style="color:#007020">export</span> <span style="color:#bb60d5">a</span><span style="color:#666">=</span><span style="color:#4070a0">&#39;&#39;</span>Wie hйЮёßen Sieﬁ тест<span style="color:#4070a0">&#39;&#39;</span> ; <span style="color:#007020">echo</span> <span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">a</span>^^<span style="color:#70a0d0;font-style:italic">}</span>
+WIE HйЮёßEN SIEﬁ тест
+
+$ <span style="color:#007020">export</span> <span style="color:#bb60d5">a</span><span style="color:#666">=</span><span style="color:#4070a0">&#39;&#39;</span>WIE HЙЮЁSSEN SIEFI ТЕСТ<span style="color:#4070a0">&#39;&#39;</span> ; <span style="color:#007020">echo</span> <span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">a</span>,,<span style="color:#70a0d0;font-style:italic">}</span>
+wie hЙЮЁssen siefi ТЕСТ
+</code></pre></div><h2 id="using-dd">Using dd</h2>
+<p>Doesn’t work with UTF-8 characters.</p>
+<p>The bad news it outputs more information than only toggled string. Just for collection.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ <span style="color:#007020">echo</span> <span style="color:#4070a0">&#39;&#39;</span>Wie hйЮёßen Sieﬁ тест<span style="color:#4070a0">&#39;&#39;</span> | dd <span style="color:#bb60d5">conv</span><span style="color:#666">=</span>ucase
+WIE HйЮёßEN SIEﬁ тест
+0+1 records in
+0+1 records out
+<span style="color:#40a070">32</span> bytes <span style="color:#666">(</span><span style="color:#40a070">32</span> B<span style="color:#666">)</span> copied, 0.000124458 s, <span style="color:#40a070">257</span> kB/s
+
+$ <span style="color:#007020">echo</span> <span style="color:#4070a0">&#39;&#39;</span>WIE HЙЮЁSSEN SIEFI ТЕСТ<span style="color:#4070a0">&#39;&#39;</span> | dd <span style="color:#bb60d5">conv</span><span style="color:#666">=</span>lcase
+wie hЙЮЁssen siefi ТЕСТ
+0+1 records in
+0+1 records out
+<span style="color:#40a070">31</span> bytes <span style="color:#666">(</span><span style="color:#40a070">31</span> B<span style="color:#666">)</span> copied, 7.913e-05 s, <span style="color:#40a070">392</span> kB/s
+</code></pre></div><h2 id="using-php">Using php</h2>
+<p>Doesn’t work with UTF-8 characters.</p>
+<p>PHP can be used as scripting language for general purposes with php-cli.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ <span style="color:#007020">echo</span> <span style="color:#4070a0">&#39;&#39;</span>Wie hйЮёßen Sieﬁ тест<span style="color:#4070a0">&#39;&#39;</span> | php -r <span style="color:#4070a0">&#34;print strtoupper(fgets(STDIN));&#34;</span>
+WIE HйЮёßEN SIEﬁ тест
+
+$ <span style="color:#007020">echo</span> <span style="color:#4070a0">&#39;&#39;</span>WIE HЙЮЁSSEN SIEFI ТЕСТ<span style="color:#4070a0">&#39;&#39;</span> | php -r <span style="color:#4070a0">&#34;print strtolower(fgets(STDIN));&#34;</span>
+wie hЙЮЁssen siefi ТЕСТ
+</code></pre></div>
+		</div>
+		
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/sed/" rel="tag">sed</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/awk/" rel="tag">awk</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/python/" rel="tag">python</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/bash/" rel="tag">bash</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/tr/" rel="tag">tr</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/dd/" rel="tag">dd</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/perl/" rel="tag">perl</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/terminal/" rel="tag">terminal</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/linux/" rel="tag">linux</a></li>
+	</ul>
+</div>
+	</article>
+</main>
+
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/blog/2012/10/29/setting-up-rhodecode-on-ubuntu-12.04/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Setting up RhodeCode on Ubuntu 12.04</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/blog/2012/11/01/show-n-biggest-directories-in-linux-bash/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">Show N biggest directories in linux bash</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 Kenarius Octonotes.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script> <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { id:22777879, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</body>
+</html>

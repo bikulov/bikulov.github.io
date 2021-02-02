@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="yandex-verification" content="761bc4bf6044da39" />
+	<title>Ubuntu Server 12.04 &#43; Slurm 2.5.7 fatnodes - Kenarius Octonotes</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.80.0" />
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		 <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="Kenarius Octonotes" rel="home">
+				<div class="logo__title">Kenarius Octonotes</div>
+				<div class="logo__tagline">Static notes about information technologies</div>
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">Home</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/resume">Resume</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Ubuntu Server 12.04 &#43; Slurm 2.5.7 fatnodes</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2013-06-18T09:00:00">2013-06-18</time>
+</div>
+</div>
+		</header><div class="content post__content clearfix">
+			<p>SLURM (Simple Linux Utility for Resource Management) — job scheduler and resource manager usually installed on supercomputers. For example, it runs on Lomonosov supercomputer in MSU, Moscow, Russia.</p>
+<p>Usually one physical or virtual computer (physical node) is one logical node is SLURM. If one physical node serve more than one logical nodes, it called «fat node». Fat nodes are needed in case you have a lot of memory at physical node or several GPUs on it. Sometimes fat nodes are convenient.</p>
+<p>System is Ubuntu 12.04 Server x64. We need additional configuration parameter, so SLURM will be built from the sources.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>Munge for nodes authentication and build-essential for building from sources are needed:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get install -y libmunge-dev munge build-essential
+</code></pre></div><h2 id="building-slurm">Building SLURM</h2>
+<p>Get, unpack and cd to slurm dir:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">wget http://www.schedmd.com/download/latest/slurm-2.5.7.tar.bz2
+tar xvf slurm-2.5.7.tar.bz2
+<span style="color:#007020">cd</span> slurm-2.5.7/
+</code></pre></div><p>Configure SLURM to enable fat nodes, make and install it:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">./configure --enable-multiple-slurmd
+make
+sudo make install
+</code></pre></div><h2 id="configuring-system">Configuring system</h2>
+<p>We need to add user slurm and add him to group with the same name:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo adduser slurm
+sudo adduser slurm slurm
+</code></pre></div><p>Create munge key and start munge daemon:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo /usr/sbin/create-munge-key
+sudo service munge start
+</code></pre></div><h2 id="configuring-slurm">Configuring SLURM</h2>
+<p>Now create configuration file <code>/usr/local/etc/slurm.conf</code>:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#4070a0">ClusterName</span><span style="color:#666">=</span><span style="color:#4070a0">ubuntu #&lt; change this to your hostname</span>
+<span style="color:#4070a0">ControlMachine</span><span style="color:#666">=</span><span style="color:#4070a0">ubuntu #&lt; change this to your host name</span>
+
+<span style="color:#4070a0">SlurmUser</span><span style="color:#666">=</span><span style="color:#4070a0">slurm</span>
+<span style="color:#4070a0">SlurmctldPort</span><span style="color:#666">=</span><span style="color:#4070a0">6817</span>
+<span style="color:#4070a0">AuthType</span><span style="color:#666">=</span><span style="color:#4070a0">auth/munge</span>
+
+<span style="color:#4070a0">StateSaveLocation</span><span style="color:#666">=</span><span style="color:#4070a0">/tmp</span>
+<span style="color:#4070a0">SlurmdSpoolDir</span><span style="color:#666">=</span><span style="color:#4070a0">/tmp/slurmd%n/</span>
+<span style="color:#4070a0">SwitchType</span><span style="color:#666">=</span><span style="color:#4070a0">switch/none</span>
+<span style="color:#4070a0">MpiDefault</span><span style="color:#666">=</span><span style="color:#4070a0">none</span>
+<span style="color:#4070a0">SlurmctldPidFile</span><span style="color:#666">=</span><span style="color:#4070a0">/var/run/slurmctld.pid</span>
+<span style="color:#4070a0">SlurmdPidFile</span><span style="color:#666">=</span><span style="color:#4070a0">/var/run/slurmd%n.pid</span>
+<span style="color:#4070a0">ProctrackType</span><span style="color:#666">=</span><span style="color:#4070a0">proctrack/pgid</span>
+<span style="color:#4070a0">CacheGroups</span><span style="color:#666">=</span><span style="color:#4070a0">0</span>
+<span style="color:#4070a0">ReturnToService</span><span style="color:#666">=</span><span style="color:#4070a0">0</span>
+
+<span style="color:#60a0b0;font-style:italic"># TIMERS</span>
+<span style="color:#4070a0">SlurmctldTimeout</span><span style="color:#666">=</span><span style="color:#4070a0">300</span>
+<span style="color:#4070a0">SlurmdTimeout</span><span style="color:#666">=</span><span style="color:#4070a0">300</span>
+<span style="color:#4070a0">InactiveLimit</span><span style="color:#666">=</span><span style="color:#4070a0">0</span>
+<span style="color:#4070a0">MinJobAge</span><span style="color:#666">=</span><span style="color:#4070a0">300</span>
+<span style="color:#4070a0">KillWait</span><span style="color:#666">=</span><span style="color:#4070a0">30</span>
+<span style="color:#4070a0">Waittime</span><span style="color:#666">=</span><span style="color:#4070a0">0</span>
+
+<span style="color:#60a0b0;font-style:italic"># SCHEDULING</span>
+<span style="color:#4070a0">SchedulerType</span><span style="color:#666">=</span><span style="color:#4070a0">sched/backfill</span>
+<span style="color:#4070a0">SelectType</span><span style="color:#666">=</span><span style="color:#4070a0">select/linear</span>
+<span style="color:#4070a0">FastSchedule</span><span style="color:#666">=</span><span style="color:#4070a0">1</span>
+
+<span style="color:#60a0b0;font-style:italic"># LOGGING</span>
+<span style="color:#4070a0">SlurmctldDebug</span><span style="color:#666">=</span><span style="color:#4070a0">3</span>
+<span style="color:#4070a0">SlurmdDebug</span><span style="color:#666">=</span><span style="color:#4070a0">3</span>
+<span style="color:#4070a0">JobCompType</span><span style="color:#666">=</span><span style="color:#4070a0">jobcomp/none</span>
+
+<span style="color:#60a0b0;font-style:italic"># COMPUTE NODES</span>
+<span style="color:#60a0b0;font-style:italic"># control node</span>
+<span style="color:#4070a0">NodeName</span><span style="color:#666">=</span><span style="color:#4070a0">ubuntu NodeAddr=127.0.0.1 Port=17000 State=UNKNOWN</span>
+
+<span style="color:#60a0b0;font-style:italic"># each logical node is on the same physical node, so we need different ports for them</span>
+<span style="color:#60a0b0;font-style:italic"># name node-[*] is arbitrary</span>
+<span style="color:#4070a0">NodeName</span><span style="color:#666">=</span><span style="color:#4070a0">node-0 NodeAddr=127.0.0.1 Port=17001 State=UNKNOWN</span>
+<span style="color:#4070a0">NodeName</span><span style="color:#666">=</span><span style="color:#4070a0">node-1 NodeAddr=127.0.0.1 Port=17002 State=UNKNOWN</span>
+<span style="color:#4070a0">NodeName</span><span style="color:#666">=</span><span style="color:#4070a0">node-2 NodeAddr=127.0.0.1 Port=17003 State=UNKNOWN</span>
+<span style="color:#4070a0">NodeName</span><span style="color:#666">=</span><span style="color:#4070a0">node-3 NodeAddr=127.0.0.1 Port=17004 State=UNKNOWN</span>
+<span style="color:#4070a0">NodeName</span><span style="color:#666">=</span><span style="color:#4070a0">node-4 NodeAddr=127.0.0.1 Port=17005 State=UNKNOWN</span>
+
+<span style="color:#60a0b0;font-style:italic"># PARTITIONS</span>
+<span style="color:#60a0b0;font-style:italic"># partition name is arbitrary</span>
+<span style="color:#4070a0">PartitionName</span><span style="color:#666">=</span><span style="color:#4070a0">cpu Nodes=node-[0-4] Default=YES MaxTime=INFINITE State=UP</span>
+</code></pre></div><h2 id="starting-slurm">Starting SLURM</h2>
+<p>Start SLURM control daemon:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo slurmctld -c
+</code></pre></div><p>Start SLURM daemons for each logical node:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo slurmd -c -N node-0
+sudo slurmd -c -N node-1
+sudo slurmd -c -N node-2
+sudo slurmd -c -N node-3
+sudo slurmd -c -N node-4
+</code></pre></div><p>Check if everything is alright:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sinfo
+</code></pre></div><p>You must see that nodes are ready for work:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cpu*         up   infinite      <span style="color:#40a070">5</span>   idle node-<span style="color:#666">[</span>0-4<span style="color:#666">]</span>
+</code></pre></div>
+		</div>
+		
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/ubuntu/" rel="tag">ubuntu</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/ubuntu-server/" rel="tag">ubuntu server</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/server/" rel="tag">server</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/slurm/" rel="tag">slurm</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/fatnode/" rel="tag">fatnode</a></li>
+	</ul>
+</div>
+	</article>
+</main>
+
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/blog/2013/04/28/ubuntu-server-12.04-drupal-7-nginx-mysql/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Ubuntu Server 12.04 &#43; Drupal 7 &#43; nginx &#43; MySQL</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/blog/2013/07/12/configuration-of-hosts-for-convenient-ssh-connections/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">Configuration of hosts for convenient ssh connections</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 Kenarius Octonotes.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script> <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { id:22777879, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</body>
+</html>

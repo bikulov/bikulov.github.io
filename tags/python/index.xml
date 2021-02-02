@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>python on Kenarius Octonotes</title>
+    <link>https://bikulov.org/tags/python/</link>
+    <description>Recent content in python on Kenarius Octonotes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 22 Feb 2019 00:30:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Python program template</title>
+      <link>https://bikulov.org/blog/2019/02/22/python-program-template/</link>
+      <pubDate>Fri, 22 Feb 2019 00:30:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2019/02/22/python-program-template/</guid>
+      <description>&lt;p&gt;For every simple python script you need same simple parts:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;command line arguments parsing&lt;/li&gt;
+&lt;li&gt;logging&lt;/li&gt;
+&lt;li&gt;[optional] submodules&lt;/li&gt;
+&lt;li&gt;[optional] building to a binary&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I&amp;rsquo;ve prepared a simple python project with all these parts to use as template. It is available on &lt;a href=&#34;https://github.com/bikulov/python_template/&#34;&gt;github&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python sorting objects of user defined class</title>
+      <link>https://bikulov.org/blog/2017/03/11/python-sorting-objects-of-user-defined-class/</link>
+      <pubDate>Sat, 11 Mar 2017 23:32:41 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2017/03/11/python-sorting-objects-of-user-defined-class/</guid>
+      <description>&lt;p&gt;The most common way of sorting collections of custom objects in Python is to &lt;a href=&#34;https://docs.python.org/3.5/library/functions.html#sorted&#34;&gt;provide&lt;/a&gt; key function that is used to extract a comparison key from each element:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#007020&#34;&gt;sorted&lt;/span&gt;(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Case insensitive Sorting is here&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;split(), key&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;str&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;lower)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Install Jupyter Notebook and Scientific Environment in Ubuntu 14.04 With Python 3</title>
+      <link>https://bikulov.org/blog/2015/11/07/install-jupyter-notebook-and-scientific-environment-in-ubuntu-14.04-with-python-3/</link>
+      <pubDate>Sat, 07 Nov 2015 11:24:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2015/11/07/install-jupyter-notebook-and-scientific-environment-in-ubuntu-14.04-with-python-3/</guid>
+      <description>&lt;p&gt;Several changes occured since my last &lt;a href=&#34;https://bikulov.org/blog/2014/05/14/install-up-to-date-scientific-environment-in-ubuntu-14-dot-04-with-python-3-dot-4/&#34;&gt;note&lt;/a&gt; about installing python scientific environment:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://ipython.org/notebook&#34;&gt;IPython Notebook&lt;/a&gt; was succeeded by &lt;a href=&#34;http://jupyter.org/&#34;&gt;Jupyter Notebook&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://stanford.edu/~mwaskom/software/seaborn/&#34;&gt;seaborn&lt;/a&gt; package is used for the pretty matplotlib plots&lt;/li&gt;
+&lt;li&gt;raw &lt;a href=&#34;https://virtualenv.readthedocs.org/en/latest/&#34;&gt;virtualenv&lt;/a&gt; was replaced by &lt;a href=&#34;https://virtualenvwrapper.readthedocs.org/en/latest/&#34;&gt;virtualenvwrapper&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;procedure of notebook profiles creation and edition has been changed&lt;/li&gt;
+&lt;li&gt;ipython &lt;a href=&#34;https://bugs.launchpad.net/ubuntu/+source/python3.4/+bug/1290847&#34;&gt;bug&lt;/a&gt; about pip in virtualenv is obsolete. But now another &lt;a href=&#34;https://github.com/matplotlib/matplotlib/issues/3029/&#34;&gt;workaround&lt;/a&gt; is needed for packahes installation&lt;/li&gt;
+&lt;li&gt;pip installation from &lt;a href=&#34;https://bootstrap.pypa.io/get-pip.py&#34;&gt;pypa&lt;/a&gt; is now one-liner&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>Animations from scientific data using Paraview 4.3 and python</title>
+      <link>https://bikulov.org/blog/2015/04/05/animations-from-scientific-data-using-paraview-4.3-and-python/</link>
+      <pubDate>Sun, 05 Apr 2015 16:31:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2015/04/05/animations-from-scientific-data-using-paraview-4.3-and-python/</guid>
+      <description>&lt;h3 id=&#34;create-frames&#34;&gt;Create frames&lt;/h3&gt;
+&lt;p&gt;This note describes usage of Paraview 4.3 (contrary to previous &lt;a href=&#34;https://bikulov.org/blog/2014/11/15/create-video-illustrations-from-numerical-experiments-data-with-paraview-and-python-2/&#34;&gt;note&lt;/a&gt; with Paraview before 4.1). Some changes were made:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;command line arguments were added to make code more reusable&lt;/li&gt;
+&lt;li&gt;it works with Paraview extracted from the archive (4.3.1)&lt;/li&gt;
+&lt;li&gt;white background must be specified manually (&lt;code&gt;SetViewProperties(view, Background = [1, 1, 1])&lt;/code&gt; in the code)&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>Create video illustrations from numerical experiments data with Paraview and Python 2</title>
+      <link>https://bikulov.org/blog/2014/11/15/create-video-illustrations-from-numerical-experiments-data-with-paraview-and-python-2/</link>
+      <pubDate>Sat, 15 Nov 2014 01:56:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2014/11/15/create-video-illustrations-from-numerical-experiments-data-with-paraview-and-python-2/</guid>
+      <description>&lt;p&gt;See &lt;a href=&#34;http://bikulov.org/blog/2015/04/05/animations-from-scientific-data-using-paraview-4-dot-3-and-python/&#34;&gt;updated&lt;/a&gt; note.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Install up-to-date scientific environment in Ubuntu 14.04 with Python 3.4</title>
+      <link>https://bikulov.org/blog/2014/05/14/install-up-to-date-scientific-environment-in-ubuntu-14.04-with-python-3.4/</link>
+      <pubDate>Wed, 14 May 2014 16:16:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2014/05/14/install-up-to-date-scientific-environment-in-ubuntu-14.04-with-python-3.4/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: I&amp;rsquo;ve created an &lt;a href=&#34;https://bikulov.org/blog/2015/11/07/install-jupyter-notebook-and-scientific-environment-in-ubuntu-14-dot-04-with-python-3/&#34;&gt;updated page&lt;/a&gt; with most recent instructions for &lt;a href=&#34;http://jupyter.org/&#34;&gt;Jupyter Notebook&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Set application version in gengetopt config based on Mercurial revision</title>
+      <link>https://bikulov.org/blog/2013/11/02/set-application-version-in-gengetopt-config-based-on-mercurial-revision/</link>
+      <pubDate>Sat, 02 Nov 2013 21:53:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/11/02/set-application-version-in-gengetopt-config-based-on-mercurial-revision/</guid>
+      <description>&lt;p&gt;Previously I wrote about gengetopt tool to parse command line arguments. There was a line about application version.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;version &amp;quot;13.10.25&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;It is important to keep this line up to date every time you compile and deploy binary.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Creation of paper-ready plots with matlotlib</title>
+      <link>https://bikulov.org/blog/2013/10/03/creation-of-paper-ready-plots-with-matlotlib/</link>
+      <pubDate>Thu, 03 Oct 2013 10:37:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/10/03/creation-of-paper-ready-plots-with-matlotlib/</guid>
+      <description>&lt;p&gt;I used to utilize gnuplot for creation of plots with arbitrary data. The main problem was to postprocess data before plotting: I had to integrate postprocess into calculation code itself or to write additional script to do so. I&amp;rsquo;d like to provide an example of good-looking plotting with Python and matplotlib. Python has bataries included, so there will be no problem with preparation of data to be plotted.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Using CUDA C&#43;&#43; functions in Python via `*.so` and ctypes</title>
+      <link>https://bikulov.org/blog/2013/10/01/using-cuda-c-functions-in-python-via-.so-and-ctypes/</link>
+      <pubDate>Tue, 01 Oct 2013 08:33:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/10/01/using-cuda-c-functions-in-python-via-.so-and-ctypes/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;d like to show how to use HPC part written on C++ with CUDA in Python code. So, every heavy part may be done on GPU with CUDA, all gluing tasks (with beautiful matplotlib plots) are done on CPU with Python.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Email notification if IP is changed with Python and cron</title>
+      <link>https://bikulov.org/blog/2013/09/09/email-notification-if-ip-is-changed-with-python-and-cron/</link>
+      <pubDate>Mon, 09 Sep 2013 23:24:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/09/09/email-notification-if-ip-is-changed-with-python-and-cron/</guid>
+      <description>&lt;p&gt;This Python script retrieves computer&amp;rsquo;s external IP address (using internet.yandex.ru) and emails message with new IP if IP has been changed since last check. BeautifulSoup module is needed, so install it if you have no installed version:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;sudo pip install beautifulsoup
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Toggling string case in linux bash</title>
+      <link>https://bikulov.org/blog/2012/10/31/toggling-string-case-in-linux-bash/</link>
+      <pubDate>Wed, 31 Oct 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2012/10/31/toggling-string-case-in-linux-bash/</guid>
+      <description>&lt;p&gt;It’s quite an academic task, but anyway useful sometimes. I’ve collected different ways to do it in terminal in linux. Some of them work with UTF-8 characters (some it will toggle case for &amp;ldquo;й&amp;rdquo;, &amp;ldquo;ё&amp;rdquo; and so on. It will not in general handle special ligatures, such as &amp;ldquo;ß&amp;rdquo;&amp;quot; and &amp;ldquo;ﬁ&amp;rdquo;.)&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Blender and Python molecules visualization</title>
+      <link>https://bikulov.org/blog/2012/04/11/blender-and-python-molecules-visualization/</link>
+      <pubDate>Wed, 11 Apr 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2012/04/11/blender-and-python-molecules-visualization/</guid>
+      <description>&lt;p&gt;Blender is a free software for 3D graphics. In old virsions many operations were binded to hotkeys, so it was believed that Blender is very hard to master. Now it has more userfriendly interface with button in addition to hotkeys.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

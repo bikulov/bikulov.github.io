@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>screen capture on Kenarius Octonotes</title>
+    <link>https://bikulov.org/tags/screen-capture/</link>
+    <description>Recent content in screen capture on Kenarius Octonotes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 23 Jan 2013 09:31:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/screen-capture/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Universal screen capturing with scrot, imagemagick and ffmpeg</title>
+      <link>https://bikulov.org/blog/2013/01/23/universal-screen-capturing-with-scrot-imagemagick-and-ffmpeg/</link>
+      <pubDate>Wed, 23 Jan 2013 09:31:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/01/23/universal-screen-capturing-with-scrot-imagemagick-and-ffmpeg/</guid>
+      <description>&lt;p&gt;You can record your screen using only command line in Linux. Workflow will look like: &lt;code&gt;Create a bunch of screenshots -&amp;gt; Crop screenshots -&amp;gt; Make a movie from images&lt;/code&gt;.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

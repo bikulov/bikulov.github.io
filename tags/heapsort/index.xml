@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>heapsort on Kenarius Octonotes</title>
+    <link>https://bikulov.org/tags/heapsort/</link>
+    <description>Recent content in heapsort on Kenarius Octonotes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 04 Nov 2013 21:33:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/heapsort/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Heapsort implementation in C&#43;&#43;</title>
+      <link>https://bikulov.org/blog/2013/11/04/heapsort-implementation-in-c-/</link>
+      <pubDate>Mon, 04 Nov 2013 21:33:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/11/04/heapsort-implementation-in-c-/</guid>
+      <description>&lt;p&gt;Heapsort is one of the fastest sorting algorithms. The best and the worst cases for heapsort have same $O(n\log(n))$ performance.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="yandex-verification" content="761bc4bf6044da39" />
+	<title>Script for user configurations generation and sending at Ubuntu OpenVPN server - Kenarius Octonotes</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.80.0" />
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		 <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="Kenarius Octonotes" rel="home">
+				<div class="logo__title">Kenarius Octonotes</div>
+				<div class="logo__tagline">Static notes about information technologies</div>
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">Home</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/resume">Resume</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Script for user configurations generation and sending at Ubuntu OpenVPN server</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2016-01-05T23:07:00">2016-01-05</time>
+</div>
+</div>
+		</header><div class="content post__content clearfix">
+			<p>Ubuntu has a very detailed documentation about <a href="https://help.ubuntu.com/lts/serverguide/openvpn.html">OpenVPN server</a> configuration. The key feature of this note is script for automatic generation of single-file client configurations (keys and certs are embedded) and sending them by email. Looks interesting? Read below!</p>
+<h2 id="prerequisities">Prerequisities</h2>
+<p>All commands in this section must be executed as root user.</p>
+<p>Update package list:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">apt-get update
+apt-get -y upgrade
+</code></pre></div><p>Install needed packages (easy-rsa must be installed explicitly on modern Ubuntus):</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">apt-get install -y openvpn easy-rsa
+</code></pre></div><h2 id="configure-openvpn-server-on-ubuntu-1404">Configure OpenVPN server on Ubuntu 14.04</h2>
+<p>Copy default configuration:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cp -r /usr/share/easy-rsa /etc/openvpn/easy-rsa
+<span style="color:#007020">cd</span> /etc/openvpn/easy-rsa
+</code></pre></div><p>Edit vars file in <code>/etc/openvpn/easy-rsa</code> folder corresponding to your settings. Change the following lines corresponding to your options:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007020">export</span> <span style="color:#bb60d5">KEY_SIZE</span><span style="color:#666">=</span><span style="color:#40a070">2048</span>
+
+<span style="color:#007020">export</span> <span style="color:#bb60d5">KEY_COUNTRY</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;US&#34;</span>
+<span style="color:#007020">export</span> <span style="color:#bb60d5">KEY_PROVINCE</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;State&#34;</span>
+<span style="color:#007020">export</span> <span style="color:#bb60d5">KEY_CITY</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;BigCityName&#34;</span>
+<span style="color:#007020">export</span> <span style="color:#bb60d5">KEY_ORG</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;OrganizationName&#34;</span>
+<span style="color:#007020">export</span> <span style="color:#bb60d5">KEY_EMAIL</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;mail@organization.com&#34;</span>
+<span style="color:#007020">export</span> <span style="color:#bb60d5">KEY_OU</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;vpn.organization.com&#34;</span>
+
+<span style="color:#007020">export</span> <span style="color:#bb60d5">KEY_NAME</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;vpn.organization.com&#34;</span>
+
+<span style="color:#007020">export</span> <span style="color:#bb60d5">KEY_CN</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;vpn.organization.com&#34;</span>
+<span style="color:#007020">export</span> <span style="color:#bb60d5">KEY_ALTNAMES</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;vpn.organization.com&#34;</span>
+</code></pre></div><p>Activate saved settings:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007020">source</span> vars
+</code></pre></div><p>And generate server keys:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">./clean-all
+./build-ca
+./build-key-server vpn.organization.com
+./build-dh
+openvpn --genkey --secret keys/ta.key
+</code></pre></div><p>Example of server config (must be placed into <code>/etc/openvpn</code> folder):</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#60a0b0;font-style:italic"># /etc/openvpn/server.conf</span>
+<span style="color:#60a0b0;font-style:italic"># Which TCP/UDP port should OpenVPN listen on</span>
+port <span style="color:#40a070">1594</span>
+
+<span style="color:#60a0b0;font-style:italic"># Ip&#39;s</span>
+server 10.10.10.0 255.255.255.0
+
+<span style="color:#60a0b0;font-style:italic"># UDP server</span>
+proto udp
+
+<span style="color:#60a0b0;font-style:italic"># Create a routed IP tunnel</span>
+dev tun
+
+<span style="color:#60a0b0;font-style:italic"># Root certificate, certificate, private key, DH key, SSL/TLS key</span>
+ca       easy-rsa/keys/ca.crt
+cert     easy-rsa/keys/vpn.organization.com.crt
+key      easy-rsa/keys/vpn.organization.com.key
+dh       easy-rsa/keys/dh2048.pem
+tls-auth easy-rsa/keys/ta.key <span style="color:#40a070">0</span>
+
+<span style="color:#60a0b0;font-style:italic"># Maintain a record of client &lt;-&gt; virtual IP address</span>
+ifconfig-pool-persist ipp.txt
+
+<span style="color:#60a0b0;font-style:italic"># Allow different clients to be able to &#34;see&#34; each other</span>
+client-to-client
+
+<span style="color:#60a0b0;font-style:italic"># Ping every 10 seconds, peer is down if no pong during a 120 seconds</span>
+keepalive <span style="color:#40a070">10</span> <span style="color:#40a070">120</span>
+
+<span style="color:#60a0b0;font-style:italic"># Cryptographic cipher</span>
+cipher AES-256-CBC
+
+<span style="color:#60a0b0;font-style:italic"># Enable compression on the VPN link</span>
+comp-lzo
+
+<span style="color:#60a0b0;font-style:italic"># Reduce the OpenVPN daemon&#39;s privileges after initialization</span>
+user nobody
+group nogroup
+
+<span style="color:#60a0b0;font-style:italic"># Avoid errors caused by the privilege downgrade</span>
+persist-key
+persist-tun
+
+<span style="color:#60a0b0;font-style:italic"># Status file</span>
+status openvpn-status.log
+
+<span style="color:#60a0b0;font-style:italic"># Set the appropriate level of log verbosity</span>
+verb <span style="color:#40a070">3</span>
+</code></pre></div><p>Be sure that your keys <code>ca.crt</code>, <code>vpn.organization.com.crt</code>, <code>vpn.organization.com.key</code>, <code>dh2048.pem</code>, <code>ta.key</code> are in the correct place corresponding to server config.</p>
+<h2 id="client-configuration">Client configuration</h2>
+<p>Client configuration must correspond to server one. For the above server config client one is:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#60a0b0;font-style:italic"># /etc/openvpn/easy-rsa/client.conf</span>
+<span style="color:#60a0b0;font-style:italic"># Specify that it is a client</span>
+client
+
+<span style="color:#60a0b0;font-style:italic"># Use the same setting as on the server.</span>
+dev tun
+proto udp
+
+<span style="color:#60a0b0;font-style:italic"># The hostname/IP and port of the server.</span>
+remote vpn.organization.com <span style="color:#40a070">1594</span>
+
+<span style="color:#60a0b0;font-style:italic"># Keep trying indefinitely to resolve the host name of the OpenVPN server</span>
+resolv-retry infinite
+
+<span style="color:#60a0b0;font-style:italic"># Most clients don&#39;t need to bind to a specific local port number</span>
+nobind
+
+<span style="color:#60a0b0;font-style:italic"># Downgrade privileges after initialization (non-Windows only)</span>
+user nobody
+group nogroup
+
+<span style="color:#60a0b0;font-style:italic"># Try to preserve some state across restarts</span>
+persist-key
+persist-tun
+
+<span style="color:#60a0b0;font-style:italic"># Verify server certificate</span>
+ns-cert-type server
+
+<span style="color:#60a0b0;font-style:italic"># Enable compression on the VPN link</span>
+comp-lzo
+
+<span style="color:#60a0b0;font-style:italic"># Set log file verbosity.</span>
+verb <span style="color:#40a070">3</span>
+
+<span style="color:#60a0b0;font-style:italic"># Set key direction for tls-auth</span>
+key-direction <span style="color:#40a070">1</span>
+
+<span style="color:#60a0b0;font-style:italic"># Cryptographic cipher</span>
+cipher AES-256-CBC
+</code></pre></div><h2 id="сonvenient-autosending-of-client-configurations">Сonvenient autosending of client configurations</h2>
+<p>Save the following script into folder:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007020">#!/usr/bin/env bash
+</span><span style="color:#007020"></span>
+<span style="color:#bb60d5">CLIENT</span><span style="color:#666">=</span><span style="color:#bb60d5">$1</span>
+<span style="color:#bb60d5">CLIENT_MAIL</span><span style="color:#666">=</span><span style="color:#bb60d5">$2</span>
+<span style="color:#bb60d5">SERVER</span><span style="color:#666">=</span>vpn.dima.io
+
+<span style="color:#007020">cd</span> /etc/openvpn/easy-rsa
+
+<span style="color:#007020">source</span> vars
+
+mkdir -p bundles
+
+./build-key <span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">CLIENT</span><span style="color:#70a0d0;font-style:italic">}</span>.at.<span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">SERVER</span><span style="color:#70a0d0;font-style:italic">}</span>
+
+cp client.conf bundles/<span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">CLIENT</span><span style="color:#70a0d0;font-style:italic">}</span>.at.<span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">SERVER</span><span style="color:#70a0d0;font-style:italic">}</span>.conf
+
+<span style="color:#007020">echo</span> <span style="color:#4070a0">&#34;&lt;ca&gt;&#34;</span>  &gt;&gt; bundles/<span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">CLIENT</span><span style="color:#70a0d0;font-style:italic">}</span>.at.<span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">SERVER</span><span style="color:#70a0d0;font-style:italic">}</span>.conf
+cat keys/ca.crt &gt;&gt; bundles/<span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">CLIENT</span><span style="color:#70a0d0;font-style:italic">}</span>.at.<span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">SERVER</span><span style="color:#70a0d0;font-style:italic">}</span>.conf
+<span style="color:#007020">echo</span> <span style="color:#4070a0">&#34;&lt;/ca&gt;&#34;</span> &gt;&gt; bundles/<span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">CLIENT</span><span style="color:#70a0d0;font-style:italic">}</span>.at.<span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">SERVER</span><span style="color:#70a0d0;font-style:italic">}</span>.conf
+
+<span style="color:#007020">echo</span> <span style="color:#4070a0">&#34;&lt;cert&gt;&#34;</span>  &gt;&gt; bundles/<span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">CLIENT</span><span style="color:#70a0d0;font-style:italic">}</span>.at.<span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">SERVER</span><span style="color:#70a0d0;font-style:italic">}</span>.conf
+cat keys/<span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">CLIENT</span><span style="color:#70a0d0;font-style:italic">}</span>.at.<span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">SERVER</span><span style="color:#70a0d0;font-style:italic">}</span>.crt &gt;&gt; bundles/<span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">CLIENT</span><span style="color:#70a0d0;font-style:italic">}</span>.at.<span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">SERVER</span><span style="color:#70a0d0;font-style:italic">}</span>.conf
+<span style="color:#007020">echo</span> <span style="color:#4070a0">&#34;&lt;/cert&gt;&#34;</span> &gt;&gt; bundles/<span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">CLIENT</span><span style="color:#70a0d0;font-style:italic">}</span>.at.<span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">SERVER</span><span style="color:#70a0d0;font-style:italic">}</span>.conf
+
+<span style="color:#007020">echo</span> <span style="color:#4070a0">&#34;&lt;key&gt;&#34;</span>  &gt;&gt; bundles/<span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">CLIENT</span><span style="color:#70a0d0;font-style:italic">}</span>.at.<span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">SERVER</span><span style="color:#70a0d0;font-style:italic">}</span>.conf
+cat keys/<span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">CLIENT</span><span style="color:#70a0d0;font-style:italic">}</span>.at.<span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">SERVER</span><span style="color:#70a0d0;font-style:italic">}</span>.key &gt;&gt; bundles/<span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">CLIENT</span><span style="color:#70a0d0;font-style:italic">}</span>.at.<span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">SERVER</span><span style="color:#70a0d0;font-style:italic">}</span>.conf
+<span style="color:#007020">echo</span> <span style="color:#4070a0">&#34;&lt;/key&gt;&#34;</span> &gt;&gt; bundles/<span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">CLIENT</span><span style="color:#70a0d0;font-style:italic">}</span>.at.<span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">SERVER</span><span style="color:#70a0d0;font-style:italic">}</span>.conf
+
+<span style="color:#007020">echo</span> <span style="color:#4070a0">&#34;&lt;tls-auth&gt;&#34;</span>  &gt;&gt; bundles/<span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">CLIENT</span><span style="color:#70a0d0;font-style:italic">}</span>.at.<span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">SERVER</span><span style="color:#70a0d0;font-style:italic">}</span>.conf
+cat keys/ta.key &gt;&gt; bundles/<span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">CLIENT</span><span style="color:#70a0d0;font-style:italic">}</span>.at.<span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">SERVER</span><span style="color:#70a0d0;font-style:italic">}</span>.conf
+<span style="color:#007020">echo</span> <span style="color:#4070a0">&#34;&lt;/tls-auth&gt;&#34;</span> &gt;&gt; bundles/<span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">CLIENT</span><span style="color:#70a0d0;font-style:italic">}</span>.at.<span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">SERVER</span><span style="color:#70a0d0;font-style:italic">}</span>.conf
+
+<span style="color:#007020;font-weight:bold">if</span> <span style="color:#666">[</span> -n <span style="color:#4070a0">&#34;</span><span style="color:#bb60d5">$CLIENT_MAIL</span><span style="color:#4070a0">&#34;</span> <span style="color:#666">]</span>; <span style="color:#007020;font-weight:bold">then</span>
+    <span style="color:#007020">echo</span> -e <span style="color:#4070a0">&#34;Hello, </span><span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">CLIENT</span><span style="color:#70a0d0;font-style:italic">}</span><span style="color:#4070a0">!\n\nConfiguration with embedded certificates is attached.&#34;</span> &gt; mail.txt
+    <span style="color:#007020">echo</span> <span style="color:#4070a0">&#34;If you use Windows system, rename configuration from *.conf to *.ovpn.&#34;</span> &gt;&gt; mail.txt
+    <span style="color:#007020">echo</span> <span style="color:#4070a0">&#34;This mail is automatically generated. Please do not respond to it.&#34;</span> &gt;&gt; mail.txt
+    <span style="color:#007020">echo</span> <span style="color:#4070a0">&#34;--&#34;</span>
+    <span style="color:#007020">echo</span> <span style="color:#4070a0">&#34;</span><span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">SERVER</span><span style="color:#70a0d0;font-style:italic">}</span><span style="color:#4070a0"> team.&#34;</span>
+    cat mail.txt | mutt -s <span style="color:#4070a0">&#34;Configuration for </span><span style="color:#bb60d5">$CLIENT</span><span style="color:#4070a0"> on </span><span style="color:#bb60d5">$SERVER</span><span style="color:#4070a0"> OpenVPN server&#34;</span> -a bundles/<span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">CLIENT</span><span style="color:#70a0d0;font-style:italic">}</span>.at.<span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">SERVER</span><span style="color:#70a0d0;font-style:italic">}</span>.conf -- <span style="color:#bb60d5">$CLIENT_MAIL</span>
+<span style="color:#007020;font-weight:bold">fi</span>
+
+rm mail.txt
+</code></pre></div><p>add-key</p>
+<p>And make it executable:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">chmod +x add-key
+</code></pre></div><p>You will have to install <code>mutt</code> (it is used for sending emails with attachments). Your server must have full hostname like <code>server.organization.com</code>, otherwise sendmail may hang during the install, so change it before mutt installation.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">apt-get install -y mutt
+</code></pre></div><h2 id="if-you-install-in-lxc-container">If you install in LXC container</h2>
+<p>If you install VPN server into LXC container, you have to make additional steps. Firstly, add rule for iptabels in host system (use ip of your VPN container and port from VPN server config):</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -t nat -A PREROUTING -i eth0 -p udp --dport <span style="color:#40a070">1594</span> -j DNAT --to 10.0.3.111:1594
+</code></pre></div><p>To make it persistent, you may use <a href="http://stackoverflow.com/questions/30818931/debian-8-iptables-persistent">iptables-persistent</a>.</p>
+<p>Secondly, confugure <a href="/blog/2014/10/09/tips-for-lxc/">tun device</a> for lxc.</p>
+		</div>
+		
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/openvpn/" rel="tag">openvpn</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/ubuntu/" rel="tag">ubuntu</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/howto/" rel="tag">howto</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/script/" rel="tag">script</a></li>
+	</ul>
+</div>
+	</article>
+</main>
+
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/blog/2015/11/07/install-jupyter-notebook-and-scientific-environment-in-ubuntu-14.04-with-python-3/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Install Jupyter Notebook and Scientific Environment in Ubuntu 14.04 With Python 3</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/blog/2016/08/19/tips-for-lxc-2-unprivileged-containers/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">Tips for LXC 2: unprivileged containers</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 Kenarius Octonotes.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script> <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { id:22777879, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</body>
+</html>

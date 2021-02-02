@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="yandex-verification" content="761bc4bf6044da39" />
+	<title>Creating Zip With VPN Client Keys and Configuration Files - Kenarius Octonotes</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.80.0" />
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		 <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="Kenarius Octonotes" rel="home">
+				<div class="logo__title">Kenarius Octonotes</div>
+				<div class="logo__tagline">Static notes about information technologies</div>
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">Home</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/resume">Resume</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Creating Zip With VPN Client Keys and Configuration Files</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2013-07-31T09:31:00">2013-07-31</time>
+</div>
+</div>
+		</header><div class="content post__content clearfix">
+			<p>Depends on server configuration, each OpenVPN client needs configuration file (client.conf for *nix and client.ovpn for windows), certificate authority (ca.crt), [optional] tls auth file (ta.key), user crt and key.</p>
+<p>Typical OpenVPN client configuration file looks like (ca and ta files in <code>server</code> subdirectory):</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#4070a0">client</span>
+<span style="color:#4070a0">remote &lt;vpn server address&gt;</span>
+<span style="color:#4070a0">port 1194</span>
+<span style="color:#4070a0">proto udp</span>
+<span style="color:#4070a0">dev tun</span>
+<span style="color:#4070a0">dev-type tun</span>
+<span style="color:#4070a0">ns-cert-type server</span>
+<span style="color:#4070a0">reneg-sec 86400</span>
+<span style="color:#4070a0">comp-lzo yes</span>
+<span style="color:#4070a0">verb 3</span>
+<span style="color:#4070a0">ca server/ca.crt</span>
+<span style="color:#4070a0">cert &lt;user crt&gt;</span>
+<span style="color:#4070a0">key &lt;user key&gt;</span>
+<span style="color:#4070a0">tls-auth server/ta.key 1</span>
+</code></pre></div><p>The following is tested on Ubuntu 12.04, but it will work (maybe with some modifications) in other linux distributions. Create new subdirectory <code>key-bundles</code> in <code>/etc/openvpn/easy-rsa</code> directory. Place there the following script <code>zip-key</code>:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007020">#!/bin/bash
+</span><span style="color:#007020"></span><span style="color:#bb60d5">NAME</span><span style="color:#666">=</span><span style="color:#bb60d5">$1</span>
+<span style="color:#007020">cd</span> keys
+sed -s <span style="color:#4070a0">&#34;s/^cert .*/cert </span><span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">NAME</span><span style="color:#70a0d0;font-style:italic">}</span><span style="color:#4070a0">.crt/g&#34;</span> -i client.conf
+sed -s <span style="color:#4070a0">&#34;s/^key .*/key </span><span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">NAME</span><span style="color:#70a0d0;font-style:italic">}</span><span style="color:#4070a0">.key/g&#34;</span> -i client.conf
+cp client.conf client.ovpn
+zip -r ../key-bundles/<span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">NAME</span><span style="color:#70a0d0;font-style:italic">}</span>.zip client.conf client.ovpn server <span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">NAME</span><span style="color:#70a0d0;font-style:italic">}</span>.crt <span style="color:#70a0d0;font-style:italic">${</span><span style="color:#bb60d5">NAME</span><span style="color:#70a0d0;font-style:italic">}</span>.key
+<span style="color:#007020">cd</span> -
+</code></pre></div><p>You may need zip (<code>sudo apt-get install zip</code>) and make script executable (<code>sudo chmod +x zip-key</code>). I assume your VPN client configuration file is client.conf, ta.key and ca.crt are in <code>/etc/openvpn/easy-rsa/keys/server</code> directory. First and the only script argument is client key filename.</p>
+		</div>
+		
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/ubuntu/" rel="tag">ubuntu</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/ubuntu-12.04/" rel="tag">ubuntu 12.04</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/server/" rel="tag">server</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/vpn/" rel="tag">vpn</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/openvpn/" rel="tag">openvpn</a></li>
+	</ul>
+</div>
+	</article>
+</main>
+
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/blog/2013/07/12/configuration-of-hosts-for-convenient-ssh-connections/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Configuration of hosts for convenient ssh connections</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/blog/2013/08/08/configuring-ubuntu-12.04-in-openvz-on-centos-6.4/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">Configuring Ubuntu 12.04 in OpenVZ on CentOS 6.4</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 Kenarius Octonotes.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script> <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { id:22777879, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</body>
+</html>

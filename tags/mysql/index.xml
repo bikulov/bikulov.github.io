@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>mysql on Kenarius Octonotes</title>
+    <link>https://bikulov.org/tags/mysql/</link>
+    <description>Recent content in mysql on Kenarius Octonotes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 28 Apr 2013 09:00:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Ubuntu Server 12.04 &#43; Drupal 7 &#43; nginx &#43; MySQL</title>
+      <link>https://bikulov.org/blog/2013/04/28/ubuntu-server-12.04-drupal-7-nginx-mysql/</link>
+      <pubDate>Sun, 28 Apr 2013 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/04/28/ubuntu-server-12.04-drupal-7-nginx-mysql/</guid>
+      <description>&lt;p&gt;Default Drupal package in Ubuntu installs Apache, but I prefer nginx as a webserver. In this note I’ll describe steps necessary to get Drupal 7 work.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

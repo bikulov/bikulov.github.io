@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="yandex-verification" content="761bc4bf6044da39" />
+	<title>Blender and Python molecules visualization - Kenarius Octonotes</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.80.0" />
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		 <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="Kenarius Octonotes" rel="home">
+				<div class="logo__title">Kenarius Octonotes</div>
+				<div class="logo__tagline">Static notes about information technologies</div>
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">Home</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/resume">Resume</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Blender and Python molecules visualization</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2012-04-11T09:00:00">2012-04-11</time>
+</div>
+</div>
+		</header><div class="content post__content clearfix">
+			<p>Blender is a free software for 3D graphics. In old virsions many operations were binded to hotkeys, so it was believed that Blender is very hard to master. Now it has more userfriendly interface with button in addition to hotkeys.</p>
+<p>One of the most useful features of Blender is scripting. Below I provide python script for drawing molecules with cylinders and spheres.</p>
+<p>Command to draw a sphere:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">bpy<span style="color:#666">.</span>ops<span style="color:#666">.</span>mesh<span style="color:#666">.</span>primitive_uv_sphere_add()
+</code></pre></div><p>To draw a cylinder, you need to specify cylinder center and rotation. Rotation is described via rotation axis and rotation angle.</p>
+<p>Trivial cylinder after creation is aligned with Z axis: <code>z = (0,0,1)</code>. If you need to connect two points <code>r1</code> and <code>r2</code> with cylinder, its center coordinate is <code>r3 = (r1+r2)/2</code>. Cylinder must be aligned with <code>z_desired = (r1-r2).normalized()</code>, so rotation axis is <code>rot_axis = z.cross(z_desired)</code> and angle <code>angle = acos(z.dot(z_desired))</code>.</p>
+<p>Wrapping up, code:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#007020;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">math</span> <span style="color:#007020;font-weight:bold">import</span> degrees, acos
+<span style="color:#007020;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">mathutils</span> <span style="color:#007020;font-weight:bold">import</span> Vector
+
+spheres <span style="color:#666">=</span> (Vector((<span style="color:#40a070">2</span>,<span style="color:#40a070">3</span>,<span style="color:#40a070">3</span>)),Vector((<span style="color:#40a070">1</span>,<span style="color:#40a070">1</span>,<span style="color:#40a070">2</span>)),Vector((<span style="color:#40a070">2</span>,<span style="color:#40a070">3</span>,<span style="color:#40a070">4</span>)),Vector((<span style="color:#40a070">4</span>,<span style="color:#40a070">5</span>,<span style="color:#40a070">3</span>)))
+edges <span style="color:#666">=</span> ((<span style="color:#40a070">0</span>,<span style="color:#40a070">1</span>),(<span style="color:#40a070">1</span>,<span style="color:#40a070">2</span>),(<span style="color:#40a070">2</span>,<span style="color:#40a070">3</span>))
+
+<span style="color:#007020;font-weight:bold">for</span> i <span style="color:#007020;font-weight:bold">in</span> <span style="color:#007020">range</span>(<span style="color:#40a070">0</span>, <span style="color:#007020">len</span>(spheres)):
+    r1 <span style="color:#666">=</span> spheres[i]
+    bpy<span style="color:#666">.</span>ops<span style="color:#666">.</span>mesh<span style="color:#666">.</span>primitive_uv_sphere_add(location<span style="color:#666">=</span>(r1<span style="color:#666">.</span>x, r1<span style="color:#666">.</span>y, r1<span style="color:#666">.</span>z))
+
+<span style="color:#007020;font-weight:bold">for</span> i <span style="color:#007020;font-weight:bold">in</span> <span style="color:#007020">range</span>(<span style="color:#40a070">0</span>,<span style="color:#007020">len</span>(edges)):
+     r1 <span style="color:#666">=</span> spheres[edges[i][<span style="color:#40a070">0</span>]]
+     r2 <span style="color:#666">=</span> spheres[edges[i][<span style="color:#40a070">1</span>]]
+     r3 <span style="color:#666">=</span> (r1<span style="color:#666">+</span>r2)<span style="color:#666">/</span><span style="color:#40a070">2</span>
+     z <span style="color:#666">=</span> Vector((<span style="color:#40a070">0</span>,<span style="color:#40a070">0</span>,<span style="color:#40a070">1</span>))
+     z_desired <span style="color:#666">=</span> (r1<span style="color:#666">-</span>r2)<span style="color:#666">.</span>normalized()
+     rot_axis <span style="color:#666">=</span> z<span style="color:#666">.</span>cross(z_desired)
+     angle <span style="color:#666">=</span> acos(z<span style="color:#666">.</span>dot(z_desired))
+     bpy<span style="color:#666">.</span>ops<span style="color:#666">.</span>mesh<span style="color:#666">.</span>primitive_cylinder_add(radius<span style="color:#666">=</span><span style="color:#40a070">0.3</span>, depth<span style="color:#666">=</span>(r2<span style="color:#666">-</span>r1)<span style="color:#666">.</span>length,location<span style="color:#666">=</span>(r3<span style="color:#666">.</span>x,r3<span style="color:#666">.</span>y,r3<span style="color:#666">.</span>z))
+     bpy<span style="color:#666">.</span>ops<span style="color:#666">.</span>transform<span style="color:#666">.</span>rotate(value<span style="color:#666">=</span>(angle,), axis<span style="color:#666">=</span>rot_axis)
+</code></pre></div><p>After copy-paste to blender console you will see the similar image:</p>
+<p><img src="/images/2012/blender_python.png" alt="blender_python"></p>
+		</div>
+		
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/blender/" rel="tag">blender</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/python/" rel="tag">python</a></li>
+	</ul>
+</div>
+	</article>
+</main>
+
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/blog/2012/07/18/montage-png-into-single-one/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">Montage png into single one</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 Kenarius Octonotes.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script> <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { id:22777879, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+</body>
+</html>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>backup on Kenarius Octonotes</title>
+    <link>https://bikulov.org/tags/backup/</link>
+    <description>Recent content in backup on Kenarius Octonotes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 30 Aug 2012 09:30:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/backup/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Daily backups (files &#43; mysql) to yandex.disk in Ubuntu 12.04</title>
+      <link>https://bikulov.org/blog/2012/08/30/daily-backups-files-mysql-to-yandex.disk-in-ubuntu-12.04/</link>
+      <pubDate>Thu, 30 Aug 2012 09:30:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2012/08/30/daily-backups-files-mysql-to-yandex.disk-in-ubuntu-12.04/</guid>
+      <description>&lt;p&gt;We all do backups. This note is about doing them on Ubuntu 12.04.&lt;/p&gt;
+&lt;p&gt;Tasks:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;archive important folders&lt;/li&gt;
+&lt;li&gt;dump mysql databases&lt;/li&gt;
+&lt;li&gt;upload all to yandex.disk (online web storage with 10GB space)&lt;/li&gt;
+&lt;li&gt;delete old backups&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I’ll save only backups for last five days.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
