@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://bikulov.org/</loc>
+    <lastmod>2021-02-02T09:30:00+03:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://bikulov.org/tags/docker/</loc>
     <lastmod>2021-02-02T09:30:00+03:00</lastmod>
   </url>
@@ -19,11 +24,6 @@
   
   <url>
     <loc>https://bikulov.org/tags/howto/</loc>
-    <lastmod>2021-02-02T09:30:00+03:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://bikulov.org/</loc>
     <lastmod>2021-02-02T09:30:00+03:00</lastmod>
   </url>
   
