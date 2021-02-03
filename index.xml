@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Bikulov Octonotes</title>
+    <title>:) bikulov.ORG</title>
     <link>https://bikulov.org/</link>
-    <description>Recent content on Bikulov Octonotes</description>
+    <description>Recent content on :) bikulov.ORG</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>en</language>
     <lastBuildDate>Tue, 02 Feb 2021 09:30:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>How to setup own selfhosted wiki</title>
@@ -13,8 +13,15 @@
       <pubDate>Tue, 02 Feb 2021 09:30:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2021/02/02/how-to-setup-own-selfhosted-wiki/</guid>
-      <description>Disclaimer: many links in this post are referral. If you are uncomfortable with it, just search for the text in the links and use results from the search engines.
-Plan  Spin up a new virtual server (1 CPU + 1 GB RAM is fairly enough) in Vultr, Digital Ocean, etc. Register a new domain name Install Docker and Docker Compose Use docker-compose to deploy a wiki Backups  Virtual server For example, let it be Digital Ocean.</description>
+      <description>&lt;p&gt;Disclaimer: many links in this post are referral. If you are uncomfortable with it, just search for the text in the links and use results from the search engines.&lt;/p&gt;
+&lt;h2 id=&#34;plan&#34;&gt;Plan&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;Spin up a new virtual server (1 CPU + 1 GB RAM is fairly enough) in &lt;a href=&#34;https://www.vultr.com/?ref=7552058&#34; target=&#34;_blank&#34;&gt;Vultr&lt;/a&gt;, &lt;a href=&#34;https://m.do.co/c/8aba7c4cd737&#34; target=&#34;_blank&#34;&gt;Digital Ocean&lt;/a&gt;, etc.&lt;/li&gt;
+&lt;li&gt;Register a new domain name&lt;/li&gt;
+&lt;li&gt;Install Docker and Docker Compose&lt;/li&gt;
+&lt;li&gt;Use docker-compose to deploy a wiki&lt;/li&gt;
+&lt;li&gt;Backups&lt;/li&gt;
+&lt;/ol&gt;</description>
     </item>
     
     <item>
@@ -23,7 +30,7 @@ Plan  Spin up a new virtual server (1 CPU + 1 GB RAM is fairly enough) in Vultr,
       <pubDate>Sun, 22 Dec 2019 02:30:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2019/12/22/wireguard-on-ubuntu-server-and-android-client/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;https://www.wireguard.com/&#34;&gt;WireGuard&lt;/a&gt; is lightweight VPN with extremely simple configuration. All below was tested on Ubuntu 18.04 as server and Anroid 8.0.0 as client.&lt;/p&gt;</description>
+      <description>&lt;p&gt;&lt;a href=&#34;https://www.wireguard.com/&#34; target=&#34;_blank&#34;&gt;WireGuard&lt;/a&gt; is lightweight VPN with extremely simple configuration. All below was tested on Ubuntu 18.04 as server and Anroid 8.0.0 as client.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -39,7 +46,7 @@ Plan  Spin up a new virtual server (1 CPU + 1 GB RAM is fairly enough) in Vultr,
 &lt;li&gt;[optional] submodules&lt;/li&gt;
 &lt;li&gt;[optional] building to a binary&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;I&amp;rsquo;ve prepared a simple python project with all these parts to use as template. It is available on &lt;a href=&#34;https://github.com/bikulov/python_template/&#34;&gt;github&lt;/a&gt;.&lt;/p&gt;</description>
+&lt;p&gt;I&amp;rsquo;ve prepared a simple python project with all these parts to use as template. It is available on &lt;a href=&#34;https://github.com/bikulov/python_template/&#34; target=&#34;_blank&#34;&gt;github&lt;/a&gt;.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -48,7 +55,7 @@ Plan  Spin up a new virtual server (1 CPU + 1 GB RAM is fairly enough) in Vultr,
       <pubDate>Mon, 18 Feb 2019 15:41:22 +0300</pubDate>
       
       <guid>https://bikulov.org/resume/</guid>
-      <description>Employment  2015, October – current programmer in Yandex. 2016, January – current physisist in Lomonosov Moscow State University, Physics Faculty. 2013, December – 2015, October junior programmer in Yandex. 2013, May – 2015, January research fellow in Lomonosov Moscow State University, Physics Faculty. 2012, October – 2013, November analyst in IntroVision LLC. 2011 – 2012 programmer in IntroVision LLC. 2007 – 2012 undergraduate education in Lomonosov Moscow State University. 2011, summer research trainee in Clarkson University, Potsdam, NY, USA.</description>
+      <description>Employment  2015, October – current programmer in Yandex. 2016, January – current physisist in Lomonosov Moscow State University, Physics Faculty. 2013, December – 2015, October junior programmer in Yandex. 2013, May – 2015, January research fellow in Lomonosov Moscow State University, Physics Faculty. 2012, October – 2013, November analyst in IntroVision LLC. 2011 – 2012 programmer in IntroVision LLC. 2007 – 2012 undergraduate education in Lomonosov Moscow State University. 2011, summer research trainee in Clarkson University, Potsdam, NY, USA. 2010, summer research trainee in Clarkson University, Potsdam, NY, USA.  Education  2016 PhD dissertation «Modeling of transport phenomena in porous medium with hybrid supercomputer systems».</description>
     </item>
     
     <item>
@@ -57,9 +64,9 @@ Plan  Spin up a new virtual server (1 CPU + 1 GB RAM is fairly enough) in Vultr,
       <pubDate>Sat, 11 Mar 2017 23:32:41 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2017/03/11/python-sorting-objects-of-user-defined-class/</guid>
-      <description>&lt;p&gt;The most common way of sorting collections of custom objects in Python is to &lt;a href=&#34;https://docs.python.org/3.5/library/functions.html#sorted&#34;&gt;provide&lt;/a&gt; key function that is used to extract a comparison key from each element:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#007020&#34;&gt;sorted&lt;/span&gt;(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Case insensitive Sorting is here&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;split(), key&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;str&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;lower)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+      <description>&lt;p&gt;The most common way of sorting collections of custom objects in Python is to &lt;a href=&#34;https://docs.python.org/3.5/library/functions.html#sorted&#34; target=&#34;_blank&#34;&gt;provide&lt;/a&gt; key function that is used to extract a comparison key from each element:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;sorted(&amp;quot;Case insensitive Sorting is here&amp;quot;.split(), key=str.lower)
+&lt;/code&gt;&lt;/pre&gt;</description>
     </item>
     
     <item>
@@ -68,7 +75,7 @@ Plan  Spin up a new virtual server (1 CPU + 1 GB RAM is fairly enough) in Vultr,
       <pubDate>Fri, 19 Aug 2016 18:26:36 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2016/08/19/tips-for-lxc-2-unprivileged-containers/</guid>
-      <description>&lt;p&gt;LXC containers are great for application isolation and safe deployment. &lt;a href=&#34;http://unix.stackexchange.com/questions/181341/what-are-benefits-and-downsides-of-unprivileged-containers&#34;&gt;Running unprivileged containers is the safest way to run containers in a production environment&lt;/a&gt;. This note contains enough information to create your own safe container.&lt;/p&gt;</description>
+      <description>&lt;p&gt;LXC containers are great for application isolation and safe deployment. &lt;a href=&#34;http://unix.stackexchange.com/questions/181341/what-are-benefits-and-downsides-of-unprivileged-containers&#34; target=&#34;_blank&#34;&gt;Running unprivileged containers is the safest way to run containers in a production environment&lt;/a&gt;. This note contains enough information to create your own safe container.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -77,7 +84,7 @@ Plan  Spin up a new virtual server (1 CPU + 1 GB RAM is fairly enough) in Vultr,
       <pubDate>Tue, 05 Jan 2016 23:07:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2016/01/05/script-for-user-configurations-generation-and-sending-at-ubuntu-openvpn-server/</guid>
-      <description>&lt;p&gt;Ubuntu has a very detailed documentation about &lt;a href=&#34;https://help.ubuntu.com/lts/serverguide/openvpn.html&#34;&gt;OpenVPN server&lt;/a&gt; configuration. The key feature of this note is script for automatic generation of single-file client configurations (keys and certs are embedded) and sending them by email. Looks interesting? Read below!&lt;/p&gt;</description>
+      <description>&lt;p&gt;Ubuntu has a very detailed documentation about &lt;a href=&#34;https://help.ubuntu.com/lts/serverguide/openvpn.html&#34; target=&#34;_blank&#34;&gt;OpenVPN server&lt;/a&gt; configuration. The key feature of this note is script for automatic generation of single-file client configurations (keys and certs are embedded) and sending them by email. Looks interesting? Read below!&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -88,12 +95,12 @@ Plan  Spin up a new virtual server (1 CPU + 1 GB RAM is fairly enough) in Vultr,
       <guid>https://bikulov.org/blog/2015/11/07/install-jupyter-notebook-and-scientific-environment-in-ubuntu-14.04-with-python-3/</guid>
       <description>&lt;p&gt;Several changes occured since my last &lt;a href=&#34;https://bikulov.org/blog/2014/05/14/install-up-to-date-scientific-environment-in-ubuntu-14-dot-04-with-python-3-dot-4/&#34;&gt;note&lt;/a&gt; about installing python scientific environment:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://ipython.org/notebook&#34;&gt;IPython Notebook&lt;/a&gt; was succeeded by &lt;a href=&#34;http://jupyter.org/&#34;&gt;Jupyter Notebook&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://stanford.edu/~mwaskom/software/seaborn/&#34;&gt;seaborn&lt;/a&gt; package is used for the pretty matplotlib plots&lt;/li&gt;
-&lt;li&gt;raw &lt;a href=&#34;https://virtualenv.readthedocs.org/en/latest/&#34;&gt;virtualenv&lt;/a&gt; was replaced by &lt;a href=&#34;https://virtualenvwrapper.readthedocs.org/en/latest/&#34;&gt;virtualenvwrapper&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://ipython.org/notebook&#34; target=&#34;_blank&#34;&gt;IPython Notebook&lt;/a&gt; was succeeded by &lt;a href=&#34;http://jupyter.org/&#34; target=&#34;_blank&#34;&gt;Jupyter Notebook&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://stanford.edu/~mwaskom/software/seaborn/&#34; target=&#34;_blank&#34;&gt;seaborn&lt;/a&gt; package is used for the pretty matplotlib plots&lt;/li&gt;
+&lt;li&gt;raw &lt;a href=&#34;https://virtualenv.readthedocs.org/en/latest/&#34; target=&#34;_blank&#34;&gt;virtualenv&lt;/a&gt; was replaced by &lt;a href=&#34;https://virtualenvwrapper.readthedocs.org/en/latest/&#34; target=&#34;_blank&#34;&gt;virtualenvwrapper&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;procedure of notebook profiles creation and edition has been changed&lt;/li&gt;
-&lt;li&gt;ipython &lt;a href=&#34;https://bugs.launchpad.net/ubuntu/+source/python3.4/+bug/1290847&#34;&gt;bug&lt;/a&gt; about pip in virtualenv is obsolete. But now another &lt;a href=&#34;https://github.com/matplotlib/matplotlib/issues/3029/&#34;&gt;workaround&lt;/a&gt; is needed for packahes installation&lt;/li&gt;
-&lt;li&gt;pip installation from &lt;a href=&#34;https://bootstrap.pypa.io/get-pip.py&#34;&gt;pypa&lt;/a&gt; is now one-liner&lt;/li&gt;
+&lt;li&gt;ipython &lt;a href=&#34;https://bugs.launchpad.net/ubuntu/&amp;#43;source/python3.4/&amp;#43;bug/1290847&#34; target=&#34;_blank&#34;&gt;bug&lt;/a&gt; about pip in virtualenv is obsolete. But now another &lt;a href=&#34;https://github.com/matplotlib/matplotlib/issues/3029/&#34; target=&#34;_blank&#34;&gt;workaround&lt;/a&gt; is needed for packahes installation&lt;/li&gt;
+&lt;li&gt;pip installation from &lt;a href=&#34;https://bootstrap.pypa.io/get-pip.py&#34; target=&#34;_blank&#34;&gt;pypa&lt;/a&gt; is now one-liner&lt;/li&gt;
 &lt;/ul&gt;</description>
     </item>
     
@@ -103,7 +110,7 @@ Plan  Spin up a new virtual server (1 CPU + 1 GB RAM is fairly enough) in Vultr,
       <pubDate>Sat, 26 Sep 2015 20:05:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2015/09/26/scan-images-from-command-line-in-linux/</guid>
-      <description>&lt;p&gt;Console utilities in Linuxes are cool: &lt;a href=&#34;https://mcabber.com/&#34;&gt;mcabber&lt;/a&gt; for jabber, &lt;a href=&#34;http://www.mutt.org/&#34;&gt;mutt&lt;/a&gt; for mail, &lt;a href=&#34;http://moc.daper.net/&#34;&gt;mocp&lt;/a&gt; for music, &lt;a href=&#34;http://www.vim.org/&#34;&gt;vim&lt;/a&gt; to rule them all! This note is about scaning from the console (I assume your scanner is already set-up). Aim is to scan document with good quality into pdf with reasonable size.&lt;/p&gt;</description>
+      <description>&lt;p&gt;Console utilities in Linuxes are cool: &lt;a href=&#34;https://mcabber.com/&#34; target=&#34;_blank&#34;&gt;mcabber&lt;/a&gt; for jabber, &lt;a href=&#34;http://www.mutt.org/&#34; target=&#34;_blank&#34;&gt;mutt&lt;/a&gt; for mail, &lt;a href=&#34;http://moc.daper.net/&#34; target=&#34;_blank&#34;&gt;mocp&lt;/a&gt; for music, &lt;a href=&#34;http://www.vim.org/&#34; target=&#34;_blank&#34;&gt;vim&lt;/a&gt; to rule them all! This note is about scaning from the console (I assume your scanner is already set-up). Aim is to scan document with good quality into pdf with reasonable size.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -127,7 +134,7 @@ Plan  Spin up a new virtual server (1 CPU + 1 GB RAM is fairly enough) in Vultr,
       <pubDate>Sat, 28 Feb 2015 08:54:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2015/02/28/install-cuda-6.5-on-clean-ubuntu-14.04/</guid>
-      <description>&lt;p&gt;Lately NVIDIA added repository for Ubuntu 12.04 and Ubuntu 14.04. Recently I hit problem with missing dependencies for &lt;code&gt;libcheese-gtk23&lt;/code&gt; and &lt;code&gt;libcheese7&lt;/code&gt; libraries while installing latest CUDA 6.5 on clean Ubuntu 14.04. Remedy to this can be found on &lt;a href=&#34;http://askubuntu.com/questions/587977/unmet-dependences-when-install-cuda-6-5-on-a-freshly-installed-ubuntu-14-04&#34;&gt;askubuntu&lt;/a&gt;. So, the complete set of commands is below.&lt;/p&gt;</description>
+      <description>&lt;p&gt;Lately NVIDIA added repository for Ubuntu 12.04 and Ubuntu 14.04. Recently I hit problem with missing dependencies for &lt;code&gt;libcheese-gtk23&lt;/code&gt; and &lt;code&gt;libcheese7&lt;/code&gt; libraries while installing latest CUDA 6.5 on clean Ubuntu 14.04. Remedy to this can be found on &lt;a href=&#34;http://askubuntu.com/questions/587977/unmet-dependences-when-install-cuda-6-5-on-a-freshly-installed-ubuntu-14-04&#34; target=&#34;_blank&#34;&gt;askubuntu&lt;/a&gt;. So, the complete set of commands is below.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -136,7 +143,7 @@ Plan  Spin up a new virtual server (1 CPU + 1 GB RAM is fairly enough) in Vultr,
       <pubDate>Sat, 15 Nov 2014 01:56:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2014/11/15/create-video-illustrations-from-numerical-experiments-data-with-paraview-and-python-2/</guid>
-      <description>&lt;p&gt;See &lt;a href=&#34;http://bikulov.org/blog/2015/04/05/animations-from-scientific-data-using-paraview-4-dot-3-and-python/&#34;&gt;updated&lt;/a&gt; note.&lt;/p&gt;</description>
+      <description>&lt;p&gt;See &lt;a href=&#34;http://bikulov.org/blog/2015/04/05/animations-from-scientific-data-using-paraview-4-dot-3-and-python/&#34; target=&#34;_blank&#34;&gt;updated&lt;/a&gt; note.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -146,7 +153,7 @@ Plan  Spin up a new virtual server (1 CPU + 1 GB RAM is fairly enough) in Vultr,
       
       <guid>https://bikulov.org/blog/2014/10/09/tips-for-lxc-creation-autostart-openvpn-and-port-forwarding-to-containers/</guid>
       <description>&lt;p&gt;I&amp;rsquo;ve completed setting up my comfort set of LXC containers and want to save some points I spent a lot of time for or things for copy-paste.&lt;/p&gt;
-&lt;p&gt;I used the official &lt;a href=&#34;https://help.ubuntu.com/lts/serverguide/lxc.html&#34;&gt;Ubuntu Server Guide&lt;/a&gt; but &lt;a href=&#34;https://www.digitalocean.com/community/tutorials/getting-started-with-lxc-on-an-ubuntu-13-04-vps&#34;&gt;note&lt;/a&gt; at Digital Ocean knowledge base also helped me a lot. I created 3 containers: one for vpn, one for site on &lt;a href=&#34;https://bikulov.org/blog/2014/08/09/setup-drupal-7-with-nginx-and-postgresql-on-ubuntu-14-dot-04/&#34;&gt;Drupal&lt;/a&gt; and last one as www proxy for second one with nginx only.&lt;/p&gt;</description>
+&lt;p&gt;I used the official &lt;a href=&#34;https://help.ubuntu.com/lts/serverguide/lxc.html&#34; target=&#34;_blank&#34;&gt;Ubuntu Server Guide&lt;/a&gt; but &lt;a href=&#34;https://www.digitalocean.com/community/tutorials/getting-started-with-lxc-on-an-ubuntu-13-04-vps&#34; target=&#34;_blank&#34;&gt;note&lt;/a&gt; at Digital Ocean knowledge base also helped me a lot. I created 3 containers: one for vpn, one for site on &lt;a href=&#34;https://bikulov.org/blog/2014/08/09/setup-drupal-7-with-nginx-and-postgresql-on-ubuntu-14-dot-04/&#34;&gt;Drupal&lt;/a&gt; and last one as www proxy for second one with nginx only.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -156,8 +163,8 @@ Plan  Spin up a new virtual server (1 CPU + 1 GB RAM is fairly enough) in Vultr,
       
       <guid>https://bikulov.org/blog/2014/08/09/setup-drupal-7-with-nginx-and-postgresql-on-ubuntu-14.04/</guid>
       <description>&lt;p&gt;This note is similar to previous &lt;a href=&#34;https://bikulov.org/blog/2013/04/28/ubuntu-server-12-04-drupal-7-nginx-mysql/&#34;&gt;drupal&lt;/a&gt; and &lt;a href=&#34;https://bikulov.org/blog/2013/08/19/setting-up-joomla-3-dot-1-5-with-postgresql-on-ubuntu-13-dot-04/&#34;&gt;joomla&lt;/a&gt; installations. Install requirements (webserver, php5, DB server, DB adapter for php) as root:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;apt-get install -y nginx php5-fpm nginx postgresql php5-pgsql php5-gd
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;apt-get install -y nginx php5-fpm nginx postgresql php5-pgsql php5-gd
+&lt;/code&gt;&lt;/pre&gt;</description>
     </item>
     
     <item>
@@ -166,7 +173,7 @@ Plan  Spin up a new virtual server (1 CPU + 1 GB RAM is fairly enough) in Vultr,
       <pubDate>Wed, 14 May 2014 16:16:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2014/05/14/install-up-to-date-scientific-environment-in-ubuntu-14.04-with-python-3.4/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: I&amp;rsquo;ve created an &lt;a href=&#34;https://bikulov.org/blog/2015/11/07/install-jupyter-notebook-and-scientific-environment-in-ubuntu-14-dot-04-with-python-3/&#34;&gt;updated page&lt;/a&gt; with most recent instructions for &lt;a href=&#34;http://jupyter.org/&#34;&gt;Jupyter Notebook&lt;/a&gt;.&lt;/p&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: I&amp;rsquo;ve created an &lt;a href=&#34;https://bikulov.org/blog/2015/11/07/install-jupyter-notebook-and-scientific-environment-in-ubuntu-14-dot-04-with-python-3/&#34;&gt;updated page&lt;/a&gt; with most recent instructions for &lt;a href=&#34;http://jupyter.org/&#34; target=&#34;_blank&#34;&gt;Jupyter Notebook&lt;/a&gt;.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -202,7 +209,7 @@ Plan  Spin up a new virtual server (1 CPU + 1 GB RAM is fairly enough) in Vultr,
       <pubDate>Sat, 23 Nov 2013 17:42:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2013/11/23/throw-in-function-signature-in-c-/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;http://www.cplusplus.com/doc/tutorial/exceptions/&#34;&gt;There is&lt;/a&gt; base class &lt;code&gt;exception&lt;/code&gt; in standard library (header &lt;code&gt;&amp;lt;exception&amp;gt;&lt;/code&gt;). It &lt;a href=&#34;http://en.cppreference.com/w/cpp/error/exception&#34;&gt;has&lt;/a&gt; default constructor, copy constructor, copy operator and destructor and virtual &lt;code&gt;what()&lt;/code&gt; function. Latter returns string with additional information about exception.&lt;/p&gt;</description>
+      <description>&lt;p&gt;&lt;a href=&#34;http://www.cplusplus.com/doc/tutorial/exceptions/&#34; target=&#34;_blank&#34;&gt;There is&lt;/a&gt; base class &lt;code&gt;exception&lt;/code&gt; in standard library (header &lt;code&gt;&amp;lt;exception&amp;gt;&lt;/code&gt;). It &lt;a href=&#34;http://en.cppreference.com/w/cpp/error/exception&#34; target=&#34;_blank&#34;&gt;has&lt;/a&gt; default constructor, copy constructor, copy operator and destructor and virtual &lt;code&gt;what()&lt;/code&gt; function. Latter returns string with additional information about exception.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -211,7 +218,7 @@ Plan  Spin up a new virtual server (1 CPU + 1 GB RAM is fairly enough) in Vultr,
       <pubDate>Tue, 19 Nov 2013 23:53:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2013/11/19/sort-strings-from-file-in-c-/</guid>
-      <description>&lt;p&gt;The very simple and common test program is to read bunch of strings from input file (let it be &lt;code&gt;input.txt&lt;/code&gt;), sort them and write down to another file (&lt;code&gt;output.txt&lt;/code&gt;). There is an &lt;a href=&#34;http://www.cyberforum.ru/post1673221.html&#34;&gt;implementation&lt;/a&gt; with small bug: it adds extra empty line. I&amp;rsquo;ve modified original code a bit, so now it works correctly (note: if have last empty line in the input, you will have an empty line in the output). Fixed code is provided below.&lt;/p&gt;</description>
+      <description>&lt;p&gt;The very simple and common test program is to read bunch of strings from input file (let it be &lt;code&gt;input.txt&lt;/code&gt;), sort them and write down to another file (&lt;code&gt;output.txt&lt;/code&gt;). There is an &lt;a href=&#34;http://www.cyberforum.ru/post1673221.html&#34; target=&#34;_blank&#34;&gt;implementation&lt;/a&gt; with small bug: it adds extra empty line. I&amp;rsquo;ve modified original code a bit, so now it works correctly (note: if have last empty line in the input, you will have an empty line in the output). Fixed code is provided below.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -240,7 +247,8 @@ Plan  Spin up a new virtual server (1 CPU + 1 GB RAM is fairly enough) in Vultr,
       <guid>https://bikulov.org/blog/2013/11/02/set-application-version-in-gengetopt-config-based-on-mercurial-revision/</guid>
       <description>&lt;p&gt;Previously I wrote about gengetopt tool to parse command line arguments. There was a line about application version.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;version &amp;quot;13.10.25&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;It is important to keep this line up to date every time you compile and deploy binary.&lt;/p&gt;</description>
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;It is important to keep this line up to date every time you compile and deploy binary.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -249,7 +257,7 @@ Plan  Spin up a new virtual server (1 CPU + 1 GB RAM is fairly enough) in Vultr,
       <pubDate>Sat, 26 Oct 2013 00:03:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2013/10/26/command-line-arguments-in-c-and-c-with-gengetopt/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;http://www.gnu.org/software/gengetopt/gengetopt.html&#34;&gt;Gengetopt&lt;/a&gt; is a tool for parsing command line arguments in C and C++ applications. It generates &lt;code&gt;cmdline.c&lt;/code&gt; and &lt;code&gt;cmdline.h&lt;/code&gt; files in pure C, which contain parser, helper functions, error handling and structure to store argument values. Arguments to be included in auto-generated file are defined in config. I usually gengetopt config file as &lt;code&gt;cmdline.ggo&lt;/code&gt;. In this note I provide an example of gengetopt config file and arguments usage in code.&lt;/p&gt;</description>
+      <description>&lt;p&gt;&lt;a href=&#34;http://www.gnu.org/software/gengetopt/gengetopt.html&#34; target=&#34;_blank&#34;&gt;Gengetopt&lt;/a&gt; is a tool for parsing command line arguments in C and C++ applications. It generates &lt;code&gt;cmdline.c&lt;/code&gt; and &lt;code&gt;cmdline.h&lt;/code&gt; files in pure C, which contain parser, helper functions, error handling and structure to store argument values. Arguments to be included in auto-generated file are defined in config. I usually gengetopt config file as &lt;code&gt;cmdline.ggo&lt;/code&gt;. In this note I provide an example of gengetopt config file and arguments usage in code.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -286,8 +294,8 @@ Plan  Spin up a new virtual server (1 CPU + 1 GB RAM is fairly enough) in Vultr,
       
       <guid>https://bikulov.org/blog/2013/09/09/email-notification-if-ip-is-changed-with-python-and-cron/</guid>
       <description>&lt;p&gt;This Python script retrieves computer&amp;rsquo;s external IP address (using internet.yandex.ru) and emails message with new IP if IP has been changed since last check. BeautifulSoup module is needed, so install it if you have no installed version:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;sudo pip install beautifulsoup
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo pip install beautifulsoup
+&lt;/code&gt;&lt;/pre&gt;</description>
     </item>
     
     <item>
@@ -296,7 +304,7 @@ Plan  Spin up a new virtual server (1 CPU + 1 GB RAM is fairly enough) in Vultr,
       <pubDate>Mon, 02 Sep 2013 18:05:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2013/09/02/universal-simple-makefile/</guid>
-      <description>&lt;p&gt;I often work on my netbook, so I prefer to use &lt;a href=&#34;http://www.sublimetext.com/&#34;&gt;Sublime Text&lt;/a&gt; with Makefiles instead of full-featured IDEs. To automate build process I&amp;rsquo;ve constructed (with help of &lt;a href=&#34;http://pipopolam.com/&#34;&gt;Vasily Picard&lt;/a&gt; and examples from the Internet) universal Makefile. It assumes the following structure of files.&lt;/p&gt;</description>
+      <description>&lt;p&gt;I often work on my netbook, so I prefer to use &lt;a href=&#34;http://www.sublimetext.com/&#34; target=&#34;_blank&#34;&gt;Sublime Text&lt;/a&gt; with Makefiles instead of full-featured IDEs. To automate build process I&amp;rsquo;ve constructed (with help of &lt;a href=&#34;http://pipopolam.com/&#34; target=&#34;_blank&#34;&gt;Vasily Picard&lt;/a&gt; and examples from the Internet) universal Makefile. It assumes the following structure of files.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -305,7 +313,7 @@ Plan  Spin up a new virtual server (1 CPU + 1 GB RAM is fairly enough) in Vultr,
       <pubDate>Mon, 26 Aug 2013 18:42:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2013/08/26/install-and-configure-btsync-in-ubuntu-12.04/</guid>
-      <description>&lt;p&gt;This note describes installation of Bittorrent Sync on Ubuntu. Tutorial was tested on Ubuntu 12.04, but it must work for all Debian-based systems. Read full btsync  &lt;a href=&#34;http://btsync.s3-website-us-east-1.amazonaws.com/BitTorrentSyncUserGuide.pdf&#34;&gt;manual&lt;/a&gt; for advanced information.&lt;/p&gt;</description>
+      <description>&lt;p&gt;This note describes installation of Bittorrent Sync on Ubuntu. Tutorial was tested on Ubuntu 12.04, but it must work for all Debian-based systems. Read full btsync  &lt;a href=&#34;http://btsync.s3-website-us-east-1.amazonaws.com/BitTorrentSyncUserGuide.pdf&#34; target=&#34;_blank&#34;&gt;manual&lt;/a&gt; for advanced information.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -323,7 +331,7 @@ Plan  Spin up a new virtual server (1 CPU + 1 GB RAM is fairly enough) in Vultr,
       <pubDate>Fri, 16 Aug 2013 12:14:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2013/08/16/cudasafecall-application-snippet/</guid>
-      <description>&lt;p&gt;It is a good tone to check CUDA API errors while calling cudaMalloc() and other functions. It also helps to find floating bugs caused by hardware (lack of memory, etc). I provide below an adapted version of CudaSafeCall I found many weeks ago in the &lt;a href=&#34;http://choorucode.com/2011/03/02/cuda-error-checking/&#34;&gt;Internet&lt;/a&gt;. Simply remove &lt;code&gt;#define CUDA_ERROR_CHECK&lt;/code&gt; in production if unneeded.&lt;/p&gt;</description>
+      <description>&lt;p&gt;It is a good tone to check CUDA API errors while calling cudaMalloc() and other functions. It also helps to find floating bugs caused by hardware (lack of memory, etc). I provide below an adapted version of CudaSafeCall I found many weeks ago in the &lt;a href=&#34;http://choorucode.com/2011/03/02/cuda-error-checking/&#34; target=&#34;_blank&#34;&gt;Internet&lt;/a&gt;. Simply remove &lt;code&gt;#define CUDA_ERROR_CHECK&lt;/code&gt; in production if unneeded.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -345,7 +353,7 @@ Plan  Spin up a new virtual server (1 CPU + 1 GB RAM is fairly enough) in Vultr,
       <pubDate>Thu, 08 Aug 2013 20:54:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2013/08/08/configuring-ubuntu-12.04-in-openvz-on-centos-6.4/</guid>
-      <description>&lt;p&gt;This howto is based on two sources: &lt;a href=&#34;http://openvz.org/Quick_Installation_CentOS_6&#34;&gt;Official wiki&lt;/a&gt; and Amutu blog &lt;a href=&#34;http://amutu.com/blog/2013/03/centos_bridge_devic/&#34;&gt;entry&lt;/a&gt;. In short, the main difficulty is in bridge network configuration: correct network configuration doesn&amp;rsquo;t work in CentOS 6.4 while NetworkManager is running. I compiled official documentation and fix found in Amutu blog here in one entry.&lt;/p&gt;</description>
+      <description>&lt;p&gt;This howto is based on two sources: &lt;a href=&#34;http://openvz.org/Quick_Installation_CentOS_6&#34; target=&#34;_blank&#34;&gt;Official wiki&lt;/a&gt; and Amutu blog &lt;a href=&#34;http://amutu.com/blog/2013/03/centos_bridge_devic/&#34; target=&#34;_blank&#34;&gt;entry&lt;/a&gt;. In short, the main difficulty is in bridge network configuration: correct network configuration doesn&amp;rsquo;t work in CentOS 6.4 while NetworkManager is running. I compiled official documentation and fix found in Amutu blog here in one entry.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -364,8 +372,9 @@ Plan  Spin up a new virtual server (1 CPU + 1 GB RAM is fairly enough) in Vultr,
       
       <guid>https://bikulov.org/blog/2013/07/12/configuration-of-hosts-for-convenient-ssh-connections/</guid>
       <description>&lt;p&gt;It is possible to save configuration of ssh connection for later usage. For example, one had to type&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;ssh &amp;lt;username&amp;gt;@&amp;lt;ip address&amp;gt; -p &amp;lt;port&amp;gt; -i &amp;lt;path to key file&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;every time one wants to connect to server.&lt;/p&gt;</description>
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;ssh &amp;lt;username&amp;gt;@&amp;lt;ip address&amp;gt; -p &amp;lt;port&amp;gt; -i &amp;lt;path to key file&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;every time one wants to connect to server.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -420,8 +429,8 @@ Plan  Spin up a new virtual server (1 CPU + 1 GB RAM is fairly enough) in Vultr,
       
       <guid>https://bikulov.org/blog/2012/11/01/show-n-biggest-directories-in-linux-bash/</guid>
       <description>&lt;p&gt;du (disk usage) utility in linux bash summarizes disk usage of each directory or file. By default, it outputs only directories. Just enter some dir and type&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;$ du ./
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ du ./
+&lt;/code&gt;&lt;/pre&gt;</description>
     </item>
     
     <item>
@@ -449,9 +458,9 @@ Plan  Spin up a new virtual server (1 CPU + 1 GB RAM is fairly enough) in Vultr,
       
       <guid>https://bikulov.org/blog/2012/10/25/awk-a-powerful-tool-for-programmer/</guid>
       <description>&lt;p&gt;AWK is an acronym of first letters of its authors (Aho, Weinberger and Kernighan). It is a data-manipulating scripting language with huge possibilities.  There are several implementations of it: awk is a canonical one, nawk (new awk), mawk (default in Ubuntu 12.04), gawk is GNU awk. I recommend latter one, because it works correct with unicode symbols in example:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;$ &lt;span style=&#34;color:#007020&#34;&gt;echo&lt;/span&gt; юникод | gawk &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;{res = toupper(\$1); print res;}&amp;#34;&lt;/span&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ echo юникод | gawk &amp;quot;{res = toupper(\$1); print res;}&amp;quot;
 ЮНИКОД
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;/code&gt;&lt;/pre&gt;</description>
     </item>
     
     <item>
@@ -487,8 +496,8 @@ Plan  Spin up a new virtual server (1 CPU + 1 GB RAM is fairly enough) in Vultr,
       
       <guid>https://bikulov.org/blog/2012/07/18/montage-png-into-single-one/</guid>
       <description>&lt;p&gt;Glue several png’s into one png &lt;code&gt;[1]+[2]+[3]+[4] = [[1][2][3][4]]&lt;/code&gt; with montage from ImageMagick:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;montage -geometry +1+1 -tile 4x1 image*.png final.png
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;montage -geometry +1+1 -tile 4x1 image*.png final.png
+&lt;/code&gt;&lt;/pre&gt;</description>
     </item>
     
     <item>

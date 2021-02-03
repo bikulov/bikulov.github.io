@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>fatnode on Bikulov Octonotes</title>
+    <title>fatnode on :) bikulov.ORG</title>
     <link>https://bikulov.org/tags/fatnode/</link>
-    <description>Recent content in fatnode on Bikulov Octonotes</description>
+    <description>Recent content in fatnode on :) bikulov.ORG</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>en</language>
     <lastBuildDate>Tue, 18 Jun 2013 09:00:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/fatnode/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Ubuntu Server 12.04 &#43; Slurm 2.5.7 fatnodes</title>

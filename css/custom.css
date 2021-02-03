@@ -2,3 +2,7 @@
     background-color: #ebebeb;
     color: black;
 }
+
+#content {
+    background-image: none;
+}

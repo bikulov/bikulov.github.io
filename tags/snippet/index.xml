@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>snippet on Bikulov Octonotes</title>
+    <title>snippet on :) bikulov.ORG</title>
     <link>https://bikulov.org/tags/snippet/</link>
-    <description>Recent content in snippet on Bikulov Octonotes</description>
+    <description>Recent content in snippet on :) bikulov.ORG</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>en</language>
     <lastBuildDate>Tue, 19 Nov 2013 23:53:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/snippet/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Sort strings from file in C&#43;&#43;</title>
@@ -13,7 +13,7 @@
       <pubDate>Tue, 19 Nov 2013 23:53:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2013/11/19/sort-strings-from-file-in-c-/</guid>
-      <description>&lt;p&gt;The very simple and common test program is to read bunch of strings from input file (let it be &lt;code&gt;input.txt&lt;/code&gt;), sort them and write down to another file (&lt;code&gt;output.txt&lt;/code&gt;). There is an &lt;a href=&#34;http://www.cyberforum.ru/post1673221.html&#34;&gt;implementation&lt;/a&gt; with small bug: it adds extra empty line. I&amp;rsquo;ve modified original code a bit, so now it works correctly (note: if have last empty line in the input, you will have an empty line in the output). Fixed code is provided below.&lt;/p&gt;</description>
+      <description>&lt;p&gt;The very simple and common test program is to read bunch of strings from input file (let it be &lt;code&gt;input.txt&lt;/code&gt;), sort them and write down to another file (&lt;code&gt;output.txt&lt;/code&gt;). There is an &lt;a href=&#34;http://www.cyberforum.ru/post1673221.html&#34; target=&#34;_blank&#34;&gt;implementation&lt;/a&gt; with small bug: it adds extra empty line. I&amp;rsquo;ve modified original code a bit, so now it works correctly (note: if have last empty line in the input, you will have an empty line in the output). Fixed code is provided below.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -40,7 +40,7 @@
       <pubDate>Fri, 16 Aug 2013 12:14:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2013/08/16/cudasafecall-application-snippet/</guid>
-      <description>&lt;p&gt;It is a good tone to check CUDA API errors while calling cudaMalloc() and other functions. It also helps to find floating bugs caused by hardware (lack of memory, etc). I provide below an adapted version of CudaSafeCall I found many weeks ago in the &lt;a href=&#34;http://choorucode.com/2011/03/02/cuda-error-checking/&#34;&gt;Internet&lt;/a&gt;. Simply remove &lt;code&gt;#define CUDA_ERROR_CHECK&lt;/code&gt; in production if unneeded.&lt;/p&gt;</description>
+      <description>&lt;p&gt;It is a good tone to check CUDA API errors while calling cudaMalloc() and other functions. It also helps to find floating bugs caused by hardware (lack of memory, etc). I provide below an adapted version of CudaSafeCall I found many weeks ago in the &lt;a href=&#34;http://choorucode.com/2011/03/02/cuda-error-checking/&#34; target=&#34;_blank&#34;&gt;Internet&lt;/a&gt;. Simply remove &lt;code&gt;#define CUDA_ERROR_CHECK&lt;/code&gt; in production if unneeded.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -50,8 +50,8 @@
       
       <guid>https://bikulov.org/blog/2012/07/18/montage-png-into-single-one/</guid>
       <description>&lt;p&gt;Glue several png’s into one png &lt;code&gt;[1]+[2]+[3]+[4] = [[1][2][3][4]]&lt;/code&gt; with montage from ImageMagick:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;montage -geometry +1+1 -tile 4x1 image*.png final.png
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;montage -geometry +1+1 -tile 4x1 image*.png final.png
+&lt;/code&gt;&lt;/pre&gt;</description>
     </item>
     
   </channel>

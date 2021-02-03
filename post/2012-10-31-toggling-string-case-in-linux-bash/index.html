@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="HandheldFriendly" content="True" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="generator" content="Hugo 0.80.0" />
+
+
+<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon.ico" />
+
+
+<title>Toggling string case in linux bash - Bikulov notes</title>
+
+
+<meta name="author" content="DSRKafuU" />
+
+
+<meta name="description" content="A minimal Hugo theme with nice theme color." />
+
+
+<meta name="keywords" content="sed, awk, python, bash, tr, dd, perl, terminal, linux" />
+
+
+<meta property="og:title" content="Toggling string case in linux bash" />
+<meta name="twitter:title" content="Toggling string case in linux bash" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/post/2012-10-31-toggling-string-case-in-linux-bash/" /><meta property="og:description" content="It’s quite an academic task, but anyway useful sometimes. I’ve collected different ways to do it in terminal in linux. Some of them work with UTF-8 characters (some it will toggle case for &ldquo;й&rdquo;, &ldquo;ё&rdquo; and so on. It will not in general handle special ligatures, such as &ldquo;ß&rdquo;&quot; and &ldquo;ﬁ&rdquo;.)" />
+<meta name="twitter:description" content="It’s quite an academic task, but anyway useful sometimes. I’ve collected different ways to do it in terminal in linux. Some of them work with UTF-8 characters (some it will toggle case for &ldquo;й&rdquo;, &ldquo;ё&rdquo; and so on. It will not in general handle special ligatures, such as &ldquo;ß&rdquo;&quot; and &ldquo;ﬁ&rdquo;.)" /><meta property="og:image" content="http://localhost:1313/img/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="http://localhost:1313/img/og.png" /><meta property="article:published_time" content="2012-10-31T09:00:00+03:00" /><meta property="article:modified_time" content="2012-10-31T09:00:00+03:00" />
+
+
+<style>
+    @media (prefers-color-scheme: dark) {
+        body[data-theme='auto'] img {
+            filter: brightness(60%);
+        }
+    }
+
+    body[data-theme='dark'] img {
+        filter: brightness(60%);
+    }
+</style>
+
+
+
+<link rel="stylesheet" href="http://localhost:1313/assets/css/fuji.min.css" />
+
+
+
+
+
+</head>
+
+<body data-theme="auto">
+    <script data-cfasync="false">
+  
+  var fujiThemeData = localStorage.getItem('fuji_data-theme');
+  
+  if (!fujiThemeData) {
+    localStorage.setItem('fuji_data-theme', 'auto');
+  } else {
+    
+    if (fujiThemeData !== 'auto') {
+      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
+    }
+  }
+</script>
+    <header>
+    <div class="container-lg clearfix">
+        <div class="col-12 header">
+            <a class="title-main" href="http://localhost:1313/">Bikulov notes</a>
+            
+            <span class="title-sub">A minimal Hugo theme.</span>
+            
+        </div>
+    </div>
+</header>
+
+    <main>
+        <div class="container-lg clearfix">
+            
+            <div class="col-12 col-md-9 float-left content">
+                
+<article>
+    
+    <h2 class="post-item post-title">
+        <a href="http://localhost:1313/post/2012-10-31-toggling-string-case-in-linux-bash/">Toggling string case in linux bash</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2012-10-31</span><span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;603 words</span><span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/sed">sed</a>&nbsp;<a href="/tags/awk">awk</a>&nbsp;<a href="/tags/python">python</a>&nbsp;<a href="/tags/bash">bash</a>&nbsp;<a href="/tags/tr">tr</a>&nbsp;<a href="/tags/dd">dd</a>&nbsp;<a href="/tags/perl">perl</a>&nbsp;<a href="/tags/terminal">terminal</a>&nbsp;<a href="/tags/linux">linux</a>&nbsp;</span>
+
+    </div>
+    
+    <div class="post-content markdown-body">
+        <p>It’s quite an academic task, but anyway useful sometimes. I’ve collected different ways to do it in terminal in linux. Some of them work with UTF-8 characters (some it will toggle case for &ldquo;й&rdquo;, &ldquo;ё&rdquo; and so on. It will not in general handle special ligatures, such as &ldquo;ß&rdquo;&quot; and &ldquo;ﬁ&rdquo;.)</p>
+<p>Ways are: sed, perl, python, awk, tr, bash, dd.</p>
+<h2 id="using-sed">Using sed</h2>
+<p>Works with UTF-8 characters.</p>
+<p>It is quite straightforward and allows to add custom rules easily. For example, I’ve added special handling for ligatures &ldquo;ß&rdquo;&quot; and &ldquo;ﬁ&rdquo;. I should note that conversion SS -&gt; ß is not correct in general. So you may want to remove it.</p>
+<pre><code class="language-bash">$ echo ''Wie hйЮёßen Sieﬁ тест'' | sed ''s/.*/\U&amp;/;s/ß/SS/g;s/ﬁ/FI/g''
+WIE HЙЮЁSSEN SIEFI ТЕСТ
+
+$ echo ''WIE HЙЮЁSSEN SIEFI ТЕСТ'' | sed ''s/ß/SS/g;s/ﬁ/FI/g;s/.*/\L&amp;/''
+wie hйюёssen siefi тест
+</code></pre>
+<h2 id="using-perl">Using perl</h2>
+<p>Doesn’t work with UTF-8 characters.</p>
+<p>I’m not a perl-ninja, may be there is a more efficient way. But it works.</p>
+<pre><code class="language-bash">$ echo ''Wie hйЮёßen Sieﬁ тест'' | perl -ne ''print uc($_)''
+WIE HйЮёßEN SIEﬁ тест
+
+$ echo ''WIE HЙЮЁSSEN SIEFI ТЕСТ'' | perl -ne ''print lc($_)''
+wie hЙЮЁssen siefi ТЕСТ
+</code></pre>
+<h2 id="using-python">Using python</h2>
+<p>Doesn’t work with UTF-8 characters.</p>
+<p>Python nowadays sometimes said to be replacement for perl. It can not convert Cyrillic letters (UTF-8) too.</p>
+<pre><code class="language-bash">$ echo ''Wie hйЮёßen Sieﬁ тест'' | python -c &quot;import sys; [sys.stdout.write(arg.upper()) for arg in raw_input()]; print &quot;\n&quot;&quot;
+WIE HйЮёßEN SIEﬁ тест
+
+$ echo ''WIE HЙЮЁSSEN SIEFI ТЕСТ'' | python -c &quot;import sys; [sys.stdout.write(arg.lower()) for arg in raw_input()]; print &quot;\n&quot;&quot;
+wie hЙЮЁssen siefi ТЕСТ
+</code></pre>
+<h2 id="using-awk">Using awk</h2>
+<p>Doesn’t work with UTF-8 characters in mawk, works with UTF-8 characters in gawk.</p>
+<p>Default awk in Ubuntu 12.04 is mawk. To get UTF-8 support you have to install gawk and use it.</p>
+<pre><code class="language-bash">$ echo ''Wie hйЮёßen Sieﬁ тест'' | gawk ''{for (i=1; i&lt;=NF; i++) printf toupper($i)&quot; &quot;} END {print &quot;&quot;}''
+WIE HЙЮЁßEN SIEﬁ ТЕСТ
+
+$ echo ''WIE HЙЮЁSSEN SIEFI ТЕСТ'' | gawk ''{for (i=1; i&lt;=NF; i++) printf tolower($i)&quot; &quot;} END {print &quot;&quot;}''
+wie hйюёssen siefi тест
+</code></pre>
+<h2 id="using-tr">Using tr</h2>
+<p>Doesn’t work with UTF-8 characters.</p>
+<p>It works with current locale. But I work in us locale and my native language is Russian.</p>
+<p>It is the easiest way I believe. It also fits the purpose of tr — to translate and delete characters. It is possible to add custom rules such as “tr ‘ё’ ‘Ё’&quot;, but it caused new strange symbols to appear in the output.</p>
+<pre><code class="language-bash">$ echo ''Wie hйЮёßen Sieﬁ тест'' | tr ''[:lower:]'' ''[:upper:]''
+WIE HйЮёßEN SIEﬁ тест
+
+$ echo ''WIE HЙЮЁSSEN SIEFI ТЕСТ'' | tr ''[:upper:]'' ''[:lower:]''
+wie hЙЮЁssen siefi ТЕСТ
+</code></pre>
+<h2 id="using-bash">Using bash</h2>
+<p>Doesn’t work with UTF-8 characters.</p>
+<p>Warning! It’s weird way for converting strings, but a good way to convert variables in bash scripts.</p>
+<pre><code class="language-bash">$ export a=''Wie hйЮёßen Sieﬁ тест'' ; echo ${a^^}
+WIE HйЮёßEN SIEﬁ тест
+
+$ export a=''WIE HЙЮЁSSEN SIEFI ТЕСТ'' ; echo ${a,,}
+wie hЙЮЁssen siefi ТЕСТ
+</code></pre>
+<h2 id="using-dd">Using dd</h2>
+<p>Doesn’t work with UTF-8 characters.</p>
+<p>The bad news it outputs more information than only toggled string. Just for collection.</p>
+<pre><code class="language-bash">$ echo ''Wie hйЮёßen Sieﬁ тест'' | dd conv=ucase
+WIE HйЮёßEN SIEﬁ тест
+0+1 records in
+0+1 records out
+32 bytes (32 B) copied, 0.000124458 s, 257 kB/s
+
+$ echo ''WIE HЙЮЁSSEN SIEFI ТЕСТ'' | dd conv=lcase
+wie hЙЮЁssen siefi ТЕСТ
+0+1 records in
+0+1 records out
+31 bytes (31 B) copied, 7.913e-05 s, 392 kB/s
+</code></pre>
+<h2 id="using-php">Using php</h2>
+<p>Doesn’t work with UTF-8 characters.</p>
+<p>PHP can be used as scripting language for general purposes with php-cli.</p>
+<pre><code class="language-bash">$ echo ''Wie hйЮёßen Sieﬁ тест'' | php -r &quot;print strtoupper(fgets(STDIN));&quot;
+WIE HйЮёßEN SIEﬁ тест
+
+$ echo ''WIE HЙЮЁSSEN SIEFI ТЕСТ'' | php -r &quot;print strtolower(fgets(STDIN));&quot;
+wie hЙЮЁssen siefi ТЕСТ
+</code></pre>
+    </div>
+</article>
+
+
+
+
+            </div>
+            <aside class="col-12 col-md-3 float-left sidebar">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/amzrk2" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+            <li>
+                <a href="https://twitter.com/amzrk2" target="_blank"><span>Twitter</span></a>
+            </li>
+            
+            <li>
+                <a href="https://space.bilibili.com/19767474" target="_blank"><span>bilibili</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/awk/">awk</a>
+            </span>
+            
+            <span>
+                <a href="/tags/backup/">backup</a>
+            </span>
+            
+            <span>
+                <a href="/tags/bash/">bash</a>
+            </span>
+            
+            <span>
+                <a href="/tags/blender/">blender</a>
+            </span>
+            
+            <span>
+                <a href="/tags/btsync/">btsync</a>
+            </span>
+            
+            <span>
+                <a href="/tags/c/">c</a>
+            </span>
+            
+            <span>
+                <a href="/tags/c&#43;&#43;/">c&#43;&#43;</a>
+            </span>
+            
+            <span>
+                <a href="/tags/centos/">centos</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cmake/">cmake</a>
+            </span>
+            
+            <span>
+                <a href="/tags/config/">config</a>
+            </span>
+            
+            <span>
+                <a href="/tags/console/">console</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cpp/">cpp</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cron/">cron</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cuda/">cuda</a>
+            </span>
+            
+            <span>
+                <a href="/tags/dd/">dd</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/dokuwiki/">dokuwiki</a>
+            </span>
+            
+            <span>
+                <a href="/tags/drupal/">drupal</a>
+            </span>
+            
+            <span>
+                <a href="/tags/du/">du</a>
+            </span>
+            
+            <span>
+                <a href="/tags/exceptions/">exceptions</a>
+            </span>
+            
+            <span>
+                <a href="/tags/fatnode/">fatnode</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ffmpeg/">ffmpeg</a>
+            </span>
+            
+            <span>
+                <a href="/tags/firefox/">firefox</a>
+            </span>
+            
+            <span>
+                <a href="/tags/gengetopt/">gengetopt</a>
+            </span>
+            
+            <span>
+                <a href="/tags/heapsort/">heapsort</a>
+            </span>
+            
+            <span>
+                <a href="/tags/howto/">howto</a>
+            </span>
+            
+            <span>
+                <a href="/tags/i3/">i3</a>
+            </span>
+            
+            <span>
+                <a href="/tags/imagemagick/">imagemagick</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ip/">ip</a>
+            </span>
+            
+            <span>
+                <a href="/tags/iptables/">iptables</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ipython/">ipython</a>
+            </span>
+            
+            <span>
+                <a href="/tags/joomla/">joomla</a>
+            </span>
+            
+            <span>
+                <a href="/tags/jupyter/">jupyter</a>
+            </span>
+            
+            <span>
+                <a href="/tags/latex/">latex</a>
+            </span>
+            
+            <span>
+                <a href="/tags/libcheese/">libcheese</a>
+            </span>
+            
+            <span>
+                <a href="/tags/linux/">linux</a>
+            </span>
+            
+            <span>
+                <a href="/tags/lxc/">lxc</a>
+            </span>
+            
+            <span>
+                <a href="/tags/makefile/">makefile</a>
+            </span>
+            
+            <span>
+                <a href="/tags/matplotlib/">matplotlib</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mercurial/">mercurial</a>
+            </span>
+            
+            <span>
+                <a href="/tags/montage/">montage</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mysql/">mysql</a>
+            </span>
+            
+            <span>
+                <a href="/tags/nautilus/">nautilus</a>
+            </span>
+            
+            <span>
+                <a href="/tags/nginx/">nginx</a>
+            </span>
+            
+            <span>
+                <a href="/tags/numpy/">numpy</a>
+            </span>
+            
+            <span>
+                <a href="/tags/openvpn/">openvpn</a>
+            </span>
+            
+            <span>
+                <a href="/tags/openvz/">openvz</a>
+            </span>
+            
+            <span>
+                <a href="/tags/paraview/">paraview</a>
+            </span>
+            
+            <span>
+                <a href="/tags/pcap/">pcap</a>
+            </span>
+            
+            <span>
+                <a href="/tags/pcmanfm/">PCManFM</a>
+            </span>
+            
+            <span>
+                <a href="/tags/pdf/">pdf</a>
+            </span>
+            
+            <span>
+                <a href="/tags/perl/">perl</a>
+            </span>
+            
+            <span>
+                <a href="/tags/plots/">plots</a>
+            </span>
+            
+            <span>
+                <a href="/tags/png/">png</a>
+            </span>
+            
+            <span>
+                <a href="/tags/postgres/">postgres</a>
+            </span>
+            
+            <span>
+                <a href="/tags/postgresql/">postgresql</a>
+            </span>
+            
+            <span>
+                <a href="/tags/programmer-tools/">programmer tools</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/quicksort/">quicksort</a>
+            </span>
+            
+            <span>
+                <a href="/tags/research/">research</a>
+            </span>
+            
+            <span>
+                <a href="/tags/rhodecode/">rhodecode</a>
+            </span>
+            
+            <span>
+                <a href="/tags/scan/">scan</a>
+            </span>
+            
+            <span>
+                <a href="/tags/scanimage/">scanimage</a>
+            </span>
+            
+            <span>
+                <a href="/tags/science/">science</a>
+            </span>
+            
+            <span>
+                <a href="/tags/scipy/">scipy</a>
+            </span>
+            
+            <span>
+                <a href="/tags/screen-capture/">screen capture</a>
+            </span>
+            
+            <span>
+                <a href="/tags/script/">script</a>
+            </span>
+            
+            <span>
+                <a href="/tags/scrot/">scrot</a>
+            </span>
+            
+            <span>
+                <a href="/tags/seaborn/">seaborn</a>
+            </span>
+            
+            <span>
+                <a href="/tags/sed/">sed</a>
+            </span>
+            
+            <span>
+                <a href="/tags/selfhosted/">selfhosted</a>
+            </span>
+            
+            <span>
+                <a href="/tags/server/">server</a>
+            </span>
+            
+            <span>
+                <a href="/tags/slurm/">slurm</a>
+            </span>
+            
+            <span>
+                <a href="/tags/snippet/">snippet</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ssh/">ssh</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tcpdump/">tcpdump</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tcptrace/">tcptrace</a>
+            </span>
+            
+            <span>
+                <a href="/tags/template/">template</a>
+            </span>
+            
+            <span>
+                <a href="/tags/terminal/">terminal</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tiff/">tiff</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tips-and-tricks/">tips and tricks</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tpick/">tpick</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tr/">tr</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tshark/">tshark</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tun/">tun</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tutorial/">tutorial</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ubuntu/">ubuntu</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ubuntu-12.04/">ubuntu 12.04</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ubuntu-server/">ubuntu server</a>
+            </span>
+            
+            <span>
+                <a href="/tags/visualization/">visualization</a>
+            </span>
+            
+            <span>
+                <a href="/tags/vpn/">vpn</a>
+            </span>
+            
+            <span>
+                <a href="/tags/yandex.disk/">yandex.disk</a>
+            </span>
+            
+            <span>
+                <a href="/tags/zotero/">zotero</a>
+            </span>
+            
+            <span>
+                <a href="/tags/zotfile/">zotfile</a>
+            </span>
+            
+        </div>
+    </div>
+    <div class="sidebar-item sidebar-toc">
+        <h3>TOC</h3><nav id="TableOfContents">
+  <ul>
+    <li><a href="#using-sed">Using sed</a></li>
+    <li><a href="#using-perl">Using perl</a></li>
+    <li><a href="#using-python">Using python</a></li>
+    <li><a href="#using-awk">Using awk</a></li>
+    <li><a href="#using-tr">Using tr</a></li>
+    <li><a href="#using-bash">Using bash</a></li>
+    <li><a href="#using-dd">Using dd</a></li>
+    <li><a href="#using-php">Using php</a></li>
+  </ul>
+</nav></div>
+</aside>
+        </div>
+        <div class="btn">
+    <div class="btn-menu" id="btn-menu">
+        <i class="iconfont icon-grid-sharp"></i>
+    </div>
+    <div class="btn-toggle-mode">
+        <i class="iconfont icon-contrast-sharp"></i>
+    </div>
+    <div class="btn-scroll-top">
+        <i class="iconfont icon-chevron-up-circle-sharp"></i>
+    </div>
+</div>
+<aside class="sidebar-mobile" style="display: none;">
+  <div class="sidebar-wrapper">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/amzrk2" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+            <li>
+                <a href="https://twitter.com/amzrk2" target="_blank"><span>Twitter</span></a>
+            </li>
+            
+            <li>
+                <a href="https://space.bilibili.com/19767474" target="_blank"><span>bilibili</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/awk/">awk</a>
+            </span>
+            
+            <span>
+                <a href="/tags/backup/">backup</a>
+            </span>
+            
+            <span>
+                <a href="/tags/bash/">bash</a>
+            </span>
+            
+            <span>
+                <a href="/tags/blender/">blender</a>
+            </span>
+            
+            <span>
+                <a href="/tags/btsync/">btsync</a>
+            </span>
+            
+            <span>
+                <a href="/tags/c/">c</a>
+            </span>
+            
+            <span>
+                <a href="/tags/c&#43;&#43;/">c&#43;&#43;</a>
+            </span>
+            
+            <span>
+                <a href="/tags/centos/">centos</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cmake/">cmake</a>
+            </span>
+            
+            <span>
+                <a href="/tags/config/">config</a>
+            </span>
+            
+            <span>
+                <a href="/tags/console/">console</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cpp/">cpp</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cron/">cron</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cuda/">cuda</a>
+            </span>
+            
+            <span>
+                <a href="/tags/dd/">dd</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/dokuwiki/">dokuwiki</a>
+            </span>
+            
+            <span>
+                <a href="/tags/drupal/">drupal</a>
+            </span>
+            
+            <span>
+                <a href="/tags/du/">du</a>
+            </span>
+            
+            <span>
+                <a href="/tags/exceptions/">exceptions</a>
+            </span>
+            
+            <span>
+                <a href="/tags/fatnode/">fatnode</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ffmpeg/">ffmpeg</a>
+            </span>
+            
+            <span>
+                <a href="/tags/firefox/">firefox</a>
+            </span>
+            
+            <span>
+                <a href="/tags/gengetopt/">gengetopt</a>
+            </span>
+            
+            <span>
+                <a href="/tags/heapsort/">heapsort</a>
+            </span>
+            
+            <span>
+                <a href="/tags/howto/">howto</a>
+            </span>
+            
+            <span>
+                <a href="/tags/i3/">i3</a>
+            </span>
+            
+            <span>
+                <a href="/tags/imagemagick/">imagemagick</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ip/">ip</a>
+            </span>
+            
+            <span>
+                <a href="/tags/iptables/">iptables</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ipython/">ipython</a>
+            </span>
+            
+            <span>
+                <a href="/tags/joomla/">joomla</a>
+            </span>
+            
+            <span>
+                <a href="/tags/jupyter/">jupyter</a>
+            </span>
+            
+            <span>
+                <a href="/tags/latex/">latex</a>
+            </span>
+            
+            <span>
+                <a href="/tags/libcheese/">libcheese</a>
+            </span>
+            
+            <span>
+                <a href="/tags/linux/">linux</a>
+            </span>
+            
+            <span>
+                <a href="/tags/lxc/">lxc</a>
+            </span>
+            
+            <span>
+                <a href="/tags/makefile/">makefile</a>
+            </span>
+            
+            <span>
+                <a href="/tags/matplotlib/">matplotlib</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mercurial/">mercurial</a>
+            </span>
+            
+            <span>
+                <a href="/tags/montage/">montage</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mysql/">mysql</a>
+            </span>
+            
+            <span>
+                <a href="/tags/nautilus/">nautilus</a>
+            </span>
+            
+            <span>
+                <a href="/tags/nginx/">nginx</a>
+            </span>
+            
+            <span>
+                <a href="/tags/numpy/">numpy</a>
+            </span>
+            
+            <span>
+                <a href="/tags/openvpn/">openvpn</a>
+            </span>
+            
+            <span>
+                <a href="/tags/openvz/">openvz</a>
+            </span>
+            
+            <span>
+                <a href="/tags/paraview/">paraview</a>
+            </span>
+            
+            <span>
+                <a href="/tags/pcap/">pcap</a>
+            </span>
+            
+            <span>
+                <a href="/tags/pcmanfm/">PCManFM</a>
+            </span>
+            
+            <span>
+                <a href="/tags/pdf/">pdf</a>
+            </span>
+            
+            <span>
+                <a href="/tags/perl/">perl</a>
+            </span>
+            
+            <span>
+                <a href="/tags/plots/">plots</a>
+            </span>
+            
+            <span>
+                <a href="/tags/png/">png</a>
+            </span>
+            
+            <span>
+                <a href="/tags/postgres/">postgres</a>
+            </span>
+            
+            <span>
+                <a href="/tags/postgresql/">postgresql</a>
+            </span>
+            
+            <span>
+                <a href="/tags/programmer-tools/">programmer tools</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/quicksort/">quicksort</a>
+            </span>
+            
+            <span>
+                <a href="/tags/research/">research</a>
+            </span>
+            
+            <span>
+                <a href="/tags/rhodecode/">rhodecode</a>
+            </span>
+            
+            <span>
+                <a href="/tags/scan/">scan</a>
+            </span>
+            
+            <span>
+                <a href="/tags/scanimage/">scanimage</a>
+            </span>
+            
+            <span>
+                <a href="/tags/science/">science</a>
+            </span>
+            
+            <span>
+                <a href="/tags/scipy/">scipy</a>
+            </span>
+            
+            <span>
+                <a href="/tags/screen-capture/">screen capture</a>
+            </span>
+            
+            <span>
+                <a href="/tags/script/">script</a>
+            </span>
+            
+            <span>
+                <a href="/tags/scrot/">scrot</a>
+            </span>
+            
+            <span>
+                <a href="/tags/seaborn/">seaborn</a>
+            </span>
+            
+            <span>
+                <a href="/tags/sed/">sed</a>
+            </span>
+            
+            <span>
+                <a href="/tags/selfhosted/">selfhosted</a>
+            </span>
+            
+            <span>
+                <a href="/tags/server/">server</a>
+            </span>
+            
+            <span>
+                <a href="/tags/slurm/">slurm</a>
+            </span>
+            
+            <span>
+                <a href="/tags/snippet/">snippet</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ssh/">ssh</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tcpdump/">tcpdump</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tcptrace/">tcptrace</a>
+            </span>
+            
+            <span>
+                <a href="/tags/template/">template</a>
+            </span>
+            
+            <span>
+                <a href="/tags/terminal/">terminal</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tiff/">tiff</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tips-and-tricks/">tips and tricks</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tpick/">tpick</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tr/">tr</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tshark/">tshark</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tun/">tun</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tutorial/">tutorial</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ubuntu/">ubuntu</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ubuntu-12.04/">ubuntu 12.04</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ubuntu-server/">ubuntu server</a>
+            </span>
+            
+            <span>
+                <a href="/tags/visualization/">visualization</a>
+            </span>
+            
+            <span>
+                <a href="/tags/vpn/">vpn</a>
+            </span>
+            
+            <span>
+                <a href="/tags/yandex.disk/">yandex.disk</a>
+            </span>
+            
+            <span>
+                <a href="/tags/zotero/">zotero</a>
+            </span>
+            
+            <span>
+                <a href="/tags/zotfile/">zotfile</a>
+            </span>
+            
+        </div>
+    </div>
+    
+    
+    
+    <div class="sidebar-item sidebar-toc">
+        <h3>TOC</h3>
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#using-sed">Using sed</a></li>
+    <li><a href="#using-perl">Using perl</a></li>
+    <li><a href="#using-python">Using python</a></li>
+    <li><a href="#using-awk">Using awk</a></li>
+    <li><a href="#using-tr">Using tr</a></li>
+    <li><a href="#using-bash">Using bash</a></li>
+    <li><a href="#using-dd">Using dd</a></li>
+    <li><a href="#using-php">Using php</a></li>
+  </ul>
+</nav>
+    </div>
+    
+    
+  </div>
+</aside>
+    </main>
+
+    <footer>
+    <div class="container-lg clearfix">
+        <div class="col-12 footer">
+            
+            <span>&copy; 2020-2021
+                <a href="http://localhost:1313/">DSRKafuU</a>
+                 | <a href="https://github.com/itsme/my_blog">Source code</a> 
+                | Powered by <a href="https://github.com/amzrk2/hugo-theme-fuji/"
+                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
+                                                    target="_blank">Hugo</a> 
+            </span>
+        </div>
+    </div>
+</footer>
+
+    
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.0/lazysizes.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+
+
+<script defer src="/assets/js/fuji.min.js"></script>
+
+
+</body>
+
+</html>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>awk on Bikulov Octonotes</title>
+    <title>awk on :) bikulov.ORG</title>
     <link>https://bikulov.org/tags/awk/</link>
-    <description>Recent content in awk on Bikulov Octonotes</description>
+    <description>Recent content in awk on :) bikulov.ORG</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>en</language>
     <lastBuildDate>Thu, 01 Nov 2012 09:00:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/awk/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Show N biggest directories in linux bash</title>
@@ -14,8 +14,8 @@
       
       <guid>https://bikulov.org/blog/2012/11/01/show-n-biggest-directories-in-linux-bash/</guid>
       <description>&lt;p&gt;du (disk usage) utility in linux bash summarizes disk usage of each directory or file. By default, it outputs only directories. Just enter some dir and type&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;$ du ./
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ du ./
+&lt;/code&gt;&lt;/pre&gt;</description>
     </item>
     
     <item>
@@ -34,9 +34,9 @@
       
       <guid>https://bikulov.org/blog/2012/10/25/awk-a-powerful-tool-for-programmer/</guid>
       <description>&lt;p&gt;AWK is an acronym of first letters of its authors (Aho, Weinberger and Kernighan). It is a data-manipulating scripting language with huge possibilities.  There are several implementations of it: awk is a canonical one, nawk (new awk), mawk (default in Ubuntu 12.04), gawk is GNU awk. I recommend latter one, because it works correct with unicode symbols in example:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;$ &lt;span style=&#34;color:#007020&#34;&gt;echo&lt;/span&gt; юникод | gawk &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;{res = toupper(\$1); print res;}&amp;#34;&lt;/span&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ echo юникод | gawk &amp;quot;{res = toupper(\$1); print res;}&amp;quot;
 ЮНИКОД
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;/code&gt;&lt;/pre&gt;</description>
     </item>
     
   </channel>

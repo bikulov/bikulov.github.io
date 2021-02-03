@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>exceptions on Bikulov Octonotes</title>
+    <title>exceptions on :) bikulov.ORG</title>
     <link>https://bikulov.org/tags/exceptions/</link>
-    <description>Recent content in exceptions on Bikulov Octonotes</description>
+    <description>Recent content in exceptions on :) bikulov.ORG</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>en</language>
     <lastBuildDate>Sat, 23 Nov 2013 17:42:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/exceptions/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>throw() in function signature in C&#43;&#43;</title>
@@ -13,7 +13,7 @@
       <pubDate>Sat, 23 Nov 2013 17:42:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2013/11/23/throw-in-function-signature-in-c-/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;http://www.cplusplus.com/doc/tutorial/exceptions/&#34;&gt;There is&lt;/a&gt; base class &lt;code&gt;exception&lt;/code&gt; in standard library (header &lt;code&gt;&amp;lt;exception&amp;gt;&lt;/code&gt;). It &lt;a href=&#34;http://en.cppreference.com/w/cpp/error/exception&#34;&gt;has&lt;/a&gt; default constructor, copy constructor, copy operator and destructor and virtual &lt;code&gt;what()&lt;/code&gt; function. Latter returns string with additional information about exception.&lt;/p&gt;</description>
+      <description>&lt;p&gt;&lt;a href=&#34;http://www.cplusplus.com/doc/tutorial/exceptions/&#34; target=&#34;_blank&#34;&gt;There is&lt;/a&gt; base class &lt;code&gt;exception&lt;/code&gt; in standard library (header &lt;code&gt;&amp;lt;exception&amp;gt;&lt;/code&gt;). It &lt;a href=&#34;http://en.cppreference.com/w/cpp/error/exception&#34; target=&#34;_blank&#34;&gt;has&lt;/a&gt; default constructor, copy constructor, copy operator and destructor and virtual &lt;code&gt;what()&lt;/code&gt; function. Latter returns string with additional information about exception.&lt;/p&gt;</description>
     </item>
     
   </channel>

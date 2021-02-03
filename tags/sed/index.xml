@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>sed on Bikulov Octonotes</title>
+    <title>sed on :) bikulov.ORG</title>
     <link>https://bikulov.org/tags/sed/</link>
-    <description>Recent content in sed on Bikulov Octonotes</description>
+    <description>Recent content in sed on :) bikulov.ORG</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>en</language>
     <lastBuildDate>Thu, 01 Nov 2012 09:00:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/sed/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Show N biggest directories in linux bash</title>
@@ -14,8 +14,8 @@
       
       <guid>https://bikulov.org/blog/2012/11/01/show-n-biggest-directories-in-linux-bash/</guid>
       <description>&lt;p&gt;du (disk usage) utility in linux bash summarizes disk usage of each directory or file. By default, it outputs only directories. Just enter some dir and type&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;$ du ./
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ du ./
+&lt;/code&gt;&lt;/pre&gt;</description>
     </item>
     
     <item>

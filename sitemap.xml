@@ -43,11 +43,6 @@
   </url>
   
   <url>
-    <loc>https://bikulov.org/tags/</loc>
-    <lastmod>2021-02-02T09:30:00+03:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://bikulov.org/tags/ubuntu/</loc>
     <lastmod>2021-02-02T09:30:00+03:00</lastmod>
   </url>
@@ -730,10 +725,6 @@
   <url>
     <loc>https://bikulov.org/blog/2012/04/11/blender-and-python-molecules-visualization/</loc>
     <lastmod>2012-04-11T09:00:00+03:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://bikulov.org/categories/</loc>
   </url>
   
 </urlset>

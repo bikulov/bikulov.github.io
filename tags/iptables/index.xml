@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>iptables on Bikulov Octonotes</title>
+    <title>iptables on :) bikulov.ORG</title>
     <link>https://bikulov.org/tags/iptables/</link>
-    <description>Recent content in iptables on Bikulov Octonotes</description>
+    <description>Recent content in iptables on :) bikulov.ORG</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>en</language>
     <lastBuildDate>Thu, 09 Oct 2014 10:02:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/iptables/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Tips for LXC: creation, autostart, OpenVPN and port forwarding to containers</title>
@@ -14,7 +14,7 @@
       
       <guid>https://bikulov.org/blog/2014/10/09/tips-for-lxc-creation-autostart-openvpn-and-port-forwarding-to-containers/</guid>
       <description>&lt;p&gt;I&amp;rsquo;ve completed setting up my comfort set of LXC containers and want to save some points I spent a lot of time for or things for copy-paste.&lt;/p&gt;
-&lt;p&gt;I used the official &lt;a href=&#34;https://help.ubuntu.com/lts/serverguide/lxc.html&#34;&gt;Ubuntu Server Guide&lt;/a&gt; but &lt;a href=&#34;https://www.digitalocean.com/community/tutorials/getting-started-with-lxc-on-an-ubuntu-13-04-vps&#34;&gt;note&lt;/a&gt; at Digital Ocean knowledge base also helped me a lot. I created 3 containers: one for vpn, one for site on &lt;a href=&#34;https://bikulov.org/blog/2014/08/09/setup-drupal-7-with-nginx-and-postgresql-on-ubuntu-14-dot-04/&#34;&gt;Drupal&lt;/a&gt; and last one as www proxy for second one with nginx only.&lt;/p&gt;</description>
+&lt;p&gt;I used the official &lt;a href=&#34;https://help.ubuntu.com/lts/serverguide/lxc.html&#34; target=&#34;_blank&#34;&gt;Ubuntu Server Guide&lt;/a&gt; but &lt;a href=&#34;https://www.digitalocean.com/community/tutorials/getting-started-with-lxc-on-an-ubuntu-13-04-vps&#34; target=&#34;_blank&#34;&gt;note&lt;/a&gt; at Digital Ocean knowledge base also helped me a lot. I created 3 containers: one for vpn, one for site on &lt;a href=&#34;https://bikulov.org/blog/2014/08/09/setup-drupal-7-with-nginx-and-postgresql-on-ubuntu-14-dot-04/&#34;&gt;Drupal&lt;/a&gt; and last one as www proxy for second one with nginx only.&lt;/p&gt;</description>
     </item>
     
   </channel>

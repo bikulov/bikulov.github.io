@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>png on Bikulov Octonotes</title>
+    <title>png on :) bikulov.ORG</title>
     <link>https://bikulov.org/tags/png/</link>
-    <description>Recent content in png on Bikulov Octonotes</description>
+    <description>Recent content in png on :) bikulov.ORG</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>en</language>
     <lastBuildDate>Wed, 18 Jul 2012 09:00:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/png/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Montage png into single one</title>
@@ -14,8 +14,8 @@
       
       <guid>https://bikulov.org/blog/2012/07/18/montage-png-into-single-one/</guid>
       <description>&lt;p&gt;Glue several png’s into one png &lt;code&gt;[1]+[2]+[3]+[4] = [[1][2][3][4]]&lt;/code&gt; with montage from ImageMagick:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;montage -geometry +1+1 -tile 4x1 image*.png final.png
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;montage -geometry +1+1 -tile 4x1 image*.png final.png
+&lt;/code&gt;&lt;/pre&gt;</description>
     </item>
     
   </channel>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>ubuntu 12.04 on Bikulov Octonotes</title>
+    <title>ubuntu 12.04 on :) bikulov.ORG</title>
     <link>https://bikulov.org/tags/ubuntu-12.04/</link>
-    <description>Recent content in ubuntu 12.04 on Bikulov Octonotes</description>
+    <description>Recent content in ubuntu 12.04 on :) bikulov.ORG</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>en</language>
     <lastBuildDate>Wed, 31 Jul 2013 09:31:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/ubuntu-12.04/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Creating Zip With VPN Client Keys and Configuration Files</title>

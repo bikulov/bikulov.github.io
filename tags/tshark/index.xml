@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>tshark on Bikulov Octonotes</title>
+    <title>tshark on :) bikulov.ORG</title>
     <link>https://bikulov.org/tags/tshark/</link>
-    <description>Recent content in tshark on Bikulov Octonotes</description>
+    <description>Recent content in tshark on :) bikulov.ORG</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>en</language>
     <lastBuildDate>Sat, 03 Nov 2012 09:31:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/tshark/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Tools for tracing a pcap file in linux bash</title>

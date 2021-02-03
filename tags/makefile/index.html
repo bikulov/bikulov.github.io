@@ -1,223 +1,1013 @@
 <!DOCTYPE html>
-<html class="no-js" lang="en-us">
+<html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="yandex-verification" content="761bc4bf6044da39" />
-	<title>makefile - Bikulov Octonotes</title>
-	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="">
-	<meta name="generator" content="Hugo 0.80.0" />
-	
-	
-	<link rel="dns-prefetch" href="//fonts.googleapis.com">
-	<link rel="dns-prefetch" href="//fonts.gstatic.com">
-	<link rel="alternate" type="application/rss+xml" href="/tags/makefile/index.xml" title="Bikulov Octonotes">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
-	<link rel="stylesheet" href="/css/style.css">
-	<link rel="stylesheet" href="/css/custom.css">
-	<link rel="shortcut icon" href="/favicon.ico">
-		
-		 <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+    
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="HandheldFriendly" content="True" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="generator" content="Hugo 0.80.0" />
+
+
+<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon.ico" />
+
+
+<title>makefile - :) bikulov.ORG</title>
+
+
+<meta name="author" content="bikulov" />
+
+
+<meta name="description" content="Static notes about information technologies." />
+
+
+
+<meta property="og:title" content="makefile" />
+<meta name="twitter:title" content="makefile" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://bikulov.org/tags/makefile/" /><meta property="og:image" content="https://bikulov.org/img/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://bikulov.org/img/og.png" /><meta property="og:updated_time" content="2013-09-02T18:05:00+03:00" />
+
+
+<style>
+    @media (prefers-color-scheme: dark) {
+        body[data-theme='auto'] img {
+            filter: brightness(60%);
+        }
+    }
+
+    body[data-theme='dark'] img {
+        filter: brightness(60%);
+    }
+</style>
+
+
+
+<link rel="stylesheet" href="https://bikulov.org/assets/css/fuji.min.css" />
+
+
+
+
+
 </head>
-<body class="body">
-	<div class="container container--outer">
-		<header class="header">
-	<div class="container">
-		<div class="logo">
-			<a class="logo__link" href="/" title="Bikulov Octonotes" rel="home">
-				<div class="logo__title">Bikulov Octonotes</div>
-				<div class="logo__tagline">Static notes about information technologies</div>
-			</a>
-		</div>
-		
-<nav class="menu">
-	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
-		<span class="menu__btn-title" tabindex="-1">Menu</span>
-	</button>
-	<ul class="menu__list">
-		<li class="menu__item">
-			<a class="menu__link" href="/">Home</a>
-		</li>
-		<li class="menu__item">
-			<a class="menu__link" href="/resume">Resume</a>
-		</li>
-	</ul>
-</nav>
 
-	</div>
+<body data-theme="auto">
+    <script data-cfasync="false">
+  
+  var fujiThemeData = localStorage.getItem('fuji_data-theme');
+  
+  if (!fujiThemeData) {
+    localStorage.setItem('fuji_data-theme', 'auto');
+  } else {
+    
+    if (fujiThemeData !== 'auto') {
+      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
+    }
+  }
+</script>
+    <header>
+    <div class="container-lg clearfix">
+        <div class="col-12 header">
+            <a class="title-main" href="https://bikulov.org">:) bikulov.ORG</a>
+            
+            <span class="title-sub">Static notes about information technologies</span>
+            
+        </div>
+    </div>
 </header>
-		<div class="wrapper flex">
-			<div class="primary">
-			
-<main class="main list" role="main">
-	<header class="main__header">
-		<h1 class="main__title">makefile</h1>
-	</header><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/blog/2013/09/02/universal-simple-makefile/" rel="bookmark">
-			Universal simple Makefile
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
-	<time class="meta__text" datetime="2013-09-02T18:05:00">2013-09-02</time>
+
+    <main>
+        <div class="container-lg clearfix">
+            
+            <div class="col-12 col-md-9 float-left content">
+                
+
+<div class="page-info">
+    <span>Posts with the tag makefile: </span>
 </div>
-</div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		<p>I often work on my netbook, so I prefer to use <a href="http://www.sublimetext.com/">Sublime Text</a> with Makefiles instead of full-featured IDEs. To automate build process I&rsquo;ve constructed (with help of <a href="http://pipopolam.com/">Vasily Picard</a> and examples from the Internet) universal Makefile. It assumes the following structure of files.</p>
-	</div>
-</article>
-</main>
 
 
-			</div>
-			
-<aside class="sidebar">
-<div class="widget-social widget">
-	<h4 class="widget-social__title widget__title">Social</h4>
-	<div class="widget-social__content widget__content">
-		<div class="widget-social__item widget__item">
-			<a class="widget-social__link widget__link btn" title="LinkedIn" rel="noopener noreferrer" href="https://linkedin.com/in/bikulov" target="_blank">
-				<svg class="widget-social__link-icon icon-linkedin" viewBox="0 0 352 352" width="24" height="24" fill="#e64946"><path d="M0,40v272c0,21.9,18.1,40,40,40h272c21.9,0,40-18.1,40-40V40c0-21.9-18.1-40-40-40H40C18.1,0,0,18.1,0,40z M312,32 c4.6,0,8,3.4,8,8v272c0,4.6-3.4,8-8,8H40c-4.6,0-8-3.4-8-8V40c0-4.6,3.4-8,8-8H312z M59.5,87c0,15.2,12.3,27.5,27.5,27.5 c15.2,0,27.5-12.3,27.5-27.5c0-15.2-12.3-27.5-27.5-27.5C71.8,59.5,59.5,71.8,59.5,87z M187,157h-1v-21h-45v152h47v-75 c0-19.8,3.9-39,28.5-39c24.2,0,24.5,22.4,24.5,40v74h47v-83.5c0-40.9-8.7-72-56.5-72C208.5,132.5,193.3,145.1,187,157z M64,288h47.5 V136H64V288z"/></svg>
-				<span>LinkedIn</span>
-			</a>
-		</div>
-		<div class="widget-social__item widget__item">
-			<a class="widget-social__link widget__link btn" title="GitHub" rel="noopener noreferrer" href="https://github.com/bikulov" target="_blank">
-				<svg class="widget-social__link-icon icon-github" viewBox="0 0 384 374" width="24" height="24" fill="#e64946"><path d="m192 0c-106.1 0-192 85.8-192 191.7 0 84.7 55 156.6 131.3 181.9 9.6 1.8 13.1-4.2 13.1-9.2 0-4.6-.2-16.6-.3-32.6-53.4 11.6-64.7-25.7-64.7-25.7-8.7-22.1-21.3-28-21.3-28-17.4-11.9 1.3-11.6 1.3-11.6 19.3 1.4 29.4 19.8 29.4 19.8 17.1 29.3 44.9 20.8 55.9 15.9 1.7-12.4 6.7-20.8 12.2-25.6-42.6-4.8-87.5-21.3-87.5-94.8 0-20.9 7.5-38 19.8-51.4-2-4.9-8.6-24.3 1.9-50.7 0 0 16.1-5.2 52.8 19.7 15.3-4.2 31.7-6.4 48.1-6.5 16.3.1 32.7 2.2 48.1 6.5 36.7-24.8 52.8-19.7 52.8-19.7 10.5 26.4 3.9 45.9 1.9 50.7 12.3 13.4 19.7 30.5 19.7 51.4 0 73.7-44.9 89.9-87.7 94.6 6.9 5.9 13 17.6 13 35.5 0 25.6-.2 46.3-.2 52.6 0 5.1 3.5 11.1 13.2 9.2 76.2-25.5 131.2-97.3 131.2-182 0-105.9-86-191.7-192-191.7z"/></svg>
-				<span>GitHub</span>
-			</a>
-		</div>
-		<div class="widget-social__item widget__item">
-			<a class="widget-social__link widget__link btn" title="Bitbucket" rel="noopener noreferrer" href="https://bitbucket.org/bikulov" target="_blank">
-				<svg class="widget-social__link-icon icon-bitbucket" viewBox="0 0 256 231" width="24" height="24" fill="#e64946"><path d="M8.308 0A8.202 8.202 0 0 0 .106 9.516l34.819 211.373a11.155 11.155 0 0 0 10.909 9.31h167.04a8.202 8.202 0 0 0 8.201-6.89l34.82-213.752a8.202 8.202 0 0 0-8.203-9.514L8.308 0zm146.616 152.768h-53.315l-14.436-75.42h80.67l-12.919 75.42z"/></svg>
-				<span>Bitbucket</span>
-			</a>
-		</div>
-		<div class="widget-social__item widget__item">
-			<a class="widget-social__link widget__link btn" title="Email" href="mailto:blog@bikulov.org">
-				<svg class="widget-social__link-icon icon-mail" viewBox="0 0 416 288" width="24" height="24" fill="#e64946"><path d="m0 16v256 16h16 384 16v-16-256-16h-16-384-16zm347 16-139 92.5-139-92.5zm-148 125.5 9 5.5 9-5.5 167-111.5v210h-352v-210z"/></svg>
-				<span>blog@bikulov.org</span>
-			</a>
-		</div>
-	</div>
+
+<div class="post">
+    <h2 class="post-item post-title">
+        <a href="https://bikulov.org/blog/2013/09/02/universal-simple-makefile/">Universal simple Makefile</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2013-09-02</span><span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/howto">howto</a>&nbsp;<a href="/tags/makefile">makefile</a>&nbsp;</span>
+
+    </div>
+    <div class="post-item post-summary markdown-body">
+        <p>I often work on my netbook, so I prefer to use <a href="http://www.sublimetext.com/" target="_blank">Sublime Text</a> with Makefiles instead of full-featured IDEs. To automate build process I&rsquo;ve constructed (with help of <a href="http://pipopolam.com/" target="_blank">Vasily Picard</a> and examples from the Internet) universal Makefile. It assumes the following structure of files.</p>
+    </div>
 </div>
-<div class="widget-taglist widget">
-	<h4 class="widget__title">Tags</h4>
-	<div class="widget__content">
-		<a class="widget-taglist__link widget__link btn" href="/tags/awk" title="Awk">Awk</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/backup" title="Backup">Backup</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/bash" title="Bash">Bash</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/blender" title="Blender">Blender</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/btsync" title="Btsync">Btsync</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/c" title="C">C</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/c&#43;&#43;" title="C&#43;&#43;">C&#43;&#43;</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/centos" title="Centos">Centos</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/cmake" title="Cmake">Cmake</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/config" title="Config">Config</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/console" title="Console">Console</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/cpp" title="Cpp">Cpp</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/cron" title="Cron">Cron</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/cuda" title="Cuda">Cuda</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/dd" title="Dd">Dd</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/docker" title="Docker">Docker</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/dokuwiki" title="Dokuwiki">Dokuwiki</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/drupal" title="Drupal">Drupal</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/du" title="Du">Du</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/exceptions" title="Exceptions">Exceptions</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/fatnode" title="Fatnode">Fatnode</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/ffmpeg" title="Ffmpeg">Ffmpeg</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/firefox" title="Firefox">Firefox</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/gengetopt" title="Gengetopt">Gengetopt</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/heapsort" title="Heapsort">Heapsort</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/howto" title="Howto">Howto</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/i3" title="I3">I3</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/imagemagick" title="Imagemagick">Imagemagick</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/ip" title="Ip">Ip</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/iptables" title="Iptables">Iptables</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/ipython" title="Ipython">Ipython</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/joomla" title="Joomla">Joomla</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/jupyter" title="Jupyter">Jupyter</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/latex" title="Latex">Latex</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/libcheese" title="Libcheese">Libcheese</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/linux" title="Linux">Linux</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/lxc" title="Lxc">Lxc</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/makefile" title="Makefile">Makefile</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/matplotlib" title="Matplotlib">Matplotlib</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/mercurial" title="Mercurial">Mercurial</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/montage" title="Montage">Montage</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/mysql" title="Mysql">Mysql</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/nautilus" title="Nautilus">Nautilus</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/nginx" title="Nginx">Nginx</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/numpy" title="Numpy">Numpy</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/openvpn" title="Openvpn">Openvpn</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/openvz" title="Openvz">Openvz</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/paraview" title="Paraview">Paraview</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/pcap" title="Pcap">Pcap</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/pcmanfm" title="Pcmanfm">Pcmanfm</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/pdf" title="Pdf">Pdf</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/perl" title="Perl">Perl</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/plots" title="Plots">Plots</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/png" title="Png">Png</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/postgres" title="Postgres">Postgres</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/postgresql" title="Postgresql">Postgresql</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/programmer-tools" title="Programmer tools">Programmer tools</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/python" title="Python">Python</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/quicksort" title="Quicksort">Quicksort</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/research" title="Research">Research</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/rhodecode" title="Rhodecode">Rhodecode</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/scan" title="Scan">Scan</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/scanimage" title="Scanimage">Scanimage</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/science" title="Science">Science</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/scipy" title="Scipy">Scipy</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/screen-capture" title="Screen capture">Screen capture</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/script" title="Script">Script</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/scrot" title="Scrot">Scrot</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/seaborn" title="Seaborn">Seaborn</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/sed" title="Sed">Sed</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/selfhosted" title="Selfhosted">Selfhosted</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/server" title="Server">Server</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/slurm" title="Slurm">Slurm</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/snippet" title="Snippet">Snippet</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/ssh" title="Ssh">Ssh</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/tcpdump" title="Tcpdump">Tcpdump</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/tcptrace" title="Tcptrace">Tcptrace</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/template" title="Template">Template</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/terminal" title="Terminal">Terminal</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/tiff" title="Tiff">Tiff</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/tips-and-tricks" title="Tips and tricks">Tips and tricks</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/tpick" title="Tpick">Tpick</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/tr" title="Tr">Tr</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/tshark" title="Tshark">Tshark</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/tun" title="Tun">Tun</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/tutorial" title="Tutorial">Tutorial</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu" title="Ubuntu">Ubuntu</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu-12.04" title="Ubuntu 12.04">Ubuntu 12.04</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu-server" title="Ubuntu server">Ubuntu server</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/visualization" title="Visualization">Visualization</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/vpn" title="Vpn">Vpn</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/yandex.disk" title="Yandex.disk">Yandex.disk</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/zotero" title="Zotero">Zotero</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/zotfile" title="Zotfile">Zotfile</a>
-	</div>
-</div>
+
+
+
+
+
+
+
+
+
+
+            </div>
+            <aside class="col-12 col-md-3 float-left sidebar">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/resume/">Resume</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/bikulov" target="_blank"><span>Github</span></a>
+            </li>
+            
+            <li>
+                <a href="https://linkedin.com/in/bikulov" target="_blank"><span>LinkedIn</span></a>
+            </li>
+            
+            <li>
+                <a href="https://twitter.com/volukib" target="_blank"><span>Twitter</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/awk/">awk</a>
+            </span>
+            
+            <span>
+                <a href="/tags/backup/">backup</a>
+            </span>
+            
+            <span>
+                <a href="/tags/bash/">bash</a>
+            </span>
+            
+            <span>
+                <a href="/tags/blender/">blender</a>
+            </span>
+            
+            <span>
+                <a href="/tags/btsync/">btsync</a>
+            </span>
+            
+            <span>
+                <a href="/tags/c/">c</a>
+            </span>
+            
+            <span>
+                <a href="/tags/c&#43;&#43;/">c&#43;&#43;</a>
+            </span>
+            
+            <span>
+                <a href="/tags/centos/">centos</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cmake/">cmake</a>
+            </span>
+            
+            <span>
+                <a href="/tags/config/">config</a>
+            </span>
+            
+            <span>
+                <a href="/tags/console/">console</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cpp/">cpp</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cron/">cron</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cuda/">cuda</a>
+            </span>
+            
+            <span>
+                <a href="/tags/dd/">dd</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/dokuwiki/">dokuwiki</a>
+            </span>
+            
+            <span>
+                <a href="/tags/drupal/">drupal</a>
+            </span>
+            
+            <span>
+                <a href="/tags/du/">du</a>
+            </span>
+            
+            <span>
+                <a href="/tags/exceptions/">exceptions</a>
+            </span>
+            
+            <span>
+                <a href="/tags/fatnode/">fatnode</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ffmpeg/">ffmpeg</a>
+            </span>
+            
+            <span>
+                <a href="/tags/firefox/">firefox</a>
+            </span>
+            
+            <span>
+                <a href="/tags/gengetopt/">gengetopt</a>
+            </span>
+            
+            <span>
+                <a href="/tags/heapsort/">heapsort</a>
+            </span>
+            
+            <span>
+                <a href="/tags/howto/">howto</a>
+            </span>
+            
+            <span>
+                <a href="/tags/i3/">i3</a>
+            </span>
+            
+            <span>
+                <a href="/tags/imagemagick/">imagemagick</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ip/">ip</a>
+            </span>
+            
+            <span>
+                <a href="/tags/iptables/">iptables</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ipython/">ipython</a>
+            </span>
+            
+            <span>
+                <a href="/tags/joomla/">joomla</a>
+            </span>
+            
+            <span>
+                <a href="/tags/jupyter/">jupyter</a>
+            </span>
+            
+            <span>
+                <a href="/tags/latex/">latex</a>
+            </span>
+            
+            <span>
+                <a href="/tags/libcheese/">libcheese</a>
+            </span>
+            
+            <span>
+                <a href="/tags/linux/">linux</a>
+            </span>
+            
+            <span>
+                <a href="/tags/lxc/">lxc</a>
+            </span>
+            
+            <span>
+                <a href="/tags/makefile/">makefile</a>
+            </span>
+            
+            <span>
+                <a href="/tags/matplotlib/">matplotlib</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mercurial/">mercurial</a>
+            </span>
+            
+            <span>
+                <a href="/tags/montage/">montage</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mysql/">mysql</a>
+            </span>
+            
+            <span>
+                <a href="/tags/nautilus/">nautilus</a>
+            </span>
+            
+            <span>
+                <a href="/tags/nginx/">nginx</a>
+            </span>
+            
+            <span>
+                <a href="/tags/numpy/">numpy</a>
+            </span>
+            
+            <span>
+                <a href="/tags/openvpn/">openvpn</a>
+            </span>
+            
+            <span>
+                <a href="/tags/openvz/">openvz</a>
+            </span>
+            
+            <span>
+                <a href="/tags/paraview/">paraview</a>
+            </span>
+            
+            <span>
+                <a href="/tags/pcap/">pcap</a>
+            </span>
+            
+            <span>
+                <a href="/tags/pcmanfm/">PCManFM</a>
+            </span>
+            
+            <span>
+                <a href="/tags/pdf/">pdf</a>
+            </span>
+            
+            <span>
+                <a href="/tags/perl/">perl</a>
+            </span>
+            
+            <span>
+                <a href="/tags/plots/">plots</a>
+            </span>
+            
+            <span>
+                <a href="/tags/png/">png</a>
+            </span>
+            
+            <span>
+                <a href="/tags/postgres/">postgres</a>
+            </span>
+            
+            <span>
+                <a href="/tags/postgresql/">postgresql</a>
+            </span>
+            
+            <span>
+                <a href="/tags/programmer-tools/">programmer tools</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/quicksort/">quicksort</a>
+            </span>
+            
+            <span>
+                <a href="/tags/research/">research</a>
+            </span>
+            
+            <span>
+                <a href="/tags/rhodecode/">rhodecode</a>
+            </span>
+            
+            <span>
+                <a href="/tags/scan/">scan</a>
+            </span>
+            
+            <span>
+                <a href="/tags/scanimage/">scanimage</a>
+            </span>
+            
+            <span>
+                <a href="/tags/science/">science</a>
+            </span>
+            
+            <span>
+                <a href="/tags/scipy/">scipy</a>
+            </span>
+            
+            <span>
+                <a href="/tags/screen-capture/">screen capture</a>
+            </span>
+            
+            <span>
+                <a href="/tags/script/">script</a>
+            </span>
+            
+            <span>
+                <a href="/tags/scrot/">scrot</a>
+            </span>
+            
+            <span>
+                <a href="/tags/seaborn/">seaborn</a>
+            </span>
+            
+            <span>
+                <a href="/tags/sed/">sed</a>
+            </span>
+            
+            <span>
+                <a href="/tags/selfhosted/">selfhosted</a>
+            </span>
+            
+            <span>
+                <a href="/tags/server/">server</a>
+            </span>
+            
+            <span>
+                <a href="/tags/slurm/">slurm</a>
+            </span>
+            
+            <span>
+                <a href="/tags/snippet/">snippet</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ssh/">ssh</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tcpdump/">tcpdump</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tcptrace/">tcptrace</a>
+            </span>
+            
+            <span>
+                <a href="/tags/template/">template</a>
+            </span>
+            
+            <span>
+                <a href="/tags/terminal/">terminal</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tiff/">tiff</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tips-and-tricks/">tips and tricks</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tpick/">tpick</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tr/">tr</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tshark/">tshark</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tun/">tun</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tutorial/">tutorial</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ubuntu/">ubuntu</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ubuntu-12.04/">ubuntu 12.04</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ubuntu-server/">ubuntu server</a>
+            </span>
+            
+            <span>
+                <a href="/tags/visualization/">visualization</a>
+            </span>
+            
+            <span>
+                <a href="/tags/vpn/">vpn</a>
+            </span>
+            
+            <span>
+                <a href="/tags/yandex.disk/">yandex.disk</a>
+            </span>
+            
+            <span>
+                <a href="/tags/zotero/">zotero</a>
+            </span>
+            
+            <span>
+                <a href="/tags/zotfile/">zotfile</a>
+            </span>
+            
+        </div>
+    </div>
+    
+    
+    
 </aside>
-		</div>
-		<footer class="footer">
-	<div class="container footer__container flex">
-		
-		<div class="footer__copyright">
-			&copy; 2021 Bikulov Octonotes.
-			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
-		</div>
-	</div>
+        </div>
+        <div class="btn">
+    <div class="btn-menu" id="btn-menu">
+        <i class="iconfont icon-grid-sharp"></i>
+    </div>
+    <div class="btn-toggle-mode">
+        <i class="iconfont icon-contrast-sharp"></i>
+    </div>
+    <div class="btn-scroll-top">
+        <i class="iconfont icon-chevron-up-circle-sharp"></i>
+    </div>
+</div>
+<aside class="sidebar-mobile" style="display: none;">
+  <div class="sidebar-wrapper">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/resume/">Resume</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/bikulov" target="_blank"><span>Github</span></a>
+            </li>
+            
+            <li>
+                <a href="https://linkedin.com/in/bikulov" target="_blank"><span>LinkedIn</span></a>
+            </li>
+            
+            <li>
+                <a href="https://twitter.com/volukib" target="_blank"><span>Twitter</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/awk/">awk</a>
+            </span>
+            
+            <span>
+                <a href="/tags/backup/">backup</a>
+            </span>
+            
+            <span>
+                <a href="/tags/bash/">bash</a>
+            </span>
+            
+            <span>
+                <a href="/tags/blender/">blender</a>
+            </span>
+            
+            <span>
+                <a href="/tags/btsync/">btsync</a>
+            </span>
+            
+            <span>
+                <a href="/tags/c/">c</a>
+            </span>
+            
+            <span>
+                <a href="/tags/c&#43;&#43;/">c&#43;&#43;</a>
+            </span>
+            
+            <span>
+                <a href="/tags/centos/">centos</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cmake/">cmake</a>
+            </span>
+            
+            <span>
+                <a href="/tags/config/">config</a>
+            </span>
+            
+            <span>
+                <a href="/tags/console/">console</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cpp/">cpp</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cron/">cron</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cuda/">cuda</a>
+            </span>
+            
+            <span>
+                <a href="/tags/dd/">dd</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/dokuwiki/">dokuwiki</a>
+            </span>
+            
+            <span>
+                <a href="/tags/drupal/">drupal</a>
+            </span>
+            
+            <span>
+                <a href="/tags/du/">du</a>
+            </span>
+            
+            <span>
+                <a href="/tags/exceptions/">exceptions</a>
+            </span>
+            
+            <span>
+                <a href="/tags/fatnode/">fatnode</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ffmpeg/">ffmpeg</a>
+            </span>
+            
+            <span>
+                <a href="/tags/firefox/">firefox</a>
+            </span>
+            
+            <span>
+                <a href="/tags/gengetopt/">gengetopt</a>
+            </span>
+            
+            <span>
+                <a href="/tags/heapsort/">heapsort</a>
+            </span>
+            
+            <span>
+                <a href="/tags/howto/">howto</a>
+            </span>
+            
+            <span>
+                <a href="/tags/i3/">i3</a>
+            </span>
+            
+            <span>
+                <a href="/tags/imagemagick/">imagemagick</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ip/">ip</a>
+            </span>
+            
+            <span>
+                <a href="/tags/iptables/">iptables</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ipython/">ipython</a>
+            </span>
+            
+            <span>
+                <a href="/tags/joomla/">joomla</a>
+            </span>
+            
+            <span>
+                <a href="/tags/jupyter/">jupyter</a>
+            </span>
+            
+            <span>
+                <a href="/tags/latex/">latex</a>
+            </span>
+            
+            <span>
+                <a href="/tags/libcheese/">libcheese</a>
+            </span>
+            
+            <span>
+                <a href="/tags/linux/">linux</a>
+            </span>
+            
+            <span>
+                <a href="/tags/lxc/">lxc</a>
+            </span>
+            
+            <span>
+                <a href="/tags/makefile/">makefile</a>
+            </span>
+            
+            <span>
+                <a href="/tags/matplotlib/">matplotlib</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mercurial/">mercurial</a>
+            </span>
+            
+            <span>
+                <a href="/tags/montage/">montage</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mysql/">mysql</a>
+            </span>
+            
+            <span>
+                <a href="/tags/nautilus/">nautilus</a>
+            </span>
+            
+            <span>
+                <a href="/tags/nginx/">nginx</a>
+            </span>
+            
+            <span>
+                <a href="/tags/numpy/">numpy</a>
+            </span>
+            
+            <span>
+                <a href="/tags/openvpn/">openvpn</a>
+            </span>
+            
+            <span>
+                <a href="/tags/openvz/">openvz</a>
+            </span>
+            
+            <span>
+                <a href="/tags/paraview/">paraview</a>
+            </span>
+            
+            <span>
+                <a href="/tags/pcap/">pcap</a>
+            </span>
+            
+            <span>
+                <a href="/tags/pcmanfm/">PCManFM</a>
+            </span>
+            
+            <span>
+                <a href="/tags/pdf/">pdf</a>
+            </span>
+            
+            <span>
+                <a href="/tags/perl/">perl</a>
+            </span>
+            
+            <span>
+                <a href="/tags/plots/">plots</a>
+            </span>
+            
+            <span>
+                <a href="/tags/png/">png</a>
+            </span>
+            
+            <span>
+                <a href="/tags/postgres/">postgres</a>
+            </span>
+            
+            <span>
+                <a href="/tags/postgresql/">postgresql</a>
+            </span>
+            
+            <span>
+                <a href="/tags/programmer-tools/">programmer tools</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/quicksort/">quicksort</a>
+            </span>
+            
+            <span>
+                <a href="/tags/research/">research</a>
+            </span>
+            
+            <span>
+                <a href="/tags/rhodecode/">rhodecode</a>
+            </span>
+            
+            <span>
+                <a href="/tags/scan/">scan</a>
+            </span>
+            
+            <span>
+                <a href="/tags/scanimage/">scanimage</a>
+            </span>
+            
+            <span>
+                <a href="/tags/science/">science</a>
+            </span>
+            
+            <span>
+                <a href="/tags/scipy/">scipy</a>
+            </span>
+            
+            <span>
+                <a href="/tags/screen-capture/">screen capture</a>
+            </span>
+            
+            <span>
+                <a href="/tags/script/">script</a>
+            </span>
+            
+            <span>
+                <a href="/tags/scrot/">scrot</a>
+            </span>
+            
+            <span>
+                <a href="/tags/seaborn/">seaborn</a>
+            </span>
+            
+            <span>
+                <a href="/tags/sed/">sed</a>
+            </span>
+            
+            <span>
+                <a href="/tags/selfhosted/">selfhosted</a>
+            </span>
+            
+            <span>
+                <a href="/tags/server/">server</a>
+            </span>
+            
+            <span>
+                <a href="/tags/slurm/">slurm</a>
+            </span>
+            
+            <span>
+                <a href="/tags/snippet/">snippet</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ssh/">ssh</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tcpdump/">tcpdump</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tcptrace/">tcptrace</a>
+            </span>
+            
+            <span>
+                <a href="/tags/template/">template</a>
+            </span>
+            
+            <span>
+                <a href="/tags/terminal/">terminal</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tiff/">tiff</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tips-and-tricks/">tips and tricks</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tpick/">tpick</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tr/">tr</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tshark/">tshark</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tun/">tun</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tutorial/">tutorial</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ubuntu/">ubuntu</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ubuntu-12.04/">ubuntu 12.04</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ubuntu-server/">ubuntu server</a>
+            </span>
+            
+            <span>
+                <a href="/tags/visualization/">visualization</a>
+            </span>
+            
+            <span>
+                <a href="/tags/vpn/">vpn</a>
+            </span>
+            
+            <span>
+                <a href="/tags/yandex.disk/">yandex.disk</a>
+            </span>
+            
+            <span>
+                <a href="/tags/zotero/">zotero</a>
+            </span>
+            
+            <span>
+                <a href="/tags/zotfile/">zotfile</a>
+            </span>
+            
+        </div>
+    </div>
+    
+    
+  </div>
+</aside>
+    </main>
+
+    <footer>
+    <div class="container-lg clearfix">
+        <div class="col-12 footer">
+            
+            <span>&copy; 2012-2021
+                <a href="https://bikulov.org">bikulov</a>
+                 | <a href="https://github.com/bikulov/bikulov.github.io">Source code</a> 
+                | Powered by <a href="https://github.com/amzrk2/hugo-theme-fuji/"
+                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
+                                                    target="_blank">Hugo</a> 
+            </span>
+        </div>
+    </div>
 </footer>
-	</div>
-<script async defer src="/js/menu.js"></script> <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(22777879, "init", { id:22777879, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/22777879" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+
+    
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.0/lazysizes.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+
+
+<script defer src="/assets/js/fuji.min.js"></script>
+
+
 </body>
+
 </html>

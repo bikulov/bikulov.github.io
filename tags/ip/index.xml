@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>ip on Bikulov Octonotes</title>
+    <title>ip on :) bikulov.ORG</title>
     <link>https://bikulov.org/tags/ip/</link>
-    <description>Recent content in ip on Bikulov Octonotes</description>
+    <description>Recent content in ip on :) bikulov.ORG</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>en</language>
     <lastBuildDate>Mon, 09 Sep 2013 23:24:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/ip/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Email notification if IP is changed with Python and cron</title>
@@ -14,8 +14,8 @@
       
       <guid>https://bikulov.org/blog/2013/09/09/email-notification-if-ip-is-changed-with-python-and-cron/</guid>
       <description>&lt;p&gt;This Python script retrieves computer&amp;rsquo;s external IP address (using internet.yandex.ru) and emails message with new IP if IP has been changed since last check. BeautifulSoup module is needed, so install it if you have no installed version:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;sudo pip install beautifulsoup
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo pip install beautifulsoup
+&lt;/code&gt;&lt;/pre&gt;</description>
     </item>
     
   </channel>

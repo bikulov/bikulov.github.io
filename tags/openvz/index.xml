@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>openvz on Bikulov Octonotes</title>
+    <title>openvz on :) bikulov.ORG</title>
     <link>https://bikulov.org/tags/openvz/</link>
-    <description>Recent content in openvz on Bikulov Octonotes</description>
+    <description>Recent content in openvz on :) bikulov.ORG</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>en</language>
     <lastBuildDate>Sat, 10 Aug 2013 09:14:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/openvz/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Enable tun for OpenVZ Ubuntu 12.04 containers in CentOS 6.4</title>
@@ -26,7 +26,7 @@
       <pubDate>Thu, 08 Aug 2013 20:54:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2013/08/08/configuring-ubuntu-12.04-in-openvz-on-centos-6.4/</guid>
-      <description>&lt;p&gt;This howto is based on two sources: &lt;a href=&#34;http://openvz.org/Quick_Installation_CentOS_6&#34;&gt;Official wiki&lt;/a&gt; and Amutu blog &lt;a href=&#34;http://amutu.com/blog/2013/03/centos_bridge_devic/&#34;&gt;entry&lt;/a&gt;. In short, the main difficulty is in bridge network configuration: correct network configuration doesn&amp;rsquo;t work in CentOS 6.4 while NetworkManager is running. I compiled official documentation and fix found in Amutu blog here in one entry.&lt;/p&gt;</description>
+      <description>&lt;p&gt;This howto is based on two sources: &lt;a href=&#34;http://openvz.org/Quick_Installation_CentOS_6&#34; target=&#34;_blank&#34;&gt;Official wiki&lt;/a&gt; and Amutu blog &lt;a href=&#34;http://amutu.com/blog/2013/03/centos_bridge_devic/&#34; target=&#34;_blank&#34;&gt;entry&lt;/a&gt;. In short, the main difficulty is in bridge network configuration: correct network configuration doesn&amp;rsquo;t work in CentOS 6.4 while NetworkManager is running. I compiled official documentation and fix found in Amutu blog here in one entry.&lt;/p&gt;</description>
     </item>
     
   </channel>

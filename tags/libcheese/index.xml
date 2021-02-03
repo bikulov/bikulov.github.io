@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>libcheese on Bikulov Octonotes</title>
+    <title>libcheese on :) bikulov.ORG</title>
     <link>https://bikulov.org/tags/libcheese/</link>
-    <description>Recent content in libcheese on Bikulov Octonotes</description>
+    <description>Recent content in libcheese on :) bikulov.ORG</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>en</language>
     <lastBuildDate>Sat, 28 Feb 2015 08:54:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/libcheese/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Install CUDA 6.5 on clean Ubuntu 14.04</title>
@@ -13,7 +13,7 @@
       <pubDate>Sat, 28 Feb 2015 08:54:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2015/02/28/install-cuda-6.5-on-clean-ubuntu-14.04/</guid>
-      <description>&lt;p&gt;Lately NVIDIA added repository for Ubuntu 12.04 and Ubuntu 14.04. Recently I hit problem with missing dependencies for &lt;code&gt;libcheese-gtk23&lt;/code&gt; and &lt;code&gt;libcheese7&lt;/code&gt; libraries while installing latest CUDA 6.5 on clean Ubuntu 14.04. Remedy to this can be found on &lt;a href=&#34;http://askubuntu.com/questions/587977/unmet-dependences-when-install-cuda-6-5-on-a-freshly-installed-ubuntu-14-04&#34;&gt;askubuntu&lt;/a&gt;. So, the complete set of commands is below.&lt;/p&gt;</description>
+      <description>&lt;p&gt;Lately NVIDIA added repository for Ubuntu 12.04 and Ubuntu 14.04. Recently I hit problem with missing dependencies for &lt;code&gt;libcheese-gtk23&lt;/code&gt; and &lt;code&gt;libcheese7&lt;/code&gt; libraries while installing latest CUDA 6.5 on clean Ubuntu 14.04. Remedy to this can be found on &lt;a href=&#34;http://askubuntu.com/questions/587977/unmet-dependences-when-install-cuda-6-5-on-a-freshly-installed-ubuntu-14-04&#34; target=&#34;_blank&#34;&gt;askubuntu&lt;/a&gt;. So, the complete set of commands is below.&lt;/p&gt;</description>
     </item>
     
   </channel>
