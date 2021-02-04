@@ -30,8 +30,8 @@
       
       <guid>https://bikulov.org/blog/2017/03/11/python-sorting-objects-of-user-defined-class/</guid>
       <description>&lt;p&gt;The most common way of sorting collections of custom objects in Python is to &lt;a href=&#34;https://docs.python.org/3.5/library/functions.html#sorted&#34; target=&#34;_blank&#34;&gt;provide&lt;/a&gt; key function that is used to extract a comparison key from each element:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;sorted(&amp;quot;Case insensitive Sorting is here&amp;quot;.split(), key=str.lower)
-&lt;/code&gt;&lt;/pre&gt;</description>
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;sorted(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Case insensitive Sorting is here&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;split(), key&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;str&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;lower)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -92,8 +92,7 @@
       <guid>https://bikulov.org/blog/2013/11/02/set-application-version-in-gengetopt-config-based-on-mercurial-revision/</guid>
       <description>&lt;p&gt;Previously I wrote about gengetopt tool to parse command line arguments. There was a line about application version.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;version &amp;quot;13.10.25&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;It is important to keep this line up to date every time you compile and deploy binary.&lt;/p&gt;</description>
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;It is important to keep this line up to date every time you compile and deploy binary.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -121,8 +120,8 @@
       
       <guid>https://bikulov.org/blog/2013/09/09/email-notification-if-ip-is-changed-with-python-and-cron/</guid>
       <description>&lt;p&gt;This Python script retrieves computer&amp;rsquo;s external IP address (using internet.yandex.ru) and emails message with new IP if IP has been changed since last check. BeautifulSoup module is needed, so install it if you have no installed version:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo pip install beautifulsoup
-&lt;/code&gt;&lt;/pre&gt;</description>
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;sudo pip install beautifulsoup
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>

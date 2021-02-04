@@ -65,8 +65,8 @@
       
       <guid>https://bikulov.org/blog/2017/03/11/python-sorting-objects-of-user-defined-class/</guid>
       <description>&lt;p&gt;The most common way of sorting collections of custom objects in Python is to &lt;a href=&#34;https://docs.python.org/3.5/library/functions.html#sorted&#34; target=&#34;_blank&#34;&gt;provide&lt;/a&gt; key function that is used to extract a comparison key from each element:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;sorted(&amp;quot;Case insensitive Sorting is here&amp;quot;.split(), key=str.lower)
-&lt;/code&gt;&lt;/pre&gt;</description>
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;sorted(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Case insensitive Sorting is here&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;split(), key&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;str&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;lower)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -163,8 +163,8 @@
       
       <guid>https://bikulov.org/blog/2014/08/09/setup-drupal-7-with-nginx-and-postgresql-on-ubuntu-14.04/</guid>
       <description>&lt;p&gt;This note is similar to previous &lt;a href=&#34;https://bikulov.org/blog/2013/04/28/ubuntu-server-12-04-drupal-7-nginx-mysql/&#34;&gt;drupal&lt;/a&gt; and &lt;a href=&#34;https://bikulov.org/blog/2013/08/19/setting-up-joomla-3-dot-1-5-with-postgresql-on-ubuntu-13-dot-04/&#34;&gt;joomla&lt;/a&gt; installations. Install requirements (webserver, php5, DB server, DB adapter for php) as root:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;apt-get install -y nginx php5-fpm nginx postgresql php5-pgsql php5-gd
-&lt;/code&gt;&lt;/pre&gt;</description>
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;apt-get install -y nginx php5-fpm nginx postgresql php5-pgsql php5-gd
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -247,8 +247,7 @@
       <guid>https://bikulov.org/blog/2013/11/02/set-application-version-in-gengetopt-config-based-on-mercurial-revision/</guid>
       <description>&lt;p&gt;Previously I wrote about gengetopt tool to parse command line arguments. There was a line about application version.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;version &amp;quot;13.10.25&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;It is important to keep this line up to date every time you compile and deploy binary.&lt;/p&gt;</description>
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;It is important to keep this line up to date every time you compile and deploy binary.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -294,8 +293,8 @@
       
       <guid>https://bikulov.org/blog/2013/09/09/email-notification-if-ip-is-changed-with-python-and-cron/</guid>
       <description>&lt;p&gt;This Python script retrieves computer&amp;rsquo;s external IP address (using internet.yandex.ru) and emails message with new IP if IP has been changed since last check. BeautifulSoup module is needed, so install it if you have no installed version:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo pip install beautifulsoup
-&lt;/code&gt;&lt;/pre&gt;</description>
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;sudo pip install beautifulsoup
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -372,9 +371,8 @@
       
       <guid>https://bikulov.org/blog/2013/07/12/configuration-of-hosts-for-convenient-ssh-connections/</guid>
       <description>&lt;p&gt;It is possible to save configuration of ssh connection for later usage. For example, one had to type&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;ssh &amp;lt;username&amp;gt;@&amp;lt;ip address&amp;gt; -p &amp;lt;port&amp;gt; -i &amp;lt;path to key file&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;every time one wants to connect to server.&lt;/p&gt;</description>
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;ssh &amp;lt;username&amp;gt;@&amp;lt;ip address&amp;gt; -p &amp;lt;port&amp;gt; -i &amp;lt;path to key file&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;every time one wants to connect to server.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -429,8 +427,8 @@
       
       <guid>https://bikulov.org/blog/2012/11/01/show-n-biggest-directories-in-linux-bash/</guid>
       <description>&lt;p&gt;du (disk usage) utility in linux bash summarizes disk usage of each directory or file. By default, it outputs only directories. Just enter some dir and type&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ du ./
-&lt;/code&gt;&lt;/pre&gt;</description>
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;$ du ./
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -458,9 +456,9 @@
       
       <guid>https://bikulov.org/blog/2012/10/25/awk-a-powerful-tool-for-programmer/</guid>
       <description>&lt;p&gt;AWK is an acronym of first letters of its authors (Aho, Weinberger and Kernighan). It is a data-manipulating scripting language with huge possibilities.  There are several implementations of it: awk is a canonical one, nawk (new awk), mawk (default in Ubuntu 12.04), gawk is GNU awk. I recommend latter one, because it works correct with unicode symbols in example:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ echo юникод | gawk &amp;quot;{res = toupper(\$1); print res;}&amp;quot;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;$ echo юникод | gawk &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;{res = toupper(\$1); print res;}&amp;#34;&lt;/span&gt;
 ЮНИКОД
-&lt;/code&gt;&lt;/pre&gt;</description>
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -496,8 +494,8 @@
       
       <guid>https://bikulov.org/blog/2012/07/18/montage-png-into-single-one/</guid>
       <description>&lt;p&gt;Glue several png’s into one png &lt;code&gt;[1]+[2]+[3]+[4] = [[1][2][3][4]]&lt;/code&gt; with montage from ImageMagick:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;montage -geometry +1+1 -tile 4x1 image*.png final.png
-&lt;/code&gt;&lt;/pre&gt;</description>
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;montage -geometry +1+1 -tile 4x1 image*.png final.png
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>

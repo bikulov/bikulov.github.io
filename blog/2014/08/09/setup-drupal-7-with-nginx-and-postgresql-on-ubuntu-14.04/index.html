@@ -104,16 +104,14 @@ apt-get install -y nginx php5-fpm nginx postgresql php5-pgsql php5-gd
     
     <div class="post-content markdown-body">
         <p>This note is similar to previous <a href="/blog/2013/04/28/ubuntu-server-12-04-drupal-7-nginx-mysql/">drupal</a> and <a href="/blog/2013/08/19/setting-up-joomla-3-dot-1-5-with-postgresql-on-ubuntu-13-dot-04/">joomla</a> installations. Install requirements (webserver, php5, DB server, DB adapter for php) as root:</p>
-<pre><code class="language-bash">apt-get install -y nginx php5-fpm nginx postgresql php5-pgsql php5-gd
-</code></pre>
-<p>Create user and database (replace <code>USER</code> with desired username and <code>HOSTNAME_db</code> with database name, we will need this values in Drupal setup later) for future site:</p>
-<pre><code class="language-bash">sudo -u postgres -i
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">apt-get install -y nginx php5-fpm nginx postgresql php5-pgsql php5-gd
+</code></pre></div><p>Create user and database (replace <code>USER</code> with desired username and <code>HOSTNAME_db</code> with database name, we will need this values in Drupal setup later) for future site:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo -u postgres -i
 createuser USER --pwprompt --encrypted
 createdb HOSTNAME_db
 exit
-</code></pre>
-<p>Now setup nginx. First create fastcgi config <code>/etc/nginx/fastcgi.conf</code>:</p>
-<pre><code class="language-bash"># vim /etc/nginx/fastcgi.conf
+</code></pre></div><p>Now setup nginx. First create fastcgi config <code>/etc/nginx/fastcgi.conf</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># vim /etc/nginx/fastcgi.conf</span>
 fastcgi_param   QUERY_STRING            $query_string;
 fastcgi_param   REQUEST_METHOD          $request_method;
 fastcgi_param   CONTENT_TYPE            $content_type;
@@ -134,57 +132,52 @@ fastcgi_param   SERVER_PORT             $server_port;
 fastcgi_param   SERVER_NAME             $server_name;
 fastcgi_param   HTTPS                   $https;
 fastcgi_param   REDIRECT_STATUS         200;
-</code></pre>
-<p>Now create config for site (change <code>HOSTNAME</code> to your site hostname):</p>
-<pre><code class="language-bash">#vim /etc/nginx/sites-available/HOSTNAME
-server {
+</code></pre></div><p>Now create config for site (change <code>HOSTNAME</code> to your site hostname):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#vim /etc/nginx/sites-available/HOSTNAME</span>
+server <span style="color:#f92672">{</span>
   listen 80;
   server_name HOSTNAME;
   access_log /var/log/nginx/HOSTNAME.access.log;
   error_log /var/log/nginx/HOSTNAME.error.log;
   root /srv/HOSTNAME;
   index index.php index.html index.htm default.html default.htm;
-  # Support Clean (aka Search Engine Friendly) URLs
-  location / {
+  <span style="color:#75715e"># Support Clean (aka Search Engine Friendly) URLs</span>
+  location / <span style="color:#f92672">{</span>
     try_files $uri $uri/ /index.php?$args;
-  }
-  # deny running scripts inside writable directories
-  location ~* /(images|cache|media|logs|tmp)/.*\.(php|pl|py|jsp|asp|sh|cgi)$ {
-    return 403;
-    error_page 403 /403_error.html;
-  }
-  location ~ \.php$ {
+  <span style="color:#f92672">}</span>
+  <span style="color:#75715e"># deny running scripts inside writable directories</span>
+  location ~* /<span style="color:#f92672">(</span>images|cache|media|logs|tmp<span style="color:#f92672">)</span>/.*<span style="color:#ae81ff">\.</span><span style="color:#f92672">(</span>php|pl|py|jsp|asp|sh|cgi<span style="color:#f92672">)</span>$ <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">return</span> 403;
+    error_page <span style="color:#ae81ff">403</span> /403_error.html;
+  <span style="color:#f92672">}</span>
+  location ~ <span style="color:#ae81ff">\.</span>php$ <span style="color:#f92672">{</span>
     fastcgi_pass  unix:/var/run/php5-fpm.sock;
     fastcgi_index index.php;
     include fastcgi_params;
     fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
     include /etc/nginx/fastcgi.conf;
-  }
-  # caching of files
-  location ~* \.(ico|pdf|flv)$ {
+  <span style="color:#f92672">}</span>
+  <span style="color:#75715e"># caching of files</span>
+  location ~* <span style="color:#ae81ff">\.</span><span style="color:#f92672">(</span>ico|pdf|flv<span style="color:#f92672">)</span>$ <span style="color:#f92672">{</span>
     expires 1y;
-  }
-  location ~* \.(js|css|png|jpg|jpeg|gif|swf|xml|txt)$ {
+  <span style="color:#f92672">}</span>
+  location ~* <span style="color:#ae81ff">\.</span><span style="color:#f92672">(</span>js|css|png|jpg|jpeg|gif|swf|xml|txt<span style="color:#f92672">)</span>$ <span style="color:#f92672">{</span>
     expires 14d;
-  }
-}
-</code></pre>
-<p>and enable it:</p>
-<pre><code class="language-bash">ln -s /etc/nginx/sites-available/HOSTNAME /etc/nginx/sites-enabled/
-</code></pre>
-<p>Now you need to restart services as root:</p>
-<pre><code class="language-bash">service php5-fpm restart
+  <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>and enable it:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ln -s /etc/nginx/sites-available/HOSTNAME /etc/nginx/sites-enabled/
+</code></pre></div><p>Now you need to restart services as root:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">service php5-fpm restart
 service nginx restart
-</code></pre>
-<p>Download latest <a href="https://www.drupal.org/project/drupal" target="_blank">Drupal</a> package to <code>/srv/</code> and unpack it. Rename folder to <code>HOSTNAME</code> (see nginx config for host). Create settings from sample ones and change owner of <code>/srv/HOSTNAME</code> to <code>www-data:www-data</code>. Remove unnecessary Drupal package archive. All command above must look like (as root):</p>
-<pre><code class="language-bash">wget http://ftp.drupal.org/files/projects/drupal-7.31.tar.gz
+</code></pre></div><p>Download latest <a href="https://www.drupal.org/project/drupal" target="_blank">Drupal</a> package to <code>/srv/</code> and unpack it. Rename folder to <code>HOSTNAME</code> (see nginx config for host). Create settings from sample ones and change owner of <code>/srv/HOSTNAME</code> to <code>www-data:www-data</code>. Remove unnecessary Drupal package archive. All command above must look like (as root):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">wget http://ftp.drupal.org/files/projects/drupal-7.31.tar.gz
 tar xvf drupal-7.31.tar.gz
 mv drupal-7.31 bikulov.org
 rm drupal-7.31.tar.gz
 cp bikulov.org/sites/default/default.settings.php bikulov.org/sites/default/settings.php
 chown -R www-data:www-data bikulov.org
-</code></pre>
-<p>Now complete web install of Drupal using your database name and user.</p>
+</code></pre></div><p>Now complete web install of Drupal using your database name and user.</p>
     </div>
 </article>
 

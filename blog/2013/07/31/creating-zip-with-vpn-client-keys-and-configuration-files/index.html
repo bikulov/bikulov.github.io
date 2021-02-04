@@ -101,32 +101,30 @@
     <div class="post-content markdown-body">
         <p>Depends on server configuration, each OpenVPN client needs configuration file (client.conf for *nix and client.ovpn for windows), certificate authority (ca.crt), [optional] tls auth file (ta.key), user crt and key.</p>
 <p>Typical OpenVPN client configuration file looks like (ca and ta files in <code>server</code> subdirectory):</p>
-<pre><code class="language-ini">client
-remote &lt;vpn server address&gt;
-port 1194
-proto udp
-dev tun
-dev-type tun
-ns-cert-type server
-reneg-sec 86400
-comp-lzo yes
-verb 3
-ca server/ca.crt
-cert &lt;user crt&gt;
-key &lt;user key&gt;
-tls-auth server/ta.key 1
-</code></pre>
-<p>The following is tested on Ubuntu 12.04, but it will work (maybe with some modifications) in other linux distributions. Create new subdirectory <code>key-bundles</code> in <code>/etc/openvpn/easy-rsa</code> directory. Place there the following script <code>zip-key</code>:</p>
-<pre><code class="language-bash">#!/bin/bash
-NAME=$1
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#a6e22e">client</span>
+<span style="color:#a6e22e">remote &lt;vpn server address&gt;</span>
+<span style="color:#a6e22e">port 1194</span>
+<span style="color:#a6e22e">proto udp</span>
+<span style="color:#a6e22e">dev tun</span>
+<span style="color:#a6e22e">dev-type tun</span>
+<span style="color:#a6e22e">ns-cert-type server</span>
+<span style="color:#a6e22e">reneg-sec 86400</span>
+<span style="color:#a6e22e">comp-lzo yes</span>
+<span style="color:#a6e22e">verb 3</span>
+<span style="color:#a6e22e">ca server/ca.crt</span>
+<span style="color:#a6e22e">cert &lt;user crt&gt;</span>
+<span style="color:#a6e22e">key &lt;user key&gt;</span>
+<span style="color:#a6e22e">tls-auth server/ta.key 1</span>
+</code></pre></div><p>The following is tested on Ubuntu 12.04, but it will work (maybe with some modifications) in other linux distributions. Create new subdirectory <code>key-bundles</code> in <code>/etc/openvpn/easy-rsa</code> directory. Place there the following script <code>zip-key</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#!/bin/bash
+</span><span style="color:#75715e"></span>NAME<span style="color:#f92672">=</span>$1
 cd keys
-sed -s &quot;s/^cert .*/cert ${NAME}.crt/g&quot; -i client.conf
-sed -s &quot;s/^key .*/key ${NAME}.key/g&quot; -i client.conf
+sed -s <span style="color:#e6db74">&#34;s/^cert .*/cert </span><span style="color:#e6db74">${</span>NAME<span style="color:#e6db74">}</span><span style="color:#e6db74">.crt/g&#34;</span> -i client.conf
+sed -s <span style="color:#e6db74">&#34;s/^key .*/key </span><span style="color:#e6db74">${</span>NAME<span style="color:#e6db74">}</span><span style="color:#e6db74">.key/g&#34;</span> -i client.conf
 cp client.conf client.ovpn
-zip -r ../key-bundles/${NAME}.zip client.conf client.ovpn server ${NAME}.crt ${NAME}.key
+zip -r ../key-bundles/<span style="color:#e6db74">${</span>NAME<span style="color:#e6db74">}</span>.zip client.conf client.ovpn server <span style="color:#e6db74">${</span>NAME<span style="color:#e6db74">}</span>.crt <span style="color:#e6db74">${</span>NAME<span style="color:#e6db74">}</span>.key
 cd -
-</code></pre>
-<p>You may need zip (<code>sudo apt-get install zip</code>) and make script executable (<code>sudo chmod +x zip-key</code>). I assume your VPN client configuration file is client.conf, ta.key and ca.crt are in <code>/etc/openvpn/easy-rsa/keys/server</code> directory. First and the only script argument is client key filename.</p>
+</code></pre></div><p>You may need zip (<code>sudo apt-get install zip</code>) and make script executable (<code>sudo chmod +x zip-key</code>). I assume your VPN client configuration file is client.conf, ta.key and ca.crt are in <code>/etc/openvpn/easy-rsa/keys/server</code> directory. First and the only script argument is client key filename.</p>
     </div>
 </article>
 

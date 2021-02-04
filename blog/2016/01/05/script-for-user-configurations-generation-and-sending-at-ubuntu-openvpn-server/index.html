@@ -103,142 +103,134 @@
 <h2 id="prerequisities">Prerequisities</h2>
 <p>All commands in this section must be executed as root user.</p>
 <p>Update package list:</p>
-<pre><code class="language-bash">apt-get update
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">apt-get update
 apt-get -y upgrade
-</code></pre>
-<p>Install needed packages (easy-rsa must be installed explicitly on modern Ubuntus):</p>
-<pre><code class="language-bash">apt-get install -y openvpn easy-rsa
-</code></pre>
-<h2 id="configure-openvpn-server-on-ubuntu-1404">Configure OpenVPN server on Ubuntu 14.04</h2>
+</code></pre></div><p>Install needed packages (easy-rsa must be installed explicitly on modern Ubuntus):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">apt-get install -y openvpn easy-rsa
+</code></pre></div><h2 id="configure-openvpn-server-on-ubuntu-1404">Configure OpenVPN server on Ubuntu 14.04</h2>
 <p>Copy default configuration:</p>
-<pre><code class="language-bash">cp -r /usr/share/easy-rsa /etc/openvpn/easy-rsa
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cp -r /usr/share/easy-rsa /etc/openvpn/easy-rsa
 cd /etc/openvpn/easy-rsa
-</code></pre>
-<p>Edit vars file in <code>/etc/openvpn/easy-rsa</code> folder corresponding to your settings. Change the following lines corresponding to your options:</p>
-<pre><code class="language-bash">export KEY_SIZE=2048
+</code></pre></div><p>Edit vars file in <code>/etc/openvpn/easy-rsa</code> folder corresponding to your settings. Change the following lines corresponding to your options:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">export KEY_SIZE<span style="color:#f92672">=</span><span style="color:#ae81ff">2048</span>
 
-export KEY_COUNTRY=&quot;US&quot;
-export KEY_PROVINCE=&quot;State&quot;
-export KEY_CITY=&quot;BigCityName&quot;
-export KEY_ORG=&quot;OrganizationName&quot;
-export KEY_EMAIL=&quot;mail@organization.com&quot;
-export KEY_OU=&quot;vpn.organization.com&quot;
+export KEY_COUNTRY<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;US&#34;</span>
+export KEY_PROVINCE<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;State&#34;</span>
+export KEY_CITY<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;BigCityName&#34;</span>
+export KEY_ORG<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;OrganizationName&#34;</span>
+export KEY_EMAIL<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;mail@organization.com&#34;</span>
+export KEY_OU<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;vpn.organization.com&#34;</span>
 
-export KEY_NAME=&quot;vpn.organization.com&quot;
+export KEY_NAME<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;vpn.organization.com&#34;</span>
 
-export KEY_CN=&quot;vpn.organization.com&quot;
-export KEY_ALTNAMES=&quot;vpn.organization.com&quot;
-</code></pre>
-<p>Activate saved settings:</p>
-<pre><code class="language-bash">source vars
-</code></pre>
-<p>And generate server keys:</p>
-<pre><code class="language-bash">./clean-all
+export KEY_CN<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;vpn.organization.com&#34;</span>
+export KEY_ALTNAMES<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;vpn.organization.com&#34;</span>
+</code></pre></div><p>Activate saved settings:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">source vars
+</code></pre></div><p>And generate server keys:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">./clean-all
 ./build-ca
 ./build-key-server vpn.organization.com
 ./build-dh
 openvpn --genkey --secret keys/ta.key
-</code></pre>
-<p>Example of server config (must be placed into <code>/etc/openvpn</code> folder):</p>
-<pre><code class="language-bash"># /etc/openvpn/server.conf
-# Which TCP/UDP port should OpenVPN listen on
-port 1594
+</code></pre></div><p>Example of server config (must be placed into <code>/etc/openvpn</code> folder):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># /etc/openvpn/server.conf</span>
+<span style="color:#75715e"># Which TCP/UDP port should OpenVPN listen on</span>
+port <span style="color:#ae81ff">1594</span>
 
-# Ip's
+<span style="color:#75715e"># Ip&#39;s</span>
 server 10.10.10.0 255.255.255.0
 
-# UDP server
+<span style="color:#75715e"># UDP server</span>
 proto udp
 
-# Create a routed IP tunnel
+<span style="color:#75715e"># Create a routed IP tunnel</span>
 dev tun
 
-# Root certificate, certificate, private key, DH key, SSL/TLS key
+<span style="color:#75715e"># Root certificate, certificate, private key, DH key, SSL/TLS key</span>
 ca       easy-rsa/keys/ca.crt
 cert     easy-rsa/keys/vpn.organization.com.crt
 key      easy-rsa/keys/vpn.organization.com.key
 dh       easy-rsa/keys/dh2048.pem
-tls-auth easy-rsa/keys/ta.key 0
+tls-auth easy-rsa/keys/ta.key <span style="color:#ae81ff">0</span>
 
-# Maintain a record of client &lt;-&gt; virtual IP address
+<span style="color:#75715e"># Maintain a record of client &lt;-&gt; virtual IP address</span>
 ifconfig-pool-persist ipp.txt
 
-# Allow different clients to be able to &quot;see&quot; each other
+<span style="color:#75715e"># Allow different clients to be able to &#34;see&#34; each other</span>
 client-to-client
 
-# Ping every 10 seconds, peer is down if no pong during a 120 seconds
-keepalive 10 120
+<span style="color:#75715e"># Ping every 10 seconds, peer is down if no pong during a 120 seconds</span>
+keepalive <span style="color:#ae81ff">10</span> <span style="color:#ae81ff">120</span>
 
-# Cryptographic cipher
+<span style="color:#75715e"># Cryptographic cipher</span>
 cipher AES-256-CBC
 
-# Enable compression on the VPN link
+<span style="color:#75715e"># Enable compression on the VPN link</span>
 comp-lzo
 
-# Reduce the OpenVPN daemon's privileges after initialization
+<span style="color:#75715e"># Reduce the OpenVPN daemon&#39;s privileges after initialization</span>
 user nobody
 group nogroup
 
-# Avoid errors caused by the privilege downgrade
+<span style="color:#75715e"># Avoid errors caused by the privilege downgrade</span>
 persist-key
 persist-tun
 
-# Status file
+<span style="color:#75715e"># Status file</span>
 status openvpn-status.log
 
-# Set the appropriate level of log verbosity
-verb 3
-</code></pre>
-<p>Be sure that your keys <code>ca.crt</code>, <code>vpn.organization.com.crt</code>, <code>vpn.organization.com.key</code>, <code>dh2048.pem</code>, <code>ta.key</code> are in the correct place corresponding to server config.</p>
+<span style="color:#75715e"># Set the appropriate level of log verbosity</span>
+verb <span style="color:#ae81ff">3</span>
+</code></pre></div><p>Be sure that your keys <code>ca.crt</code>, <code>vpn.organization.com.crt</code>, <code>vpn.organization.com.key</code>, <code>dh2048.pem</code>, <code>ta.key</code> are in the correct place corresponding to server config.</p>
 <h2 id="client-configuration">Client configuration</h2>
 <p>Client configuration must correspond to server one. For the above server config client one is:</p>
-<pre><code class="language-bash"># /etc/openvpn/easy-rsa/client.conf
-# Specify that it is a client
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># /etc/openvpn/easy-rsa/client.conf</span>
+<span style="color:#75715e"># Specify that it is a client</span>
 client
 
-# Use the same setting as on the server.
+<span style="color:#75715e"># Use the same setting as on the server.</span>
 dev tun
 proto udp
 
-# The hostname/IP and port of the server.
-remote vpn.organization.com 1594
+<span style="color:#75715e"># The hostname/IP and port of the server.</span>
+remote vpn.organization.com <span style="color:#ae81ff">1594</span>
 
-# Keep trying indefinitely to resolve the host name of the OpenVPN server
+<span style="color:#75715e"># Keep trying indefinitely to resolve the host name of the OpenVPN server</span>
 resolv-retry infinite
 
-# Most clients don't need to bind to a specific local port number
+<span style="color:#75715e"># Most clients don&#39;t need to bind to a specific local port number</span>
 nobind
 
-# Downgrade privileges after initialization (non-Windows only)
+<span style="color:#75715e"># Downgrade privileges after initialization (non-Windows only)</span>
 user nobody
 group nogroup
 
-# Try to preserve some state across restarts
+<span style="color:#75715e"># Try to preserve some state across restarts</span>
 persist-key
 persist-tun
 
-# Verify server certificate
+<span style="color:#75715e"># Verify server certificate</span>
 ns-cert-type server
 
-# Enable compression on the VPN link
+<span style="color:#75715e"># Enable compression on the VPN link</span>
 comp-lzo
 
-# Set log file verbosity.
-verb 3
+<span style="color:#75715e"># Set log file verbosity.</span>
+verb <span style="color:#ae81ff">3</span>
 
-# Set key direction for tls-auth
-key-direction 1
+<span style="color:#75715e"># Set key direction for tls-auth</span>
+key-direction <span style="color:#ae81ff">1</span>
 
-# Cryptographic cipher
+<span style="color:#75715e"># Cryptographic cipher</span>
 cipher AES-256-CBC
-</code></pre>
-<h2 id="сonvenient-autosending-of-client-configurations">Сonvenient autosending of client configurations</h2>
+</code></pre></div><h2 id="сonvenient-autosending-of-client-configurations">Сonvenient autosending of client configurations</h2>
 <p>Save the following script into folder:</p>
-<pre><code class="language-bash">#!/usr/bin/env bash
-
-CLIENT=$1
-CLIENT_MAIL=$2
-SERVER=vpn.dima.io
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#!/usr/bin/env bash
+</span><span style="color:#75715e"></span>
+CLIENT<span style="color:#f92672">=</span>$1
+CLIENT_MAIL<span style="color:#f92672">=</span>$2
+SERVER<span style="color:#f92672">=</span>vpn.dima.io
 
 cd /etc/openvpn/easy-rsa
 
@@ -246,49 +238,45 @@ source vars
 
 mkdir -p bundles
 
-./build-key ${CLIENT}.at.${SERVER}
+./build-key <span style="color:#e6db74">${</span>CLIENT<span style="color:#e6db74">}</span>.at.<span style="color:#e6db74">${</span>SERVER<span style="color:#e6db74">}</span>
 
-cp client.conf bundles/${CLIENT}.at.${SERVER}.conf
+cp client.conf bundles/<span style="color:#e6db74">${</span>CLIENT<span style="color:#e6db74">}</span>.at.<span style="color:#e6db74">${</span>SERVER<span style="color:#e6db74">}</span>.conf
 
-echo &quot;&lt;ca&gt;&quot;  &gt;&gt; bundles/${CLIENT}.at.${SERVER}.conf
-cat keys/ca.crt &gt;&gt; bundles/${CLIENT}.at.${SERVER}.conf
-echo &quot;&lt;/ca&gt;&quot; &gt;&gt; bundles/${CLIENT}.at.${SERVER}.conf
+echo <span style="color:#e6db74">&#34;&lt;ca&gt;&#34;</span>  &gt;&gt; bundles/<span style="color:#e6db74">${</span>CLIENT<span style="color:#e6db74">}</span>.at.<span style="color:#e6db74">${</span>SERVER<span style="color:#e6db74">}</span>.conf
+cat keys/ca.crt &gt;&gt; bundles/<span style="color:#e6db74">${</span>CLIENT<span style="color:#e6db74">}</span>.at.<span style="color:#e6db74">${</span>SERVER<span style="color:#e6db74">}</span>.conf
+echo <span style="color:#e6db74">&#34;&lt;/ca&gt;&#34;</span> &gt;&gt; bundles/<span style="color:#e6db74">${</span>CLIENT<span style="color:#e6db74">}</span>.at.<span style="color:#e6db74">${</span>SERVER<span style="color:#e6db74">}</span>.conf
 
-echo &quot;&lt;cert&gt;&quot;  &gt;&gt; bundles/${CLIENT}.at.${SERVER}.conf
-cat keys/${CLIENT}.at.${SERVER}.crt &gt;&gt; bundles/${CLIENT}.at.${SERVER}.conf
-echo &quot;&lt;/cert&gt;&quot; &gt;&gt; bundles/${CLIENT}.at.${SERVER}.conf
+echo <span style="color:#e6db74">&#34;&lt;cert&gt;&#34;</span>  &gt;&gt; bundles/<span style="color:#e6db74">${</span>CLIENT<span style="color:#e6db74">}</span>.at.<span style="color:#e6db74">${</span>SERVER<span style="color:#e6db74">}</span>.conf
+cat keys/<span style="color:#e6db74">${</span>CLIENT<span style="color:#e6db74">}</span>.at.<span style="color:#e6db74">${</span>SERVER<span style="color:#e6db74">}</span>.crt &gt;&gt; bundles/<span style="color:#e6db74">${</span>CLIENT<span style="color:#e6db74">}</span>.at.<span style="color:#e6db74">${</span>SERVER<span style="color:#e6db74">}</span>.conf
+echo <span style="color:#e6db74">&#34;&lt;/cert&gt;&#34;</span> &gt;&gt; bundles/<span style="color:#e6db74">${</span>CLIENT<span style="color:#e6db74">}</span>.at.<span style="color:#e6db74">${</span>SERVER<span style="color:#e6db74">}</span>.conf
 
-echo &quot;&lt;key&gt;&quot;  &gt;&gt; bundles/${CLIENT}.at.${SERVER}.conf
-cat keys/${CLIENT}.at.${SERVER}.key &gt;&gt; bundles/${CLIENT}.at.${SERVER}.conf
-echo &quot;&lt;/key&gt;&quot; &gt;&gt; bundles/${CLIENT}.at.${SERVER}.conf
+echo <span style="color:#e6db74">&#34;&lt;key&gt;&#34;</span>  &gt;&gt; bundles/<span style="color:#e6db74">${</span>CLIENT<span style="color:#e6db74">}</span>.at.<span style="color:#e6db74">${</span>SERVER<span style="color:#e6db74">}</span>.conf
+cat keys/<span style="color:#e6db74">${</span>CLIENT<span style="color:#e6db74">}</span>.at.<span style="color:#e6db74">${</span>SERVER<span style="color:#e6db74">}</span>.key &gt;&gt; bundles/<span style="color:#e6db74">${</span>CLIENT<span style="color:#e6db74">}</span>.at.<span style="color:#e6db74">${</span>SERVER<span style="color:#e6db74">}</span>.conf
+echo <span style="color:#e6db74">&#34;&lt;/key&gt;&#34;</span> &gt;&gt; bundles/<span style="color:#e6db74">${</span>CLIENT<span style="color:#e6db74">}</span>.at.<span style="color:#e6db74">${</span>SERVER<span style="color:#e6db74">}</span>.conf
 
-echo &quot;&lt;tls-auth&gt;&quot;  &gt;&gt; bundles/${CLIENT}.at.${SERVER}.conf
-cat keys/ta.key &gt;&gt; bundles/${CLIENT}.at.${SERVER}.conf
-echo &quot;&lt;/tls-auth&gt;&quot; &gt;&gt; bundles/${CLIENT}.at.${SERVER}.conf
+echo <span style="color:#e6db74">&#34;&lt;tls-auth&gt;&#34;</span>  &gt;&gt; bundles/<span style="color:#e6db74">${</span>CLIENT<span style="color:#e6db74">}</span>.at.<span style="color:#e6db74">${</span>SERVER<span style="color:#e6db74">}</span>.conf
+cat keys/ta.key &gt;&gt; bundles/<span style="color:#e6db74">${</span>CLIENT<span style="color:#e6db74">}</span>.at.<span style="color:#e6db74">${</span>SERVER<span style="color:#e6db74">}</span>.conf
+echo <span style="color:#e6db74">&#34;&lt;/tls-auth&gt;&#34;</span> &gt;&gt; bundles/<span style="color:#e6db74">${</span>CLIENT<span style="color:#e6db74">}</span>.at.<span style="color:#e6db74">${</span>SERVER<span style="color:#e6db74">}</span>.conf
 
-if [ -n &quot;$CLIENT_MAIL&quot; ]; then
-    echo -e &quot;Hello, ${CLIENT}!\n\nConfiguration with embedded certificates is attached.&quot; &gt; mail.txt
-    echo &quot;If you use Windows system, rename configuration from *.conf to *.ovpn.&quot; &gt;&gt; mail.txt
-    echo &quot;This mail is automatically generated. Please do not respond to it.&quot; &gt;&gt; mail.txt
-    echo &quot;--&quot;
-    echo &quot;${SERVER} team.&quot;
-    cat mail.txt | mutt -s &quot;Configuration for $CLIENT on $SERVER OpenVPN server&quot; -a bundles/${CLIENT}.at.${SERVER}.conf -- $CLIENT_MAIL
-fi
+<span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> -n <span style="color:#e6db74">&#34;</span>$CLIENT_MAIL<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+    echo -e <span style="color:#e6db74">&#34;Hello, </span><span style="color:#e6db74">${</span>CLIENT<span style="color:#e6db74">}</span><span style="color:#e6db74">!\n\nConfiguration with embedded certificates is attached.&#34;</span> &gt; mail.txt
+    echo <span style="color:#e6db74">&#34;If you use Windows system, rename configuration from *.conf to *.ovpn.&#34;</span> &gt;&gt; mail.txt
+    echo <span style="color:#e6db74">&#34;This mail is automatically generated. Please do not respond to it.&#34;</span> &gt;&gt; mail.txt
+    echo <span style="color:#e6db74">&#34;--&#34;</span>
+    echo <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>SERVER<span style="color:#e6db74">}</span><span style="color:#e6db74"> team.&#34;</span>
+    cat mail.txt | mutt -s <span style="color:#e6db74">&#34;Configuration for </span>$CLIENT<span style="color:#e6db74"> on </span>$SERVER<span style="color:#e6db74"> OpenVPN server&#34;</span> -a bundles/<span style="color:#e6db74">${</span>CLIENT<span style="color:#e6db74">}</span>.at.<span style="color:#e6db74">${</span>SERVER<span style="color:#e6db74">}</span>.conf -- $CLIENT_MAIL
+<span style="color:#66d9ef">fi</span>
 
 rm mail.txt
-</code></pre>
-<p>add-key</p>
+</code></pre></div><p>add-key</p>
 <p>And make it executable:</p>
-<pre><code class="language-bash">chmod +x add-key
-</code></pre>
-<p>You will have to install <code>mutt</code> (it is used for sending emails with attachments). Your server must have full hostname like <code>server.organization.com</code>, otherwise sendmail may hang during the install, so change it before mutt installation.</p>
-<pre><code class="language-bash">apt-get install -y mutt
-</code></pre>
-<h2 id="if-you-install-in-lxc-container">If you install in LXC container</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">chmod +x add-key
+</code></pre></div><p>You will have to install <code>mutt</code> (it is used for sending emails with attachments). Your server must have full hostname like <code>server.organization.com</code>, otherwise sendmail may hang during the install, so change it before mutt installation.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">apt-get install -y mutt
+</code></pre></div><h2 id="if-you-install-in-lxc-container">If you install in LXC container</h2>
 <p>If you install VPN server into LXC container, you have to make additional steps. Firstly, add rule for iptabels in host system (use ip of your VPN container and port from VPN server config):</p>
-<pre><code class="language-bash">iptables -t nat -A PREROUTING -i eth0 -p udp --dport 1594 -j DNAT --to 10.0.3.111:1594
-</code></pre>
-<p>To make it persistent, you may use <a href="http://stackoverflow.com/questions/30818931/debian-8-iptables-persistent" target="_blank">iptables-persistent</a>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -t nat -A PREROUTING -i eth0 -p udp --dport <span style="color:#ae81ff">1594</span> -j DNAT --to 10.0.3.111:1594
+</code></pre></div><p>To make it persistent, you may use <a href="http://stackoverflow.com/questions/30818931/debian-8-iptables-persistent" target="_blank">iptables-persistent</a>.</p>
 <p>Secondly, confugure <a href="/blog/2014/10/09/tips-for-lxc/">tun device</a> for lxc.</p>
     </div>
 </article>

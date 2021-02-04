@@ -15,8 +15,7 @@
       <guid>https://bikulov.org/blog/2013/11/02/set-application-version-in-gengetopt-config-based-on-mercurial-revision/</guid>
       <description>&lt;p&gt;Previously I wrote about gengetopt tool to parse command line arguments. There was a line about application version.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;version &amp;quot;13.10.25&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;It is important to keep this line up to date every time you compile and deploy binary.&lt;/p&gt;</description>
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;It is important to keep this line up to date every time you compile and deploy binary.&lt;/p&gt;</description>
     </item>
     
     <item>

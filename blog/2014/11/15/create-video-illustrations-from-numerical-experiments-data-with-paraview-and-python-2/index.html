@@ -112,40 +112,39 @@
 <li>save frame picture</li>
 </ul>
 <p>It can be done with following python 2 script:</p>
-<pre><code class="language-python">#!/usr/bin/env python
-from sys import path
-path.append(&quot;/home/bikulov/bin/paraview/lib/paraview-4.2/site-packages&quot;)
-path.append(&quot;/home/bikulov/bin/paraview/lib/paraview-4.2/site-packages/vtk&quot;)
-path.append(&quot;/home/bikulov/bin/paraview/lib/paraview-4.2&quot;)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#!/usr/bin/env python</span>
+<span style="color:#f92672">from</span> sys <span style="color:#f92672">import</span> path
+path<span style="color:#f92672">.</span>append(<span style="color:#e6db74">&#34;/home/bikulov/bin/paraview/lib/paraview-4.2/site-packages&#34;</span>)
+path<span style="color:#f92672">.</span>append(<span style="color:#e6db74">&#34;/home/bikulov/bin/paraview/lib/paraview-4.2/site-packages/vtk&#34;</span>)
+path<span style="color:#f92672">.</span>append(<span style="color:#e6db74">&#34;/home/bikulov/bin/paraview/lib/paraview-4.2&#34;</span>)
 
-import glob, natsort, os
-from paraview.simple import *
+<span style="color:#f92672">import</span> glob<span style="color:#f92672">,</span> natsort<span style="color:#f92672">,</span> os
+<span style="color:#f92672">from</span> paraview.simple <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
 
-filenames = natsort.natsorted(glob.glob(&quot;*.raw&quot;))
+filenames <span style="color:#f92672">=</span> natsort<span style="color:#f92672">.</span>natsorted(glob<span style="color:#f92672">.</span>glob(<span style="color:#e6db74">&#34;*.raw&#34;</span>))
 
-servermanager.LoadState(&quot;state.pvsm&quot;)
-view = servermanager.GetRenderView()
-camera = view.GetActiveCamera()
-phase = FindSource('data')
+servermanager<span style="color:#f92672">.</span>LoadState(<span style="color:#e6db74">&#34;state.pvsm&#34;</span>)
+view <span style="color:#f92672">=</span> servermanager<span style="color:#f92672">.</span>GetRenderView()
+camera <span style="color:#f92672">=</span> view<span style="color:#f92672">.</span>GetActiveCamera()
+phase <span style="color:#f92672">=</span> FindSource(<span style="color:#e6db74">&#39;data&#39;</span>)
 
-try:
-	os.makedirs(&quot;img&quot;)
-except:
-	pass
+<span style="color:#66d9ef">try</span>:
+	os<span style="color:#f92672">.</span>makedirs(<span style="color:#e6db74">&#34;img&#34;</span>)
+<span style="color:#66d9ef">except</span>:
+	<span style="color:#66d9ef">pass</span>
 
-imgNum = 0
+imgNum <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
 
-phase.FilePrefix = filenames[0]
-phase.FileNameChanged()
-view.WriteImage(&quot;img/&quot;+str(imgNum).zfill(6)+&quot;.png&quot;,&quot;vtkPNGWriter&quot;,1)
+phase<span style="color:#f92672">.</span>FilePrefix <span style="color:#f92672">=</span> filenames[<span style="color:#ae81ff">0</span>]
+phase<span style="color:#f92672">.</span>FileNameChanged()
+view<span style="color:#f92672">.</span>WriteImage(<span style="color:#e6db74">&#34;img/&#34;</span><span style="color:#f92672">+</span>str(imgNum)<span style="color:#f92672">.</span>zfill(<span style="color:#ae81ff">6</span>)<span style="color:#f92672">+</span><span style="color:#e6db74">&#34;.png&#34;</span>,<span style="color:#e6db74">&#34;vtkPNGWriter&#34;</span>,<span style="color:#ae81ff">1</span>)
 
-for file in filenames:
-    phase.FilePrefix = file
-    phase.FileNameChanged()
-    view.WriteImage(&quot;img/&quot;+str(imgNum).zfill(6)+&quot;.png&quot;,&quot;vtkPNGWriter&quot;,1)
-    imgNum += 1
-</code></pre>
-<p>All images will be created in <code>img</code> folder, crop them and build video with <a href="http://bikulov.org/blog/2013/01/23/universal-screen-capturing-with-scrot-imagemagick-and/" target="_blank">mogrify and ffmpeg</a> (you may need to replace <code>ffmpeg</code> with <code>avconv</code> in newer versions of Ubuntu).</p>
+<span style="color:#66d9ef">for</span> file <span style="color:#f92672">in</span> filenames:
+    phase<span style="color:#f92672">.</span>FilePrefix <span style="color:#f92672">=</span> file
+    phase<span style="color:#f92672">.</span>FileNameChanged()
+    view<span style="color:#f92672">.</span>WriteImage(<span style="color:#e6db74">&#34;img/&#34;</span><span style="color:#f92672">+</span>str(imgNum)<span style="color:#f92672">.</span>zfill(<span style="color:#ae81ff">6</span>)<span style="color:#f92672">+</span><span style="color:#e6db74">&#34;.png&#34;</span>,<span style="color:#e6db74">&#34;vtkPNGWriter&#34;</span>,<span style="color:#ae81ff">1</span>)
+    imgNum <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</code></pre></div><p>All images will be created in <code>img</code> folder, crop them and build video with <a href="http://bikulov.org/blog/2013/01/23/universal-screen-capturing-with-scrot-imagemagick-and/" target="_blank">mogrify and ffmpeg</a> (you may need to replace <code>ffmpeg</code> with <code>avconv</code> in newer versions of Ubuntu).</p>
     </div>
 </article>
 

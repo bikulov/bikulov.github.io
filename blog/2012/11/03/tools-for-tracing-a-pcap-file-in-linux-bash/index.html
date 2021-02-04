@@ -101,30 +101,26 @@
     <div class="post-content markdown-body">
         <p>Pcap files are pocket capture files. They usually contain raw log of network connections and packets. It is the most popular format and it available in almost all network analysis tool.</p>
 <p>To play around <code>*.pcap</code>, you have to get such file somehow. There are two opposite ways: to generate it by yourself or to pick a ready one. To generate it by yourself, you can use wireshark or tcpdump in terminal:</p>
-<pre><code class="language-bash">tcpdump -w capture.pcap -i eth1
-</code></pre>
-<p>replace <code>capture.pcap</code> with desired output filename, <code>-i eth1</code> indicates the interface for the logging to be done.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">tcpdump -w capture.pcap -i eth1
+</code></pre></div><p>replace <code>capture.pcap</code> with desired output filename, <code>-i eth1</code> indicates the interface for the logging to be done.</p>
 <p>As soon as your <code>*.pcap</code> is created, it must be parsed for valuable data. Wireshark fits this task but let’s focuse on terminal utilities. I’ve found four ones, but I’m sure there is much more of them.</p>
 <h2 id="tpick">tpick</h2>
 <p>tcpick is able to capture network traffic, store data in different files for each connection and trace stored files. Colorful output in terminal is really neat.</p>
 <p>Reading <code>*.pcap</code> file:</p>
-<pre><code class="language-bash">tcpick -C -r capture.pcap
-</code></pre>
-<h2 id="tshark">tshark</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">tcpick -C -r capture.pcap
+</code></pre></div><h2 id="tshark">tshark</h2>
 <p>Wireshark has a terminal twin names tshark. Latter is useful on old computers, for scripting and more convenient for console-boys. Can capture traffic and analyze captured files as well.</p>
 <p>Reading <code>*.pcap</code> file with specified fields to display:</p>
-<pre><code class="language-bash">tshark -n -r capture.pcap -T fields -e ip.dst_host -e frame.time_delta
-</code></pre>
-<h2 id="tcptrace">tcptrace</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">tshark -n -r capture.pcap -T fields -e ip.dst_host -e frame.time_delta
+</code></pre></div><h2 id="tcptrace">tcptrace</h2>
 <p>tcptrace is created for analysis of captured files. Has many options.</p>
 <p>Reading <code>*.pcap</code> file:</p>
-<pre><code class="language-bash">tcptrace --tsv -xHTTP -f''port=80'' -btn capture.pcap
-</code></pre>
-<h2 id="tcpdump">tcpdump</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">tcptrace --tsv -xHTTP -f<span style="color:#e6db74">&#39;&#39;</span>port<span style="color:#f92672">=</span>80<span style="color:#e6db74">&#39;&#39;</span> -btn capture.pcap
+</code></pre></div><h2 id="tcpdump">tcpdump</h2>
 <p>tcpdump was already mentioned as a tool for capturing traffic to pcap-file. It also can be used as analyser.</p>
 <p>Reading <code>*.pcap</code> file:</p>
-<pre><code class="language-bash">tcpdump -ttttnr capture.pcap
-</code></pre>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">tcpdump -ttttnr capture.pcap
+</code></pre></div>
     </div>
 </article>
 

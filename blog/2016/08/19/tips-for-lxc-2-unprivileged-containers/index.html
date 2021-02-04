@@ -101,37 +101,31 @@
     <div class="post-content markdown-body">
         <p>LXC containers are great for application isolation and safe deployment. <a href="http://unix.stackexchange.com/questions/181341/what-are-benefits-and-downsides-of-unprivileged-containers" target="_blank">Running unprivileged containers is the safest way to run containers in a production environment</a>. This note contains enough information to create your own safe container.</p>
 <p>Install LXC:</p>
-<pre><code class="language-bash">apt-get install -y lxc
-</code></pre>
-<p>Now create non-root system user for lxc:</p>
-<pre><code class="language-bash">useradd --home-dir /srv/lxc --create-home lxc
-echo &quot;lxc veth lxcbr0 2&quot; | sudo tee -a /etc/lxc/lxc-usernet
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">apt-get install -y lxc
+</code></pre></div><p>Now create non-root system user for lxc:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">useradd --home-dir /srv/lxc --create-home lxc
+echo <span style="color:#e6db74">&#34;lxc veth lxcbr0 2&#34;</span> | sudo tee -a /etc/lxc/lxc-usernet
 passwd lxc &lt;type password&gt;
-</code></pre>
-<p>I recommend to add <a href="http://bikulov.org/blog/2014/10/09/tips-for-lxc/" target="_blank">autostart</a> as default behaviour:</p>
-<pre><code class="language-bash">su lxcusr
-</code></pre>
-<p>and add lines</p>
-<pre><code class="language-ini"># Autostart
-lxc.start.auto = 1
-lxc.start.delay = 5
-</code></pre>
-<p>to file <code>~/.config/lxc/default.conf</code></p>
+</code></pre></div><p>I recommend to add <a href="http://bikulov.org/blog/2014/10/09/tips-for-lxc/" target="_blank">autostart</a> as default behaviour:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">su lxcusr
+</code></pre></div><p>and add lines</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#75715e"># Autostart</span>
+<span style="color:#a6e22e">lxc.start.auto</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">1</span>
+<span style="color:#a6e22e">lxc.start.delay</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">5</span>
+</code></pre></div><p>to file <code>~/.config/lxc/default.conf</code></p>
 <p>Add uid mappings in <code>~/.config/lxc/default.conf</code>:</p>
-<pre><code class="language-ini"># UID mappings
-lxc.include = /etc/lxc/default.conf
-lxc.id_map = u 0 100000 65536
-lxc.id_map = g 0 100000 65536
-</code></pre>
-<p>Before container creation, you must login as lxc user directly (like <code>ssh lxc@server.name</code>), or you will get <a href="https://gist.github.com/julianlam/4e2bd91d8dedee21ca6f" target="_blank">error</a>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#75715e"># UID mappings</span>
+<span style="color:#a6e22e">lxc.include</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">/etc/lxc/default.conf</span>
+<span style="color:#a6e22e">lxc.id_map</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">u 0 100000 65536</span>
+<span style="color:#a6e22e">lxc.id_map</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">g 0 100000 65536</span>
+</code></pre></div><p>Before container creation, you must login as lxc user directly (like <code>ssh lxc@server.name</code>), or you will get <a href="https://gist.github.com/julianlam/4e2bd91d8dedee21ca6f" target="_blank">error</a>.</p>
 <p>Create first container:</p>
-<pre><code class="language-bash">lxc-create -t download -n sample.dima.io -- -d ubuntu -r xenial -a amd64
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">lxc-create -t download -n sample.dima.io -- -d ubuntu -r xenial -a amd64
 lxc-start -d -n sample.dima.io
 lxc-attach -n sample.dima.io
-</code></pre>
-<p>Don not forget to delete default user in container:</p>
-<pre><code class="language-bash">userdel ubuntu &amp;&amp; rm -rf /home/ubuntu
-</code></pre>
+</code></pre></div><p>Don not forget to delete default user in container:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">userdel ubuntu <span style="color:#f92672">&amp;&amp;</span> rm -rf /home/ubuntu
+</code></pre></div>
     </div>
 </article>
 

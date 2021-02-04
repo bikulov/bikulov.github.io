@@ -101,30 +101,26 @@
     <div class="post-content markdown-body">
         <h2 id="installing-dependencies">Installing dependencies</h2>
 <p>Firstly you need to install webserver, php-related stuff and database server (we use PostgreSQL).</p>
-<pre><code class="language-bash">apt-get install -y php5-fpm nginx postgresql php5-pgsql
-</code></pre>
-<p>Now download and install Joomla (currently 3.1.5 is the latest). Please, update following lines with latest version if nescessary:</p>
-<pre><code class="language-bash">cd /srv
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">apt-get install -y php5-fpm nginx postgresql php5-pgsql
+</code></pre></div><p>Now download and install Joomla (currently 3.1.5 is the latest). Please, update following lines with latest version if nescessary:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cd /srv
 wget http://joomlacode.org/gf/download/frsrelease/18622/83487/Joomla_3.1.5-Stable-Full_Package.zip
 unzip Joomla_3.1.5-Stable-Full_Package.zip -d joomla
 chown -R www-data:www-data joomla
-</code></pre>
-<h2 id="database-setup">Database setup</h2>
+</code></pre></div><h2 id="database-setup">Database setup</h2>
 <p>The only two things you need to do is to create user (<code>joomla</code> in example) and database (<code>joomla</code> in example). To do it under <code>postgres</code> user:</p>
-<pre><code class="language-bash">sudo -u postgres -i
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo -u postgres -i
 createuser joomla --pwprompt --encrypted
 createdb joomla
 exit
-</code></pre>
-<p>Output should look like:</p>
-<pre><code class="language-bash">$ createuser joomla --pwprompt --encrypted
-Enter password for new role:
+</code></pre></div><p>Output should look like:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ createuser joomla --pwprompt --encrypted
+Enter password <span style="color:#66d9ef">for</span> new role:
 Enter it again:
-Shall the new role be a superuser? (y/n) n
-Shall the new role be allowed to create databases? (y/n) y
-Shall the new role be allowed to create more new roles? (y/n) n
-</code></pre>
-<h2 id="nginx-setup">nginx setup</h2>
+Shall the new role be a superuser? <span style="color:#f92672">(</span>y/n<span style="color:#f92672">)</span> n
+Shall the new role be allowed to create databases? <span style="color:#f92672">(</span>y/n<span style="color:#f92672">)</span> y
+Shall the new role be allowed to create more new roles? <span style="color:#f92672">(</span>y/n<span style="color:#f92672">)</span> n
+</code></pre></div><h2 id="nginx-setup">nginx setup</h2>
 <p>Create file <code>joomla</code> with content (you may want to adjust <code>server_name</code> and <code>root</code>):</p>
 <pre><code># vim /etc/nginx/sites-available/joomla
 server {
@@ -158,12 +154,10 @@ server {
     expires 14d;
   }
 }
-</code></pre>
-<p>Enable site by creating link to config:</p>
-<pre><code class="language-bash">ln -s /etc/nginx/sites-available/joomla /etc/nginx/sites-enabled/
-</code></pre>
-<p>And add FastCGI options (create <code>fastcgi.conf</code> file):</p>
-<pre><code class="language-bash"># vim /etc/nginx/fastcgi.conf
+</code></pre><p>Enable site by creating link to config:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ln -s /etc/nginx/sites-available/joomla /etc/nginx/sites-enabled/
+</code></pre></div><p>And add FastCGI options (create <code>fastcgi.conf</code> file):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># vim /etc/nginx/fastcgi.conf</span>
 fastcgi_param   QUERY_STRING            $query_string;
 fastcgi_param   REQUEST_METHOD          $request_method;
 fastcgi_param   CONTENT_TYPE            $content_type;
@@ -188,10 +182,9 @@ fastcgi_param   SERVER_NAME             $server_name;
 
 fastcgi_param   HTTPS                   $https;
 
-# PHP only, required if PHP was built with --enable-force-cgi-redirect
+<span style="color:#75715e"># PHP only, required if PHP was built with --enable-force-cgi-redirect</span>
 fastcgi_param   REDIRECT_STATUS         200;
-</code></pre>
-<h2 id="hosts-setup">hosts setup</h2>
+</code></pre></div><h2 id="hosts-setup">hosts setup</h2>
 <p>Now you need to point <code>joomla.lan</code> to <code>127.0.0.1</code> ip address. To do it, add line to <code>/etc/hosts</code>:</p>
 <p>{% codeblock%}
 127.0.0.1 joomla.lan</p>

@@ -102,35 +102,33 @@
         <p>Makefiles are quite straightforward and easy to write (in reasonable situations). But GNU Make is not crossplafrom. CMake is cross-platform, cross-application (it can generate projects for different IDEs and Makefile itself).</p>
 <p>It also allows you to split source directory and directory with intermediate files and compiled binary. Now CMake natively supports CUDA.</p>
 <p>Here is <code>CMakeLists.txt</code> example I use (simply place it next to your source files to try yourself):</p>
-<pre><code class="language-cmake">CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
-PROJECT(lbmslv)
-
-FIND_PACKAGE(CUDA REQUIRED)
-FIND_PACKAGE(MPI REQUIRED)
-
-INCLUDE(FindCUDA)
-
-INCLUDE_DIRECTORIES(/usr/local/cuda/include ${MPI_INCLUDE_PATH})
-
-FILE(GLOB SOURCES &quot;*.cu&quot; &quot;*.cpp&quot; &quot;*.c&quot; &quot;*.h&quot;)
-CUDA_ADD_EXECUTABLE(lbmslv ${SOURCES})
-
-LIST(APPEND CMAKE_CXX_FLAGS &quot;-std=c++0x -O3 -ffast-math -Wall&quot;)
-
-LIST(APPEND CUDA_NVCC_FLAGS --compiler-options -fno-strict-aliasing -lineinfo -use_fast_math -Xptxas -dlcm=cg)
-LIST(APPEND CUDA_NVCC_FLAGS -gencode arch=compute_20,code=sm_20)
-LIST(APPEND CUDA_NVCC_FLAGS -gencode arch=compute_30,code=sm_30)
-LIST(APPEND CUDA_NVCC_FLAGS -gencode arch=compute_35,code=sm_35)
-
-TARGET_LINK_LIBRARIES(lbmslv /usr/local/cuda/lib64/libcudart.so ${MPI_LIBRARIES})
-</code></pre>
-<p>This file automatically adds all sources in the same directory it is placed. I&rsquo;ve also included lines for newer GPU architectures (feel free to uncomment them). I prefer to choose one to reduce compilation time. It aso switches on new (phah, new for 3 years :)) C++ standart.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake">CMAKE_MINIMUM_REQUIRED(<span style="color:#e6db74">VERSION</span> <span style="color:#e6db74">2.8</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>PROJECT(<span style="color:#e6db74">lbmslv</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>FIND_PACKAGE(<span style="color:#e6db74">CUDA</span> <span style="color:#e6db74">REQUIRED</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>FIND_PACKAGE(<span style="color:#e6db74">MPI</span> <span style="color:#e6db74">REQUIRED</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>INCLUDE(<span style="color:#e6db74">FindCUDA</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>INCLUDE_DIRECTORIES(<span style="color:#e6db74">/usr/local/cuda/include</span> <span style="color:#f92672">${</span>MPI_INCLUDE_PATH<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>FILE(<span style="color:#e6db74">GLOB</span> <span style="color:#e6db74">SOURCES</span> <span style="color:#e6db74">&#34;*.cu&#34;</span> <span style="color:#e6db74">&#34;*.cpp&#34;</span> <span style="color:#e6db74">&#34;*.c&#34;</span> <span style="color:#e6db74">&#34;*.h&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>CUDA_ADD_EXECUTABLE(<span style="color:#e6db74">lbmslv</span> <span style="color:#f92672">${</span>SOURCES<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>LIST(<span style="color:#e6db74">APPEND</span> <span style="color:#e6db74">CMAKE_CXX_FLAGS</span> <span style="color:#e6db74">&#34;-std=c++0x -O3 -ffast-math -Wall&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>LIST(<span style="color:#e6db74">APPEND</span> <span style="color:#e6db74">CUDA_NVCC_FLAGS</span> <span style="color:#e6db74">--compiler-options</span> <span style="color:#e6db74">-fno-strict-aliasing</span> <span style="color:#e6db74">-lineinfo</span> <span style="color:#e6db74">-use_fast_math</span> <span style="color:#e6db74">-Xptxas</span> <span style="color:#e6db74">-dlcm=cg</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>LIST(<span style="color:#e6db74">APPEND</span> <span style="color:#e6db74">CUDA_NVCC_FLAGS</span> <span style="color:#e6db74">-gencode</span> <span style="color:#e6db74">arch=compute_20,code=sm_20</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>LIST(<span style="color:#e6db74">APPEND</span> <span style="color:#e6db74">CUDA_NVCC_FLAGS</span> <span style="color:#e6db74">-gencode</span> <span style="color:#e6db74">arch=compute_30,code=sm_30</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>LIST(<span style="color:#e6db74">APPEND</span> <span style="color:#e6db74">CUDA_NVCC_FLAGS</span> <span style="color:#e6db74">-gencode</span> <span style="color:#e6db74">arch=compute_35,code=sm_35</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>TARGET_LINK_LIBRARIES(<span style="color:#e6db74">lbmslv</span> <span style="color:#e6db74">/usr/local/cuda/lib64/libcudart.so</span> <span style="color:#f92672">${</span>MPI_LIBRARIES<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>This file automatically adds all sources in the same directory it is placed. I&rsquo;ve also included lines for newer GPU architectures (feel free to uncomment them). I prefer to choose one to reduce compilation time. It aso switches on new (phah, new for 3 years :)) C++ standart.</p>
 <p>So, create <code>CMakeLists.txt</code> file and place it in your sources directory (say <code>src</code>). Then create <code>bin</code> (choose another name if you want) directory next to <code>src</code>. Change directory to <code>bin</code>, generate <code>Makefile</code> from <code>CMakeLists.txt</code> and build it with ordinary <code>make</code>:</p>
-<pre><code class="language-bash">cd bin
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cd bin
 cmake ../src
 make
-</code></pre>
-<p>I&rsquo;ve updated MPI part. Now it is correct.</p>
+</code></pre></div><p>I&rsquo;ve updated MPI part. Now it is correct.</p>
     </div>
 </article>
 

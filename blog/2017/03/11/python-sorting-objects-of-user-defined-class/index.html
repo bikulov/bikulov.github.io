@@ -31,10 +31,10 @@
 <meta name="twitter:title" content="Python sorting objects of user defined class" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://bikulov.org/blog/2017/03/11/python-sorting-objects-of-user-defined-class/" /><meta property="og:description" content="The most common way of sorting collections of custom objects in Python is to provide key function that is used to extract a comparison key from each element:
-sorted(&quot;Case insensitive Sorting is here&quot;.split(), key=str.lower)
+sorted(&#34;Case insensitive Sorting is here&#34;.split(), key=str.lower)
 " />
 <meta name="twitter:description" content="The most common way of sorting collections of custom objects in Python is to provide key function that is used to extract a comparison key from each element:
-sorted(&quot;Case insensitive Sorting is here&quot;.split(), key=str.lower)
+sorted(&#34;Case insensitive Sorting is here&#34;.split(), key=str.lower)
 " /><meta property="og:image" content="https://bikulov.org/img/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://bikulov.org/img/og.png" /><meta property="article:published_time" content="2017-03-11T23:32:41+03:00" /><meta property="article:modified_time" content="2017-03-11T23:32:41+03:00" />
@@ -104,54 +104,49 @@ sorted(&quot;Case insensitive Sorting is here&quot;.split(), key=str.lower)
     
     <div class="post-content markdown-body">
         <p>The most common way of sorting collections of custom objects in Python is to <a href="https://docs.python.org/3.5/library/functions.html#sorted" target="_blank">provide</a> key function that is used to extract a comparison key from each element:</p>
-<pre><code class="language-python">sorted(&quot;Case insensitive Sorting is here&quot;.split(), key=str.lower)
-</code></pre>
-<p>But sorted function compares objects by its nature, and it is possible to define comparison operators for your class t make sorted work automatically.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sorted(<span style="color:#e6db74">&#34;Case insensitive Sorting is here&#34;</span><span style="color:#f92672">.</span>split(), key<span style="color:#f92672">=</span>str<span style="color:#f92672">.</span>lower)
+</code></pre></div><p>But sorted function compares objects by its nature, and it is possible to define comparison operators for your class t make sorted work automatically.</p>
 <p>Documentation <a href="https://docs.python.org/3.5/howto/sorting.html#odd-and-ends" target="_blank">guarantees</a> that sorting uses only <code>__lt__()</code> method:</p>
 <blockquote>
 <p>The sort routines are guaranteed to use <code>__lt__()</code> when making comparisons between two objects. So, it is easy to add a standard sort order to a class by defining an <code>__lt__()</code> method.</p>
 </blockquote>
 <p>But it is <a href="http://stackoverflow.com/a/8796908" target="_blank">recommended</a> to define all comparison methods for your class for the sake of safety and code completeness. It can be done with <a href="https://docs.python.org/3/library/functools.html#functools.total_ordering" target="_blank">total_ordering</a> decorator from the functools standard module. Lets look at class:</p>
-<pre><code class="language-python">import functools
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> functools
 
-@functools.total_ordering
-class Point:
+<span style="color:#a6e22e">@functools.total_ordering</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Point</span>:
 
-    def __init__(self, x, y):
-        self.x, self.y = x, y
+    <span style="color:#66d9ef">def</span> __init__(self, x, y):
+        self<span style="color:#f92672">.</span>x, self<span style="color:#f92672">.</span>y <span style="color:#f92672">=</span> x, y
 
-    def __lt__(self, other):
-        return (self.x, self.y) &lt; (other.x, other.y)
+    <span style="color:#66d9ef">def</span> __lt__(self, other):
+        <span style="color:#66d9ef">return</span> (self<span style="color:#f92672">.</span>x, self<span style="color:#f92672">.</span>y) <span style="color:#f92672">&lt;</span> (other<span style="color:#f92672">.</span>x, other<span style="color:#f92672">.</span>y)
 
-    def __eq__(self, other):
-        return (self.x, self.y) == (other.x, other.y)
-</code></pre>
-<p>Example usage:</p>
-<pre><code class="language-python">points = [Point(x, y) for x in range(2, 0, -1) for y in range(3, 0, -1)]
+    <span style="color:#66d9ef">def</span> __eq__(self, other):
+        <span style="color:#66d9ef">return</span> (self<span style="color:#f92672">.</span>x, self<span style="color:#f92672">.</span>y) <span style="color:#f92672">==</span> (other<span style="color:#f92672">.</span>x, other<span style="color:#f92672">.</span>y)
+</code></pre></div><p>Example usage:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">points <span style="color:#f92672">=</span> [Point(x, y) <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">0</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) <span style="color:#66d9ef">for</span> y <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">0</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)]
 
-print('Not sorted:', ', '.join(map('({0.x}, {0.y})'.format, points)))
-print('Sorted:', ', '.join(map('({0.x}, {0.y})'.format, sorted(points))))
-</code></pre>
-<p>will produce output:</p>
-<pre><code class="language-bash">Not sorted: (2, 3), (2, 2), (2, 1), (1, 3), (1, 2), (1, 1)
-Sorted: (1, 1), (1, 2), (1, 3), (2, 1), (2, 2), (2, 3)
-</code></pre>
-<p>total_ordering decorator is excessive here, but may be useful in the future. What it does? It <a href="https://hg.python.org/cpython/file/3.5/Lib/functools.py" target="_blank">completes</a> remaining comparison methods from implemented ones. So you implement <code>__eq__</code> and <code>__lt__</code>, it complements <code>__le__</code>, <code>__gt__</code>, <code>__ge__</code>. Or you implement <code>__eq__</code> and <code>__le__</code>, it complements <code>__lt__</code>, <code>__gt__</code>, <code>__ge__</code>. And so on. It requires <code>__eq__</code> and one other comparison method to be defined.</p>
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Not sorted:&#39;</span>, <span style="color:#e6db74">&#39;, &#39;</span><span style="color:#f92672">.</span>join(map(<span style="color:#e6db74">&#39;({0.x}, {0.y})&#39;</span><span style="color:#f92672">.</span>format, points)))
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Sorted:&#39;</span>, <span style="color:#e6db74">&#39;, &#39;</span><span style="color:#f92672">.</span>join(map(<span style="color:#e6db74">&#39;({0.x}, {0.y})&#39;</span><span style="color:#f92672">.</span>format, sorted(points))))
+</code></pre></div><p>will produce output:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">Not sorted: <span style="color:#f92672">(</span>2, 3<span style="color:#f92672">)</span>, <span style="color:#f92672">(</span>2, 2<span style="color:#f92672">)</span>, <span style="color:#f92672">(</span>2, 1<span style="color:#f92672">)</span>, <span style="color:#f92672">(</span>1, 3<span style="color:#f92672">)</span>, <span style="color:#f92672">(</span>1, 2<span style="color:#f92672">)</span>, <span style="color:#f92672">(</span>1, 1<span style="color:#f92672">)</span>
+Sorted: <span style="color:#f92672">(</span>1, 1<span style="color:#f92672">)</span>, <span style="color:#f92672">(</span>1, 2<span style="color:#f92672">)</span>, <span style="color:#f92672">(</span>1, 3<span style="color:#f92672">)</span>, <span style="color:#f92672">(</span>2, 1<span style="color:#f92672">)</span>, <span style="color:#f92672">(</span>2, 2<span style="color:#f92672">)</span>, <span style="color:#f92672">(</span>2, 3<span style="color:#f92672">)</span>
+</code></pre></div><p>total_ordering decorator is excessive here, but may be useful in the future. What it does? It <a href="https://hg.python.org/cpython/file/3.5/Lib/functools.py" target="_blank">completes</a> remaining comparison methods from implemented ones. So you implement <code>__eq__</code> and <code>__lt__</code>, it complements <code>__le__</code>, <code>__gt__</code>, <code>__ge__</code>. Or you implement <code>__eq__</code> and <code>__le__</code>, it complements <code>__lt__</code>, <code>__gt__</code>, <code>__ge__</code>. And so on. It requires <code>__eq__</code> and one other comparison method to be defined.</p>
 <p>Essential part of the generator code is:</p>
-<pre><code class="language-python">def total_ordering(cls):
-    &quot;&quot;&quot;Class decorator that fills in missing ordering methods&quot;&quot;&quot;
-    # Find user-defined comparisons (not those inherited from object).
-    roots = [op for op in _convert if getattr(cls, op, None) is not getattr(object, op, None)]
-    if not roots:
-        raise ValueError('must define at least one ordering operation: &lt; &gt; &lt;= &gt;=')
-    root = max(roots)       # prefer __lt__ to __le__ to __gt__ to __ge__
-    for opname, opfunc in _convert[root]:
-        if opname not in roots:
-            opfunc.__name__ = opname
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">total_ordering</span>(cls):
+    <span style="color:#e6db74">&#34;&#34;&#34;Class decorator that fills in missing ordering methods&#34;&#34;&#34;</span>
+    <span style="color:#75715e"># Find user-defined comparisons (not those inherited from object).</span>
+    roots <span style="color:#f92672">=</span> [op <span style="color:#66d9ef">for</span> op <span style="color:#f92672">in</span> _convert <span style="color:#66d9ef">if</span> getattr(cls, op, None) <span style="color:#f92672">is</span> <span style="color:#f92672">not</span> getattr(object, op, None)]
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> roots:
+        <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">ValueError</span>(<span style="color:#e6db74">&#39;must define at least one ordering operation: &lt; &gt; &lt;= &gt;=&#39;</span>)
+    root <span style="color:#f92672">=</span> max(roots)       <span style="color:#75715e"># prefer __lt__ to __le__ to __gt__ to __ge__</span>
+    <span style="color:#66d9ef">for</span> opname, opfunc <span style="color:#f92672">in</span> _convert[root]:
+        <span style="color:#66d9ef">if</span> opname <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> roots:
+            opfunc<span style="color:#f92672">.</span>__name__ <span style="color:#f92672">=</span> opname
             setattr(cls, opname, opfunc)
-    return cls
-</code></pre>
-<p>where <code>_convert</code> is dict of predefined implementations of comparison methods via each other. Code gets all defined is cls comparison methods, prefers one (if several are defined) and defines other methods.</p>
+    <span style="color:#66d9ef">return</span> cls
+</code></pre></div><p>where <code>_convert</code> is dict of predefined implementations of comparison methods via each other. Code gets all defined is cls comparison methods, prefers one (if several are defined) and defines other methods.</p>
     </div>
 </article>
 

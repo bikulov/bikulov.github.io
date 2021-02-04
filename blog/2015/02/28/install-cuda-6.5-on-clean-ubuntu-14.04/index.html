@@ -101,26 +101,24 @@
     <div class="post-content markdown-body">
         <p>Lately NVIDIA added repository for Ubuntu 12.04 and Ubuntu 14.04. Recently I hit problem with missing dependencies for <code>libcheese-gtk23</code> and <code>libcheese7</code> libraries while installing latest CUDA 6.5 on clean Ubuntu 14.04. Remedy to this can be found on <a href="http://askubuntu.com/questions/587977/unmet-dependences-when-install-cuda-6-5-on-a-freshly-installed-ubuntu-14-04" target="_blank">askubuntu</a>. So, the complete set of commands is below.</p>
 <p>At first, add CUDA repository package:</p>
-<pre><code class="language-bash">wget http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1404/x86_64/cuda-repo-ubuntu1404_6.5-14_amd64.deb
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">wget http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1404/x86_64/cuda-repo-ubuntu1404_6.5-14_amd64.deb
 sudo dpkg -i cuda-repo-ubuntu1404_6.5-14_amd64.deb
-</code></pre>
-<p>Now, install CUDA:</p>
-<pre><code class="language-bash">sudo apt-get update &amp;&amp; sudo apt-get upgrade
+</code></pre></div><p>Now, install CUDA:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get update <span style="color:#f92672">&amp;&amp;</span> sudo apt-get upgrade
 
-# install nvidia driver
+<span style="color:#75715e"># install nvidia driver</span>
 sudo apt-get install nvidia-current
-# at this point you need to reboot computer
+<span style="color:#75715e"># at this point you need to reboot computer</span>
 
-# remove broken packages, beware: some GUI parts of your system will be broken or removed
+<span style="color:#75715e"># remove broken packages, beware: some GUI parts of your system will be broken or removed</span>
 sudo apt-get remove libcheese*
 
-# install CUDA
+<span style="color:#75715e"># install CUDA</span>
 sudo apt-get install cuda
 
-# restore broken GUI parts
+<span style="color:#75715e"># restore broken GUI parts</span>
 sudo apt-get install ubuntu-desktop
-</code></pre>
-<p>By the way, <a href="https://developer.gnome.org/cheese/stable/libcheese.html" target="_blank">libcheese</a> is library for video and photo capturing, including enumeration of capturing devices.</p>
+</code></pre></div><p>By the way, <a href="https://developer.gnome.org/cheese/stable/libcheese.html" target="_blank">libcheese</a> is library for video and photo capturing, including enumeration of capturing devices.</p>
     </div>
 </article>
 

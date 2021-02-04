@@ -104,62 +104,59 @@ sudo pip install beautifulsoup
     
     <div class="post-content markdown-body">
         <p>This Python script retrieves computer&rsquo;s external IP address (using internet.yandex.ru) and emails message with new IP if IP has been changed since last check. BeautifulSoup module is needed, so install it if you have no installed version:</p>
-<pre><code class="language-bash">sudo pip install beautifulsoup
-</code></pre>
-<p>Script:</p>
-<pre><code class="language-python">#!/usr/bin/env python
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo pip install beautifulsoup
+</code></pre></div><p>Script:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#!/usr/bin/env python</span>
 
-from BeautifulSoup import BeautifulSoup
-import urllib2
-import re
-import smtplib
-from email.mime.text import MIMEText
+<span style="color:#f92672">from</span> BeautifulSoup <span style="color:#f92672">import</span> BeautifulSoup
+<span style="color:#f92672">import</span> urllib2
+<span style="color:#f92672">import</span> re
+<span style="color:#f92672">import</span> smtplib
+<span style="color:#f92672">from</span> email.mime.text <span style="color:#f92672">import</span> MIMEText
 
-logFile = '/var/log/ippywatchdog.log'
+logFile <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;/var/log/ippywatchdog.log&#39;</span>
 
-request = urllib2.urlopen('http://internet.yandex.ru')
+request <span style="color:#f92672">=</span> urllib2<span style="color:#f92672">.</span>urlopen(<span style="color:#e6db74">&#39;http://internet.yandex.ru&#39;</span>)
 
-soup = BeautifulSoup(request)
-yandexIpResponse = soup.find('div', {'class': 'b-info__item b-info__item_type_ip'})
-ip=re.search('[0-9]+.[0-9]+.[0-9]+.[0-9]+', str(yandexIpResponse)).group(0)
+soup <span style="color:#f92672">=</span> BeautifulSoup(request)
+yandexIpResponse <span style="color:#f92672">=</span> soup<span style="color:#f92672">.</span>find(<span style="color:#e6db74">&#39;div&#39;</span>, {<span style="color:#e6db74">&#39;class&#39;</span>: <span style="color:#e6db74">&#39;b-info__item b-info__item_type_ip&#39;</span>})
+ip<span style="color:#f92672">=</span>re<span style="color:#f92672">.</span>search(<span style="color:#e6db74">&#39;[0-9]+.[0-9]+.[0-9]+.[0-9]+&#39;</span>, str(yandexIpResponse))<span style="color:#f92672">.</span>group(<span style="color:#ae81ff">0</span>)
 
-prevIp = ip
+prevIp <span style="color:#f92672">=</span> ip
 
-try:
-    with open(logFile,'r') as log:
-        prevIp = log.readline()
-        log.close()
-except IOError:
-    pass
+<span style="color:#66d9ef">try</span>:
+    <span style="color:#66d9ef">with</span> open(logFile,<span style="color:#e6db74">&#39;r&#39;</span>) <span style="color:#66d9ef">as</span> log:
+        prevIp <span style="color:#f92672">=</span> log<span style="color:#f92672">.</span>readline()
+        log<span style="color:#f92672">.</span>close()
+<span style="color:#66d9ef">except</span> <span style="color:#a6e22e">IOError</span>:
+    <span style="color:#66d9ef">pass</span>
 
-if (ip != prevIp):
-	for recipient in ['&lt;recipient0&gt;', '&lt;recipient1&gt;']:
-	    msg = MIMEText('New IP address of Server is ' + ip)
-	    msg['Subject'] = 'IP address of Server changed'
-	    msg['From'] = '&lt;email&gt;'
+<span style="color:#66d9ef">if</span> (ip <span style="color:#f92672">!=</span> prevIp):
+	<span style="color:#66d9ef">for</span> recipient <span style="color:#f92672">in</span> [<span style="color:#e6db74">&#39;&lt;recipient0&gt;&#39;</span>, <span style="color:#e6db74">&#39;&lt;recipient1&gt;&#39;</span>]:
+	    msg <span style="color:#f92672">=</span> MIMEText(<span style="color:#e6db74">&#39;New IP address of Server is &#39;</span> <span style="color:#f92672">+</span> ip)
+	    msg[<span style="color:#e6db74">&#39;Subject&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;IP address of Server changed&#39;</span>
+	    msg[<span style="color:#e6db74">&#39;From&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&lt;email&gt;&#39;</span>
 
-	    server = smtplib.SMTP('smtp.yandex.ru', 587)
-	    server.ehlo()
-	    server.starttls()
-	    server.ehlo()
-	    server.login(msg['From'], '&lt;email_password&gt;')
+	    server <span style="color:#f92672">=</span> smtplib<span style="color:#f92672">.</span>SMTP(<span style="color:#e6db74">&#39;smtp.yandex.ru&#39;</span>, <span style="color:#ae81ff">587</span>)
+	    server<span style="color:#f92672">.</span>ehlo()
+	    server<span style="color:#f92672">.</span>starttls()
+	    server<span style="color:#f92672">.</span>ehlo()
+	    server<span style="color:#f92672">.</span>login(msg[<span style="color:#e6db74">&#39;From&#39;</span>], <span style="color:#e6db74">&#39;&lt;email_password&gt;&#39;</span>)
 
-	    msg['To'] = recipient
-	    server.sendmail(msg['From'], msg['To'], msg.as_string())
-	    server.quit()
+	    msg[<span style="color:#e6db74">&#39;To&#39;</span>] <span style="color:#f92672">=</span> recipient
+	    server<span style="color:#f92672">.</span>sendmail(msg[<span style="color:#e6db74">&#39;From&#39;</span>], msg[<span style="color:#e6db74">&#39;To&#39;</span>], msg<span style="color:#f92672">.</span>as_string())
+	    server<span style="color:#f92672">.</span>quit()
 
-with open(logFile, 'w') as log:
-    log.write(ip)
-    log.close()
-</code></pre>
-<p>Replace <code>&lt;recipient0&gt;</code> and <code>&lt;recipient1&gt;</code> with emails which you want to receive warnings about IP change. You can add more recipients or leave the only one. Replace <code>&lt;email&gt;</code> and <code>&lt;email_password&gt;</code> with real email account and password (you need real account at ya.ru or similar email provider). SMTP server in the following code is configured for yandex mail.</p>
+<span style="color:#66d9ef">with</span> open(logFile, <span style="color:#e6db74">&#39;w&#39;</span>) <span style="color:#66d9ef">as</span> log:
+    log<span style="color:#f92672">.</span>write(ip)
+    log<span style="color:#f92672">.</span>close()
+</code></pre></div><p>Replace <code>&lt;recipient0&gt;</code> and <code>&lt;recipient1&gt;</code> with emails which you want to receive warnings about IP change. You can add more recipients or leave the only one. Replace <code>&lt;email&gt;</code> and <code>&lt;email_password&gt;</code> with real email account and password (you need real account at ya.ru or similar email provider). SMTP server in the following code is configured for yandex mail.</p>
 <p>Now place script to <code>/opt/ippywhatchdog.py</code>, make it executable, add to cron.</p>
-<pre><code class="language-bash">sudo -s
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo -s
 mv ippywhatchdog.py /opt/
 chmod +x /opt/ippywhatchdog.py
 crontab -e
-</code></pre>
-<p><code>crontab -e</code> will open text editor with cron configuration. Add the following string to execute script every 5 minutes:</p>
+</code></pre></div><p><code>crontab -e</code> will open text editor with cron configuration. Add the following string to execute script every 5 minutes:</p>
 <pre><code>*/5 * * * * /opt/ippywatchdog.py
 </code></pre>
     </div>

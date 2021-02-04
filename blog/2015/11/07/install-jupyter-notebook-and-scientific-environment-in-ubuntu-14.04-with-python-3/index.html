@@ -125,59 +125,56 @@ pip installation from pypa is now one-liner
 <li>pip installation from <a href="https://bootstrap.pypa.io/get-pip.py" target="_blank">pypa</a> is now one-liner</li>
 </ul>
 <p>Install prerequisities as root:</p>
-<pre><code class="language-bash"># install curl virtualenvwrapper
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># install curl virtualenvwrapper</span>
 apt-get install -y curl virtualenvwrapper
 
-# install as workaround for https://github.com/matplotlib/matplotlib/issues/3029/
+<span style="color:#75715e"># install as workaround for https://github.com/matplotlib/matplotlib/issues/3029/</span>
 apt-get install -y pkg-config
 
-# install python development packages and g++
+<span style="color:#75715e"># install python development packages and g++</span>
 apt-get install -y python3-dev g++
 
-# install dependencies for scipy
+<span style="color:#75715e"># install dependencies for scipy</span>
 apt-get install -y libblas-dev liblapack-dev gfortran
 
-# install some dependencies for matplotlib
+<span style="color:#75715e"># install some dependencies for matplotlib</span>
 apt-get install -y libfreetype6-dev libpng-dev libjpeg8-dev
-</code></pre>
-<p>Now create and activate virtualenv, install all the packages via pip:</p>
-<pre><code class="language-bash"># create and activate virtual environment using mkvirtualenv wrapper (env name is jupnb)
+</code></pre></div><p>Now create and activate virtualenv, install all the packages via pip:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># create and activate virtual environment using mkvirtualenv wrapper (env name is jupnb)</span>
 mkvirtualenv --no-setuptools --python /usr/bin/python3.4 jupnb
 
-# install fresh pip
+<span style="color:#75715e"># install fresh pip</span>
 curl https://bootstrap.pypa.io/get-pip.py | python
 
-# install fresh setuptools
+<span style="color:#75715e"># install fresh setuptools</span>
 pip install setuptools distribute
 
-# install numpy as it is dependecy for many others
+<span style="color:#75715e"># install numpy as it is dependecy for many others</span>
 pip install numpy
 
-# install scientific packages (seaborn instead of matplotlib for pretty plots)
+<span style="color:#75715e"># install scientific packages (seaborn instead of matplotlib for pretty plots)</span>
 pip install sympy scipy seaborn pandas jupyter
 
-# install scikit-learn separately, it depends on numpy and scipy
+<span style="color:#75715e"># install scikit-learn separately, it depends on numpy and scipy</span>
 pip install scikit-learn
 
-# deactivate venv
+<span style="color:#75715e"># deactivate venv</span>
 deactivate
-</code></pre>
-<p>Configure notebook profile with SSL encryption. Use real ssl certificate instead of self-generated (if you have one). You can use <code>jupyter notebook --generate-config</code> command to create default config with comments about all the options, or use following snippet for minimal config generation:</p>
-<pre><code class="language-bash">mkdir -p ~/.jupyter
+</code></pre></div><p>Configure notebook profile with SSL encryption. Use real ssl certificate instead of self-generated (if you have one). You can use <code>jupyter notebook --generate-config</code> command to create default config with comments about all the options, or use following snippet for minimal config generation:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir -p ~/.jupyter
 cd ~/.jupyter
-openssl req -x509 -nodes -days 365 -newkey rsa:1024 -keyout ${ENV}.pem -out jupnb.pem
-echo &quot;c.NotebookApp.ip = '*'&quot; &gt;&gt; jupyter_notebook_config.py
-echo &quot;c.NotebookApp.port = 8888&quot; &gt;&gt; jupyter_notebook_config.py
-echo &quot;c.NotebookApp.open_browser = False&quot; &gt;&gt; jupyter_notebook_config.py
-echo &quot;c.NotebookApp.password = u'$(ipython -c 'from notebook.auth import passwd; print(passwd())')'&quot; &gt;&gt; jupyter_notebook_config.py
-echo &quot;c.NotebookApp.certfile = u'jupnb.pem'&quot; &gt;&gt; jupyter_notebook_config.py
-echo &quot;c.NotebookApp.cookie_secret_file = '$HOME/.jupyter/secret_cookie'&quot; &gt;&gt; jupyter_notebook_config.py
+openssl req -x509 -nodes -days <span style="color:#ae81ff">365</span> -newkey rsa:1024 -keyout <span style="color:#e6db74">${</span>ENV<span style="color:#e6db74">}</span>.pem -out jupnb.pem
+echo <span style="color:#e6db74">&#34;c.NotebookApp.ip = &#39;*&#39;&#34;</span> &gt;&gt; jupyter_notebook_config.py
+echo <span style="color:#e6db74">&#34;c.NotebookApp.port = 8888&#34;</span> &gt;&gt; jupyter_notebook_config.py
+echo <span style="color:#e6db74">&#34;c.NotebookApp.open_browser = False&#34;</span> &gt;&gt; jupyter_notebook_config.py
+echo <span style="color:#e6db74">&#34;c.NotebookApp.password = u&#39;</span><span style="color:#66d9ef">$(</span>ipython -c <span style="color:#e6db74">&#39;from notebook.auth import passwd; print(passwd())&#39;</span><span style="color:#66d9ef">)</span><span style="color:#e6db74">&#39;&#34;</span> &gt;&gt; jupyter_notebook_config.py
+echo <span style="color:#e6db74">&#34;c.NotebookApp.certfile = u&#39;jupnb.pem&#39;&#34;</span> &gt;&gt; jupyter_notebook_config.py
+echo <span style="color:#e6db74">&#34;c.NotebookApp.cookie_secret_file = &#39;</span>$HOME<span style="color:#e6db74">/.jupyter/secret_cookie&#39;&#34;</span> &gt;&gt; jupyter_notebook_config.py
 cd -
-</code></pre>
-<p>That&rsquo;s all. To use notebook, activate virtual env, run server and open http://127.0.0.1:8888/ in your browser:</p>
-<pre><code class="language-bash">workon jupnb
+</code></pre></div><p>That&rsquo;s all. To use notebook, activate virtual env, run server and open http://127.0.0.1:8888/ in your browser:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">workon jupnb
 jupyter notebook
-</code></pre>
+</code></pre></div>
     </div>
 </article>
 

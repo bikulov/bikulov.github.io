@@ -103,159 +103,144 @@
 <h2 id="preparation">Preparation</h2>
 <h3 id="ubuntu">Ubuntu</h3>
 <p>Update Ubuntu with the commands:</p>
-<pre><code class="language-bash">sudo apt-get update
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get update
 sudo apt-get upgrade
-</code></pre>
-<p>Install pip and virtualenv with the commands:</p>
-<pre><code class="language-bash">sudo apt-get install python-pip
+</code></pre></div><p>Install pip and virtualenv with the commands:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get install python-pip
 sudo pip install virtualenv
-</code></pre>
-<h3 id="nginx">Nginx</h3>
+</code></pre></div><h3 id="nginx">Nginx</h3>
 <p>Install nginx:</p>
-<pre><code class="language-bash">sudo apt-get install nginx
-</code></pre>
-<p>Add create ssl certificates:</p>
-<pre><code class="language-bash">sudo openssl req -new -x509 -days 9999 -nodes -out host.pem -keyout host.key
-</code></pre>
-<p>Create /etc/nginx/ssl.conf file:</p>
-<pre><code class="language-bash"># Sert generation:
-# openssl req -new -x509 -days 9999 -nodes -out cert.pem -keyout     cert.key
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get install nginx
+</code></pre></div><p>Add create ssl certificates:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo openssl req -new -x509 -days <span style="color:#ae81ff">9999</span> -nodes -out host.pem -keyout host.key
+</code></pre></div><p>Create /etc/nginx/ssl.conf file:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># Sert generation:</span>
+<span style="color:#75715e"># openssl req -new -x509 -days 9999 -nodes -out cert.pem -keyout     cert.key</span>
 
 ssl         on;
 ssl_protocols       SSLv3 TLSv1;
 ssl_certificate     /etc/nginx/ssl/host.pem;
 ssl_certificate_key /etc/nginx/ssl/host.key;
-</code></pre>
-<h2 id="installing-rhodecode">Installing RhodeCode</h2>
+</code></pre></div><h2 id="installing-rhodecode">Installing RhodeCode</h2>
 <p>Install Python sources:</p>
-<pre><code class="language-bash">sudo apt-get install python-dev
-</code></pre>
-<p>Create the base directory and temporarily give yourself ownership:</p>
-<pre><code class="language-bash">sudo mkdir /srv/hg.kenarius.org
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get install python-dev
+</code></pre></div><p>Create the base directory and temporarily give yourself ownership:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo mkdir /srv/hg.kenarius.org
 sudo su
 cd /srv/hg.kenarius.org
-</code></pre>
-<p>Create the data directory, virtual environment, and install RhodeCode:</p>
-<pre><code class="language-bash">virtualenv --no-site-packages /srv/hg.kenarius.org/venv
+</code></pre></div><p>Create the data directory, virtual environment, and install RhodeCode:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">virtualenv --no-site-packages /srv/hg.kenarius.org/venv
 source /srv/hg.kenarius.org/venv/bin/activate
-(venv) pip install pastescript
-(venv) easy_install rhodecode
-</code></pre>
-<p>Create directories and the production configuraton:</p>
-<pre><code class="language-bash">mkdir /home/repository
+<span style="color:#f92672">(</span>venv<span style="color:#f92672">)</span> pip install pastescript
+<span style="color:#f92672">(</span>venv<span style="color:#f92672">)</span> easy_install rhodecode
+</code></pre></div><p>Create directories and the production configuraton:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir /home/repository
 mkdir /srv/hg.kenarius.org/data
 cd /srv/hg.kenarius.org/data
-(venv) paster make-config RhodeCode production.ini
-</code></pre>
-<p>Generate the RhodeCode database and create the initial admin account:</p>
-<pre><code class="language-bash">(venv) paster setup-rhodecode production.ini
-</code></pre>
-<h2 id="starting-rhodecode-on-boot">Starting RhodeCode on boot</h2>
+<span style="color:#f92672">(</span>venv<span style="color:#f92672">)</span> paster make-config RhodeCode production.ini
+</code></pre></div><p>Generate the RhodeCode database and create the initial admin account:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">(</span>venv<span style="color:#f92672">)</span> paster setup-rhodecode production.ini
+</code></pre></div><h2 id="starting-rhodecode-on-boot">Starting RhodeCode on boot</h2>
 <p>Create <code>start.sh</code> in <code>/srv/hg.kenarius.org</code>:</p>
-<pre><code class="language-bash">#!/bin/bash
-# run this as the rhodecode user!
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#!/bin/bash
+</span><span style="color:#75715e"></span><span style="color:#75715e"># run this as the rhodecode user!</span>
 
-WDIR=/srv/hg.kenarius.org
-VIRTUALENV_DIR=/srv/hg.kenarius.org/venv
+WDIR<span style="color:#f92672">=</span>/srv/hg.kenarius.org
+VIRTUALENV_DIR<span style="color:#f92672">=</span>/srv/hg.kenarius.org/venv
 
 source $VIRTUALENV_DIR/bin/activate
 
 cd $WDIR
 paster serve $WDIR/data/production.ini 1&gt; debug.log 2&gt; error.log
-</code></pre>
-<p>Create rhodecode in <code>/etc/init.d</code>:</p>
-<pre><code class="language-bash">#!/bin/sh -e
-########################################
-#### THIS IS A DEBIAN INIT.D SCRIPT ####
-########################################
+</code></pre></div><p>Create rhodecode in <code>/etc/init.d</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#!/bin/sh -e
+</span><span style="color:#75715e"></span><span style="color:#75715e">########################################</span>
+<span style="color:#75715e">#### THIS IS A DEBIAN INIT.D SCRIPT ####</span>
+<span style="color:#75715e">########################################</span>
 
-### BEGIN INIT INFO
-# Provides:          rhodecode
-# Required-Start:    $all
-# Required-Stop:     $all
-# Default-Start:     2 3 4 5
-# Default-Stop:      0 1 6
-# Short-Description: starts instance of rhodecode
-# Description:       starts instance of rhodecode using start-stop-    daemon
-### EN    D INIT INFO
+<span style="color:#75715e">### BEGIN INIT INFO</span>
+<span style="color:#75715e"># Provides:          rhodecode</span>
+<span style="color:#75715e"># Required-Start:    $all</span>
+<span style="color:#75715e"># Required-Stop:     $all</span>
+<span style="color:#75715e"># Default-Start:     2 3 4 5</span>
+<span style="color:#75715e"># Default-Stop:      0 1 6</span>
+<span style="color:#75715e"># Short-Description: starts instance of rhodecode</span>
+<span style="color:#75715e"># Description:       starts instance of rhodecode using start-stop-    daemon</span>
+<span style="color:#75715e">### EN    D INIT INFO</span>
 
-APP_NAME=&quot;rhodecode&quot;
-APP_HOMEDIR=&quot;hg.kenarius.org&quot;
-APP_PATH=&quot;/srv/$APP_HOMEDIR&quot;
+APP_NAME<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;rhodecode&#34;</span>
+APP_HOMEDIR<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;hg.kenarius.org&#34;</span>
+APP_PATH<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/srv/</span>$APP_HOMEDIR<span style="color:#e6db74">&#34;</span>
 
-CONF_NAME=&quot;data/production.ini&quot;
+CONF_NAME<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;data/production.ini&#34;</span>
 
-PID_PATH=&quot;$APP_PATH/$APP_NAME.pid&quot;
-LOG_PATH=&quot;$APP_PATH/$APP_NAME.log&quot;
+PID_PATH<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$APP_PATH<span style="color:#e6db74">/</span>$APP_NAME<span style="color:#e6db74">.pid&#34;</span>
+LOG_PATH<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$APP_PATH<span style="color:#e6db74">/</span>$APP_NAME<span style="color:#e6db74">.log&#34;</span>
 
-PYTHON_PATH=&quot;/srv/$APP_HOMEDIR/venv&quot;
+PYTHON_PATH<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/srv/</span>$APP_HOMEDIR<span style="color:#e6db74">/venv&#34;</span>
 
-RUN_AS=&quot;www-data&quot;
+RUN_AS<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;www-data&#34;</span>
 
-DAEMON=&quot;$PYTHON_PATH/bin/paster&quot;
+DAEMON<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$PYTHON_PATH<span style="color:#e6db74">/bin/paster&#34;</span>
 
-DAEMON_OPTS=&quot;serve --daemon \
-  --user=$RUN_AS \
-  --group=$RUN_AS \
-  --pid-file=$PID_PATH \
-  --log-file=$LOG_PATH  $APP_PATH/$CONF_NAME&quot;
+DAEMON_OPTS<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;serve --daemon \
+</span><span style="color:#e6db74">  --user=</span>$RUN_AS<span style="color:#e6db74"> \
+</span><span style="color:#e6db74">  --group=</span>$RUN_AS<span style="color:#e6db74"> \
+</span><span style="color:#e6db74">  --pid-file=</span>$PID_PATH<span style="color:#e6db74"> \
+</span><span style="color:#e6db74">  --log-file=</span>$LOG_PATH<span style="color:#e6db74">  </span>$APP_PATH<span style="color:#e6db74">/</span>$CONF_NAME<span style="color:#e6db74">&#34;</span>
 
 
-start() {
-  echo &quot;Starting $APP_NAME&quot;
-  PYTHON_EGG_CACHE=&quot;/tmp&quot; start-stop-daemon -d $APP_PATH \
-      --start --quiet \
-      --pidfile $PID_PATH \
-      --user $RUN_AS \
-      --exec $DAEMON -- $DAEMON_OPTS
-}
+start<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+  echo <span style="color:#e6db74">&#34;Starting </span>$APP_NAME<span style="color:#e6db74">&#34;</span>
+  PYTHON_EGG_CACHE<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/tmp&#34;</span> start-stop-daemon -d $APP_PATH <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>      --start --quiet <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>      --pidfile $PID_PATH <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>      --user $RUN_AS <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>      --exec $DAEMON -- $DAEMON_OPTS
+<span style="color:#f92672">}</span>
 
-stop() {
-  echo &quot;Stopping $APP_NAME&quot;
-  start-stop-daemon -d $APP_PATH \
-      --stop --quiet \
-      --pidfile $PID_PATH || echo &quot;$APP_NAME - Not running!&quot;
+stop<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+  echo <span style="color:#e6db74">&#34;Stopping </span>$APP_NAME<span style="color:#e6db74">&#34;</span>
+  start-stop-daemon -d $APP_PATH <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>      --stop --quiet <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>      --pidfile $PID_PATH <span style="color:#f92672">||</span> echo <span style="color:#e6db74">&#34;</span>$APP_NAME<span style="color:#e6db74"> - Not running!&#34;</span>
 
-  if [ -f $PID_PATH ]; then
+  <span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> -f $PID_PATH <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
     rm $PID_PATH
-  fi
-}
+  <span style="color:#66d9ef">fi</span>
+<span style="color:#f92672">}</span>
 
-case &quot;$1&quot; in
-  start)
+<span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;</span>$1<span style="color:#e6db74">&#34;</span> in
+  start<span style="color:#f92672">)</span>
     start
     ;;
-  stop)
+  stop<span style="color:#f92672">)</span>
     stop
     ;;
-  restart)
-    echo &quot;Restarting $APP_NAME&quot;
-    ### stop ###
+  restart<span style="color:#f92672">)</span>
+    echo <span style="color:#e6db74">&#34;Restarting </span>$APP_NAME<span style="color:#e6db74">&#34;</span>
+    <span style="color:#75715e">### stop ###</span>
     stop
     wait
-    ### start ###
+    <span style="color:#75715e">### start ###</span>
     start
     ;;
-  *)
-    echo &quot;Usage: $0 {start|stop|restart}&quot;
-    exit 1
-esac
-</code></pre>
-<p>Allow to execute the script:</p>
-<pre><code class="language-bash">cd /etc/init.d
+  *<span style="color:#f92672">)</span>
+    echo <span style="color:#e6db74">&#34;Usage: </span>$0<span style="color:#e6db74"> {start|stop|restart}&#34;</span>
+    exit <span style="color:#ae81ff">1</span>
+<span style="color:#66d9ef">esac</span>
+</code></pre></div><p>Allow to execute the script:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cd /etc/init.d
 chmod +x rhodecode
 sudo ./rhodecode-init.d.sh start
-</code></pre>
-<p>Install the script:</p>
-<pre><code class="language-bash">sudo update-rc.d rhodecode defaults 90
-</code></pre>
-<p>Test the script once more:</p>
-<pre><code class="language-bash">sudo service rhodecode start
+</code></pre></div><p>Install the script:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo update-rc.d rhodecode defaults <span style="color:#ae81ff">90</span>
+</code></pre></div><p>Test the script once more:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo service rhodecode start
 sudo service rhodecode stop
-</code></pre>
-<h2 id="adding-nginx-as-a-front-end-for-ssl">Adding Nginx as a front-end for SSL</h2>
+</code></pre></div><h2 id="adding-nginx-as-a-front-end-for-ssl">Adding Nginx as a front-end for SSL</h2>
 <p>Create <code>/etc/nginx/proxy.conf</code> file:</p>
-<pre><code class="language-bash">proxy_redirect              off;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">proxy_redirect              off;
 proxy_set_header            Host $host;
 proxy_set_header            X-Url-Scheme $scheme;
 proxy_set_header            X-Host $http_host;
@@ -268,16 +253,15 @@ proxy_buffering             off;
 proxy_connect_timeout       7200;
 proxy_send_timeout          7200;
 proxy_read_timeout          7200;
-proxy_buffers               8 32k;
-</code></pre>
-<p>Create <code>/etc/nginx/sites-enabled/hg.kenarius.org</code> file (assuming you already have ssl settings for nginx):</p>
-<pre><code class="language-bash">server {
+proxy_buffers               <span style="color:#ae81ff">8</span> 32k;
+</code></pre></div><p>Create <code>/etc/nginx/sites-enabled/hg.kenarius.org</code> file (assuming you already have ssl settings for nginx):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">server <span style="color:#f92672">{</span>
     listen          80;
     server_name     hg.kenarius.org;
     rewrite        ^ https://$server_name$request_uri? permanent;
-}
+<span style="color:#f92672">}</span>
 
-server {
+server <span style="color:#f92672">{</span>
     listen          443;
     server_name     hg.kenarius.org;
     access_log      /var/log/nginx/rhodecode.access.log;
@@ -286,18 +270,17 @@ server {
 
     include      /etc/nginx/ssl.conf;
 
-    location / {
+    location / <span style="color:#f92672">{</span>
          try_files $uri @rhode;
-    }
+    <span style="color:#f92672">}</span>
 
-    location @rhode {
+    location @rhode <span style="color:#f92672">{</span>
          proxy_pass      http://127.0.0.1:5000;
-    }
-}
-</code></pre>
-<p>Reload nginx settings:</p>
-<pre><code class="language-bash">nginx -s reload
-</code></pre>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>Reload nginx settings:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">nginx -s reload
+</code></pre></div>
     </div>
 </article>
 

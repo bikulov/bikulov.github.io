@@ -115,27 +115,23 @@ containter (in my case Ubuntu Server 12.04) must be allowed to use tun
 <p>I&rsquo;ve grabbed container configuration from <a href="http://askubuntu.com/questions/278238/openvpn-on-ubuntu-openvz" target="_blank">askbuntu</a>.</p>
 <h2 id="load-tun-after-boot-automatically">Load tun after boot automatically</h2>
 <p>Edit <code>tun.modules</code>:</p>
-<pre><code class="language-bash"># vim /etc/sysconfig/modules/tun.modules
-#!/bin/sh
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># vim /etc/sysconfig/modules/tun.modules</span>
+<span style="color:#75715e">#!/bin/sh</span>
 /sbin/modprobe tun
-</code></pre>
-<p>Set permissions for tun.modules:</p>
-<pre><code class="language-bash">chmod 755 /etc/sysconfig/modules/tun.modules
-</code></pre>
-<p>Reboot host system and test tun module loaded:</p>
-<pre><code class="language-bash">$ lsmod | grep tun
-tun                    15493  2
-</code></pre>
-<h2 id="edit-container-configuration">Edit container configuration</h2>
+</code></pre></div><p>Set permissions for tun.modules:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">chmod <span style="color:#ae81ff">755</span> /etc/sysconfig/modules/tun.modules
+</code></pre></div><p>Reboot host system and test tun module loaded:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ lsmod | grep tun
+tun                    <span style="color:#ae81ff">15493</span>  <span style="color:#ae81ff">2</span>
+</code></pre></div><h2 id="edit-container-configuration">Edit container configuration</h2>
 <p>Issue following commands in host terminal as root (change &lsquo;101&rsquo; to your container id):</p>
-<pre><code class="language-bash">vzctl set 101 --devnodes net/tun:rw --save
-vzctl set 101 --devices c:10:200:rw --save
-vzctl set 101 --capability net_admin:on --save
-vzctl exec 101 mkdir -p /dev/net
-vzctl exec 101 mknod /dev/net/tun c 10 200
-vzctl exec 101 chmod 600 /dev/net/tun
-</code></pre>
-<p>Now <a href="https://help.ubuntu.com/lts/serverguide/openvpn.html" target="_blank">configured</a> OpenVPN will work correctly.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vzctl set <span style="color:#ae81ff">101</span> --devnodes net/tun:rw --save
+vzctl set <span style="color:#ae81ff">101</span> --devices c:10:200:rw --save
+vzctl set <span style="color:#ae81ff">101</span> --capability net_admin:on --save
+vzctl exec <span style="color:#ae81ff">101</span> mkdir -p /dev/net
+vzctl exec <span style="color:#ae81ff">101</span> mknod /dev/net/tun c <span style="color:#ae81ff">10</span> <span style="color:#ae81ff">200</span>
+vzctl exec <span style="color:#ae81ff">101</span> chmod <span style="color:#ae81ff">600</span> /dev/net/tun
+</code></pre></div><p>Now <a href="https://help.ubuntu.com/lts/serverguide/openvpn.html" target="_blank">configured</a> OpenVPN will work correctly.</p>
     </div>
 </article>
 

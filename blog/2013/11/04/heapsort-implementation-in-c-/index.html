@@ -103,53 +103,53 @@
 <p>At first heapsort creates heap from data with <code>buildHeap</code> function. Heap is organized in linear array as follows. Every $i$-th element has two children: $(2i)$-th element and $(2i+1)$-th one. The biggest element of the array is placed on the top of the heap.</p>
 <p>After heap building top element is swapped with the latest in the array, then heap is rebuilt for the array with size decreased by one. These operations repeat till array size is bigger than one. Note that array indexes have to start from one for this implementation to work correctly (that is why I use <code>size+1</code> for array size).</p>
 <p>My implementation of heapsort is presented below. <code>heapsort.cpp</code>:</p>
-<pre><code class="language-cpp">#include &lt;iostream&gt;
-#include &lt;cstdlib&gt;
-#include &lt;algorithm&gt;
-
-template &lt;typename T&gt;
-void checkRootNode(T *array, size_t root, size_t size) {
-	size_t left = 2*root;
-	size_t right = 2*root + 1;
-	if (left &lt; size &amp;&amp; array[root] &lt; array[left]) {
-		std::swap(array[root], array[left]);
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;cstdlib&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;algorithm&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">void</span> checkRootNode(T <span style="color:#f92672">*</span>array, size_t root, size_t size) {
+	size_t left <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>root;
+	size_t right <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>root <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;
+	<span style="color:#66d9ef">if</span> (left <span style="color:#f92672">&lt;</span> size <span style="color:#f92672">&amp;&amp;</span> array[root] <span style="color:#f92672">&lt;</span> array[left]) {
+		std<span style="color:#f92672">::</span>swap(array[root], array[left]);
 		checkRootNode(array, left, size);
 	}
-	if (right &lt; size &amp;&amp; array[root] &lt; array[right]) {
-		std::swap(array[root], array[right]);
+	<span style="color:#66d9ef">if</span> (right <span style="color:#f92672">&lt;</span> size <span style="color:#f92672">&amp;&amp;</span> array[root] <span style="color:#f92672">&lt;</span> array[right]) {
+		std<span style="color:#f92672">::</span>swap(array[root], array[right]);
 		checkRootNode(array, right, size);
 	}
 }
 
-template &lt;typename T&gt;
-void buildHeap(T *array, size_t size) {
-	for (size_t i=size/2; i&gt;0; --i) {
+<span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">void</span> buildHeap(T <span style="color:#f92672">*</span>array, size_t size) {
+	<span style="color:#66d9ef">for</span> (size_t i<span style="color:#f92672">=</span>size<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>; i<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">0</span>; <span style="color:#f92672">--</span>i) {
 		checkRootNode(array, i, size);
 	}
 }
 
-template &lt;typename T&gt;
-void heapSort(T *array, size_t size) {
-	while (size &gt; 1) {
-		std::swap(array[1], array[size-1]);
-		checkRootNode(array, 1, --size);
+<span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">void</span> heapSort(T <span style="color:#f92672">*</span>array, size_t size) {
+	<span style="color:#66d9ef">while</span> (size <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>) {
+		std<span style="color:#f92672">::</span>swap(array[<span style="color:#ae81ff">1</span>], array[size<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]);
+		checkRootNode(array, <span style="color:#ae81ff">1</span>, <span style="color:#f92672">--</span>size);
 	}
 }
 
-template &lt;typename T&gt;
-void printArray(T *array, size_t size) {
-	for (size_t i=1; i &lt; size; ++i) {
-		std::cout &lt;&lt; array[i] &lt;&lt; ' ';
+<span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">void</span> printArray(T <span style="color:#f92672">*</span>array, size_t size) {
+	<span style="color:#66d9ef">for</span> (size_t i<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>; i <span style="color:#f92672">&lt;</span> size; <span style="color:#f92672">++</span>i) {
+		std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> array[i] <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#39; &#39;</span>;
 	}
-	std::cout &lt;&lt; std::endl;
+	std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
 }
 
-int main(void) {
-	size_t size = 23;
-	int *array = new int[size+1];
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">void</span>) {
+	size_t size <span style="color:#f92672">=</span> <span style="color:#ae81ff">23</span>;
+	<span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>array <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">int</span>[size<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>];
 
-	for (int i=1; i&lt;size+1; ++i) {
-		array[i] = (100.0*rand())/RAND_MAX;
+	<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>; i<span style="color:#f92672">&lt;</span>size<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>; <span style="color:#f92672">++</span>i) {
+		array[i] <span style="color:#f92672">=</span> (<span style="color:#ae81ff">100.0</span><span style="color:#f92672">*</span>rand())<span style="color:#f92672">/</span>RAND_MAX;
 	}
 
 	printArray(array, size);
@@ -157,17 +157,16 @@ int main(void) {
 	heapSort(array, size);
 	printArray(array, size);
 
-	delete [] array;
+	<span style="color:#66d9ef">delete</span> [] array;
 
-	return 0;
+	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 }
-</code></pre>
-<p>Results:</p>
-<pre><code class="language-bash">[kenarius@cudasus]$ g++ heapsort.cpp
-[kenarius@cudasus]$ ./a.out
-84 39 78 79 91 19 33 76 27 55 47 62 36 51 95 91 63 71 14 60 1 24
-1 14 19 24 27 33 36 39 47 51 55 60 62 63 71 76 78 79 84 91 91 95
-</code></pre>
+</code></pre></div><p>Results:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>kenarius@cudasus<span style="color:#f92672">]</span>$ g++ heapsort.cpp
+<span style="color:#f92672">[</span>kenarius@cudasus<span style="color:#f92672">]</span>$ ./a.out
+<span style="color:#ae81ff">84</span> <span style="color:#ae81ff">39</span> <span style="color:#ae81ff">78</span> <span style="color:#ae81ff">79</span> <span style="color:#ae81ff">91</span> <span style="color:#ae81ff">19</span> <span style="color:#ae81ff">33</span> <span style="color:#ae81ff">76</span> <span style="color:#ae81ff">27</span> <span style="color:#ae81ff">55</span> <span style="color:#ae81ff">47</span> <span style="color:#ae81ff">62</span> <span style="color:#ae81ff">36</span> <span style="color:#ae81ff">51</span> <span style="color:#ae81ff">95</span> <span style="color:#ae81ff">91</span> <span style="color:#ae81ff">63</span> <span style="color:#ae81ff">71</span> <span style="color:#ae81ff">14</span> <span style="color:#ae81ff">60</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">24</span>
+<span style="color:#ae81ff">1</span> <span style="color:#ae81ff">14</span> <span style="color:#ae81ff">19</span> <span style="color:#ae81ff">24</span> <span style="color:#ae81ff">27</span> <span style="color:#ae81ff">33</span> <span style="color:#ae81ff">36</span> <span style="color:#ae81ff">39</span> <span style="color:#ae81ff">47</span> <span style="color:#ae81ff">51</span> <span style="color:#ae81ff">55</span> <span style="color:#ae81ff">60</span> <span style="color:#ae81ff">62</span> <span style="color:#ae81ff">63</span> <span style="color:#ae81ff">71</span> <span style="color:#ae81ff">76</span> <span style="color:#ae81ff">78</span> <span style="color:#ae81ff">79</span> <span style="color:#ae81ff">84</span> <span style="color:#ae81ff">91</span> <span style="color:#ae81ff">91</span> <span style="color:#ae81ff">95</span>
+</code></pre></div>
     </div>
 </article>
 

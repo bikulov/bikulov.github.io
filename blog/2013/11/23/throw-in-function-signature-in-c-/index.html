@@ -100,109 +100,102 @@
     
     <div class="post-content markdown-body">
         <p><a href="http://www.cplusplus.com/doc/tutorial/exceptions/" target="_blank">There is</a> base class <code>exception</code> in standard library (header <code>&lt;exception&gt;</code>). It <a href="http://en.cppreference.com/w/cpp/error/exception" target="_blank">has</a> default constructor, copy constructor, copy operator and destructor and virtual <code>what()</code> function. Latter returns string with additional information about exception.</p>
-<pre><code class="language-cpp">#include &lt;exception&gt;
-class MyException: public std::exception
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;exception&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyException</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> std<span style="color:#f92672">::</span>exception
 {
-    virtual const char* what() const throw()
+    <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> <span style="color:#a6e22e">what</span>() <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">throw</span>()
     {
-        return &quot;My Exception happened&quot;;
+        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;My Exception happened&#34;</span>;
     }
 }
-</code></pre>
-<p>The most confusing part in the above code is <code>throw()</code>. It assures no exception will be thrown from the <code>what()</code> function. For example, if you want to allow exception <code>int</code> and <code>float</code> to be raised in this function, you must write <code>throw(int,float)</code> (you can not do it in the above example, this fucntion definition is fixed in base class). Ok, this example is mostly unchangable, so let&rsquo;s write own <code>MyException</code> class without derivation from any standard library class.</p>
-<pre><code class="language-cpp">#include &lt;iostream&gt;
-#include &lt;string&gt;
-
-class MyException
+</code></pre></div><p>The most confusing part in the above code is <code>throw()</code>. It assures no exception will be thrown from the <code>what()</code> function. For example, if you want to allow exception <code>int</code> and <code>float</code> to be raised in this function, you must write <code>throw(int,float)</code> (you can not do it in the above example, this fucntion definition is fixed in base class). Ok, this example is mostly unchangable, so let&rsquo;s write own <code>MyException</code> class without derivation from any standard library class.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyException</span>
 {
-public:
-    std::string what()
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    std<span style="color:#f92672">::</span>string what()
     {
-        return &quot;MyException happened&quot;;
+        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;MyException happened&#34;</span>;
     }
 };
 
-int main(int argc, char **argv)
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>argv)
 {
     MyException a;
-    try {
-        throw a;
-    } catch (MyException &amp;e) {
-        std::cout &lt;&lt; e.what() &lt;&lt; std::endl;
-    } catch (int a) {
-        std::cout &lt;&lt; &quot;int thrown &quot; &lt;&lt; a &lt;&lt; std::endl;
+    <span style="color:#66d9ef">try</span> {
+        <span style="color:#66d9ef">throw</span> a;
+    } <span style="color:#66d9ef">catch</span> (MyException <span style="color:#f92672">&amp;</span>e) {
+        std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> e.what() <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+    } <span style="color:#66d9ef">catch</span> (<span style="color:#66d9ef">int</span> a) {
+        std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;int thrown &#34;</span> <span style="color:#f92672">&lt;&lt;</span> a <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
     }
 
-    return 0;
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 }
-</code></pre>
-<p>Ok, if you copy source code, compile and run it, you&rsquo;ll see:</p>
-<pre><code class="language-bash">$ g++ main.cpp -o throw
+</code></pre></div><p>Ok, if you copy source code, compile and run it, you&rsquo;ll see:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ g++ main.cpp -o throw
 $ ./throw
 MyException happened
-</code></pre>
-<p>This behaviour is predictable. Exception thrown and caught by <code>catch (MyException &amp;e)</code>. No special modifiers is presented.</p>
+</code></pre></div><p>This behaviour is predictable. Exception thrown and caught by <code>catch (MyException &amp;e)</code>. No special modifiers is presented.</p>
 <p>Lets change example a little (throwing exception from <code>what()</code>):</p>
-<pre><code class="language-cpp">#include &lt;iostream&gt;
-#include &lt;string&gt;
-
-class MyException
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyException</span>
 {
-public:
-    std::string what()
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    std<span style="color:#f92672">::</span>string what()
     {
-        throw 10;
-        return &quot;MyException happened&quot;;
+        <span style="color:#66d9ef">throw</span> <span style="color:#ae81ff">10</span>;
+        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;MyException happened&#34;</span>;
     }
 };
 
-int main(int argc, char **argv)
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>argv)
 {
-    try {
+    <span style="color:#66d9ef">try</span> {
         MyException a;
-        throw a;
-    } catch (MyException &amp;e) {
-        std::cout &lt;&lt; e.what() &lt;&lt; std::endl;
+        <span style="color:#66d9ef">throw</span> a;
+    } <span style="color:#66d9ef">catch</span> (MyException <span style="color:#f92672">&amp;</span>e) {
+        std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> e.what() <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
     }
-    return 0;
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 }
-</code></pre>
-<p>Throwing exception from <code>what()</code> causes unhandled exception:</p>
-<pre><code class="language-bash">$ ./throw
-terminate called after throwing an instance of 'int'
-Aborted (core dumped)
-</code></pre>
-<p>Usage of throw() in function declaration is considered as a <a href="http://stackoverflow.com/questions/1055387/throw-keyword-in-functions-signature-c" target="_blank">bad idea</a>. But in this particular situation it is allowed: <code>what()</code> returns additional description, it must not send any other exception, as there is no guarantee this exception will behandled. Restrict exceptions from <code>what()</code>:</p>
-<pre><code class="language-cpp">#include &lt;iostream&gt;
-#include &lt;string&gt;
-
-class MyException
+</code></pre></div><p>Throwing exception from <code>what()</code> causes unhandled exception:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ./throw
+terminate called after throwing an instance of <span style="color:#e6db74">&#39;int&#39;</span>
+Aborted <span style="color:#f92672">(</span>core dumped<span style="color:#f92672">)</span>
+</code></pre></div><p>Usage of throw() in function declaration is considered as a <a href="http://stackoverflow.com/questions/1055387/throw-keyword-in-functions-signature-c" target="_blank">bad idea</a>. But in this particular situation it is allowed: <code>what()</code> returns additional description, it must not send any other exception, as there is no guarantee this exception will behandled. Restrict exceptions from <code>what()</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyException</span>
 {
-public:
-    std::string what() throw()
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    std<span style="color:#f92672">::</span>string what() <span style="color:#66d9ef">throw</span>()
     {
-        throw 10;
-        return &quot;MyException happened&quot;;
+        <span style="color:#66d9ef">throw</span> <span style="color:#ae81ff">10</span>;
+        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;MyException happened&#34;</span>;
     }
 };
 
-int main(int argc, char **argv)
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>argv)
 {
-    try {
+    <span style="color:#66d9ef">try</span> {
         MyException a;
         a.what();
-    } catch (...) {
-        std::cout &lt;&lt; &quot;exception handled&quot; &lt;&lt; std::endl;
+    } <span style="color:#66d9ef">catch</span> (...) {
+        std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;exception handled&#34;</span> <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
     }
-    return 0;
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 }
-</code></pre>
-<p>Finally we get what we came from: this class is pretty like std::exception, isn&rsquo;t it? <code>throw()</code> ensures no exceptions can be sent from <code>show()</code> function. So, compiler will fail? No! Compiler reports no errors. But an error occures in runtime:</p>
-<pre><code class="language-bash">$ ./throw
-terminate called after throwing an instance of 'int'
-Aborted (core dumped)
-</code></pre>
-<p>There is a little information why the code have failed. No exception (even raised in functions called from <code>show()</code>) will pass through <code>show() throw()</code>. Error will appear only at runtime.</p>
+</code></pre></div><p>Finally we get what we came from: this class is pretty like std::exception, isn&rsquo;t it? <code>throw()</code> ensures no exceptions can be sent from <code>show()</code> function. So, compiler will fail? No! Compiler reports no errors. But an error occures in runtime:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ./throw
+terminate called after throwing an instance of <span style="color:#e6db74">&#39;int&#39;</span>
+Aborted <span style="color:#f92672">(</span>core dumped<span style="color:#f92672">)</span>
+</code></pre></div><p>There is a little information why the code have failed. No exception (even raised in functions called from <code>show()</code>) will pass through <code>show() throw()</code>. Error will appear only at runtime.</p>
 <p>So, <code>throw()</code> is used to ensure no additional exceptions will be raised from <code>show()</code> function and will escape <code>catch()</code>. But in general case such behaviour is difficult to predict and <em>is</em> a bad practice. Try not to use <code>throw()</code> in function signature without high necessity. Try not to use throw with particular allowed exceptions (like <code>throw(A, B)</code>) in any situation. Standart <code>std::exception</code> is very good to derive your exceptions in huge amount of sutuations.</p>
     </div>
 </article>

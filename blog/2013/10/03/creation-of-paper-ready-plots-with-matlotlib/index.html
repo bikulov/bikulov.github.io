@@ -101,86 +101,85 @@
     <div class="post-content markdown-body">
         <p>I used to utilize gnuplot for creation of plots with arbitrary data. The main problem was to postprocess data before plotting: I had to integrate postprocess into calculation code itself or to write additional script to do so. I&rsquo;d like to provide an example of good-looking plotting with Python and matplotlib. Python has bataries included, so there will be no problem with preparation of data to be plotted.</p>
 <p>Example script <code>plot_example.py</code>:</p>
-<pre><code class="language-python">#~/usr/bin/env python
-#-*- coding: utf-8 -*-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#~/usr/bin/env python</span>
+<span style="color:#75715e">#-*- coding: utf-8 -*-</span>
 
-import matplotlib.pyplot as plt
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
 
-# set global settings
-def init_plotting():
-    plt.rcParams['figure.figsize'] = (8, 3)
-    plt.rcParams['font.size'] = 10
-    plt.rcParams['font.family'] = 'Times New Roman'
-    plt.rcParams['axes.labelsize'] = plt.rcParams['font.size']
-    plt.rcParams['axes.titlesize'] = 1.5*plt.rcParams['font.size']
-    plt.rcParams['legend.fontsize'] = plt.rcParams['font.size']
-    plt.rcParams['xtick.labelsize'] = plt.rcParams['font.size']
-    plt.rcParams['ytick.labelsize'] = plt.rcParams['font.size']
-    plt.rcParams['savefig.dpi'] = 2*plt.rcParams['savefig.dpi']
-    plt.rcParams['xtick.major.size'] = 3
-    plt.rcParams['xtick.minor.size'] = 3
-    plt.rcParams['xtick.major.width'] = 1
-    plt.rcParams['xtick.minor.width'] = 1
-    plt.rcParams['ytick.major.size'] = 3
-    plt.rcParams['ytick.minor.size'] = 3
-    plt.rcParams['ytick.major.width'] = 1
-    plt.rcParams['ytick.minor.width'] = 1
-    plt.rcParams['legend.frameon'] = False
-    plt.rcParams['legend.loc'] = 'center left'
-    plt.rcParams['axes.linewidth'] = 1
+<span style="color:#75715e"># set global settings</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">init_plotting</span>():
+    plt<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74">&#39;figure.figsize&#39;</span>] <span style="color:#f92672">=</span> (<span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">3</span>)
+    plt<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74">&#39;font.size&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>
+    plt<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74">&#39;font.family&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;Times New Roman&#39;</span>
+    plt<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74">&#39;axes.labelsize&#39;</span>] <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74">&#39;font.size&#39;</span>]
+    plt<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74">&#39;axes.titlesize&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.5</span><span style="color:#f92672">*</span>plt<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74">&#39;font.size&#39;</span>]
+    plt<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74">&#39;legend.fontsize&#39;</span>] <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74">&#39;font.size&#39;</span>]
+    plt<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74">&#39;xtick.labelsize&#39;</span>] <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74">&#39;font.size&#39;</span>]
+    plt<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74">&#39;ytick.labelsize&#39;</span>] <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74">&#39;font.size&#39;</span>]
+    plt<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74">&#39;savefig.dpi&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>plt<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74">&#39;savefig.dpi&#39;</span>]
+    plt<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74">&#39;xtick.major.size&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>
+    plt<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74">&#39;xtick.minor.size&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>
+    plt<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74">&#39;xtick.major.width&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+    plt<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74">&#39;xtick.minor.width&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+    plt<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74">&#39;ytick.major.size&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>
+    plt<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74">&#39;ytick.minor.size&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>
+    plt<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74">&#39;ytick.major.width&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+    plt<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74">&#39;ytick.minor.width&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+    plt<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74">&#39;legend.frameon&#39;</span>] <span style="color:#f92672">=</span> False
+    plt<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74">&#39;legend.loc&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;center left&#39;</span>
+    plt<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74">&#39;axes.linewidth&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
 
-    plt.gca().spines['right'].set_color('none')
-    plt.gca().spines['top'].set_color('none')
-    plt.gca().xaxis.set_ticks_position('bottom')
-    plt.gca().yaxis.set_ticks_position('left')
+    plt<span style="color:#f92672">.</span>gca()<span style="color:#f92672">.</span>spines[<span style="color:#e6db74">&#39;right&#39;</span>]<span style="color:#f92672">.</span>set_color(<span style="color:#e6db74">&#39;none&#39;</span>)
+    plt<span style="color:#f92672">.</span>gca()<span style="color:#f92672">.</span>spines[<span style="color:#e6db74">&#39;top&#39;</span>]<span style="color:#f92672">.</span>set_color(<span style="color:#e6db74">&#39;none&#39;</span>)
+    plt<span style="color:#f92672">.</span>gca()<span style="color:#f92672">.</span>xaxis<span style="color:#f92672">.</span>set_ticks_position(<span style="color:#e6db74">&#39;bottom&#39;</span>)
+    plt<span style="color:#f92672">.</span>gca()<span style="color:#f92672">.</span>yaxis<span style="color:#f92672">.</span>set_ticks_position(<span style="color:#e6db74">&#39;left&#39;</span>)
 
 init_plotting()
 
-# plotting example data
-from math import sin
-from math import cos
+<span style="color:#75715e"># plotting example data</span>
+<span style="color:#f92672">from</span> math <span style="color:#f92672">import</span> sin
+<span style="color:#f92672">from</span> math <span style="color:#f92672">import</span> cos
 
-x = [0.31415*xi for xi in xrange(0,10)]
-y1 = [sin(xi) for xi in x]
-y2 = [cos(xi + 0.5) for xi in x]
-y3 = [cos(xi + 0.5) + sin(xi) for xi in x]
+x <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0.31415</span><span style="color:#f92672">*</span>xi <span style="color:#66d9ef">for</span> xi <span style="color:#f92672">in</span> xrange(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">10</span>)]
+y1 <span style="color:#f92672">=</span> [sin(xi) <span style="color:#66d9ef">for</span> xi <span style="color:#f92672">in</span> x]
+y2 <span style="color:#f92672">=</span> [cos(xi <span style="color:#f92672">+</span> <span style="color:#ae81ff">0.5</span>) <span style="color:#66d9ef">for</span> xi <span style="color:#f92672">in</span> x]
+y3 <span style="color:#f92672">=</span> [cos(xi <span style="color:#f92672">+</span> <span style="color:#ae81ff">0.5</span>) <span style="color:#f92672">+</span> sin(xi) <span style="color:#66d9ef">for</span> xi <span style="color:#f92672">in</span> x]
 
-# begin subplots region
-plt.subplot(121)
-plt.gca().margins(0.1, 0.1)
-plt.plot(x, y1, linestyle='-', marker='.', linewidth=1, color='r', label='sin')
-plt.plot(x, y2, linestyle='.', marker='o', linewidth=1, color='b', label='cos')
+<span style="color:#75715e"># begin subplots region</span>
+plt<span style="color:#f92672">.</span>subplot(<span style="color:#ae81ff">121</span>)
+plt<span style="color:#f92672">.</span>gca()<span style="color:#f92672">.</span>margins(<span style="color:#ae81ff">0.1</span>, <span style="color:#ae81ff">0.1</span>)
+plt<span style="color:#f92672">.</span>plot(x, y1, linestyle<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;-&#39;</span>, marker<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;.&#39;</span>, linewidth<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, color<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;r&#39;</span>, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;sin&#39;</span>)
+plt<span style="color:#f92672">.</span>plot(x, y2, linestyle<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;.&#39;</span>, marker<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;o&#39;</span>, linewidth<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, color<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;b&#39;</span>, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;cos&#39;</span>)
 
-plt.gca().annotate(u'point $\\frac{\\tau}{2}$', xy=(x[2], y1[2]),  xycoords='data',
-                xytext=(30, -10), textcoords='offset points', size=8,
-                arrowprops=dict(arrowstyle='simple', fc='g', ec='none'))
+plt<span style="color:#f92672">.</span>gca()<span style="color:#f92672">.</span>annotate(<span style="color:#e6db74">u</span><span style="color:#e6db74">&#39;point $</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">frac{</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">tau}{2}$&#39;</span>, xy<span style="color:#f92672">=</span>(x[<span style="color:#ae81ff">2</span>], y1[<span style="color:#ae81ff">2</span>]),  xycoords<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;data&#39;</span>,
+                xytext<span style="color:#f92672">=</span>(<span style="color:#ae81ff">30</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">10</span>), textcoords<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;offset points&#39;</span>, size<span style="color:#f92672">=</span><span style="color:#ae81ff">8</span>,
+                arrowprops<span style="color:#f92672">=</span>dict(arrowstyle<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;simple&#39;</span>, fc<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;g&#39;</span>, ec<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;none&#39;</span>))
 
-plt.xlabel(u'x label')
-plt.ylabel(u'y label')
-plt.title(u'First plot title')
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">u</span><span style="color:#e6db74">&#39;x label&#39;</span>)
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">u</span><span style="color:#e6db74">&#39;y label&#39;</span>)
+plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">u</span><span style="color:#e6db74">&#39;First plot title&#39;</span>)
 
-plt.gca().legend(bbox_to_anchor = (0.0, 0.1))
+plt<span style="color:#f92672">.</span>gca()<span style="color:#f92672">.</span>legend(bbox_to_anchor <span style="color:#f92672">=</span> (<span style="color:#ae81ff">0.0</span>, <span style="color:#ae81ff">0.1</span>))
 
-plt.subplot(122)
-plt.gca().margins(0.1, 0.1)
-plt.plot(x, y3, linestyle='--', marker='.', linewidth=1, color='g', label='sum')
+plt<span style="color:#f92672">.</span>subplot(<span style="color:#ae81ff">122</span>)
+plt<span style="color:#f92672">.</span>gca()<span style="color:#f92672">.</span>margins(<span style="color:#ae81ff">0.1</span>, <span style="color:#ae81ff">0.1</span>)
+plt<span style="color:#f92672">.</span>plot(x, y3, linestyle<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;--&#39;</span>, marker<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;.&#39;</span>, linewidth<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, color<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;g&#39;</span>, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;sum&#39;</span>)
 
-plt.gca().annotate(u'$y_x$', xy=(x[2], y3[2]),  xycoords='data',
-                xytext=(-30, -20), textcoords='offset points', size=8,
-                arrowprops=dict(arrowstyle='simple', fc='orange', ec='none'))
+plt<span style="color:#f92672">.</span>gca()<span style="color:#f92672">.</span>annotate(<span style="color:#e6db74">u</span><span style="color:#e6db74">&#39;$y_x$&#39;</span>, xy<span style="color:#f92672">=</span>(x[<span style="color:#ae81ff">2</span>], y3[<span style="color:#ae81ff">2</span>]),  xycoords<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;data&#39;</span>,
+                xytext<span style="color:#f92672">=</span>(<span style="color:#f92672">-</span><span style="color:#ae81ff">30</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">20</span>), textcoords<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;offset points&#39;</span>, size<span style="color:#f92672">=</span><span style="color:#ae81ff">8</span>,
+                arrowprops<span style="color:#f92672">=</span>dict(arrowstyle<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;simple&#39;</span>, fc<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;orange&#39;</span>, ec<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;none&#39;</span>))
 
-plt.xlabel(u'x label')
-plt.ylabel(u'y label')
-plt.title(u'Second plot title')
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">u</span><span style="color:#e6db74">&#39;x label&#39;</span>)
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">u</span><span style="color:#e6db74">&#39;y label&#39;</span>)
+plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">u</span><span style="color:#e6db74">&#39;Second plot title&#39;</span>)
 
-plt.gca().legend(bbox_to_anchor = (0.0, 0.1))
-# end subplots region
+plt<span style="color:#f92672">.</span>gca()<span style="color:#f92672">.</span>legend(bbox_to_anchor <span style="color:#f92672">=</span> (<span style="color:#ae81ff">0.0</span>, <span style="color:#ae81ff">0.1</span>))
+<span style="color:#75715e"># end subplots region</span>
 
-# output resulting plot to file
-plt.tight_layout()
-plt.savefig('graph.png')
-</code></pre>
-<p>I&rsquo;ve set all important parameters for me: font, size of font, width of different types of lines, titles, labels, so you can change them to fit yourself. PNG output can be changed to EPS or PDF ones.</p>
+<span style="color:#75715e"># output resulting plot to file</span>
+plt<span style="color:#f92672">.</span>tight_layout()
+plt<span style="color:#f92672">.</span>savefig(<span style="color:#e6db74">&#39;graph.png&#39;</span>)
+</code></pre></div><p>I&rsquo;ve set all important parameters for me: font, size of font, width of different types of lines, titles, labels, so you can change them to fit yourself. PNG output can be changed to EPS or PDF ones.</p>
 <p>First part of script is an init function. It sets some global matplotlib parameters (so you do not need to edit your matplotlib rc file). You can edit parameters.</p>
 <p>Second part is preparation of data to be plotted. You can replace it completely with your own code. For example, to load data from file.</p>
 <p>Third part is creating plots. You can add only one plot at figure (to do so, remove second plot and <code>subplot</code> statements). You can add more plots at one figure (change <code>subplot</code> accordingly. Three numbers are rows of plots, columns of plots and the plot number. For 2x2 plots use <code>subplot(22x)</code> where <code>x</code> is plot number.)</p>

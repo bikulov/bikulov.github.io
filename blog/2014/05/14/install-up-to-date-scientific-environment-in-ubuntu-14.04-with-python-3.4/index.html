@@ -102,67 +102,61 @@
         <p><strong>Note</strong>: I&rsquo;ve created an <a href="/blog/2015/11/07/install-jupyter-notebook-and-scientific-environment-in-ubuntu-14-dot-04-with-python-3/">updated page</a> with most recent instructions for <a href="http://jupyter.org/" target="_blank">Jupyter Notebook</a>.</p>
 <p>I use IPython notebook for processing numerical experiments results and plotting. The default Python 3 in Ubuntu 14.04 is 3.4, so it is easier to install really up-to-date bunch of software.</p>
 <p>Full set of commands you need to install recent ipython notebook, numpy, scipy, etc in virtual environment almost without affecting shiny-new Ubuntu 14.04.</p>
-<pre><code class="language-bash">#!/usr/bin/env bash
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#!/usr/bin/env bash
+</span><span style="color:#75715e"></span>
 sudo su
-# install python development packages and g++
+<span style="color:#75715e"># install python development packages and g++</span>
 apt-get install -y python3-dev g++
 
-# install dependencies for scipy
+<span style="color:#75715e"># install dependencies for scipy</span>
 apt-get install -y libblas-dev liblapack-dev gfortran
 
-# install dependencies for matplotlib
+<span style="color:#75715e"># install dependencies for matplotlib</span>
 apt-get install -y libfreetype6-dev libpng-dev
 exit
 
-# ipython notebook has bug:
-# https://bugs.launchpad.net/ubuntu/+source/python3.4/+bug/1290847
+<span style="color:#75715e"># ipython notebook has bug:</span>
+<span style="color:#75715e"># https://bugs.launchpad.net/ubuntu/+source/python3.4/+bug/1290847</span>
 
 python3 -m venv --clear --without-pip venv/ipython-notebook
 
-# activate virtual env and install pip
+<span style="color:#75715e"># activate virtual env and install pip</span>
 source venv/ipython-notebook/bin/activate
 
 wget https://bootstrap.pypa.io/get-pip.py
 python get-pip.py
 rm get-pip.py
 
-# install scientific packages
+<span style="color:#75715e"># install scientific packages</span>
 pip install numpy sympy matplotlib scipy pandas
 
-# install ipython notebook and dependencies
+<span style="color:#75715e"># install ipython notebook and dependencies</span>
 pip install ipython pyzmq jinja2 pygments bokeh
 
-# install latest dev scikit-learn and build it
+<span style="color:#75715e"># install latest dev scikit-learn and build it</span>
 pip install cython https://github.com/scikit-learn/scikit-learn/archive/master.zip
 
-# install prettyplotlib by Olga Botvinnik for beauty plots
+<span style="color:#75715e"># install prettyplotlib by Olga Botvinnik for beauty plots</span>
 pip install brewer2mpl prettyplotlib
 
-# deactivate venv
+<span style="color:#75715e"># deactivate venv</span>
 deactivate
-</code></pre>
-<p>Now create profile for ipython notebook and change there some settings. Activate virtual environment:</p>
-<pre><code class="language-bash">bikulov@kbux:~$ source venv/ipython-notebook/bin/activate
-</code></pre>
-<p>Generate password and exit ipython:</p>
-<pre><code class="language-bash">ipython
-from IPython.lib import passwd; passwd()
-exit()
-</code></pre>
-<p>Copy password hash to clipboard. Create profile with desired name:</p>
-<pre><code class="language-bash">ipython profile create [name]
-</code></pre>
-<p>Open <code>~/.ipython/profile_[name]/ipython_notebook_config.py</code> and  change settings:</p>
-<pre><code class="language-python">c.NotebookApp.port = 8888
-c.NotebookApp.ip = '0.0.0.0'
-c.NotebookApp.open_browser = False
-c.NotebookApp.password = [password hash]
-</code></pre>
-<p>Start ipython notebook server:</p>
-<pre><code class="language-python">ipython notebook --profile=[name]
-</code></pre>
-<p>And open http://127.0.0.1:8888/ in your browser.</p>
+</code></pre></div><p>Now create profile for ipython notebook and change there some settings. Activate virtual environment:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">bikulov@kbux:~$ source venv/ipython-notebook/bin/activate
+</code></pre></div><p>Generate password and exit ipython:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ipython
+from IPython.lib import passwd; passwd<span style="color:#f92672">()</span>
+exit<span style="color:#f92672">()</span>
+</code></pre></div><p>Copy password hash to clipboard. Create profile with desired name:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ipython profile create <span style="color:#f92672">[</span>name<span style="color:#f92672">]</span>
+</code></pre></div><p>Open <code>~/.ipython/profile_[name]/ipython_notebook_config.py</code> and  change settings:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">c<span style="color:#f92672">.</span>NotebookApp<span style="color:#f92672">.</span>port <span style="color:#f92672">=</span> <span style="color:#ae81ff">8888</span>
+c<span style="color:#f92672">.</span>NotebookApp<span style="color:#f92672">.</span>ip <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;0.0.0.0&#39;</span>
+c<span style="color:#f92672">.</span>NotebookApp<span style="color:#f92672">.</span>open_browser <span style="color:#f92672">=</span> False
+c<span style="color:#f92672">.</span>NotebookApp<span style="color:#f92672">.</span>password <span style="color:#f92672">=</span> [password hash]
+</code></pre></div><p>Start ipython notebook server:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">ipython notebook <span style="color:#f92672">--</span>profile<span style="color:#f92672">=</span>[name]
+</code></pre></div><p>And open http://127.0.0.1:8888/ in your browser.</p>
     </div>
 </article>
 

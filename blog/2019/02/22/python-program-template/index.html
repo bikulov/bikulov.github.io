@@ -122,40 +122,35 @@ I&rsquo;ve prepared a simple python project with all these parts to use as templ
 </ul>
 <p>I&rsquo;ve prepared a simple python project with all these parts to use as template. It is available on <a href="https://github.com/bikulov/python_template/" target="_blank">github</a>.</p>
 <p>Command line arguments parsing is done in <code>parse_arguments</code>. The most interesting thing there is setting default fuctions for submodules (and <code>None</code> for main module). It looks like:</p>
-<pre><code class="language-python">first_module_parser.set_defaults(func=first_module)
-</code></pre>
-<p>and allows to address needed by chosen submodule function as simple as</p>
-<pre><code class="language-python">if args.func:
-    args.func(args)
-</code></pre>
-<p>Logging initialization is simple and has only two modes: verbose (with <code>DEBUG</code> level enabled) and non-verbose (only <code>INFO</code> messages):</p>
-<pre><code class="language-python">logging.basicConfig(
-    level=logging.DEBUG if args.verbose else logging.INFO,
-    format=&quot;[%(filename)s:%(lineno)d] %(levelname)-8s [%(asctime)s]  %(message)s&quot;,
-    datefmt=&quot;%Y-%m-%d %H:%M:%S&quot;,
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">first_module_parser<span style="color:#f92672">.</span>set_defaults(func<span style="color:#f92672">=</span>first_module)
+</code></pre></div><p>and allows to address needed by chosen submodule function as simple as</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">if</span> args<span style="color:#f92672">.</span>func:
+    args<span style="color:#f92672">.</span>func(args)
+</code></pre></div><p>Logging initialization is simple and has only two modes: verbose (with <code>DEBUG</code> level enabled) and non-verbose (only <code>INFO</code> messages):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">logging<span style="color:#f92672">.</span>basicConfig(
+    level<span style="color:#f92672">=</span>logging<span style="color:#f92672">.</span>DEBUG <span style="color:#66d9ef">if</span> args<span style="color:#f92672">.</span>verbose <span style="color:#66d9ef">else</span> logging<span style="color:#f92672">.</span>INFO,
+    format<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;[</span><span style="color:#e6db74">%(filename)s</span><span style="color:#e6db74">:</span><span style="color:#e6db74">%(lineno)d</span><span style="color:#e6db74">] </span><span style="color:#e6db74">%(levelname)-8s</span><span style="color:#e6db74"> [</span><span style="color:#e6db74">%(asctime)s</span><span style="color:#e6db74">]  </span><span style="color:#e6db74">%(message)s</span><span style="color:#e6db74">&#34;</span>,
+    datefmt<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;%Y-%m-</span><span style="color:#e6db74">%d</span><span style="color:#e6db74"> %H:%M:%S&#34;</span>,
 )
-</code></pre>
-<p>These is also a <code>Makefile</code> in the project with simple compilation from python code to binary (<code>python-&gt;cython-&gt;gcc-&gt;binary</code>):</p>
-<pre><code class="language-Makefile">cp python_template.py python_template.pyx
-cython *.pyx --embed
-gcc -Os -I /usr/include/python3.5m -o python_template python_template.c -lpython3.5m -lpthread -lm -lutil -ldl
-rm python_template.pyx python_template.c
-</code></pre>
-<p><code>pytest</code> test is located in the separate file <code>test_python_template.py</code> and may be invoced as:</p>
-<pre><code class="language-bash">make test
-</code></pre>
-<p>Sample output:</p>
-<pre><code class="language-bash">$ make test
+</code></pre></div><p>These is also a <code>Makefile</code> in the project with simple compilation from python code to binary (<code>python-&gt;cython-&gt;gcc-&gt;binary</code>):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Makefile" data-lang="Makefile"><span style="color:#960050;background-color:#1e0010">cp</span> <span style="color:#960050;background-color:#1e0010">python_template.py</span> <span style="color:#960050;background-color:#1e0010">python_template.pyx</span>
+<span style="color:#960050;background-color:#1e0010">cython</span> <span style="color:#960050;background-color:#1e0010">*.pyx</span> <span style="color:#960050;background-color:#1e0010">--embed</span>
+<span style="color:#960050;background-color:#1e0010">gcc</span> <span style="color:#960050;background-color:#1e0010">-Os</span> <span style="color:#960050;background-color:#1e0010">-I</span> <span style="color:#960050;background-color:#1e0010">/usr/include/python3.5m</span> <span style="color:#960050;background-color:#1e0010">-o</span> <span style="color:#960050;background-color:#1e0010">python_template</span> <span style="color:#960050;background-color:#1e0010">python_template.c</span> <span style="color:#960050;background-color:#1e0010">-lpython3.5m</span> <span style="color:#960050;background-color:#1e0010">-lpthread</span> <span style="color:#960050;background-color:#1e0010">-lm</span> <span style="color:#960050;background-color:#1e0010">-lutil</span> <span style="color:#960050;background-color:#1e0010">-ldl</span>
+<span style="color:#960050;background-color:#1e0010">rm</span> <span style="color:#960050;background-color:#1e0010">python_template.pyx</span> <span style="color:#960050;background-color:#1e0010">python_template.c</span>
+</code></pre></div><p><code>pytest</code> test is located in the separate file <code>test_python_template.py</code> and may be invoced as:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">make test
+</code></pre></div><p>Sample output:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ make test
 py.test test_python_template.py
-================================ test session starts =================================
+<span style="color:#f92672">================================</span> test session starts <span style="color:#f92672">=================================</span>
 platform linux2 -- Python 2.7.12, pytest-2.8.7, py-1.4.31, pluggy-0.3.1
 rootdir: /home/bikulov/Projects/python_template, inifile:
-collected 3 items
+collected <span style="color:#ae81ff">3</span> items
 
 test_python_template.py ...
 
-============================== 3 passed in 0.01 seconds ==============================
-</code></pre>
+<span style="color:#f92672">==============================</span> <span style="color:#ae81ff">3</span> passed in 0.01 seconds <span style="color:#f92672">==============================</span>
+</code></pre></div>
     </div>
 </article>
 

@@ -101,38 +101,38 @@
     <div class="post-content markdown-body">
         <p>The very simple and common test program is to read bunch of strings from input file (let it be <code>input.txt</code>), sort them and write down to another file (<code>output.txt</code>). There is an <a href="http://www.cyberforum.ru/post1673221.html" target="_blank">implementation</a> with small bug: it adds extra empty line. I&rsquo;ve modified original code a bit, so now it works correctly (note: if have last empty line in the input, you will have an empty line in the output). Fixed code is provided below.</p>
 <p><code>sortstrings.cpp</code>:</p>
-<pre><code class="language-cpp">#include &lt;fstream&gt;
-#include &lt;vector&gt;
-#include &lt;string&gt;
-#include &lt;iostream&gt;
-#include &lt;algorithm&gt;
-#include &lt;iterator&gt;
-
-int main(int argc, char **argv)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;fstream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;vector&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;algorithm&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iterator&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>argv)
 {
-    std::ifstream fin(&quot;input.txt&quot;);
-    std::vector&lt;std::string&gt; array;
+    std<span style="color:#f92672">::</span>ifstream fin(<span style="color:#e6db74">&#34;input.txt&#34;</span>);
+    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>std<span style="color:#f92672">::</span>string<span style="color:#f92672">&gt;</span> array;
 
-    while (true) {
-        std::string s;
+    <span style="color:#66d9ef">while</span> (true) {
+        std<span style="color:#f92672">::</span>string s;
         getline(fin, s);
-        if (fin.eof()) {
-            break;
+        <span style="color:#66d9ef">if</span> (fin.eof()) {
+            <span style="color:#66d9ef">break</span>;
         }
         array.push_back(s);
-        std::cout &lt;&lt; s &lt;&lt; std::endl;
+        std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> s <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
     }
     fin.close();
 
-    std::sort(array.begin(), array.end());
+    std<span style="color:#f92672">::</span>sort(array.begin(), array.end());
 
-    std::ofstream fout(&quot;output.txt&quot;);
-    std::copy(array.begin(), array.end(), std::ostream_iterator&lt;std::string&gt;(fout, &quot;\n&quot;));
+    std<span style="color:#f92672">::</span>ofstream fout(<span style="color:#e6db74">&#34;output.txt&#34;</span>);
+    std<span style="color:#f92672">::</span>copy(array.begin(), array.end(), std<span style="color:#f92672">::</span>ostream_iterator<span style="color:#f92672">&lt;</span>std<span style="color:#f92672">::</span>string<span style="color:#f92672">&gt;</span>(fout, <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>));
     fout.close();
 
-    return 0;
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 }
-</code></pre>
+</code></pre></div>
     </div>
 </article>
 

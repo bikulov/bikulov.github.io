@@ -31,11 +31,11 @@
 <meta name="twitter:title" content="AWK: a powerful tool for programmer" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://bikulov.org/blog/2012/10/25/awk-a-powerful-tool-for-programmer/" /><meta property="og:description" content="AWK is an acronym of first letters of its authors (Aho, Weinberger and Kernighan). It is a data-manipulating scripting language with huge possibilities.  There are several implementations of it: awk is a canonical one, nawk (new awk), mawk (default in Ubuntu 12.04), gawk is GNU awk. I recommend latter one, because it works correct with unicode symbols in example:
-$ echo юникод | gawk &quot;{res = toupper(\$1); print res;}&quot;
+$ echo юникод | gawk &#34;{res = toupper(\$1); print res;}&#34;
 ЮНИКОД
 " />
 <meta name="twitter:description" content="AWK is an acronym of first letters of its authors (Aho, Weinberger and Kernighan). It is a data-manipulating scripting language with huge possibilities.  There are several implementations of it: awk is a canonical one, nawk (new awk), mawk (default in Ubuntu 12.04), gawk is GNU awk. I recommend latter one, because it works correct with unicode symbols in example:
-$ echo юникод | gawk &quot;{res = toupper(\$1); print res;}&quot;
+$ echo юникод | gawk &#34;{res = toupper(\$1); print res;}&#34;
 ЮНИКОД
 " /><meta property="og:image" content="https://bikulov.org/img/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
@@ -106,44 +106,40 @@ $ echo юникод | gawk &quot;{res = toupper(\$1); print res;}&quot;
     
     <div class="post-content markdown-body">
         <p>AWK is an acronym of first letters of its authors (Aho, Weinberger and Kernighan). It is a data-manipulating scripting language with huge possibilities.  There are several implementations of it: awk is a canonical one, nawk (new awk), mawk (default in Ubuntu 12.04), gawk is GNU awk. I recommend latter one, because it works correct with unicode symbols in example:</p>
-<pre><code class="language-bash">$ echo юникод | gawk &quot;{res = toupper(\$1); print res;}&quot;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ echo юникод | gawk <span style="color:#e6db74">&#34;{res = toupper(\$1); print res;}&#34;</span>
 ЮНИКОД
-</code></pre>
-<h3 id="basic-usage">Basic usage</h3>
+</code></pre></div><h3 id="basic-usage">Basic usage</h3>
 <p>Most useful feature is writing script files to be loaded in awk later. One can execute script file by</p>
-<pre><code class="language-bash">gawk [options] -f script_file.awk input_file
-</code></pre>
-<p>If there is no input file awk will read standard input stream.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">gawk <span style="color:#f92672">[</span>options<span style="color:#f92672">]</span> -f script_file.awk input_file
+</code></pre></div><p>If there is no input file awk will read standard input stream.</p>
 <p>Let’s take a look at an example. It reads input stream, writes down first argument to history, increases counter by 1 and prints &ldquo;”. Code of script.awk:</p>
-<pre><code class="language-bash">#!/usr/bin/gawk -f
-# BEGIN block executes only once after running awk
-BEGIN {
-    print &quot;\nBegin printing args\n&quot;;
-    i = 0;
-}
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#!/usr/bin/gawk -f
+</span><span style="color:#75715e"></span><span style="color:#75715e"># BEGIN block executes only once after running awk</span>
+BEGIN <span style="color:#f92672">{</span>
+    print <span style="color:#e6db74">&#34;\nBegin printing args\n&#34;</span>;
+    i <span style="color:#f92672">=</span> 0;
+<span style="color:#f92672">}</span>
 
-# Main block executes for every argument
-{
+<span style="color:#75715e"># Main block executes for every argument</span>
+<span style="color:#f92672">{</span>
     i++;
-    history[i] = $1;
+    history<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> $1;
     print i, $1;
-    if ($1 == 0)
-        exit(0);
-}
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>$1 <span style="color:#f92672">==</span> 0<span style="color:#f92672">)</span>
+        exit<span style="color:#f92672">(</span>0<span style="color:#f92672">)</span>;
+<span style="color:#f92672">}</span>
 
-# END block executes only once at finishing awk
-END {
-    print &quot;\nArguments were: &quot;;
-    for (n=1; n&lt;=i; ++n)
-        print history[n],&quot; &quot;;
-    print &quot;\nEnd printing args\n&quot;
-}
-</code></pre>
-<p>Then, make script executable and run it:</p>
-<pre><code class="language-bash">$chmod +x ./script.awk
+<span style="color:#75715e"># END block executes only once at finishing awk</span>
+END <span style="color:#f92672">{</span>
+    print <span style="color:#e6db74">&#34;\nArguments were: &#34;</span>;
+    <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span>n<span style="color:#f92672">=</span>1; n&lt;<span style="color:#f92672">=</span>i; ++n<span style="color:#f92672">)</span>
+        print history<span style="color:#f92672">[</span>n<span style="color:#f92672">]</span>,<span style="color:#e6db74">&#34; &#34;</span>;
+    print <span style="color:#e6db74">&#34;\nEnd printing args\n&#34;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>Then, make script executable and run it:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$chmod +x ./script.awk
 $./script.awk
-</code></pre>
-<p>Output will be like (&ldquo;one&rdquo;-enter, “cat&rdquo;-enter, “dog&quot;-enter, “0&quot;-enter):</p>
+</code></pre></div><p>Output will be like (&ldquo;one&rdquo;-enter, “cat&rdquo;-enter, “dog&quot;-enter, “0&quot;-enter):</p>
 <pre><code>Begin printing args
 
 one
@@ -162,30 +158,27 @@ dog
 0
 
 End printing args
-</code></pre>
-<p>Awk can be launched with script inline:</p>
-<pre><code class="language-bash">gawk [options] ''script_text'' file(s)
-</code></pre>
-<p>Example counts “block&quot; words in code listed above:</p>
-<pre><code class="language-bash">awk &quot;BEGIN{blocks=0} /block/{blocks++} END{ print blocks}&quot; script.awk
-</code></pre>
-<p>Where <code>/regular expression/</code> controls whether block after it will be executed.</p>
+</code></pre><p>Awk can be launched with script inline:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">gawk <span style="color:#f92672">[</span>options<span style="color:#f92672">]</span> <span style="color:#e6db74">&#39;&#39;</span>script_text<span style="color:#e6db74">&#39;&#39;</span> file<span style="color:#f92672">(</span>s<span style="color:#f92672">)</span>
+</code></pre></div><p>Example counts “block&quot; words in code listed above:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">awk <span style="color:#e6db74">&#34;BEGIN{blocks=0} /block/{blocks++} END{ print blocks}&#34;</span> script.awk
+</code></pre></div><p>Where <code>/regular expression/</code> controls whether block after it will be executed.</p>
 <h3 id="user-defined-functions">User-defined functions</h3>
 <p>In awk user-defined functions can be added as follows:</p>
-<pre><code class="language-bash">#!/usr/bin/gawk -f
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#!/usr/bin/gawk -f
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e"># returns sum of numbers</span>
+<span style="color:#66d9ef">function</span> sum<span style="color:#f92672">(</span>a, b, c<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    res <span style="color:#f92672">=</span> a + b + c;
 
-# returns sum of numbers
-function sum(a, b, c) {
-    res = a + b + c;
+    <span style="color:#66d9ef">return</span> res;
+<span style="color:#f92672">}</span>
 
-    return res;
-}
-
-# main program, for testing
-{
-    print sum($1, $2, $3);
-}
-</code></pre>
+<span style="color:#75715e"># main program, for testing</span>
+<span style="color:#f92672">{</span>
+    print sum<span style="color:#f92672">(</span>$1, $2, $3<span style="color:#f92672">)</span>;
+<span style="color:#f92672">}</span>
+</code></pre></div>
     </div>
 </article>
 

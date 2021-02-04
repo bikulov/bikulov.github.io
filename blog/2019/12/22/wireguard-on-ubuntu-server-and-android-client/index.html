@@ -102,14 +102,12 @@
         <p><a href="https://www.wireguard.com/" target="_blank">WireGuard</a> is lightweight VPN with extremely simple configuration. All below was tested on Ubuntu 18.04 as server and Anroid 8.0.0 as client.</p>
 <h3 id="server">Server</h3>
 <p><a href="https://www.wireguard.com/install/" target="_blank">Installation</a> from official ppa:</p>
-<pre><code class="language-(bash)">apt-add-repository ppa:wireguard/wireguard
+<pre><code class="language-(bash)" data-lang="(bash)">apt-add-repository ppa:wireguard/wireguard
 apt update
 apt install wireguard
-</code></pre>
-<p>Client and server authenticate each other with asymmetric keys (like in SSH). Keys are generated with management utility <code>wg</code>:</p>
-<pre><code class="language-(bash)">wg genkey
-</code></pre>
-<p>This will be server auth key (client auth key can be generated with the same command or in mobile application, you will need public part in config).</p>
+</code></pre><p>Client and server authenticate each other with asymmetric keys (like in SSH). Keys are generated with management utility <code>wg</code>:</p>
+<pre><code class="language-(bash)" data-lang="(bash)">wg genkey
+</code></pre><p>This will be server auth key (client auth key can be generated with the same command or in mobile application, you will need public part in config).</p>
 <p>Add configuration file <code>sudo vim /etc/wireguard/wg0.conf</code>:</p>
 <pre><code>[Interface]
 Address = 10.9.0.1/24
@@ -121,23 +119,18 @@ PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING 
 [Peer]
 PublicKey = &lt;public key generated on client (android app)&gt;
 AllowedIPs = 10.9.0.2/32
-</code></pre>
-<p>And fix chmod:</p>
+</code></pre><p>And fix chmod:</p>
 <pre><code>chmod 600 /etc/wireguard/wg0.conf
-</code></pre>
-<p>This configuration includes routing internet requests from VPN clients. If you do not need it (communication between server and client is enough), omit <code>MASQUERADE</code> lines.</p>
+</code></pre><p>This configuration includes routing internet requests from VPN clients. If you do not need it (communication between server and client is enough), omit <code>MASQUERADE</code> lines.</p>
 <p>Enable systemd to autorun service:</p>
 <pre><code>sudo systemctl enable wg-quick@wg0.service
 sudo systemctl daemon-reload
-</code></pre>
-<p>Start it manually first time:</p>
+</code></pre><p>Start it manually first time:</p>
 <pre><code>wg-quick up wg0
-</code></pre>
-<p>Enable web forwarding if you have kept MASQUERADE lines in the config:</p>
+</code></pre><p>Enable web forwarding if you have kept MASQUERADE lines in the config:</p>
 <pre><code>vim /etc/sysctl.conf
 net.ipv4.ip_forward=1
-</code></pre>
-<h3 id="client">Client</h3>
+</code></pre><h3 id="client">Client</h3>
 <p>Install application from <a href="https://play.google.com/store/apps/details?id=com.wireguard.android" target="_blank">Play</a></p>
 <p>Create configuration from scratch.</p>
 <ul>

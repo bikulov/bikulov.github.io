@@ -104,61 +104,56 @@
 <p>Site will be available at url [sitename].</p>
 <h2 id="installing-packages">Installing packages</h2>
 <p>Install all necessary packages:</p>
-<pre><code class="language-bash">sudo apt-get install -y nginx php5-fpm php-apc php5-mysql mysql-client-core-5.5 mysql-server php5-gd
-</code></pre>
-<p>During the installation MySQL will ask you for root password. Rememer it, I will refer to it as [mysqlpwd] further.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get install -y nginx php5-fpm php-apc php5-mysql mysql-client-core-5.5 mysql-server php5-gd
+</code></pre></div><p>During the installation MySQL will ask you for root password. Rememer it, I will refer to it as [mysqlpwd] further.</p>
 <h2 id="set-up-mysql">Set up MySQL</h2>
 <p>Login to MySQL console:</p>
-<pre><code class="language-bash">mysql -u root --password=[mysqlpwd]
-</code></pre>
-<p>and issue the following commands (create user, create database, allow user to work with database):</p>
-<pre><code class="language-mysql">CREATE USER '[dbuser]'@'localhost' IDENTIFIED BY '[dbpwd]';
-CREATE DATABASE [dbname];
-GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, INDEX, ALTER, LOCK TABLES, CREATE TEMPORARY TABLES ON `[dbname]`.* TO '[dbuser]'@'localhost' IDENTIFIED BY '[dbpwd]';
-FLUSH PRIVILEGES;
-EXIT
-</code></pre>
-<h2 id="set-up-nginx">Set up nginx</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mysql -u root --password<span style="color:#f92672">=[</span>mysqlpwd<span style="color:#f92672">]</span>
+</code></pre></div><p>and issue the following commands (create user, create database, allow user to work with database):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-mysql" data-lang="mysql"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">USER</span> <span style="color:#e6db74">&#39;[dbuser]&#39;</span><span style="color:#f92672">@</span><span style="color:#e6db74">&#39;localhost&#39;</span> <span style="color:#66d9ef">IDENTIFIED</span> <span style="color:#66d9ef">BY</span> <span style="color:#e6db74">&#39;[dbpwd]&#39;</span>;
+<span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">DATABASE</span> [dbname];
+<span style="color:#66d9ef">GRANT</span> <span style="color:#66d9ef">SELECT</span>, <span style="color:#66d9ef">INSERT</span>, <span style="color:#66d9ef">UPDATE</span>, <span style="color:#66d9ef">DELETE</span>, <span style="color:#66d9ef">CREATE</span>, <span style="color:#66d9ef">DROP</span>, <span style="color:#66d9ef">INDEX</span>, <span style="color:#66d9ef">ALTER</span>, <span style="color:#66d9ef">LOCK</span> <span style="color:#66d9ef">TABLES</span>, <span style="color:#66d9ef">CREATE</span> TEMPORARY <span style="color:#66d9ef">TABLES</span> <span style="color:#66d9ef">ON</span> <span style="color:#f92672">`</span>[dbname]<span style="color:#f92672">`</span>.<span style="color:#f92672">*</span> <span style="color:#66d9ef">TO</span> <span style="color:#e6db74">&#39;[dbuser]&#39;</span><span style="color:#f92672">@</span><span style="color:#e6db74">&#39;localhost&#39;</span> <span style="color:#66d9ef">IDENTIFIED</span> <span style="color:#66d9ef">BY</span> <span style="color:#e6db74">&#39;[dbpwd]&#39;</span>;
+<span style="color:#66d9ef">FLUSH</span> <span style="color:#66d9ef">PRIVILEGES</span>;
+<span style="color:#66d9ef">EXIT</span>
+</code></pre></div><h2 id="set-up-nginx">Set up nginx</h2>
 <p>Here we will make a configurational file for nginx.</p>
 <p>As create file in <code>sites-available</code> directory with content:</p>
-<pre><code class="language-ini">server {
-  listen 80;
-  server_name [sitename];
-  access_log /var/log/[sitename].access.log;
-  error_log /var/log/[sitename].error.log;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#a6e22e">server {</span>
+  <span style="color:#a6e22e">listen 80;</span>
+  <span style="color:#a6e22e">server_name [sitename];</span>
+  <span style="color:#a6e22e">access_log /var/log/[sitename].access.log;</span>
+  <span style="color:#a6e22e">error_log /var/log/[sitename].error.log;</span>
 
-  root /srv/[sitename];
-  index index.php;
+  <span style="color:#a6e22e">root /srv/[sitename];</span>
+  <span style="color:#a6e22e">index index.php;</span>
 
-  location / {
-    try_files $uri $uri/ /index.php;
-  }
+  <span style="color:#a6e22e">location / {</span>
+    <span style="color:#a6e22e">try_files $uri $uri/ /index.php;</span>
+  <span style="color:#a6e22e">}</span>
 
-  location = /favicon.ico {
-    empty_gif;
-  }
+  <span style="color:#a6e22e">location</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">/favicon.ico {
+</span><span style="color:#e6db74">    empty_gif;
+</span><span style="color:#e6db74">  }</span>
 
-  location ~ \.php$ {
-    include /etc/nginx/fastcgi_params;
-    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-    fastcgi_pass 127.0.0.1:9000;
-  }
-}
-</code></pre>
-<p>and add link for nginx to enable site:</p>
-<pre><code class="language-bash">sudo ln /etc/nginx/sites-available/[sitename] /etc/nginx/sites-enabled/[sitename]
+  <span style="color:#a6e22e">location ~ \.php$ {</span>
+    <span style="color:#a6e22e">include /etc/nginx/fastcgi_params;</span>
+    <span style="color:#a6e22e">fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;</span>
+    <span style="color:#a6e22e">fastcgi_pass 127.0.0.1:9000;</span>
+  <span style="color:#a6e22e">}</span>
+<span style="color:#a6e22e">}</span>
+</code></pre></div><p>and add link for nginx to enable site:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo ln /etc/nginx/sites-available/<span style="color:#f92672">[</span>sitename<span style="color:#f92672">]</span> /etc/nginx/sites-enabled/<span style="color:#f92672">[</span>sitename<span style="color:#f92672">]</span>
 sudo service nginx restart
-</code></pre>
-<h2 id="set-up-drupal">Set up Drupal</h2>
+</code></pre></div><h2 id="set-up-drupal">Set up Drupal</h2>
 <p>We will store Drupal in  folder in <code>/srv</code>. Issue following commands in bash:</p>
-<pre><code class="language-bash">sudo -s
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo -s
 cd /srv
 wget http://ftp.drupal.org/files/projects/drupal-7.22.tar.gz
 tar xvf drupal-7.22.tar.gz
-mv drupal-7.22 [sitename]
-chown -R www-data:www-data [sitename]
+mv drupal-7.22 <span style="color:#f92672">[</span>sitename<span style="color:#f92672">]</span>
+chown -R www-data:www-data <span style="color:#f92672">[</span>sitename<span style="color:#f92672">]</span>
 exit
-</code></pre>
+</code></pre></div>
     </div>
 </article>
 

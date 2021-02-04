@@ -102,37 +102,32 @@
         <p>You can record your screen using only command line in Linux. Workflow will look like: <code>Create a bunch of screenshots -&gt; Crop screenshots -&gt; Make a movie from images</code>.</p>
 <h2 id="making-screenshots">Making screenshots</h2>
 <p>scrot is command line screen capturing tool. It’s basic usage is very simple:</p>
-<pre><code class="language-bash">$ scrot
-</code></pre>
-<p>or</p>
-<pre><code class="language-bash">$ scrot &lt;filename&gt;.png
-</code></pre>
-<p>if you want to specify output filename.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ scrot
+</code></pre></div><p>or</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ scrot &lt;filename&gt;.png
+</code></pre></div><p>if you want to specify output filename.</p>
 <p>Let’s write script, which captures screen every 0.5 seconds and write result to screenshots/00000N.png (filename with leading zeros):</p>
-<pre><code class="language-bash">#!/bin/bash
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#!/bin/bash
+</span><span style="color:#75715e"></span>
+t<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
 
-t=0
-
-while true; do
-    scrot screenshots/`printf &quot;%06g\n&quot; $t`.png
+<span style="color:#66d9ef">while</span> true; <span style="color:#66d9ef">do</span>
+    scrot screenshots/<span style="color:#e6db74">`</span>printf <span style="color:#e6db74">&#34;%06g\n&#34;</span> $t<span style="color:#e6db74">`</span>.png
     sleep 0.5
-    t=`expr $t + 1`
-done
+    t<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>expr $t + 1<span style="color:#e6db74">`</span>
+<span style="color:#66d9ef">done</span>
 
-exit 0
-</code></pre>
-<h2 id="cropping-screenshots">Cropping screenshots</h2>
+exit <span style="color:#ae81ff">0</span>
+</code></pre></div><h2 id="cropping-screenshots">Cropping screenshots</h2>
 <p>We will use magrify utility from ImageMagick package:</p>
-<pre><code class="language-bash">$ for file in $(ls); do mogrify -crop &lt;width&gt;x&lt;height&gt;+&lt;x_shift&gt;+&lt;y_shift&gt; ${file}; done
-</code></pre>
-<p>You can determine width, height, x_shift, y_shift values by adjusting rectangular selection tool in GIMP or in any image viewer.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ <span style="color:#66d9ef">for</span> file in <span style="color:#66d9ef">$(</span>ls<span style="color:#66d9ef">)</span>; <span style="color:#66d9ef">do</span> mogrify -crop &lt;width&gt;x&lt;height&gt;+&lt;x_shift&gt;+&lt;y_shift&gt; <span style="color:#e6db74">${</span>file<span style="color:#e6db74">}</span>; <span style="color:#66d9ef">done</span>
+</code></pre></div><p>You can determine width, height, x_shift, y_shift values by adjusting rectangular selection tool in GIMP or in any image viewer.</p>
 <h2 id="creating-movie-from-images">Creating movie from images</h2>
 <p>We will use ffmpeg for it. Here is command:</p>
-<pre><code class="language-bash">ffmpeg -qscale 1 -r 20 -b 9600 -i %06d.png &lt;output_file&gt;.mp4
-</code></pre>
-<p><code>ffmpeg</code> is no longer supported in Ubuntu 14.04, you may use <code>avconv</code>:</p>
-<pre><code class="language-bash">avconv -qscale 1 -r 20 -b 9600 -i %06d.png &lt;output_file&gt;.mp4
-</code></pre>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ffmpeg -qscale <span style="color:#ae81ff">1</span> -r <span style="color:#ae81ff">20</span> -b <span style="color:#ae81ff">9600</span> -i %06d.png &lt;output_file&gt;.mp4
+</code></pre></div><p><code>ffmpeg</code> is no longer supported in Ubuntu 14.04, you may use <code>avconv</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">avconv -qscale <span style="color:#ae81ff">1</span> -r <span style="color:#ae81ff">20</span> -b <span style="color:#ae81ff">9600</span> -i %06d.png &lt;output_file&gt;.mp4
+</code></pre></div>
     </div>
 </article>
 

@@ -101,29 +101,27 @@
     <div class="post-content markdown-body">
         <p>Console utilities in Linuxes are cool: <a href="https://mcabber.com/" target="_blank">mcabber</a> for jabber, <a href="http://www.mutt.org/" target="_blank">mutt</a> for mail, <a href="http://moc.daper.net/" target="_blank">mocp</a> for music, <a href="http://www.vim.org/" target="_blank">vim</a> to rule them all! This note is about scaning from the console (I assume your scanner is already set-up). Aim is to scan document with good quality into pdf with reasonable size.</p>
 <p>Scanning is done by <a href="http://www.sane-project.org/man/scanimage.1.html" target="_blank">scanimage</a> utility:</p>
-<pre><code class="language-bash">scanimage --resolution 300 --mode Color --format tiff &gt; document.tiff
-</code></pre>
-<p>If there is more than one scanner in your system, list them all by <code>scanimage -L</code> commant and use specify name with <code>--device-name</code> argument.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">scanimage --resolution <span style="color:#ae81ff">300</span> --mode Color --format tiff &gt; document.tiff
+</code></pre></div><p>If there is more than one scanner in your system, list them all by <code>scanimage -L</code> commant and use specify name with <code>--device-name</code> argument.</p>
 <p>Next step is to convert tiff into pdf image. It can be done with <a href="http://www.imagemagick.org/script/index.php" target="_blank">imagemagick</a>:</p>
-<pre><code class="language-bash">convert document.tiff document-big.pdf
-</code></pre>
-<p>But resulting pdf is too big and must be reduced. I&rsquo;ve found <a href="http://www.alfredklomp.com/programming/shrinkpdf/" target="_blank">shrinkpdf</a> bash script very helpful for this purpose with correction: IMHO 72 DPI resolution is too small, so I&rsquo;ve changed it to 300 dpi. Essential part of that script is <a href="http://www.ghostscript.com/" target="_blank">ghostscript</a> call:</p>
-<pre><code class="language-bash">gs -q -dNOPAUSE -dBATCH -dSAFER        \
-   -sDEVICE=pdfwrite                   \
-   -dCompatibilityLevel=1.3            \
-   -dPDFSETTINGS=/screen               \
-   -dEmbedAllFonts=true                \
-   -dSubsetFonts=true                  \
-   -dColorImageDownsampleType=/Bicubic \
-   -dColorImageResolution=300          \
-   -dGrayImageDownsampleType=/Bicubic  \
-   -dGrayImageResolution=300           \
-   -dMonoImageDownsampleType=/Bicubic  \
-   -dMonoImageResolution=300           \
-   -sOutputFile=document.pdf           \
-   document-big.pdf
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">convert document.tiff document-big.pdf
+</code></pre></div><p>But resulting pdf is too big and must be reduced. I&rsquo;ve found <a href="http://www.alfredklomp.com/programming/shrinkpdf/" target="_blank">shrinkpdf</a> bash script very helpful for this purpose with correction: IMHO 72 DPI resolution is too small, so I&rsquo;ve changed it to 300 dpi. Essential part of that script is <a href="http://www.ghostscript.com/" target="_blank">ghostscript</a> call:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">gs -q -dNOPAUSE -dBATCH -dSAFER        <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>   -sDEVICE<span style="color:#f92672">=</span>pdfwrite                   <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>   -dCompatibilityLevel<span style="color:#f92672">=</span>1.3            <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>   -dPDFSETTINGS<span style="color:#f92672">=</span>/screen               <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>   -dEmbedAllFonts<span style="color:#f92672">=</span>true                <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>   -dSubsetFonts<span style="color:#f92672">=</span>true                  <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>   -dColorImageDownsampleType<span style="color:#f92672">=</span>/Bicubic <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>   -dColorImageResolution<span style="color:#f92672">=</span><span style="color:#ae81ff">300</span>          <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>   -dGrayImageDownsampleType<span style="color:#f92672">=</span>/Bicubic  <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>   -dGrayImageResolution<span style="color:#f92672">=</span><span style="color:#ae81ff">300</span>           <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>   -dMonoImageDownsampleType<span style="color:#f92672">=</span>/Bicubic  <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>   -dMonoImageResolution<span style="color:#f92672">=</span><span style="color:#ae81ff">300</span>           <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>   -sOutputFile<span style="color:#f92672">=</span>document.pdf           <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>   document-big.pdf
 
-</code></pre>
+</code></pre></div>
     </div>
 </article>
 

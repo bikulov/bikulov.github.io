@@ -127,57 +127,45 @@ I’ll save only backups for last five days." /><meta property="og:image" conten
 <h2 id="archiving">Archiving</h2>
 <p>There are many different backup tools, see wiki list. I’ve chosen DAR.</p>
 <p>One can install it in Ubuntu 12.04 by typing</p>
-<pre><code class="language-bash"># apt-get install dar
-</code></pre>
-<p>It is a console utility and it can be confusing for beginner. Here is great short how-to with explanations.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># apt-get install dar</span>
+</code></pre></div><p>It is a console utility and it can be confusing for beginner. Here is great short how-to with explanations.</p>
 <p>I will perform full backups every day. For incremental ones read manual.</p>
 <p>I need to backup <code>/srv</code> folder, so my command is:</p>
-<pre><code class="language-bash">dar -m 256 -z -s 600M -D -R /srv -c `date -I`_data -Z &quot;*.gz&quot; -Z &quot;*.bz2&quot; -Z &quot;*.zip&quot; -Z &quot;*.png&quot;
-</code></pre>
-<p>It creates file currentdate_data.X.dar, for example 2012-08-30_data.1.dar, with a backup. If archive is bigger than 600M (-s 600M), it splits in two slices. <code>X</code> in the filename represents slice number. For the full description read how-to.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">dar -m <span style="color:#ae81ff">256</span> -z -s 600M -D -R /srv -c <span style="color:#e6db74">`</span>date -I<span style="color:#e6db74">`</span>_data -Z <span style="color:#e6db74">&#34;*.gz&#34;</span> -Z <span style="color:#e6db74">&#34;*.bz2&#34;</span> -Z <span style="color:#e6db74">&#34;*.zip&#34;</span> -Z <span style="color:#e6db74">&#34;*.png&#34;</span>
+</code></pre></div><p>It creates file currentdate_data.X.dar, for example 2012-08-30_data.1.dar, with a backup. If archive is bigger than 600M (-s 600M), it splits in two slices. <code>X</code> in the filename represents slice number. For the full description read how-to.</p>
 <h2 id="dumping-mysql">Dumping MySQL</h2>
 <p>Dumping MySQL is performed by mysqldump utility. You can list your databases in MySQL by entering into console with</p>
-<pre><code class="language-mysql">mysql -uroot -ppassword
-</code></pre>
-<p>and type there</p>
-<pre><code class="language-mysql">SHOW DATABASES;
-</code></pre>
-<p>I have drupal database I want to backup. So, I type:</p>
-<pre><code class="language-bash">mysqldump -u root -ppassword drupal &gt; `date -I`_drupal.mysqldump
-</code></pre>
-<p>It creates file with all necessary stuff to create the same table from nothing.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-mysql" data-lang="mysql">mysql <span style="color:#f92672">-</span>uroot <span style="color:#f92672">-</span>ppassword
+</code></pre></div><p>and type there</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-mysql" data-lang="mysql"><span style="color:#66d9ef">SHOW</span> <span style="color:#66d9ef">DATABASES</span>;
+</code></pre></div><p>I have drupal database I want to backup. So, I type:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mysqldump -u root -ppassword drupal &gt; <span style="color:#e6db74">`</span>date -I<span style="color:#e6db74">`</span>_drupal.mysqldump
+</code></pre></div><p>It creates file with all necessary stuff to create the same table from nothing.</p>
 <h2 id="uploading">Uploading</h2>
 <p>Yandex.Disk can be accessed by WebDAV. Install vebdavfs2:</p>
-<pre><code class="language-bash"># apt-get install davfs2
-</code></pre>
-<p>Then edit /etc/davfs2/secrets. Just add line with address, login and password:</p>
-<pre><code class="language-bash">https://webdav.yandex.ru username@yandex.ru &quot;userpass&quot;
-</code></pre>
-<p>Now you cat mount yandex.disk as an ordinary drive to folder /mount/yandex:</p>
-<pre><code class="language-bash">mount -t davfs https://webdav.yandex.ru /media/yandex
-</code></pre>
-<p>Now it is possible to store backups in cloud.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># apt-get install davfs2</span>
+</code></pre></div><p>Then edit /etc/davfs2/secrets. Just add line with address, login and password:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">https://webdav.yandex.ru username@yandex.ru <span style="color:#e6db74">&#34;userpass&#34;</span>
+</code></pre></div><p>Now you cat mount yandex.disk as an ordinary drive to folder /mount/yandex:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mount -t davfs https://webdav.yandex.ru /media/yandex
+</code></pre></div><p>Now it is possible to store backups in cloud.</p>
 <p>Old files can be removed by:</p>
-<pre><code class="language-bash">rm `ls *.dar | head -n -5`
-</code></pre>
-<p>It leaves only last five backups.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">rm <span style="color:#e6db74">`</span>ls *.dar | head -n -5<span style="color:#e6db74">`</span>
+</code></pre></div><p>It leaves only last five backups.</p>
 <h2 id="adding-to-cron">Adding to cron</h2>
 <p>All commands from above in one script backup.sh:</p>
-<pre><code class="language-bash">#!/bin/bash
-mount -t davfs https://webdav.yandex.ru /media/yandex
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#!/bin/bash
+</span><span style="color:#75715e"></span>mount -t davfs https://webdav.yandex.ru /media/yandex
 cd /media/yandex/cudacer
-dar -m 256 -z -s 600M -D -R /srv -c `date -I`_data -Z &quot;*.gz&quot; -Z &quot;*.bz2&quot; -Z &quot;*.zip&quot; -Z &quot;*.png&quot;
-rm `ls *.dar | head -n -5`
-mysqldump -u root -p&lt;password&gt; &lt;dbname&gt;l &gt; `date -I`_drupal.mysqldump
-rm `ls *.mysqldump | head -n -5`
-</code></pre>
-<p>Run it every day at 1am. Open cron tasks</p>
-<pre><code class="language-bash"># crontab -e
-</code></pre>
-<p>and paste there line:</p>
-<pre><code class="language-bash"> 0 1 * * * /home/kenarius/backup.sh
-</code></pre>
-<p>Now you have backups.</p>
+dar -m <span style="color:#ae81ff">256</span> -z -s 600M -D -R /srv -c <span style="color:#e6db74">`</span>date -I<span style="color:#e6db74">`</span>_data -Z <span style="color:#e6db74">&#34;*.gz&#34;</span> -Z <span style="color:#e6db74">&#34;*.bz2&#34;</span> -Z <span style="color:#e6db74">&#34;*.zip&#34;</span> -Z <span style="color:#e6db74">&#34;*.png&#34;</span>
+rm <span style="color:#e6db74">`</span>ls *.dar | head -n -5<span style="color:#e6db74">`</span>
+mysqldump -u root -p&lt;password&gt; &lt;dbname&gt;l &gt; <span style="color:#e6db74">`</span>date -I<span style="color:#e6db74">`</span>_drupal.mysqldump
+rm <span style="color:#e6db74">`</span>ls *.mysqldump | head -n -5<span style="color:#e6db74">`</span>
+</code></pre></div><p>Run it every day at 1am. Open cron tasks</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># crontab -e</span>
+</code></pre></div><p>and paste there line:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> * * * /home/kenarius/backup.sh
+</code></pre></div><p>Now you have backups.</p>
     </div>
 </article>
 

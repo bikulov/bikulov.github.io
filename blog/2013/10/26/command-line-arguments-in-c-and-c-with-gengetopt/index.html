@@ -101,121 +101,108 @@
     <div class="post-content markdown-body">
         <p><a href="http://www.gnu.org/software/gengetopt/gengetopt.html" target="_blank">Gengetopt</a> is a tool for parsing command line arguments in C and C++ applications. It generates <code>cmdline.c</code> and <code>cmdline.h</code> files in pure C, which contain parser, helper functions, error handling and structure to store argument values. Arguments to be included in auto-generated file are defined in config. I usually gengetopt config file as <code>cmdline.ggo</code>. In this note I provide an example of gengetopt config file and arguments usage in code.</p>
 <p>Header of config file contains information about version, app name and description. You can use the following template:</p>
-<pre><code class="language-ini">version &quot;13.10.25&quot;
-package &quot;app&quot;
-purpose &quot;Sample application description.
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#a6e22e">version &#34;13.10.25&#34;</span>
+<span style="color:#a6e22e">package &#34;app&#34;</span>
+<span style="color:#a6e22e">purpose &#34;Sample application description.</span>
 
-By John Doe &lt;sample@example.com&gt;&quot;
-</code></pre>
-<p>Arguments are listed after header in the same config file. Even if no options given below the header, two default ones are defined: <code>-h</code> shows help message and <code>-V</code> shows app version string. You can specify long option name (in call it can be used as <code>--long-option</code>), short option name, option type and whether option is required.</p>
+<span style="color:#a6e22e">By John Doe &lt;sample@example.com&gt;&#34;</span>
+</code></pre></div><p>Arguments are listed after header in the same config file. Even if no options given below the header, two default ones are defined: <code>-h</code> shows help message and <code>-V</code> shows app version string. You can specify long option name (in call it can be used as <code>--long-option</code>), short option name, option type and whether option is required.</p>
 <p>String option with long name <code>filename</code> and short name <code>f</code>, description <code>String argument</code> and it is required. Option can be called as <code>-f myfile</code> or <code>--filename myfile</code>.</p>
-<pre><code class="language-ini">option &quot;filename&quot; f &quot;String argument&quot; string required
-</code></pre>
-<p>It is possible to define options that takes several values, separated by comma. The following opition takes exactly 3 arguments with type <code>int</code>:</p>
-<pre><code class="language-ini">option &quot;size&quot; s &quot;Optional argument, takes exactly 3 int values separated by commas&quot; multiple(3) optional int
-</code></pre>
-<p>Option can take «one (two, etc) or more» arguments:</p>
-<pre><code class="language-ini">option &quot;array&quot; a &quot;Required argument, takes 1 or more args&quot; multiple(1-) required int
-</code></pre>
-<p>It is possible not to specify short name:</p>
-<pre><code class="language-ini">option &quot;long-option&quot; - &quot;Option without short version&quot; optional float
-</code></pre>
-<p>You can provide default value for an option. The default value is used if option is not used in app call.</p>
-<pre><code class="language-ini">option &quot;default-value&quot; d &quot;Argument with default value&quot; optional float default=&quot;0.003&quot;
-</code></pre>
-<p>There is flags. If flag is provided in app call, it&rsquo;s value triggered to opposite:</p>
-<pre><code class="language-ini">option &quot;console&quot; c &quot;Flag with default 'off'&quot; flag off
-</code></pre>
-<p>The whole config file:</p>
-<pre><code class="language-ini">version &quot;13.10.25&quot;
-package &quot;app&quot;
-purpose &quot;Sample application description.
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#a6e22e">option &#34;filename&#34; f &#34;String argument&#34; string required</span>
+</code></pre></div><p>It is possible to define options that takes several values, separated by comma. The following opition takes exactly 3 arguments with type <code>int</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#a6e22e">option &#34;size&#34; s &#34;Optional argument, takes exactly 3 int values separated by commas&#34; multiple(3) optional int</span>
+</code></pre></div><p>Option can take «one (two, etc) or more» arguments:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#a6e22e">option &#34;array&#34; a &#34;Required argument, takes 1 or more args&#34; multiple(1-) required int</span>
+</code></pre></div><p>It is possible not to specify short name:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#a6e22e">option &#34;long-option&#34; - &#34;Option without short version&#34; optional float</span>
+</code></pre></div><p>You can provide default value for an option. The default value is used if option is not used in app call.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#a6e22e">option &#34;default-value&#34; d &#34;Argument with default value&#34; optional float default</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;0.003&#34;</span>
+</code></pre></div><p>There is flags. If flag is provided in app call, it&rsquo;s value triggered to opposite:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#a6e22e">option &#34;console&#34; c &#34;Flag with default &#39;off&#39;&#34; flag off</span>
+</code></pre></div><p>The whole config file:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#a6e22e">version &#34;13.10.25&#34;</span>
+<span style="color:#a6e22e">package &#34;app&#34;</span>
+<span style="color:#a6e22e">purpose &#34;Sample application description.</span>
 
-By John Doe &lt;sample@example.com&gt;&quot;
+<span style="color:#a6e22e">By John Doe &lt;sample@example.com&gt;&#34;</span>
 
-# Options
-option &quot;filename&quot; f &quot;String argument&quot; string required
-option &quot;size&quot; s &quot;Optional argument, takes exactly 3 int values separated by commas&quot; multiple(3) optional int
-option &quot;array&quot; a &quot;Required argument, takes 1 or more args&quot; multiple(1-) required int
-option &quot;long-option&quot; - &quot;Option without short version&quot; optional float
-option &quot;default-value&quot; d &quot;Argument with default value&quot; optional float default=&quot;0.003&quot;
-option &quot;console&quot; c &quot;Flag with default 'off'&quot; flag off
-</code></pre>
-<p>Arguments are used in source code via gengeopt_args_info structure defined in cmdline.h. Example:</p>
-<pre><code class="language-cpp">#include &lt;iostream&gt;
-#include &lt;cstdlib&gt;
-
-#include &quot;cmdline.h&quot;
-
-int main(int argc, char *argv[])
+<span style="color:#75715e"># Options</span>
+<span style="color:#a6e22e">option &#34;filename&#34; f &#34;String argument&#34; string required</span>
+<span style="color:#a6e22e">option &#34;size&#34; s &#34;Optional argument, takes exactly 3 int values separated by commas&#34; multiple(3) optional int</span>
+<span style="color:#a6e22e">option &#34;array&#34; a &#34;Required argument, takes 1 or more args&#34; multiple(1-) required int</span>
+<span style="color:#a6e22e">option &#34;long-option&#34; - &#34;Option without short version&#34; optional float</span>
+<span style="color:#a6e22e">option &#34;default-value&#34; d &#34;Argument with default value&#34; optional float default</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;0.003&#34;</span>
+<span style="color:#a6e22e">option &#34;console&#34; c &#34;Flag with default &#39;off&#39;&#34; flag off</span>
+</code></pre></div><p>Arguments are used in source code via gengeopt_args_info structure defined in cmdline.h. Example:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;cstdlib&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;cmdline.h&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>argv[])
 {
     gengetopt_args_info ai;
-    if (cmdline_parser (argc, argv, &amp;ai) != 0) {
-        exit(1);
+    <span style="color:#66d9ef">if</span> (cmdline_parser (argc, argv, <span style="color:#f92672">&amp;</span>ai) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>) {
+        exit(<span style="color:#ae81ff">1</span>);
     }
 
-    std::cout &lt;&lt; ai.filename_arg &lt;&lt; std::endl;
+    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> ai.filename_arg <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
 
-    if (ai.size_given) {
-        std::cout &lt;&lt; ai.size_arg[0] &lt;&lt; &quot; &quot;
-                  &lt;&lt; ai.size_arg[1] &lt;&lt; &quot; &quot;
-                  &lt;&lt; ai.size_arg[2] &lt;&lt; std::endl;
+    <span style="color:#66d9ef">if</span> (ai.size_given) {
+        std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> ai.size_arg[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; &#34;</span>
+                  <span style="color:#f92672">&lt;&lt;</span> ai.size_arg[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; &#34;</span>
+                  <span style="color:#f92672">&lt;&lt;</span> ai.size_arg[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
     }
 
-    for (int i=0; i&lt;ai.array_given; ++i) {
-        std::cout &lt;&lt; ai.array_arg[i] &lt;&lt; &quot; &quot;;
+    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>; i<span style="color:#f92672">&lt;</span>ai.array_given; <span style="color:#f92672">++</span>i) {
+        std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> ai.array_arg[i] <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; &#34;</span>;
     }
-    std::cout &lt;&lt; std::endl;
+    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
 
-    if (ai.long_option_given) {
-        std::cout &lt;&lt; ai.long_option_arg &lt;&lt; std::endl;
+    <span style="color:#66d9ef">if</span> (ai.long_option_given) {
+        std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> ai.long_option_arg <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
     }
 
-    std::cout &lt;&lt; ai.default_value_arg &lt;&lt; std::endl;
-    std::cout &lt;&lt; ai.console_flag &lt;&lt; std::endl;
+    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> ai.default_value_arg <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> ai.console_flag <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
 
-    return 0;
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 }
-</code></pre>
-<p>And Makefile to make them all (you need gengetopt to be installed):</p>
-<pre><code class="language-bash">APPNAME = app
-OBJECTS = main.o cmdline.o
+</code></pre></div><p>And Makefile to make them all (you need gengetopt to be installed):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">APPNAME <span style="color:#f92672">=</span> app
+OBJECTS <span style="color:#f92672">=</span> main.o cmdline.o
 
-CC = gcc
-CXX = g++
+CC <span style="color:#f92672">=</span> gcc
+CXX <span style="color:#f92672">=</span> g++
 
-all: $(OBJECTS)
-	$(CXX) $(OBJECTS) -o $(APPNAME)
+all: <span style="color:#66d9ef">$(</span>OBJECTS<span style="color:#66d9ef">)</span>
+	<span style="color:#66d9ef">$(</span>CXX<span style="color:#66d9ef">)</span> <span style="color:#66d9ef">$(</span>OBJECTS<span style="color:#66d9ef">)</span> -o <span style="color:#66d9ef">$(</span>APPNAME<span style="color:#66d9ef">)</span>
 cmdline.o: cmdline.c
-	$(CC) -c $&lt; -o $@
+	<span style="color:#66d9ef">$(</span>CC<span style="color:#66d9ef">)</span> -c $&lt; -o $@
 main.o: main.cpp
-	$(CXX) -c $&lt; -o $@
+	<span style="color:#66d9ef">$(</span>CXX<span style="color:#66d9ef">)</span> -c $&lt; -o $@
 cmdline.c: cmdline.ggo
-	gengetopt --input=cmdline.ggo --include-getopt
+	gengetopt --input<span style="color:#f92672">=</span>cmdline.ggo --include-getopt
 clean:
-	rm -rf *.o $(APPNAME)
-</code></pre>
-<p>Place <code>main.cpp</code>, <code>cmdline.ggo</code> and <code>Makefile</code> in one folder and build this example.</p>
+	rm -rf *.o <span style="color:#66d9ef">$(</span>APPNAME<span style="color:#66d9ef">)</span>
+</code></pre></div><p>Place <code>main.cpp</code>, <code>cmdline.ggo</code> and <code>Makefile</code> in one folder and build this example.</p>
 <p>Output samples:</p>
-<pre><code class="language-bash">$ ./app -a 1,2,3,4,5,6 -f test -s 16,32,64 --long-option 0.4 -d 0.8
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ./app -a 1,2,3,4,5,6 -f test -s 16,32,64 --long-option 0.4 -d 0.8
 test
-16 32 64
-1 2 3 4 5 6
+<span style="color:#ae81ff">16</span> <span style="color:#ae81ff">32</span> <span style="color:#ae81ff">64</span>
+<span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">4</span> <span style="color:#ae81ff">5</span> <span style="color:#ae81ff">6</span>
 0.4
 0.8
-0
-</code></pre>
-<pre><code class="language-bash">$ ./app -a 1 -f test -c
+<span style="color:#ae81ff">0</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ./app -a <span style="color:#ae81ff">1</span> -f test -c
 test
-1
+<span style="color:#ae81ff">1</span>
 0.003
-1
-</code></pre>
-<pre><code class="language-bash">$ ./app
-./app: '--filename' ('-f') option required
-./app: '--array' ('-a') option required
-</code></pre>
-<p>Have fun!</p>
+<span style="color:#ae81ff">1</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ./app
+./app: <span style="color:#e6db74">&#39;--filename&#39;</span> <span style="color:#f92672">(</span><span style="color:#e6db74">&#39;-f&#39;</span><span style="color:#f92672">)</span> option required
+./app: <span style="color:#e6db74">&#39;--array&#39;</span> <span style="color:#f92672">(</span><span style="color:#e6db74">&#39;-a&#39;</span><span style="color:#f92672">)</span> option required
+</code></pre></div><p>Have fun!</p>
     </div>
 </article>
 

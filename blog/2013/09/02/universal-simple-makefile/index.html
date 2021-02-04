@@ -102,47 +102,47 @@
         <p>I often work on my netbook, so I prefer to use <a href="http://www.sublimetext.com/" target="_blank">Sublime Text</a> with Makefiles instead of full-featured IDEs. To automate build process I&rsquo;ve constructed (with help of <a href="http://pipopolam.com/" target="_blank">Vasily Picard</a> and examples from the Internet) universal Makefile. It assumes the following structure of files.</p>
 <p>All sources are placed in the <code>src</code> subdirectory. Intermediate object files are placed in <code>obj</code> subdirectory, it must be created before compilation. Resulting binary file is placed into <code>bin</code> subdirectory. If you use gengetopt as command-line arguments parcer, name ggo file as <code>cmdline.ggo</code> and <code>*.c</code> and <code>*.h</code> files will be updated automatically if ggo is changed.</p>
 <p>The following makefile is set to use mpi compilers, include OpenGL, CUDA and GLUT libraries, and compile CUDA source code as well. Feel free to remove unnecessary fragments and to change application binary name (in the first line).</p>
-<pre><code class="language-makefile">APPNAME := bin/app
-SOURCES := $(wildcard src/*.cpp src/*.cu src/*.c)
-OBJECTS := $(patsubst src%,obj%, $(patsubst %.cu,%.device.o, $(patsubst %.cpp,%.o, $(patsubst %.c,%.o, $(SOURCES)))))
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-makefile" data-lang="makefile">APPNAME <span style="color:#f92672">:=</span> bin/app
+SOURCES <span style="color:#f92672">:=</span> <span style="color:#66d9ef">$(</span>wildcard src/*.cpp src/*.cu src/*.c<span style="color:#66d9ef">)</span>
+OBJECTS <span style="color:#f92672">:=</span> <span style="color:#66d9ef">$(</span>patsubst src%,obj%, <span style="color:#66d9ef">$(</span>patsubst %.cu,%.device.o, <span style="color:#66d9ef">$(</span>patsubst %.cpp,%.o, <span style="color:#66d9ef">$(</span>patsubst %.c,%.o, <span style="color:#66d9ef">$(</span>SOURCES<span style="color:#66d9ef">)))))</span>
 
-INCLUDE := -I/usr/local/cuda/include
-LIBPATH := -L/usr/local/cuda/lib64
-LIBS    := -lcudart -lGL -lglut
+INCLUDE <span style="color:#f92672">:=</span> -I/usr/local/cuda/include
+LIBPATH <span style="color:#f92672">:=</span> -L/usr/local/cuda/lib64
+LIBS    <span style="color:#f92672">:=</span> -lcudart -lGL -lglut
 
-FLAGS    := -O3 -ffast-math -Wall -Werror -fopenmp
-CCFLAGS  := $(FLAGS)
-CXXFLAGS := $(FLAGS) -std=c++0x
+FLAGS    <span style="color:#f92672">:=</span> -O3 -ffast-math -Wall -Werror -fopenmp
+CCFLAGS  <span style="color:#f92672">:=</span> <span style="color:#66d9ef">$(</span>FLAGS<span style="color:#66d9ef">)</span>
+CXXFLAGS <span style="color:#f92672">:=</span> <span style="color:#66d9ef">$(</span>FLAGS<span style="color:#66d9ef">)</span> -std<span style="color:#f92672">=</span>c++0x
 
-GENCODE_FLAGS := -gencode arch=compute_20,code=sm_20 -gencode arch=compute_30,code=sm_30 -gencode arch=compute_35,code=sm_35
-NVCCFLAGS     := $(GENCODE_FLAGS) --compiler-options -fno-strict-aliasing -lineinfo -use_fast_math -Xptxas -dlcm=cg
+GENCODE_FLAGS <span style="color:#f92672">:=</span> -gencode arch<span style="color:#f92672">=</span>compute_20,code<span style="color:#f92672">=</span>sm_20 -gencode arch<span style="color:#f92672">=</span>compute_30,code<span style="color:#f92672">=</span>sm_30 -gencode arch<span style="color:#f92672">=</span>compute_35,code<span style="color:#f92672">=</span>sm_35
+NVCCFLAGS     <span style="color:#f92672">:=</span> <span style="color:#66d9ef">$(</span>GENCODE_FLAGS<span style="color:#66d9ef">)</span> --compiler-options -fno-strict-aliasing -lineinfo -use_fast_math -Xptxas -dlcm<span style="color:#f92672">=</span>cg
 
-CC   := mpicc
-CXX  := mpicxx
-NVCC := /usr/local/cuda/bin/nvcc
+CC   <span style="color:#f92672">:=</span> mpicc
+CXX  <span style="color:#f92672">:=</span> mpicxx
+NVCC <span style="color:#f92672">:=</span> /usr/local/cuda/bin/nvcc
 
-all: $(OBJECTS)
-	$(CXX) $(CXXFLAGS) $(INCLUDE) $(OBJECTS) -o $(APPNAME) $(LIBPATH) $(LIBS)
+<span style="color:#a6e22e">all</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">$(</span>OBJECTS<span style="color:#66d9ef">)</span>
+	<span style="color:#66d9ef">$(</span>CXX<span style="color:#66d9ef">)</span> <span style="color:#66d9ef">$(</span>CXXFLAGS<span style="color:#66d9ef">)</span> <span style="color:#66d9ef">$(</span>INCLUDE<span style="color:#66d9ef">)</span> <span style="color:#66d9ef">$(</span>OBJECTS<span style="color:#66d9ef">)</span> -o <span style="color:#66d9ef">$(</span>APPNAME<span style="color:#66d9ef">)</span> <span style="color:#66d9ef">$(</span>LIBPATH<span style="color:#66d9ef">)</span> <span style="color:#66d9ef">$(</span>LIBS<span style="color:#66d9ef">)</span>
 
-obj/cmdline.o: src/cmdline.c
-	$(CC) -Wno-unused-but-set-variable -c $&lt; -o $@
+<span style="color:#a6e22e">obj/cmdline.o</span><span style="color:#f92672">:</span> src/cmdline.c
+	<span style="color:#66d9ef">$(</span>CC<span style="color:#66d9ef">)</span> -Wno-unused-but-set-variable -c $&lt; -o $@
 
-src/cmdline.c: src/cmdline.ggo
-	gengetopt --input=src/cmdline.ggo --output-dir=src --include-getopt
+<span style="color:#a6e22e">src/cmdline.c</span><span style="color:#f92672">:</span> src/cmdline.ggo
+	gengetopt --input<span style="color:#f92672">=</span>src/cmdline.ggo --output-dir<span style="color:#f92672">=</span>src --include-getopt
 
-%.o: ../src/%.c
-	$(CC) $(CCFLAGS) $(INCLUDE) -c $&lt; -o $@
+<span style="color:#a6e22e">%.o</span><span style="color:#f92672">:</span> ../src/%.c
+	<span style="color:#66d9ef">$(</span>CC<span style="color:#66d9ef">)</span> <span style="color:#66d9ef">$(</span>CCFLAGS<span style="color:#66d9ef">)</span> <span style="color:#66d9ef">$(</span>INCLUDE<span style="color:#66d9ef">)</span> -c $&lt; -o $@
 
-%.o: ../src/%.cpp
-	$(CXX) $(CXXFLAGS) $(INCLUDE) -c $&lt; -o $@
+<span style="color:#a6e22e">%.o</span><span style="color:#f92672">:</span> ../src/%.cpp
+	<span style="color:#66d9ef">$(</span>CXX<span style="color:#66d9ef">)</span> <span style="color:#66d9ef">$(</span>CXXFLAGS<span style="color:#66d9ef">)</span> <span style="color:#66d9ef">$(</span>INCLUDE<span style="color:#66d9ef">)</span> -c $&lt; -o $@
 
-%.device.o: ../src/%.cu
-	$(NVCC) $(NVCCFLAGS) -c $&lt; -o $@
+<span style="color:#a6e22e">%.device.o</span><span style="color:#f92672">:</span> ../src/%.cu
+	<span style="color:#66d9ef">$(</span>NVCC<span style="color:#66d9ef">)</span> <span style="color:#66d9ef">$(</span>NVCCFLAGS<span style="color:#66d9ef">)</span> -c $&lt; -o $@
 
-clean:
+<span style="color:#a6e22e">clean</span><span style="color:#f92672">:</span>
 	rm -rf obj/*
-	rm -f $(APPNAME)
-</code></pre>
+	rm -f <span style="color:#66d9ef">$(</span>APPNAME<span style="color:#66d9ef">)</span>
+</code></pre></div>
     </div>
 </article>
 

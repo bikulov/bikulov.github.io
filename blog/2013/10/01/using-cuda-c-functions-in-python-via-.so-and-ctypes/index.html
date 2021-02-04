@@ -102,82 +102,79 @@
         <p>I&rsquo;d like to show how to use HPC part written on C++ with CUDA in Python code. So, every heavy part may be done on GPU with CUDA, all gluing tasks (with beautiful matplotlib plots) are done on CPU with Python.</p>
 <p>We will use shared object, compiled from C++ CUDA code in Python. The only uncertain part here is conversation of types from «high-level» Python ones to «low-level» C++ ones. We will write application for parallel calculation of elementwise sum for two arrays.</p>
 <p>First, CUDA code. CUDA kernel <code>cuda_sum_kernel</code> is doing job on GPU, wrapper <code>cuda_sum</code> prepares arrays for GPU and frees memory after calculation is done. Note <code>extern &quot;C&quot;</code> line. It is important for correct  function name in the compiled shared object later.</p>
-<pre><code class="language-cpp">#include &lt;cuda.h&gt;
-#include &lt;cuda_runtime_api.h&gt;
-
-__global__ void cuda_sum_kernel(float *a, float *b, float *c, size_t size)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;cuda.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;cuda_runtime_api.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+__global__ <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">cuda_sum_kernel</span>(<span style="color:#66d9ef">float</span> <span style="color:#f92672">*</span>a, <span style="color:#66d9ef">float</span> <span style="color:#f92672">*</span>b, <span style="color:#66d9ef">float</span> <span style="color:#f92672">*</span>c, size_t size)
 {
-    size_t idx = blockIdx.x * blockDim.x + threadIdx.x;
-    if (idx &gt;= size) {
-        return;
+    size_t idx <span style="color:#f92672">=</span> blockIdx.x <span style="color:#f92672">*</span> blockDim.x <span style="color:#f92672">+</span> threadIdx.x;
+    <span style="color:#66d9ef">if</span> (idx <span style="color:#f92672">&gt;=</span> size) {
+        <span style="color:#66d9ef">return</span>;
     }
 
-    c[idx] = a[idx] + b[idx];
+    c[idx] <span style="color:#f92672">=</span> a[idx] <span style="color:#f92672">+</span> b[idx];
 }
 
-extern &quot;C&quot; {
-void cuda_sum(float *a, float *b, float *c, size_t size)
+<span style="color:#66d9ef">extern</span> <span style="color:#e6db74">&#34;C&#34;</span> {
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">cuda_sum</span>(<span style="color:#66d9ef">float</span> <span style="color:#f92672">*</span>a, <span style="color:#66d9ef">float</span> <span style="color:#f92672">*</span>b, <span style="color:#66d9ef">float</span> <span style="color:#f92672">*</span>c, size_t size)
 {
-    float *d_a, *d_b, *d_c;
+    <span style="color:#66d9ef">float</span> <span style="color:#f92672">*</span>d_a, <span style="color:#f92672">*</span>d_b, <span style="color:#f92672">*</span>d_c;
 
-    cudaMalloc((void **)&amp;d_a, size * sizeof(float));
-    cudaMalloc((void **)&amp;d_b, size * sizeof(float));
-    cudaMalloc((void **)&amp;d_c, size * sizeof(float));
+    cudaMalloc((<span style="color:#66d9ef">void</span> <span style="color:#f92672">**</span>)<span style="color:#f92672">&amp;</span>d_a, size <span style="color:#f92672">*</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">float</span>));
+    cudaMalloc((<span style="color:#66d9ef">void</span> <span style="color:#f92672">**</span>)<span style="color:#f92672">&amp;</span>d_b, size <span style="color:#f92672">*</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">float</span>));
+    cudaMalloc((<span style="color:#66d9ef">void</span> <span style="color:#f92672">**</span>)<span style="color:#f92672">&amp;</span>d_c, size <span style="color:#f92672">*</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">float</span>));
 
-    cudaMemcpy(d_a, a, size * sizeof(float), cudaMemcpyHostToDevice);
-    cudaMemcpy(d_b, b, size * sizeof(float), cudaMemcpyHostToDevice);
+    cudaMemcpy(d_a, a, size <span style="color:#f92672">*</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">float</span>), cudaMemcpyHostToDevice);
+    cudaMemcpy(d_b, b, size <span style="color:#f92672">*</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">float</span>), cudaMemcpyHostToDevice);
 
-    cuda_sum_kernel &lt;&lt;&lt; ceil(size / 256.0), 256 &gt;&gt;&gt; (d_a, d_b, d_c, size);
+    cuda_sum_kernel <span style="color:#f92672">&lt;&lt;&lt;</span> ceil(size <span style="color:#f92672">/</span> <span style="color:#ae81ff">256.0</span>), <span style="color:#ae81ff">256</span> <span style="color:#f92672">&gt;&gt;&gt;</span> (d_a, d_b, d_c, size);
 
-    cudaMemcpy(c, d_c, size * sizeof(float), cudaMemcpyDeviceToHost);
+    cudaMemcpy(c, d_c, size <span style="color:#f92672">*</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">float</span>), cudaMemcpyDeviceToHost);
 
     cudaFree(d_a);
     cudaFree(d_b);
     cudaFree(d_c);
 }
 }
-</code></pre>
-<p>Compile it to <code>*.so</code> file with nvcc compiler:</p>
-<pre><code class="language-bash">/usr/local/cuda/bin/nvcc -Xcompiler -fPIC -shared -o cuda_sum.so cuda_sum.cu
-</code></pre>
-<p>The last part is to use function <code>cuda_sum</code> from created <code>cuda_sum.so</code> file in Python script. Example (with comments):</p>
-<pre><code class="language-python">import numpy as np
-import ctypes
-from ctypes import *
+</code></pre></div><p>Compile it to <code>*.so</code> file with nvcc compiler:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">/usr/local/cuda/bin/nvcc -Xcompiler -fPIC -shared -o cuda_sum.so cuda_sum.cu
+</code></pre></div><p>The last part is to use function <code>cuda_sum</code> from created <code>cuda_sum.so</code> file in Python script. Example (with comments):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">import</span> ctypes
+<span style="color:#f92672">from</span> ctypes <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
 
-# extract cuda_sum function pointer in the shared object cuda_sum.so
-def get_cuda_sum():
-    dll = ctypes.CDLL('./cuda_sum.so', mode=ctypes.RTLD_GLOBAL)
-    func = dll.cuda_sum
-    func.argtypes = [POINTER(c_float), POINTER(c_float), POINTER(c_float), c_size_t]
-    return func
+<span style="color:#75715e"># extract cuda_sum function pointer in the shared object cuda_sum.so</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_cuda_sum</span>():
+    dll <span style="color:#f92672">=</span> ctypes<span style="color:#f92672">.</span>CDLL(<span style="color:#e6db74">&#39;./cuda_sum.so&#39;</span>, mode<span style="color:#f92672">=</span>ctypes<span style="color:#f92672">.</span>RTLD_GLOBAL)
+    func <span style="color:#f92672">=</span> dll<span style="color:#f92672">.</span>cuda_sum
+    func<span style="color:#f92672">.</span>argtypes <span style="color:#f92672">=</span> [POINTER(c_float), POINTER(c_float), POINTER(c_float), c_size_t]
+    <span style="color:#66d9ef">return</span> func
 
-# create __cuda_sum function with get_cuda_sum()
-__cuda_sum = get_cuda_sum()
+<span style="color:#75715e"># create __cuda_sum function with get_cuda_sum()</span>
+__cuda_sum <span style="color:#f92672">=</span> get_cuda_sum()
 
-# convenient python wrapper for __cuda_sum
-# it does all job with types convertation
-# from python ones to C++ ones
-def cuda_sum(a, b, c, size):
-    a_p = a.ctypes.data_as(POINTER(c_float))
-    b_p = b.ctypes.data_as(POINTER(c_float))
-    c_p = c.ctypes.data_as(POINTER(c_float))
+<span style="color:#75715e"># convenient python wrapper for __cuda_sum</span>
+<span style="color:#75715e"># it does all job with types convertation</span>
+<span style="color:#75715e"># from python ones to C++ ones</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">cuda_sum</span>(a, b, c, size):
+    a_p <span style="color:#f92672">=</span> a<span style="color:#f92672">.</span>ctypes<span style="color:#f92672">.</span>data_as(POINTER(c_float))
+    b_p <span style="color:#f92672">=</span> b<span style="color:#f92672">.</span>ctypes<span style="color:#f92672">.</span>data_as(POINTER(c_float))
+    c_p <span style="color:#f92672">=</span> c<span style="color:#f92672">.</span>ctypes<span style="color:#f92672">.</span>data_as(POINTER(c_float))
 
     __cuda_sum(a_p, b_p, c_p, size)
 
-# testing, sum of two arrays of ones and output head part of resulting array
-if __name__ == '__main__':
-    size=int(1024*1024)
+<span style="color:#75715e"># testing, sum of two arrays of ones and output head part of resulting array</span>
+<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
+    size<span style="color:#f92672">=</span>int(<span style="color:#ae81ff">1024</span><span style="color:#f92672">*</span><span style="color:#ae81ff">1024</span>)
 
-    a = np.ones(size).astype('float32')
-    b = np.ones(size).astype('float32')
-    c = np.zeros(size).astype('float32')
+    a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>ones(size)<span style="color:#f92672">.</span>astype(<span style="color:#e6db74">&#39;float32&#39;</span>)
+    b <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>ones(size)<span style="color:#f92672">.</span>astype(<span style="color:#e6db74">&#39;float32&#39;</span>)
+    c <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros(size)<span style="color:#f92672">.</span>astype(<span style="color:#e6db74">&#39;float32&#39;</span>)
 
     cuda_sum(a, b, c, size)
 
-    print c[:10]
-</code></pre>
-<p>Now you can desing the code above into full-featured Python module.</p>
+    <span style="color:#66d9ef">print</span> c[:<span style="color:#ae81ff">10</span>]
+</code></pre></div><p>Now you can desing the code above into full-featured Python module.</p>
     </div>
 </article>
 

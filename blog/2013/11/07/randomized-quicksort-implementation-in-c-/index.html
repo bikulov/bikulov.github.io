@@ -107,41 +107,41 @@
 <li>Call Quicksort for elements before the pivot and Quicksort for elements after the pivot recursively (stop if array size is one or less)</li>
 </ol>
 <p>My implementation of Quicksort in C++ is provided below. <code>quicksort.cpp</code>:</p>
-<pre><code class="language-cpp">#include &lt;iostream&gt;
-#include &lt;cstdlib&gt;
-#include &lt;algorithm&gt;
-
-template &lt;typename T&gt;
-void printArray(T *array, size_t size)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;cstdlib&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;algorithm&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">void</span> printArray(T <span style="color:#f92672">*</span>array, size_t size)
 {
-    for (size_t i = 0; i &lt; size; ++i) {
-        std::cout &lt;&lt; array[i] &lt;&lt; &quot; &quot;;
+    <span style="color:#66d9ef">for</span> (size_t i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> size; <span style="color:#f92672">++</span>i) {
+        std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> array[i] <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; &#34;</span>;
     }
-    std::cout &lt;&lt; std::endl;
+    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
 }
 
-template &lt;typename T&gt;
-void quickSort(T *array, size_t left, size_t right)
+<span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">void</span> quickSort(T <span style="color:#f92672">*</span>array, size_t left, size_t right)
 {
-    size_t l = left;
-    size_t r = right - 1;
-    size_t size = right - left;
+    size_t l <span style="color:#f92672">=</span> left;
+    size_t r <span style="color:#f92672">=</span> right <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>;
+    size_t size <span style="color:#f92672">=</span> right <span style="color:#f92672">-</span> left;
 
-    if (size &gt; 1) {
-        T pivot = array[rand() % size + l];
+    <span style="color:#66d9ef">if</span> (size <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>) {
+        T pivot <span style="color:#f92672">=</span> array[rand() <span style="color:#f92672">%</span> size <span style="color:#f92672">+</span> l];
 
-        while (l &lt; r) {
-            while (array[r] &gt; pivot &amp;&amp; r &gt; l) {
-                r--;
+        <span style="color:#66d9ef">while</span> (l <span style="color:#f92672">&lt;</span> r) {
+            <span style="color:#66d9ef">while</span> (array[r] <span style="color:#f92672">&gt;</span> pivot <span style="color:#f92672">&amp;&amp;</span> r <span style="color:#f92672">&gt;</span> l) {
+                r<span style="color:#f92672">--</span>;
             }
 
-            while (array[l] &lt; pivot &amp;&amp; l &lt;= r) {
-                l++;
+            <span style="color:#66d9ef">while</span> (array[l] <span style="color:#f92672">&lt;</span> pivot <span style="color:#f92672">&amp;&amp;</span> l <span style="color:#f92672">&lt;=</span> r) {
+                l<span style="color:#f92672">++</span>;
             }
 
-            if (l &lt; r) {
-                std::swap(array[l], array[r]);
-                l++;
+            <span style="color:#66d9ef">if</span> (l <span style="color:#f92672">&lt;</span> r) {
+                std<span style="color:#f92672">::</span>swap(array[l], array[r]);
+                l<span style="color:#f92672">++</span>;
             }
         }
 
@@ -150,24 +150,24 @@ void quickSort(T *array, size_t left, size_t right)
     }
 }
 
-int main(void)
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">void</span>)
 {
-    size_t size = 21;
-    int *array = new int[size];
+    size_t size <span style="color:#f92672">=</span> <span style="color:#ae81ff">21</span>;
+    <span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>array <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">int</span>[size];
 
-    for (int i = 0; i &lt; size; ++i) {
-        array[i] = (100.0 * rand()) / RAND_MAX;
+    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> size; <span style="color:#f92672">++</span>i) {
+        array[i] <span style="color:#f92672">=</span> (<span style="color:#ae81ff">100.0</span> <span style="color:#f92672">*</span> rand()) <span style="color:#f92672">/</span> RAND_MAX;
     }
 
     printArray(array, size);
-    quickSort(array, 0, size);
+    quickSort(array, <span style="color:#ae81ff">0</span>, size);
     printArray(array, size);
 
-    delete [] array;
+    <span style="color:#66d9ef">delete</span> [] array;
 
-    return 0;
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 }
-</code></pre>
+</code></pre></div>
     </div>
 </article>
 

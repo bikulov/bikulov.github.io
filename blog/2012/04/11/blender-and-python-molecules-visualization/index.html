@@ -102,33 +102,31 @@
         <p>Blender is a free software for 3D graphics. In old virsions many operations were binded to hotkeys, so it was believed that Blender is very hard to master. Now it has more userfriendly interface with button in addition to hotkeys.</p>
 <p>One of the most useful features of Blender is scripting. Below I provide python script for drawing molecules with cylinders and spheres.</p>
 <p>Command to draw a sphere:</p>
-<pre><code class="language-python">bpy.ops.mesh.primitive_uv_sphere_add()
-</code></pre>
-<p>To draw a cylinder, you need to specify cylinder center and rotation. Rotation is described via rotation axis and rotation angle.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">bpy<span style="color:#f92672">.</span>ops<span style="color:#f92672">.</span>mesh<span style="color:#f92672">.</span>primitive_uv_sphere_add()
+</code></pre></div><p>To draw a cylinder, you need to specify cylinder center and rotation. Rotation is described via rotation axis and rotation angle.</p>
 <p>Trivial cylinder after creation is aligned with Z axis: <code>z = (0,0,1)</code>. If you need to connect two points <code>r1</code> and <code>r2</code> with cylinder, its center coordinate is <code>r3 = (r1+r2)/2</code>. Cylinder must be aligned with <code>z_desired = (r1-r2).normalized()</code>, so rotation axis is <code>rot_axis = z.cross(z_desired)</code> and angle <code>angle = acos(z.dot(z_desired))</code>.</p>
 <p>Wrapping up, code:</p>
-<pre><code class="language-python">from math import degrees, acos
-from mathutils import Vector
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> math <span style="color:#f92672">import</span> degrees, acos
+<span style="color:#f92672">from</span> mathutils <span style="color:#f92672">import</span> Vector
 
-spheres = (Vector((2,3,3)),Vector((1,1,2)),Vector((2,3,4)),Vector((4,5,3)))
-edges = ((0,1),(1,2),(2,3))
+spheres <span style="color:#f92672">=</span> (Vector((<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">3</span>)),Vector((<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>)),Vector((<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>)),Vector((<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">3</span>)))
+edges <span style="color:#f92672">=</span> ((<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>),(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>),(<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>))
 
-for i in range(0, len(spheres)):
-    r1 = spheres[i]
-    bpy.ops.mesh.primitive_uv_sphere_add(location=(r1.x, r1.y, r1.z))
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>, len(spheres)):
+    r1 <span style="color:#f92672">=</span> spheres[i]
+    bpy<span style="color:#f92672">.</span>ops<span style="color:#f92672">.</span>mesh<span style="color:#f92672">.</span>primitive_uv_sphere_add(location<span style="color:#f92672">=</span>(r1<span style="color:#f92672">.</span>x, r1<span style="color:#f92672">.</span>y, r1<span style="color:#f92672">.</span>z))
 
-for i in range(0,len(edges)):
-     r1 = spheres[edges[i][0]]
-     r2 = spheres[edges[i][1]]
-     r3 = (r1+r2)/2
-     z = Vector((0,0,1))
-     z_desired = (r1-r2).normalized()
-     rot_axis = z.cross(z_desired)
-     angle = acos(z.dot(z_desired))
-     bpy.ops.mesh.primitive_cylinder_add(radius=0.3, depth=(r2-r1).length,location=(r3.x,r3.y,r3.z))
-     bpy.ops.transform.rotate(value=(angle,), axis=rot_axis)
-</code></pre>
-<p>After copy-paste to blender console you will see the similar image:</p>
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>,len(edges)):
+     r1 <span style="color:#f92672">=</span> spheres[edges[i][<span style="color:#ae81ff">0</span>]]
+     r2 <span style="color:#f92672">=</span> spheres[edges[i][<span style="color:#ae81ff">1</span>]]
+     r3 <span style="color:#f92672">=</span> (r1<span style="color:#f92672">+</span>r2)<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>
+     z <span style="color:#f92672">=</span> Vector((<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>))
+     z_desired <span style="color:#f92672">=</span> (r1<span style="color:#f92672">-</span>r2)<span style="color:#f92672">.</span>normalized()
+     rot_axis <span style="color:#f92672">=</span> z<span style="color:#f92672">.</span>cross(z_desired)
+     angle <span style="color:#f92672">=</span> acos(z<span style="color:#f92672">.</span>dot(z_desired))
+     bpy<span style="color:#f92672">.</span>ops<span style="color:#f92672">.</span>mesh<span style="color:#f92672">.</span>primitive_cylinder_add(radius<span style="color:#f92672">=</span><span style="color:#ae81ff">0.3</span>, depth<span style="color:#f92672">=</span>(r2<span style="color:#f92672">-</span>r1)<span style="color:#f92672">.</span>length,location<span style="color:#f92672">=</span>(r3<span style="color:#f92672">.</span>x,r3<span style="color:#f92672">.</span>y,r3<span style="color:#f92672">.</span>z))
+     bpy<span style="color:#f92672">.</span>ops<span style="color:#f92672">.</span>transform<span style="color:#f92672">.</span>rotate(value<span style="color:#f92672">=</span>(angle,), axis<span style="color:#f92672">=</span>rot_axis)
+</code></pre></div><p>After copy-paste to blender console you will see the similar image:</p>
 <p><img class="img-zoomable" src="/images/2012/blender_python.png" alt="blender_python" />
 </p>
     </div>

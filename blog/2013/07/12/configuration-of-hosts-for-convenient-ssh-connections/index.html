@@ -32,11 +32,9 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://bikulov.org/blog/2013/07/12/configuration-of-hosts-for-convenient-ssh-connections/" /><meta property="og:description" content="It is possible to save configuration of ssh connection for later usage. For example, one had to type
 ssh &lt;username&gt;@&lt;ip address&gt; -p &lt;port&gt; -i &lt;path to key file&gt;
-
 every time one wants to connect to server." />
 <meta name="twitter:description" content="It is possible to save configuration of ssh connection for later usage. For example, one had to type
 ssh &lt;username&gt;@&lt;ip address&gt; -p &lt;port&gt; -i &lt;path to key file&gt;
-
 every time one wants to connect to server." /><meta property="og:image" content="https://bikulov.org/img/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://bikulov.org/img/og.png" /><meta property="article:published_time" content="2013-07-12T09:00:00+03:00" /><meta property="article:modified_time" content="2013-07-12T09:00:00+03:00" />
@@ -106,20 +104,17 @@ every time one wants to connect to server." /><meta property="og:image" content=
     
     <div class="post-content markdown-body">
         <p>It is possible to save configuration of ssh connection for later usage. For example, one had to type</p>
-<pre><code class="language-bash">ssh &lt;username&gt;@&lt;ip address&gt; -p &lt;port&gt; -i &lt;path to key file&gt;
-</code></pre>
-<p>every time one wants to connect to server.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ssh &lt;username&gt;@&lt;ip address&gt; -p &lt;port&gt; -i &lt;path to key file&gt;
+</code></pre></div><p>every time one wants to connect to server.</p>
 <p>Create <code>~/.ssh/config</code> with following content:</p>
-<pre><code class="language-bash">Host &lt;name&gt;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">Host &lt;name&gt;
   Hostname &lt;ip address&gt;
   Port &lt;port&gt;
   User &lt;username&gt;
-  IdentityFile &lt;path to key file (if any)&gt;
-</code></pre>
-<p>Now just type</p>
-<pre><code class="language-bash">ssh &lt;name&gt;
-</code></pre>
-<p>to get connected to the server.</p>
+  IdentityFile &lt;path to key file <span style="color:#f92672">(</span><span style="color:#66d9ef">if</span> any<span style="color:#f92672">)</span>&gt;
+</code></pre></div><p>Now just type</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ssh &lt;name&gt;
+</code></pre></div><p>to get connected to the server.</p>
     </div>
 </article>
 

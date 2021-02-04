@@ -102,52 +102,45 @@
         <p>Assymetric encryption is useful if you want to encrypt data at remote server via script. In case you use bash script for symmetric encryption job, you have to store password inside this script. So, if remote server is compromized, you will loose both the encrypted data and the key to decrypt it. Assymetric encryption allows you not to store decryption key at remote machine. So, data will be in safe even if server is hacked.</p>
 <p>Assymetric encryption is slow and cannot be applied for large files. The solution is to use hybrid symmetric-assymetric encryption for big data situation. It works as follows: big file is encrypted with symmetric algorythm with on the fly generated key. Key is stored in the file and encrypted with assymetric algorythm.</p>
 <p>Bash scripts to encrypt and decrypt files are provided below. To simulate situation with local and remote machines, create <code>local</code> and <code>remote</code> folders side by side. Change directory to <code>local</code> folder, create public and private keys pair and copy public key (keynames are <code>keyfile.key</code> for private and <code>keyfile.pub</code> for <code>public</code>) to remote folder:</p>
-<pre><code class="language-bash">cd local
-openssl genrsa -out keyfile.key 4096
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cd local
+openssl genrsa -out keyfile.key <span style="color:#ae81ff">4096</span>
 openssl rsa -in keyfile.key -pubout -out keyfile.pub
 cp keyfile.pub ../remote/
-</code></pre>
-<p>Now change directory to <code>remote</code> folder. Create bash script <code>encrypt.sh</code>:</p>
-<pre><code class="language-bash">#!/bin/bash
+</code></pre></div><p>Now change directory to <code>remote</code> folder. Create bash script <code>encrypt.sh</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#!/bin/bash
+</span><span style="color:#75715e"></span>
+file<span style="color:#f92672">=</span>$1
+passfile<span style="color:#f92672">=</span><span style="color:#e6db74">${</span>file<span style="color:#e6db74">}</span>_pwd
+pubkey<span style="color:#f92672">=</span>keyfile.pub
 
-file=$1
-passfile=${file}_pwd
-pubkey=keyfile.pub
+openssl rand <span style="color:#ae81ff">256</span> &gt; <span style="color:#e6db74">${</span>passfile<span style="color:#e6db74">}</span>
 
-openssl rand 256 &gt; ${passfile}
+tar cz $file | openssl enc -aes-256-cbc -salt -out <span style="color:#e6db74">${</span>file<span style="color:#e6db74">}</span>.enc -pass file:./<span style="color:#e6db74">${</span>passfile<span style="color:#e6db74">}</span>
+openssl rsautl -encrypt -pubin -inkey <span style="color:#e6db74">${</span>pubkey<span style="color:#e6db74">}</span> -in <span style="color:#e6db74">${</span>passfile<span style="color:#e6db74">}</span> -out <span style="color:#e6db74">${</span>passfile<span style="color:#e6db74">}</span>.enc
 
-tar cz $file | openssl enc -aes-256-cbc -salt -out ${file}.enc -pass file:./${passfile}
-openssl rsautl -encrypt -pubin -inkey ${pubkey} -in ${passfile} -out ${passfile}.enc
-
-rm ${file} ${passfile}
-cp ${file}.enc ${passfile}.enc ../local
-</code></pre>
-<p>Make it executable:</p>
-<pre><code class="language-bash">chmod +x ./encrypt.sh
-</code></pre>
-<p>Now you can create <code>testfile</code> with text &ldquo;secret data&rdquo; and encrypt it with script <code>encrypt.sh</code>. Resulting encrypted files will be copied to <code>../local</code> folder.</p>
-<pre><code class="language-bash">echo &quot;secret data&quot; &gt; testfile
+rm <span style="color:#e6db74">${</span>file<span style="color:#e6db74">}</span> <span style="color:#e6db74">${</span>passfile<span style="color:#e6db74">}</span>
+cp <span style="color:#e6db74">${</span>file<span style="color:#e6db74">}</span>.enc <span style="color:#e6db74">${</span>passfile<span style="color:#e6db74">}</span>.enc ../local
+</code></pre></div><p>Make it executable:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">chmod +x ./encrypt.sh
+</code></pre></div><p>Now you can create <code>testfile</code> with text &ldquo;secret data&rdquo; and encrypt it with script <code>encrypt.sh</code>. Resulting encrypted files will be copied to <code>../local</code> folder.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">echo <span style="color:#e6db74">&#34;secret data&#34;</span> &gt; testfile
 ./encrypt.sh testfile
-</code></pre>
-<p>Now change directory to <code>local</code> folder. Create bash script <code>decrypt.sh</code>:</p>
-<pre><code class="language-bash">#!/bin/bash
+</code></pre></div><p>Now change directory to <code>local</code> folder. Create bash script <code>decrypt.sh</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#!/bin/bash
+</span><span style="color:#75715e"></span>
+file<span style="color:#f92672">=</span>$1
+passfile<span style="color:#f92672">=</span><span style="color:#e6db74">${</span>file%.enc<span style="color:#e6db74">}</span>_pwd.enc
+privatekey<span style="color:#f92672">=</span>keyfile.key
 
-file=$1
-passfile=${file%.enc}_pwd.enc
-privatekey=keyfile.key
+openssl rsautl -decrypt -inkey <span style="color:#e6db74">${</span>privatekey<span style="color:#e6db74">}</span> -in <span style="color:#e6db74">${</span>passfile<span style="color:#e6db74">}</span> -out <span style="color:#e6db74">${</span>passfile%.enc<span style="color:#e6db74">}</span>
+openssl enc -d -aes-256-cbc -in <span style="color:#e6db74">${</span>file<span style="color:#e6db74">}</span> -pass file:./<span style="color:#e6db74">${</span>passfile%.enc<span style="color:#e6db74">}</span> | tar xz
 
-openssl rsautl -decrypt -inkey ${privatekey} -in ${passfile} -out ${passfile%.enc}
-openssl enc -d -aes-256-cbc -in ${file} -pass file:./${passfile%.enc} | tar xz
-
-rm ${file} ${passfile} ${passfile%.enc}
-</code></pre>
-<p>Make it executable:</p>
-<pre><code class="language-bash">chmod +x ./decrypt.sh
-</code></pre>
-<p>Now decrypt <code>testfile</code>:</p>
-<pre><code class="language-bash">./decrypt.sh testfile.enc
-</code></pre>
-<p>Decypted <code>testfile</code> will be placed into <code>local</code> directory.</p>
+rm <span style="color:#e6db74">${</span>file<span style="color:#e6db74">}</span> <span style="color:#e6db74">${</span>passfile<span style="color:#e6db74">}</span> <span style="color:#e6db74">${</span>passfile%.enc<span style="color:#e6db74">}</span>
+</code></pre></div><p>Make it executable:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">chmod +x ./decrypt.sh
+</code></pre></div><p>Now decrypt <code>testfile</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">./decrypt.sh testfile.enc
+</code></pre></div><p>Decypted <code>testfile</code> will be placed into <code>local</code> directory.</p>
     </div>
 </article>
 

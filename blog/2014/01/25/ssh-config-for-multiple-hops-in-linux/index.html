@@ -101,18 +101,17 @@
     <div class="post-content markdown-body">
         <p>Often some hosts in corporate network are available only from several gateway machines. The scheme looks like that: you connect to gateway <code>ssh -A gateway.public.net</code> and then to desired host from gateway machines <code>ssh -A host.private.net</code>. But the problem arises when you want to copy or download something from <em>host.private.net</em>. You have to do it in two hops, because <code>host.private.net</code> is not available from your machine directly. The solution is ssh forwarding.</p>
 <p>Just add the following (edit according your network settings) lines to <code>~/.ssh/config</code>:</p>
-<pre><code class="language-ini">Host gateway
-    User bikulov
-    ForwardAgent yes
-    HostName gateway.public.net
-    IdentityFile ~/.ssh/bikulov_private_key
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#a6e22e">Host gateway</span>
+    <span style="color:#a6e22e">User bikulov</span>
+    <span style="color:#a6e22e">ForwardAgent yes</span>
+    <span style="color:#a6e22e">HostName gateway.public.net</span>
+    <span style="color:#a6e22e">IdentityFile ~/.ssh/bikulov_private_key</span>
 
-Host host
-    User bikulov
-    ForwardAgent yes
-    ProxyCommand ssh -4 gateway nc -q 0 host.private.net 22
-</code></pre>
-<p><code>ForwardAgent</code> options forwards information about your ssh key <code>bikulov_private_key</code> to <em>gateway.public.net</em>. Now you can just type <code>ssh host</code> in terminal. You will be connected to <em>host.private.net</em> through <em>gateway.public.net</em> automatically. And scp now works directly too.</p>
+<span style="color:#a6e22e">Host host</span>
+    <span style="color:#a6e22e">User bikulov</span>
+    <span style="color:#a6e22e">ForwardAgent yes</span>
+    <span style="color:#a6e22e">ProxyCommand ssh -4 gateway nc -q 0 host.private.net 22</span>
+</code></pre></div><p><code>ForwardAgent</code> options forwards information about your ssh key <code>bikulov_private_key</code> to <em>gateway.public.net</em>. Now you can just type <code>ssh host</code> in terminal. You will be connected to <em>host.private.net</em> through <em>gateway.public.net</em> automatically. And scp now works directly too.</p>
     </div>
 </article>
 

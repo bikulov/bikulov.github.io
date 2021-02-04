@@ -120,53 +120,52 @@ white background must be specified manually (SetViewProperties(view, Background 
 </ul>
 <p>Script is tested under Ubuntu 14.04 with Paraview 4.3.1. Paraview was downloaded from official <a href="http://www.paraview.org/download/" target="_blank">site</a> and extracted to <code>/home/bikulov/bin/ParaView-4.3.1-Linux-64bit/lib/paraview-4.3</code> (you have to change this line in script to your destination). State file must be prepared in the same Paraview 4.3.1 to avoid compatibility issues (or you may have errors about <code>ColorArrayName</code>).</p>
 <p>Script (also available as a <a href="https://gist.github.com/bikulov/60ab87063ca6a1ae1bf2" target="_blank">gist</a>):</p>
-<pre><code class="language-python">#!/usr/bin/env python
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#!/usr/bin/env python</span>
 
-import os, sys
-import glob, natsort, argparse
+<span style="color:#f92672">import</span> os<span style="color:#f92672">,</span> sys
+<span style="color:#f92672">import</span> glob<span style="color:#f92672">,</span> natsort<span style="color:#f92672">,</span> argparse
 
-ParaviewPath=&quot;/home/bikulov/bin/ParaView-4.3.1-Linux-64bit/lib/paraview-4.3&quot;
-print(&quot;export LD_LIBRARY_PATH={ParaviewPath}:$LD_LIBRARY_PATH&quot;.format(ParaviewPath=ParaviewPath))
+ParaviewPath<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/home/bikulov/bin/ParaView-4.3.1-Linux-64bit/lib/paraview-4.3&#34;</span>
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;export LD_LIBRARY_PATH={ParaviewPath}:$LD_LIBRARY_PATH&#34;</span><span style="color:#f92672">.</span>format(ParaviewPath<span style="color:#f92672">=</span>ParaviewPath))
 
-sys.path.append(os.path.join(ParaviewPath, &quot;site-packages&quot;))
-sys.path.append(os.path.join(ParaviewPath, &quot;site-packages/vtk&quot;))
-from paraview.simple import *
+sys<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>append(os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(ParaviewPath, <span style="color:#e6db74">&#34;site-packages&#34;</span>))
+sys<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>append(os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(ParaviewPath, <span style="color:#e6db74">&#34;site-packages/vtk&#34;</span>))
+<span style="color:#f92672">from</span> paraview.simple <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
 
-def main(pipeline, state, files, output):
-    filenames = natsort.natsorted(files)
-    servermanager.LoadState(state)
-    view = servermanager.GetRenderView()
-    camera = view.GetActiveCamera()
-    phase = FindSource(pipeline)
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>(pipeline, state, files, output):
+    filenames <span style="color:#f92672">=</span> natsort<span style="color:#f92672">.</span>natsorted(files)
+    servermanager<span style="color:#f92672">.</span>LoadState(state)
+    view <span style="color:#f92672">=</span> servermanager<span style="color:#f92672">.</span>GetRenderView()
+    camera <span style="color:#f92672">=</span> view<span style="color:#f92672">.</span>GetActiveCamera()
+    phase <span style="color:#f92672">=</span> FindSource(pipeline)
 
-    # Set white background
-    SetViewProperties(view, Background = [1, 1, 1])
+    <span style="color:#75715e"># Set white background</span>
+    SetViewProperties(view, Background <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>])
 
-    try:
-         os.makedirs(output)
-    except:
-        pass
+    <span style="color:#66d9ef">try</span>:
+         os<span style="color:#f92672">.</span>makedirs(output)
+    <span style="color:#66d9ef">except</span>:
+        <span style="color:#66d9ef">pass</span>
 
-    imgNum = 0
+    imgNum <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
 
-    for f in filenames:
-        phase.FilePrefix = f
-        phase.FileNameChanged()
-        view.WriteImage(os.path.join(output, str(imgNum).zfill(6) + &quot;.png&quot;), &quot;vtkPNGWriter&quot;, 1)
-        imgNum += 1
+    <span style="color:#66d9ef">for</span> f <span style="color:#f92672">in</span> filenames:
+        phase<span style="color:#f92672">.</span>FilePrefix <span style="color:#f92672">=</span> f
+        phase<span style="color:#f92672">.</span>FileNameChanged()
+        view<span style="color:#f92672">.</span>WriteImage(os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(output, str(imgNum)<span style="color:#f92672">.</span>zfill(<span style="color:#ae81ff">6</span>) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;.png&#34;</span>), <span style="color:#e6db74">&#34;vtkPNGWriter&#34;</span>, <span style="color:#ae81ff">1</span>)
+        imgNum <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
 
-if __name__ == &quot;__main__&quot;:
-    parser = argparse.ArgumentParser(prog=&quot;PROG&quot;, description=&quot;Draw With Paraview&quot;)
-    parser.add_argument(&quot;--state&quot;, type=str, help=&quot;State file to load&quot;, default=&quot;state.pvsm&quot;)
-    parser.add_argument(&quot;--pipeline&quot;, type=str, help=&quot;Pipiline name for changing file&quot;, default=&quot;data&quot;)
-    parser.add_argument(&quot;--output&quot;, type=str, help=&quot;Output path for images&quot;, default=&quot;img&quot;)
-    parser.add_argument(&quot;files&quot;, nargs=&quot;*&quot;, help=&quot;Files to be used in the pipeline&quot;)
+<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+    parser <span style="color:#f92672">=</span> argparse<span style="color:#f92672">.</span>ArgumentParser(prog<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;PROG&#34;</span>, description<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Draw With Paraview&#34;</span>)
+    parser<span style="color:#f92672">.</span>add_argument(<span style="color:#e6db74">&#34;--state&#34;</span>, type<span style="color:#f92672">=</span>str, help<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;State file to load&#34;</span>, default<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;state.pvsm&#34;</span>)
+    parser<span style="color:#f92672">.</span>add_argument(<span style="color:#e6db74">&#34;--pipeline&#34;</span>, type<span style="color:#f92672">=</span>str, help<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Pipiline name for changing file&#34;</span>, default<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;data&#34;</span>)
+    parser<span style="color:#f92672">.</span>add_argument(<span style="color:#e6db74">&#34;--output&#34;</span>, type<span style="color:#f92672">=</span>str, help<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Output path for images&#34;</span>, default<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;img&#34;</span>)
+    parser<span style="color:#f92672">.</span>add_argument(<span style="color:#e6db74">&#34;files&#34;</span>, nargs<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;*&#34;</span>, help<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Files to be used in the pipeline&#34;</span>)
 
-    args = parser.parse_args()
+    args <span style="color:#f92672">=</span> parser<span style="color:#f92672">.</span>parse_args()
 
-    main(pipeline=args.pipeline, state=args.state, files=args.files, output=args.output)
-</code></pre>
-<p>Command line arguments explanation:</p>
+    main(pipeline<span style="color:#f92672">=</span>args<span style="color:#f92672">.</span>pipeline, state<span style="color:#f92672">=</span>args<span style="color:#f92672">.</span>state, files<span style="color:#f92672">=</span>args<span style="color:#f92672">.</span>files, output<span style="color:#f92672">=</span>args<span style="color:#f92672">.</span>output)
+</code></pre></div><p>Command line arguments explanation:</p>
 <ul>
 <li><code>--state</code> is filename with state to be loaded (<code>File-&gt;Save State in Paraview</code>)</li>
 <li><code>--pipeline</code> is the name of pipeline inside state (item in <code>Pipeline browser</code>, for which you want to change <code>File Prefix</code>)</li>
@@ -174,28 +173,23 @@ if __name__ == &quot;__main__&quot;:
 <li>files are bunch of raw binary images you whant to visualize as video</li>
 </ul>
 <p>Example run (will process all <code>*-phase.raw</code> files in directory and save resulting images into <code>imgtest</code> directory):</p>
-<pre><code class="language-bash">./draw_with_paraview.py --state state.pvsm --pipeline data --output imgtest *-phase.raw
-</code></pre>
-<p>Note: you must add path to paraview libraries in <code>LD_LIBRARY_PATH</code> before run (script prints out this line for convenience):</p>
-<pre><code class="language-bash">export LD_LIBRARY_PATH=/home/bikulov/bin/ParaView-4.3.1-Linux-64bit/lib/paraview-4.3:$LD_LIBRARY_PATH
-</code></pre>
-<h3 id="postprocess-frames">Postprocess frames</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">./draw_with_paraview.py --state state.pvsm --pipeline data --output imgtest *-phase.raw
+</code></pre></div><p>Note: you must add path to paraview libraries in <code>LD_LIBRARY_PATH</code> before run (script prints out this line for convenience):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">export LD_LIBRARY_PATH<span style="color:#f92672">=</span>/home/bikulov/bin/ParaView-4.3.1-Linux-64bit/lib/paraview-4.3:$LD_LIBRARY_PATH
+</code></pre></div><h3 id="postprocess-frames">Postprocess frames</h3>
 <p>You may want to crop images in the output folder. For mp4 width and height must be divisible by two, so you may need to <a href="http://www.alecjacobson.com/weblog/?p=2872" target="_blank">crop</a> for identify them accordingly (in <a href="http://superuser.com/questions/745523/how-can-i-run-mogrify-over-the-3-million-jpg-files" target="_blank">parallel</a> for speed):</p>
-<pre><code class="language-bash">img=$(ls *.png|head -n 1)
-width=$(($(identify -format &quot;(%[fx:w]/2)*2&quot; ${img})))
-height=$(($(identify -format &quot;(%[fx:h]/2)*2&quot; ${img})))
-find -name '*.png' -exec mogrify -crop &quot;${width}x${height}+0+0&quot; {} +
-</code></pre>
-<p>Or the same commands in one line:</p>
-<pre><code class="language-bash">img=$(ls *.png|head -n 1); width=$(($(identify -format &quot;(%[fx:w]/2)*2&quot; ${img}))); height=$(($(identify -format &quot;(%[fx:h]/2)*2&quot; ${img}))); find -name '*.png' -exec mogrify -crop &quot;${width}x${height}+0+0&quot; {} +
-</code></pre>
-<p>You may also need to crop images to some specific size, just use the final line:</p>
-<pre><code class="language-bash">find -name '*.png' -exec mogrify -crop &lt;width&gt;x&lt;height&gt;+&lt;x_shift&gt;+&lt;y_shift&gt; {} +
-</code></pre>
-<h3 id="create-animation-from-the-frames">Create animation from the frames</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">img<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>ls *.png|head -n 1<span style="color:#66d9ef">)</span>
+width<span style="color:#f92672">=</span><span style="color:#66d9ef">$(($(</span>identify -format <span style="color:#e6db74">&#34;(%[fx:w]/2)*2&#34;</span> <span style="color:#e6db74">${</span>img<span style="color:#e6db74">}</span><span style="color:#66d9ef">)))</span>
+height<span style="color:#f92672">=</span><span style="color:#66d9ef">$(($(</span>identify -format <span style="color:#e6db74">&#34;(%[fx:h]/2)*2&#34;</span> <span style="color:#e6db74">${</span>img<span style="color:#e6db74">}</span><span style="color:#66d9ef">)))</span>
+find -name <span style="color:#e6db74">&#39;*.png&#39;</span> -exec mogrify -crop <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>width<span style="color:#e6db74">}</span><span style="color:#e6db74">x</span><span style="color:#e6db74">${</span>height<span style="color:#e6db74">}</span><span style="color:#e6db74">+0+0&#34;</span> <span style="color:#f92672">{}</span> +
+</code></pre></div><p>Or the same commands in one line:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">img<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>ls *.png|head -n 1<span style="color:#66d9ef">)</span>; width<span style="color:#f92672">=</span><span style="color:#66d9ef">$(($(</span>identify -format <span style="color:#e6db74">&#34;(%[fx:w]/2)*2&#34;</span> <span style="color:#e6db74">${</span>img<span style="color:#e6db74">}</span><span style="color:#66d9ef">)))</span>; height<span style="color:#f92672">=</span><span style="color:#66d9ef">$(($(</span>identify -format <span style="color:#e6db74">&#34;(%[fx:h]/2)*2&#34;</span> <span style="color:#e6db74">${</span>img<span style="color:#e6db74">}</span><span style="color:#66d9ef">)))</span>; find -name <span style="color:#e6db74">&#39;*.png&#39;</span> -exec mogrify -crop <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>width<span style="color:#e6db74">}</span><span style="color:#e6db74">x</span><span style="color:#e6db74">${</span>height<span style="color:#e6db74">}</span><span style="color:#e6db74">+0+0&#34;</span> <span style="color:#f92672">{}</span> +
+</code></pre></div><p>You may also need to crop images to some specific size, just use the final line:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">find -name <span style="color:#e6db74">&#39;*.png&#39;</span> -exec mogrify -crop &lt;width&gt;x&lt;height&gt;+&lt;x_shift&gt;+&lt;y_shift&gt; <span style="color:#f92672">{}</span> +
+</code></pre></div><h3 id="create-animation-from-the-frames">Create animation from the frames</h3>
 <p>Create video from images (<a href="http://bikulov.org/blog/2013/01/23/universal-screen-capturing-with-scrot-imagemagick-and/" target="_blank">ffmpeg</a> no longer supported, so use avconv):</p>
-<pre><code class="language-bash">avconf -qscale 1 -r 20 -b 9600 -i %06d.png output_file.mp4
-</code></pre>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">avconf -qscale <span style="color:#ae81ff">1</span> -r <span style="color:#ae81ff">20</span> -b <span style="color:#ae81ff">9600</span> -i %06d.png output_file.mp4
+</code></pre></div>
     </div>
 </article>
 

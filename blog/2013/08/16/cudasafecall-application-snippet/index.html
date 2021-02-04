@@ -100,35 +100,35 @@
     
     <div class="post-content markdown-body">
         <p>It is a good tone to check CUDA API errors while calling cudaMalloc() and other functions. It also helps to find floating bugs caused by hardware (lack of memory, etc). I provide below an adapted version of CudaSafeCall I found many weeks ago in the <a href="http://choorucode.com/2011/03/02/cuda-error-checking/" target="_blank">Internet</a>. Simply remove <code>#define CUDA_ERROR_CHECK</code> in production if unneeded.</p>
-<pre><code class="language-c">#include &lt;iostream&gt;
-#include &lt;cuda.h&gt;
-
-#define CUDA_ERROR_CHECK
-
-#define CudaSafeCall(error) __cudaSafeCall(error, __FILE__, __LINE__)
-
-inline void __cudaSafeCall(cudaError error, const char *file, const int line)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;cuda.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#define CUDA_ERROR_CHECK
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#define CudaSafeCall(error) __cudaSafeCall(error, __FILE__, __LINE__)
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">__cudaSafeCall</span>(cudaError error, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>file, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span> line)
 {
-#ifdef CUDA_ERROR_CHECK
-    if (error != cudaSuccess ) {
-        std::cout &lt;&lt; &quot;error: CudaSafeCall() failed at &quot; &lt;&lt; file
-                  &lt;&lt; &quot;:&quot; &lt;&lt; line
-                  &lt;&lt; &quot; with \&quot;&quot; &lt;&lt; cudaGetErrorString(error) &lt;&lt; &quot;\&quot;&quot;
-                  &lt;&lt; std::endl;
-        exit( -1 );
+<span style="color:#75715e">#ifdef CUDA_ERROR_CHECK
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (error <span style="color:#f92672">!=</span> cudaSuccess ) {
+        std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;error: CudaSafeCall() failed at &#34;</span> <span style="color:#f92672">&lt;&lt;</span> file
+                  <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;:&#34;</span> <span style="color:#f92672">&lt;&lt;</span> line
+                  <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; with </span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">&lt;&lt;</span> cudaGetErrorString(error) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">&#34;</span>
+                  <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+        exit( <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> );
     }
-#endif
-}
+<span style="color:#75715e">#endif
+</span><span style="color:#75715e"></span>}
 
-int main(int argc, char **argv)
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>argv)
 {
-    float *d_array;
-    size_t N = 1024;
-    CudaSafeCall(cudaMalloc((void **)&amp;d_array, N*N*N*N));
+    <span style="color:#66d9ef">float</span> <span style="color:#f92672">*</span>d_array;
+    size_t N <span style="color:#f92672">=</span> <span style="color:#ae81ff">1024</span>;
+    CudaSafeCall(cudaMalloc((<span style="color:#66d9ef">void</span> <span style="color:#f92672">**</span>)<span style="color:#f92672">&amp;</span>d_array, N<span style="color:#f92672">*</span>N<span style="color:#f92672">*</span>N<span style="color:#f92672">*</span>N));
     CudaSafeCall(cudaFree(d_array));
-    return 0;
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 }
-</code></pre>
+</code></pre></div>
     </div>
 </article>
 

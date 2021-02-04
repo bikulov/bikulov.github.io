@@ -102,122 +102,119 @@
         <p>This note describes installation of Bittorrent Sync on Ubuntu. Tutorial was tested on Ubuntu 12.04, but it must work for all Debian-based systems. Read full btsync  <a href="http://btsync.s3-website-us-east-1.amazonaws.com/BitTorrentSyncUserGuide.pdf" target="_blank">manual</a> for advanced information.</p>
 <h2 id="download-and-install-btsync">Download and install btsync</h2>
 <p>Btsync is provided as single binary file. We will place it into <code>/usr/bin</code> directory. So, download archive with binary file, extract it, remove archive, move binary:</p>
-<pre><code class="language-bash">wget http://btsync.s3-website-us-east-1.amazonaws.com/btsync_x64.tar.gz
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">wget http://btsync.s3-website-us-east-1.amazonaws.com/btsync_x64.tar.gz
 tar xf btsync_x64.tar.gz
 rm btsync_x64.tar.gz
 sudo mv btsync /usr/bin/btsync
-</code></pre>
-<h2 id="configure-shared-folder">Configure shared folder</h2>
+</code></pre></div><h2 id="configure-shared-folder">Configure shared folder</h2>
 <p>We will use configuration file instead of web interface. Create <code>~/.sync/config.json</code> (for <code>&lt;home folder&gt;</code> for user <code>username</code> is <code>/home/username</code>) with content provided below. If you have several users you want to use btsync, create config in their home folders.</p>
-<pre><code class="language-json">{
-  &quot;device_name&quot;: &quot;&lt;computer name&gt;&quot;,
-  &quot;pid_file&quot; : &quot;&lt;home folder&gt;/.sync/btsync.pid&quot;,
-  &quot;storage_path&quot;: &quot;&lt;home folder&gt;/.sync&quot;,
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#f92672">&#34;device_name&#34;</span>: <span style="color:#e6db74">&#34;&lt;computer name&gt;&#34;</span>,
+  <span style="color:#f92672">&#34;pid_file&#34;</span> : <span style="color:#e6db74">&#34;&lt;home folder&gt;/.sync/btsync.pid&#34;</span>,
+  <span style="color:#f92672">&#34;storage_path&#34;</span>: <span style="color:#e6db74">&#34;&lt;home folder&gt;/.sync&#34;</span>,
 
-  &quot;listening_port&quot; : 0,
-  &quot;check_for_updates&quot; : true,
-  &quot;use_upnp&quot; : true,
-  &quot;download_limit&quot; : 0,
-  &quot;upload_limit&quot; : 0,
-  &quot;lan_encrypt_data&quot;: true,
+  <span style="color:#f92672">&#34;listening_port&#34;</span> : <span style="color:#ae81ff">0</span>,
+  <span style="color:#f92672">&#34;check_for_updates&#34;</span> : <span style="color:#66d9ef">true</span>,
+  <span style="color:#f92672">&#34;use_upnp&#34;</span> : <span style="color:#66d9ef">true</span>,
+  <span style="color:#f92672">&#34;download_limit&#34;</span> : <span style="color:#ae81ff">0</span>,
+  <span style="color:#f92672">&#34;upload_limit&#34;</span> : <span style="color:#ae81ff">0</span>,
+  <span style="color:#f92672">&#34;lan_encrypt_data&#34;</span>: <span style="color:#66d9ef">true</span>,
 
-  &quot;shared_folders&quot; :
+  <span style="color:#f92672">&#34;shared_folders&#34;</span> :
   [
     {
-      &quot;secret&quot; : &quot;&lt;secret key&gt;&quot;,
-      &quot;dir&quot; : &quot;&lt;dir path&gt;&quot;,
+      <span style="color:#f92672">&#34;secret&#34;</span> : <span style="color:#e6db74">&#34;&lt;secret key&gt;&#34;</span>,
+      <span style="color:#f92672">&#34;dir&#34;</span> : <span style="color:#e6db74">&#34;&lt;dir path&gt;&#34;</span>,
 
-      &quot;use_relay_server&quot; : true,
-      &quot;use_tracker&quot; : true,
-      &quot;use_dht&quot; : false,
-      &quot;search_lan&quot; : true,
-      &quot;use_sync_trash&quot; : true
+      <span style="color:#f92672">&#34;use_relay_server&#34;</span> : <span style="color:#66d9ef">true</span>,
+      <span style="color:#f92672">&#34;use_tracker&#34;</span> : <span style="color:#66d9ef">true</span>,
+      <span style="color:#f92672">&#34;use_dht&#34;</span> : <span style="color:#66d9ef">false</span>,
+      <span style="color:#f92672">&#34;search_lan&#34;</span> : <span style="color:#66d9ef">true</span>,
+      <span style="color:#f92672">&#34;use_sync_trash&#34;</span> : <span style="color:#66d9ef">true</span>
     }
   ]
 }
-</code></pre>
-<h2 id="init-script">Init script</h2>
+</code></pre></div><h2 id="init-script">Init script</h2>
 <p>Create file <code>/etc/init.d/btsync</code> with content (thanks to <a href="https://gist.github.com/MendelGusmao/5398362" target="_blank">Mendel</a>, you need to list users who will use btsync in <code>BTSYNC_USERS</code> variable, every user must have config file from previous section in home folder):</p>
-<pre><code class="language-bash">#!/bin/sh
-### BEGIN INIT INFO
-# Provides: btsync
-# Required-Start: $local_fs $remote_fs
-# Required-Stop: $local_fs $remote_fs
-# Should-Start: $network
-# Should-Stop: $network
-# Default-Start: 2 3 4 5
-# Default-Stop: 0 1 6
-# Short-Description: Multi-user daemonized version of btsync.
-# Description: Starts the btsync daemon for all registered users.
-### END INIT INFO
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#!/bin/sh
+</span><span style="color:#75715e"></span><span style="color:#75715e">### BEGIN INIT INFO</span>
+<span style="color:#75715e"># Provides: btsync</span>
+<span style="color:#75715e"># Required-Start: $local_fs $remote_fs</span>
+<span style="color:#75715e"># Required-Stop: $local_fs $remote_fs</span>
+<span style="color:#75715e"># Should-Start: $network</span>
+<span style="color:#75715e"># Should-Stop: $network</span>
+<span style="color:#75715e"># Default-Start: 2 3 4 5</span>
+<span style="color:#75715e"># Default-Stop: 0 1 6</span>
+<span style="color:#75715e"># Short-Description: Multi-user daemonized version of btsync.</span>
+<span style="color:#75715e"># Description: Starts the btsync daemon for all registered users.</span>
+<span style="color:#75715e">### END INIT INFO</span>
 
-# Source: https://gist.github.com/MendelGusmao/5398362
+<span style="color:#75715e"># Source: https://gist.github.com/MendelGusmao/5398362</span>
 
-# Replace with linux users you want to run BTSync clients for
-BTSYNC_USERS=&quot;kenarius&quot;
-DAEMON=/usr/bin/btsync
+<span style="color:#75715e"># Replace with linux users you want to run BTSync clients for</span>
+BTSYNC_USERS<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;kenarius&#34;</span>
+DAEMON<span style="color:#f92672">=</span>/usr/bin/btsync
 
-start() {
-  for btsuser in $BTSYNC_USERS; do
-    HOMEDIR=`getent passwd $btsuser | cut -d: -f6`
-    config=$HOMEDIR/.sync/config.json
-    if [ -f $config ]; then
-      echo &quot;Starting BTSync for $btsuser&quot;
+start<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">for</span> btsuser in $BTSYNC_USERS; <span style="color:#66d9ef">do</span>
+    HOMEDIR<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>getent passwd $btsuser | cut -d: -f6<span style="color:#e6db74">`</span>
+    config<span style="color:#f92672">=</span>$HOMEDIR/.sync/config.json
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> -f $config <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+      echo <span style="color:#e6db74">&#34;Starting BTSync for </span>$btsuser<span style="color:#e6db74">&#34;</span>
       start-stop-daemon -b -o -c $btsuser -S -u $btsuser -x $DAEMON -- --config $config
-    else
-      echo &quot;Couldn't start BTSync for $btsuser (no $config found)&quot;
-    fi
-  done
-}
+    <span style="color:#66d9ef">else</span>
+      echo <span style="color:#e6db74">&#34;Couldn&#39;t start BTSync for </span>$btsuser<span style="color:#e6db74"> (no </span>$config<span style="color:#e6db74"> found)&#34;</span>
+    <span style="color:#66d9ef">fi</span>
+  <span style="color:#66d9ef">done</span>
+<span style="color:#f92672">}</span>
 
-stop() {
-  for btsuser in $BTSYNC_USERS; do
-    dbpid=`pgrep -fu $btsuser $DAEMON`
-    if [ ! -z &quot;$dbpid&quot; ]; then
-      echo &quot;Stopping btsync for $btsuser&quot;
+stop<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">for</span> btsuser in $BTSYNC_USERS; <span style="color:#66d9ef">do</span>
+    dbpid<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>pgrep -fu $btsuser $DAEMON<span style="color:#e6db74">`</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> ! -z <span style="color:#e6db74">&#34;</span>$dbpid<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+      echo <span style="color:#e6db74">&#34;Stopping btsync for </span>$btsuser<span style="color:#e6db74">&#34;</span>
       start-stop-daemon -o -c $btsuser -K -u $btsuser -x $DAEMON
-    fi
-  done
-}
+    <span style="color:#66d9ef">fi</span>
+  <span style="color:#66d9ef">done</span>
+<span style="color:#f92672">}</span>
 
-status() {
-  for btsuser in $BTSYNC_USERS; do
-    dbpid=`pgrep -fu $btsuser $DAEMON`
-    if [ -z &quot;$dbpid&quot; ]; then
-      echo &quot;btsync for USER $btsuser: not running.&quot;
-    else
-      echo &quot;btsync for USER $btsuser: running (pid $dbpid)&quot;
-    fi
-  done
-}
+status<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">for</span> btsuser in $BTSYNC_USERS; <span style="color:#66d9ef">do</span>
+    dbpid<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>pgrep -fu $btsuser $DAEMON<span style="color:#e6db74">`</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> -z <span style="color:#e6db74">&#34;</span>$dbpid<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+      echo <span style="color:#e6db74">&#34;btsync for USER </span>$btsuser<span style="color:#e6db74">: not running.&#34;</span>
+    <span style="color:#66d9ef">else</span>
+      echo <span style="color:#e6db74">&#34;btsync for USER </span>$btsuser<span style="color:#e6db74">: running (pid </span>$dbpid<span style="color:#e6db74">)&#34;</span>
+    <span style="color:#66d9ef">fi</span>
+  <span style="color:#66d9ef">done</span>
+<span style="color:#f92672">}</span>
 
-case &quot;$1&quot; in
- start)
+<span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;</span>$1<span style="color:#e6db74">&#34;</span> in
+ start<span style="color:#f92672">)</span>
 start
 ;;
-stop)
+stop<span style="color:#f92672">)</span>
 stop
 ;;
-restart|reload|force-reload)
+restart|reload|force-reload<span style="color:#f92672">)</span>
 stop
 start
 ;;
-status)
+status<span style="color:#f92672">)</span>
 status
 ;;
-*)
-echo &quot;Usage: /etc/init.d/btsync {start|stop|reload|force-reload|restart|status}&quot;
-exit 1
-esac
+*<span style="color:#f92672">)</span>
+echo <span style="color:#e6db74">&#34;Usage: /etc/init.d/btsync {start|stop|reload|force-reload|restart|status}&#34;</span>
+exit <span style="color:#ae81ff">1</span>
+<span style="color:#66d9ef">esac</span>
 
-exit 0
-</code></pre>
-<p>That&rsquo;s all. Now make btsync executable, register init script with <code>update-rc.d</code> and start service. Issue as <code>root</code>:</p>
-<pre><code class="language-bash">cd /etc/init.d/
+exit <span style="color:#ae81ff">0</span>
+</code></pre></div><p>That&rsquo;s all. Now make btsync executable, register init script with <code>update-rc.d</code> and start service. Issue as <code>root</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cd /etc/init.d/
 chmod +x btsync
 update-rc.d btsync defaults
 service btsync start
-</code></pre>
+</code></pre></div>
     </div>
 </article>
 

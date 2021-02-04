@@ -104,15 +104,14 @@ $ du ./
     
     <div class="post-content markdown-body">
         <p>du (disk usage) utility in linux bash summarizes disk usage of each directory or file. By default, it outputs only directories. Just enter some dir and type</p>
-<pre><code class="language-bash">$ du ./
-</code></pre>
-<p>But if <code>./</code> has many subdirectories, output will be too long. And it is unsorted. The stated in the title task can be achieved by piping.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ du ./
+</code></pre></div><p>But if <code>./</code> has many subdirectories, output will be too long. And it is unsorted. The stated in the title task can be achieved by piping.</p>
 <h2 id="sort-output-by-size">Sort output by size</h2>
 <p>Cut the first line, it is size of the ./ dir as sum of other sizes
 Use &ldquo;—human-readable&rdquo; in du or divide by 1024 to get kbytes, mbytes, etc. I divide by 1000 to get results close to nautilus ones.</p>
 <p>The resulting command:</p>
-<pre><code class="language-bash">$ du -b --max-depth=1 | sort -nr | sed -n '2,4p' | awk '{print $1/1000^3&quot; Gb\t&quot; $2}'
-</code></pre>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ du -b --max-depth<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> | sort -nr | sed -n <span style="color:#e6db74">&#39;2,4p&#39;</span> | awk <span style="color:#e6db74">&#39;{print $1/1000^3&#34; Gb\t&#34; $2}&#39;</span>
+</code></pre></div>
     </div>
 </article>
 
