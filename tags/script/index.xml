@@ -15,7 +15,7 @@
       
       <guid>https://bikulov.org/blog/2016/01/05/script-for-user-configurations-generation-and-sending-at-ubuntu-openvpn-server/</guid>
       <description>Ubuntu has a very detailed documentation about OpenVPN server configuration. The key feature of this note is script for automatic generation of single-file client configurations (keys and certs are embedded) and sending them by email. Looks interesting? Read below!
-#&amp;nbsp;Prerequisities All commands in this section must be executed as root user.
+§&amp;nbsp;Prerequisities All commands in this section must be executed as root user.
 Update package list:
 apt-get update apt-get -y upgrade Install needed packages (easy-rsa must be installed explicitly on modern Ubuntus):</description>
     </item>

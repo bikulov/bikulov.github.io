@@ -30,7 +30,7 @@
       </ul>
     </div>
   </nav>
-</header><div class="container bg-light">
+</header><div class="container bg-light p-4">
 <div class="row text-center mb-5">
   <div class="col">
     <h1>Install and configure btsync in Ubuntu 12.04</h1>
@@ -50,14 +50,14 @@
   <div class="col">
     <p>This note describes installation of Bittorrent Sync on Ubuntu. Tutorial was tested on Ubuntu 12.04, but it must work for all Debian-based systems. Read full btsync  <a href="http://btsync.s3-website-us-east-1.amazonaws.com/BitTorrentSyncUserGuide.pdf">manual</a> for advanced information.</p>
 <h2 id="download-and-install-btsync">
-  <a class="text-decoration-none" href="#download-and-install-btsync">#</a>&nbsp;Download and install btsync
+  <a class="text-decoration-none" href="#download-and-install-btsync">§</a>&nbsp;Download and install btsync
 </h2><p>Btsync is provided as single binary file. We will place it into <code>/usr/bin</code> directory. So, download archive with binary file, extract it, remove archive, move binary:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>wget http://btsync.s3-website-us-east-1.amazonaws.com/btsync_x64.tar.gz
 </span></span><span style="display:flex;"><span>tar xf btsync_x64.tar.gz
 </span></span><span style="display:flex;"><span>rm btsync_x64.tar.gz
 </span></span><span style="display:flex;"><span>sudo mv btsync /usr/bin/btsync
 </span></span></code></pre></div><h2 id="configure-shared-folder">
-  <a class="text-decoration-none" href="#configure-shared-folder">#</a>&nbsp;Configure shared folder
+  <a class="text-decoration-none" href="#configure-shared-folder">§</a>&nbsp;Configure shared folder
 </h2><p>We will use configuration file instead of web interface. Create <code>~/.sync/config.json</code> (for <code>&lt;home folder&gt;</code> for user <code>username</code> is <code>/home/username</code>) with content provided below. If you have several users you want to use btsync, create config in their home folders.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;device_name&#34;</span>: <span style="color:#e6db74">&#34;&lt;computer name&gt;&#34;</span>,
@@ -86,7 +86,7 @@
 </span></span><span style="display:flex;"><span>  ]
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><h2 id="init-script">
-  <a class="text-decoration-none" href="#init-script">#</a>&nbsp;Init script
+  <a class="text-decoration-none" href="#init-script">§</a>&nbsp;Init script
 </h2><p>Create file <code>/etc/init.d/btsync</code> with content (thanks to <a href="https://gist.github.com/MendelGusmao/5398362">Mendel</a>, you need to list users who will use btsync in <code>BTSYNC_USERS</code> variable, every user must have config file from previous section in home folder):</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/sh
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">### BEGIN INIT INFO</span>

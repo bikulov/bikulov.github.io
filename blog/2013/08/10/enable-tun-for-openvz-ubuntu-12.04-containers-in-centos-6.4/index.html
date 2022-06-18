@@ -30,7 +30,7 @@
       </ul>
     </div>
   </nav>
-</header><div class="container bg-light">
+</header><div class="container bg-light p-4">
 <div class="row text-center mb-5">
   <div class="col">
     <h1>Enable tun for OpenVZ Ubuntu 12.04 containers in CentOS 6.4</h1>
@@ -61,7 +61,7 @@
 </ul>
 <p>I&rsquo;ve grabbed container configuration from <a href="http://askubuntu.com/questions/278238/openvpn-on-ubuntu-openvz">askbuntu</a>.</p>
 <h2 id="load-tun-after-boot-automatically">
-  <a class="text-decoration-none" href="#load-tun-after-boot-automatically">#</a>&nbsp;Load tun after boot automatically
+  <a class="text-decoration-none" href="#load-tun-after-boot-automatically">§</a>&nbsp;Load tun after boot automatically
 </h2><p>Edit <code>tun.modules</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># vim /etc/sysconfig/modules/tun.modules</span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">#!/bin/sh</span>
@@ -72,7 +72,7 @@
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ lsmod | grep tun
 </span></span><span style="display:flex;"><span>tun                    <span style="color:#ae81ff">15493</span>  <span style="color:#ae81ff">2</span>
 </span></span></code></pre></div><h2 id="edit-container-configuration">
-  <a class="text-decoration-none" href="#edit-container-configuration">#</a>&nbsp;Edit container configuration
+  <a class="text-decoration-none" href="#edit-container-configuration">§</a>&nbsp;Edit container configuration
 </h2><p>Issue following commands in host terminal as root (change &lsquo;101&rsquo; to your container id):</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>vzctl set <span style="color:#ae81ff">101</span> --devnodes net/tun:rw --save
 </span></span><span style="display:flex;"><span>vzctl set <span style="color:#ae81ff">101</span> --devices c:10:200:rw --save

@@ -30,7 +30,7 @@
       </ul>
     </div>
   </nav>
-</header><div class="container bg-light">
+</header><div class="container bg-light p-4">
 <div class="row text-center mb-5">
   <div class="col">
     <h1>Show N biggest directories in linux bash</h1>
@@ -58,7 +58,7 @@
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ du ./
 </span></span></code></pre></div><p>But if <code>./</code> has many subdirectories, output will be too long. And it is unsorted. The stated in the title task can be achieved by piping.</p>
 <h2 id="sort-output-by-size">
-  <a class="text-decoration-none" href="#sort-output-by-size">#</a>&nbsp;Sort output by size
+  <a class="text-decoration-none" href="#sort-output-by-size">§</a>&nbsp;Sort output by size
 </h2><p>Cut the first line, it is size of the ./ dir as sum of other sizes
 Use &ldquo;—human-readable&rdquo; in du or divide by 1024 to get kbytes, mbytes, etc. I divide by 1000 to get results close to nautilus ones.</p>
 <p>The resulting command:</p>

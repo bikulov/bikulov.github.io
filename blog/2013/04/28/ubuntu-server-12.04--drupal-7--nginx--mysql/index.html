@@ -30,7 +30,7 @@
       </ul>
     </div>
   </nav>
-</header><div class="container bg-light">
+</header><div class="container bg-light p-4">
 <div class="row text-center mb-5">
   <div class="col">
     <h1>Ubuntu Server 12.04 &#43; Drupal 7 &#43; nginx &#43; MySQL</h1>
@@ -56,12 +56,12 @@
 <p>All variables in square brackets must be replaced by your names or passwords.</p>
 <p>Site will be available at url [sitename].</p>
 <h2 id="installing-packages">
-  <a class="text-decoration-none" href="#installing-packages">#</a>&nbsp;Installing packages
+  <a class="text-decoration-none" href="#installing-packages">§</a>&nbsp;Installing packages
 </h2><p>Install all necessary packages:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt-get install -y nginx php5-fpm php-apc php5-mysql mysql-client-core-5.5 mysql-server php5-gd
 </span></span></code></pre></div><p>During the installation MySQL will ask you for root password. Rememer it, I will refer to it as [mysqlpwd] further.</p>
 <h2 id="set-up-mysql">
-  <a class="text-decoration-none" href="#set-up-mysql">#</a>&nbsp;Set up MySQL
+  <a class="text-decoration-none" href="#set-up-mysql">§</a>&nbsp;Set up MySQL
 </h2><p>Login to MySQL console:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mysql -u root --password<span style="color:#f92672">=[</span>mysqlpwd<span style="color:#f92672">]</span>
 </span></span></code></pre></div><p>and issue the following commands (create user, create database, allow user to work with database):</p>
@@ -71,7 +71,7 @@
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">FLUSH</span> <span style="color:#66d9ef">PRIVILEGES</span>;
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">EXIT</span>
 </span></span></code></pre></div><h2 id="set-up-nginx">
-  <a class="text-decoration-none" href="#set-up-nginx">#</a>&nbsp;Set up nginx
+  <a class="text-decoration-none" href="#set-up-nginx">§</a>&nbsp;Set up nginx
 </h2><p>Here we will make a configurational file for nginx.</p>
 <p>As create file in <code>sites-available</code> directory with content:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#a6e22e">server {</span>
@@ -101,7 +101,7 @@
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo ln /etc/nginx/sites-available/<span style="color:#f92672">[</span>sitename<span style="color:#f92672">]</span> /etc/nginx/sites-enabled/<span style="color:#f92672">[</span>sitename<span style="color:#f92672">]</span>
 </span></span><span style="display:flex;"><span>sudo service nginx restart
 </span></span></code></pre></div><h2 id="set-up-drupal">
-  <a class="text-decoration-none" href="#set-up-drupal">#</a>&nbsp;Set up Drupal
+  <a class="text-decoration-none" href="#set-up-drupal">§</a>&nbsp;Set up Drupal
 </h2><p>We will store Drupal in  folder in <code>/srv</code>. Issue following commands in bash:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo -s
 </span></span><span style="display:flex;"><span>cd /srv

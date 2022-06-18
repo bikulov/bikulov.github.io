@@ -14,7 +14,7 @@
       <pubDate>Sun, 05 Apr 2015 16:31:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2015/04/05/animations-from-scientific-data-using-paraview-4.3-and-python/</guid>
-      <description>#&amp;nbsp;Create frames This note describes usage of Paraview 4.3 (contrary to previous note with Paraview before 4.1). Some changes were made:
+      <description>§&amp;nbsp;Create frames This note describes usage of Paraview 4.3 (contrary to previous note with Paraview before 4.1). Some changes were made:
  command line arguments were added to make code more reusable it works with Paraview extracted from the archive (4.3.1) white background must be specified manually (SetViewProperties(view, Background = [1, 1, 1]) in the code)  Script is tested under Ubuntu 14.04 with Paraview 4.3.1. Paraview was downloaded from official site and extracted to /home/bikulov/bin/ParaView-4.</description>
     </item>
     

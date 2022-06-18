@@ -30,7 +30,7 @@
       </ul>
     </div>
   </nav>
-</header><div class="container bg-light">
+</header><div class="container bg-light p-4">
 <div class="row text-center mb-5">
   <div class="col">
     <h1>How to setup own selfhosted wiki</h1>
@@ -56,7 +56,7 @@
   <div class="col">
     <p>Disclaimer: many links in this post are referral. If you are uncomfortable with it, just search for the text in the links and use results from the search engines.</p>
 <h2 id="plan">
-  <a class="text-decoration-none" href="#plan">#</a>&nbsp;Plan
+  <a class="text-decoration-none" href="#plan">§</a>&nbsp;Plan
 </h2><ol>
 <li>Spin up a new virtual server (1 CPU + 1 GB RAM is fairly enough) in <a href="https://www.vultr.com/?ref=7552058">Vultr</a>, <a href="https://m.do.co/c/8aba7c4cd737">Digital Ocean</a>, etc.</li>
 <li>Register a new domain name</li>
@@ -65,7 +65,7 @@
 <li>Backups</li>
 </ol>
 <h2 id="virtual-server">
-  <a class="text-decoration-none" href="#virtual-server">#</a>&nbsp;Virtual server
+  <a class="text-decoration-none" href="#virtual-server">§</a>&nbsp;Virtual server
 </h2><p>For example, let it be Digital Ocean.</p>
 <p>You need to create a 5$ basic droplet with Ubuntu 20.04 (Droplets -&gt; Create droplet). Choose:</p>
 <ol>
@@ -77,12 +77,12 @@
 <li>Authentication: SSH is must-have, generate key if needed</li>
 </ol>
 <h2 id="domain-name">
-  <a class="text-decoration-none" href="#domain-name">#</a>&nbsp;Domain name
+  <a class="text-decoration-none" href="#domain-name">§</a>&nbsp;Domain name
 </h2><p>One can register a domain name at the registrar of your choice. For Russian domains, I use <a href="https://www.reg.ru/?rlink=reflink-6310513">reg.ru</a>.</p>
 <p>After registration (and some wait time, while DNS records are being updated across the world), add resource record in DNS editor: <code>A</code> for IPv4 and <code>AAAA</code> for IPv6. IPs you can find on the virtual machine info page.</p>
 <p>More about resource records: <a href="https://en.wikipedia.org/wiki/List_of_DNS_record_types">https://en.wikipedia.org/wiki/List_of_DNS_record_types</a></p>
 <h2 id="docker-and-docker-compose">
-  <a class="text-decoration-none" href="#docker-and-docker-compose">#</a>&nbsp;Docker and docker-compose
+  <a class="text-decoration-none" href="#docker-and-docker-compose">§</a>&nbsp;Docker and docker-compose
 </h2><p>For installation of Docker use the <a href="https://docs.docker.com/engine/install/ubuntu/">official doc</a>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># run as root</span>
 </span></span><span style="display:flex;"><span>apt install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
@@ -95,7 +95,7 @@
 </span></span><span style="display:flex;"><span>curl -L <span style="color:#e6db74">&#34;https://github.com/docker/compose/releases/download/1.28.2/docker-compose-</span><span style="color:#66d9ef">$(</span>uname -s<span style="color:#66d9ef">)</span><span style="color:#e6db74">-</span><span style="color:#66d9ef">$(</span>uname -m<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span> -o /usr/local/bin/docker-compose
 </span></span><span style="display:flex;"><span>chmod +x /usr/local/bin/docker-compose
 </span></span></code></pre></div><h2 id="deploy-wiki">
-  <a class="text-decoration-none" href="#deploy-wiki">#</a>&nbsp;Deploy wiki
+  <a class="text-decoration-none" href="#deploy-wiki">§</a>&nbsp;Deploy wiki
 </h2><p>You need to <a href="https://github.com/awesome-selfhosted/awesome-selfhosted#wikis">choose</a> wiki to install. Let it be <a href="https://www.dokuwiki.org">Dokuwiki</a>.</p>
 <p>All you need is just a single <code>docker-compose.yaml</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-docker" data-lang="docker"><span style="display:flex;"><span>version: <span style="color:#e6db74">&#34;3.4&#34;</span><span style="color:#960050;background-color:#1e0010">
@@ -154,7 +154,7 @@
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker-compose up -d
 </span></span></code></pre></div><p><a href="https://docs.docker.com/compose/">More about docker-compose</a>. <a href="https://docs.docker.com/storage/volumes/">More about data volumes</a>. <a href="https://doc.traefik.io/traefik/v2.0/user-guides/docker-compose/acme-tls/">More about traefic</a>.</p>
 <h2 id="backups">
-  <a class="text-decoration-none" href="#backups">#</a>&nbsp;Backups
+  <a class="text-decoration-none" href="#backups">§</a>&nbsp;Backups
 </h2><p>More at backups can be fount in the <a href="https://docs.docker.com/storage/volumes/#backup-restore-or-migrate-data-volumes">official doc</a>. Below I rovide the most essential: backup bash command.</p>
 <p>Backup:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker run --rm --volumes-from dokuwiki -v <span style="color:#66d9ef">$(</span>pwd<span style="color:#66d9ef">)</span>:/backup ubuntu bash -c <span style="color:#e6db74">&#34;tar cvfz /backup/dokuwiki_</span><span style="color:#66d9ef">$(</span>date +%s<span style="color:#66d9ef">)</span><span style="color:#e6db74">.tar.gz /config&#34;</span>

@@ -30,7 +30,7 @@
       </ul>
     </div>
   </nav>
-</header><div class="container bg-light">
+</header><div class="container bg-light p-4">
 <div class="row text-center mb-5">
   <div class="col">
     <h1>Script for user configurations generation and sending at Ubuntu OpenVPN server</h1>
@@ -52,7 +52,7 @@
   <div class="col">
     <p>Ubuntu has a very detailed documentation about <a href="https://help.ubuntu.com/lts/serverguide/openvpn.html">OpenVPN server</a> configuration. The key feature of this note is script for automatic generation of single-file client configurations (keys and certs are embedded) and sending them by email. Looks interesting? Read below!</p>
 <h2 id="prerequisities">
-  <a class="text-decoration-none" href="#prerequisities">#</a>&nbsp;Prerequisities
+  <a class="text-decoration-none" href="#prerequisities">§</a>&nbsp;Prerequisities
 </h2><p>All commands in this section must be executed as root user.</p>
 <p>Update package list:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>apt-get update
@@ -60,7 +60,7 @@
 </span></span></code></pre></div><p>Install needed packages (easy-rsa must be installed explicitly on modern Ubuntus):</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>apt-get install -y openvpn easy-rsa
 </span></span></code></pre></div><h2 id="configure-openvpn-server-on-ubuntu-1404">
-  <a class="text-decoration-none" href="#configure-openvpn-server-on-ubuntu-1404">#</a>&nbsp;Configure OpenVPN server on Ubuntu 14.04
+  <a class="text-decoration-none" href="#configure-openvpn-server-on-ubuntu-1404">§</a>&nbsp;Configure OpenVPN server on Ubuntu 14.04
 </h2><p>Copy default configuration:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cp -r /usr/share/easy-rsa /etc/openvpn/easy-rsa
 </span></span><span style="display:flex;"><span>cd /etc/openvpn/easy-rsa
@@ -137,7 +137,7 @@
 </span></span><span style="display:flex;"><span>verb <span style="color:#ae81ff">3</span>
 </span></span></code></pre></div><p>Be sure that your keys <code>ca.crt</code>, <code>vpn.organization.com.crt</code>, <code>vpn.organization.com.key</code>, <code>dh2048.pem</code>, <code>ta.key</code> are in the correct place corresponding to server config.</p>
 <h2 id="client-configuration">
-  <a class="text-decoration-none" href="#client-configuration">#</a>&nbsp;Client configuration
+  <a class="text-decoration-none" href="#client-configuration">§</a>&nbsp;Client configuration
 </h2><p>Client configuration must correspond to server one. For the above server config client one is:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># /etc/openvpn/easy-rsa/client.conf</span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># Specify that it is a client</span>
@@ -179,7 +179,7 @@
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># Cryptographic cipher</span>
 </span></span><span style="display:flex;"><span>cipher AES-256-CBC
 </span></span></code></pre></div><h2 id="сonvenient-autosending-of-client-configurations">
-  <a class="text-decoration-none" href="#%d1%81onvenient-autosending-of-client-configurations">#</a>&nbsp;Сonvenient autosending of client configurations
+  <a class="text-decoration-none" href="#%d1%81onvenient-autosending-of-client-configurations">§</a>&nbsp;Сonvenient autosending of client configurations
 </h2><p>Save the following script into folder:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env bash
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
@@ -229,7 +229,7 @@
 </span></span></code></pre></div><p>You will have to install <code>mutt</code> (it is used for sending emails with attachments). Your server must have full hostname like <code>server.organization.com</code>, otherwise sendmail may hang during the install, so change it before mutt installation.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>apt-get install -y mutt
 </span></span></code></pre></div><h2 id="if-you-install-in-lxc-container">
-  <a class="text-decoration-none" href="#if-you-install-in-lxc-container">#</a>&nbsp;If you install in LXC container
+  <a class="text-decoration-none" href="#if-you-install-in-lxc-container">§</a>&nbsp;If you install in LXC container
 </h2><p>If you install VPN server into LXC container, you have to make additional steps. Firstly, add rule for iptabels in host system (use ip of your VPN container and port from VPN server config):</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>iptables -t nat -A PREROUTING -i eth0 -p udp --dport <span style="color:#ae81ff">1594</span> -j DNAT --to 10.0.3.111:1594
 </span></span></code></pre></div><p>To make it persistent, you may use <a href="http://stackoverflow.com/questions/30818931/debian-8-iptables-persistent">iptables-persistent</a>.</p>

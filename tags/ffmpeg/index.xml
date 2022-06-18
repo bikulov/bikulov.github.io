@@ -15,7 +15,7 @@
       
       <guid>https://bikulov.org/blog/2013/01/23/universal-screen-capturing-with-scrot-imagemagick-and-ffmpeg/</guid>
       <description>You can record your screen using only command line in Linux. Workflow will look like: Create a bunch of screenshots -&amp;gt; Crop screenshots -&amp;gt; Make a movie from images.
-#&amp;nbsp;Making screenshots scrot is command line screen capturing tool. It’s basic usage is very simple:
+§&amp;nbsp;Making screenshots scrot is command line screen capturing tool. It’s basic usage is very simple:
 $ scrot or
 $ scrot &amp;lt;filename&amp;gt;.png if you want to specify output filename.
 Let’s write script, which captures screen every 0.5 seconds and write result to screenshots/00000N.</description>

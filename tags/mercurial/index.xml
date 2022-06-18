@@ -26,9 +26,9 @@ I suggest to use Python script for this. Preliminaries: hg id -n returns local r
       
       <guid>https://bikulov.org/blog/2012/10/29/setting-up-rhodecode-on-ubuntu-12.04/</guid>
       <description>This howto is based on a great guide with modifications. All settings are made for server domain hg.kenarius.org. You can replace it with your one easily.
-#&amp;nbsp;Preparation #&amp;nbsp;Ubuntu Update Ubuntu with the commands:
+§&amp;nbsp;Preparation §&amp;nbsp;Ubuntu Update Ubuntu with the commands:
 sudo apt-get update sudo apt-get upgrade Install pip and virtualenv with the commands:
-sudo apt-get install python-pip sudo pip install virtualenv #&amp;nbsp;Nginx Install nginx:
+sudo apt-get install python-pip sudo pip install virtualenv §&amp;nbsp;Nginx Install nginx:
 sudo apt-get install nginx Add create ssl certificates:
 sudo openssl req -new -x509 -days 9999 -nodes -out host.</description>
     </item>

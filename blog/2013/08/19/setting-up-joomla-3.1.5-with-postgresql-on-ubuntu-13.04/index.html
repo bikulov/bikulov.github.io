@@ -30,7 +30,7 @@
       </ul>
     </div>
   </nav>
-</header><div class="container bg-light">
+</header><div class="container bg-light p-4">
 <div class="row text-center mb-5">
   <div class="col">
     <h1>Setting up Joomla 3.1.5 with PostgreSQL on Ubuntu 13.04</h1>
@@ -53,7 +53,7 @@
 <div class="row">
   <div class="col">
     <h2 id="installing-dependencies">
-  <a class="text-decoration-none" href="#installing-dependencies">#</a>&nbsp;Installing dependencies
+  <a class="text-decoration-none" href="#installing-dependencies">§</a>&nbsp;Installing dependencies
 </h2><p>Firstly you need to install webserver, php-related stuff and database server (we use PostgreSQL).</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>apt-get install -y php5-fpm nginx postgresql php5-pgsql
 </span></span></code></pre></div><p>Now download and install Joomla (currently 3.1.5 is the latest). Please, update following lines with latest version if nescessary:</p>
@@ -62,7 +62,7 @@
 </span></span><span style="display:flex;"><span>unzip Joomla_3.1.5-Stable-Full_Package.zip -d joomla
 </span></span><span style="display:flex;"><span>chown -R www-data:www-data joomla
 </span></span></code></pre></div><h2 id="database-setup">
-  <a class="text-decoration-none" href="#database-setup">#</a>&nbsp;Database setup
+  <a class="text-decoration-none" href="#database-setup">§</a>&nbsp;Database setup
 </h2><p>The only two things you need to do is to create user (<code>joomla</code> in example) and database (<code>joomla</code> in example). To do it under <code>postgres</code> user:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo -u postgres -i
 </span></span><span style="display:flex;"><span>createuser joomla --pwprompt --encrypted
@@ -76,7 +76,7 @@
 </span></span><span style="display:flex;"><span>Shall the new role be allowed to create databases? <span style="color:#f92672">(</span>y/n<span style="color:#f92672">)</span> y
 </span></span><span style="display:flex;"><span>Shall the new role be allowed to create more new roles? <span style="color:#f92672">(</span>y/n<span style="color:#f92672">)</span> n
 </span></span></code></pre></div><h2 id="nginx-setup">
-  <a class="text-decoration-none" href="#nginx-setup">#</a>&nbsp;nginx setup
+  <a class="text-decoration-none" href="#nginx-setup">§</a>&nbsp;nginx setup
 </h2><p>Create file <code>joomla</code> with content (you may want to adjust <code>server_name</code> and <code>root</code>):</p>
 <pre tabindex="0"><code># vim /etc/nginx/sites-available/joomla
 server {
@@ -141,7 +141,7 @@ server {
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># PHP only, required if PHP was built with --enable-force-cgi-redirect</span>
 </span></span><span style="display:flex;"><span>fastcgi_param   REDIRECT_STATUS         200;
 </span></span></code></pre></div><h2 id="hosts-setup">
-  <a class="text-decoration-none" href="#hosts-setup">#</a>&nbsp;hosts setup
+  <a class="text-decoration-none" href="#hosts-setup">§</a>&nbsp;hosts setup
 </h2><p>Now you need to point <code>joomla.lan</code> to <code>127.0.0.1</code> ip address. To do it, add line to <code>/etc/hosts</code>:</p>
 <p>{% codeblock%}
 127.0.0.1 joomla.lan</p>

@@ -30,7 +30,7 @@
       </ul>
     </div>
   </nav>
-</header><div class="container bg-light">
+</header><div class="container bg-light p-4">
 <div class="row text-center mb-5">
   <div class="col">
     <h1>Ubuntu Server 12.04 &#43; Slurm 2.5.7 fatnodes</h1>
@@ -54,11 +54,11 @@
 <p>Usually one physical or virtual computer (physical node) is one logical node is SLURM. If one physical node serve more than one logical nodes, it called «fat node». Fat nodes are needed in case you have a lot of memory at physical node or several GPUs on it. Sometimes fat nodes are convenient.</p>
 <p>System is Ubuntu 12.04 Server x64. We need additional configuration parameter, so SLURM will be built from the sources.</p>
 <h2 id="prerequisites">
-  <a class="text-decoration-none" href="#prerequisites">#</a>&nbsp;Prerequisites
+  <a class="text-decoration-none" href="#prerequisites">§</a>&nbsp;Prerequisites
 </h2><p>Munge for nodes authentication and build-essential for building from sources are needed:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt-get install -y libmunge-dev munge build-essential
 </span></span></code></pre></div><h2 id="building-slurm">
-  <a class="text-decoration-none" href="#building-slurm">#</a>&nbsp;Building SLURM
+  <a class="text-decoration-none" href="#building-slurm">§</a>&nbsp;Building SLURM
 </h2><p>Get, unpack and cd to slurm dir:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>wget http://www.schedmd.com/download/latest/slurm-2.5.7.tar.bz2
 </span></span><span style="display:flex;"><span>tar xvf slurm-2.5.7.tar.bz2
@@ -68,7 +68,7 @@
 </span></span><span style="display:flex;"><span>make
 </span></span><span style="display:flex;"><span>sudo make install
 </span></span></code></pre></div><h2 id="configuring-system">
-  <a class="text-decoration-none" href="#configuring-system">#</a>&nbsp;Configuring system
+  <a class="text-decoration-none" href="#configuring-system">§</a>&nbsp;Configuring system
 </h2><p>We need to add user slurm and add him to group with the same name:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo adduser slurm
 </span></span><span style="display:flex;"><span>sudo adduser slurm slurm
@@ -76,7 +76,7 @@
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo /usr/sbin/create-munge-key
 </span></span><span style="display:flex;"><span>sudo service munge start
 </span></span></code></pre></div><h2 id="configuring-slurm">
-  <a class="text-decoration-none" href="#configuring-slurm">#</a>&nbsp;Configuring SLURM
+  <a class="text-decoration-none" href="#configuring-slurm">§</a>&nbsp;Configuring SLURM
 </h2><p>Now create configuration file <code>/usr/local/etc/slurm.conf</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#a6e22e">ClusterName</span><span style="color:#f92672">=</span><span style="color:#e6db74">ubuntu #&lt; change this to your hostname</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">ControlMachine</span><span style="color:#f92672">=</span><span style="color:#e6db74">ubuntu #&lt; change this to your host name</span>
@@ -129,7 +129,7 @@
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># partition name is arbitrary</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">PartitionName</span><span style="color:#f92672">=</span><span style="color:#e6db74">cpu Nodes=node-[0-4] Default=YES MaxTime=INFINITE State=UP</span>
 </span></span></code></pre></div><h2 id="starting-slurm">
-  <a class="text-decoration-none" href="#starting-slurm">#</a>&nbsp;Starting SLURM
+  <a class="text-decoration-none" href="#starting-slurm">§</a>&nbsp;Starting SLURM
 </h2><p>Start SLURM control daemon:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo slurmctld -c
 </span></span></code></pre></div><p>Start SLURM daemons for each logical node:</p>

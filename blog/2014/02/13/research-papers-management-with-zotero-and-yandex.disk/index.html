@@ -30,7 +30,7 @@
       </ul>
     </div>
   </nav>
-</header><div class="container bg-light">
+</header><div class="container bg-light p-4">
 <div class="row text-center mb-5">
   <div class="col">
     <h1>Research Papers Management With Zotero and Yandex.Disk</h1>
@@ -54,7 +54,7 @@
   <div class="col">
     <p>Zotero is an open source plugin for Firefox for managing research papers collections. You can use online zotero storage (pretty small) or use third-party sync application. I use Yandex Disk for this purpose: 10 Gb it quite enough for a moderate research library. zotero can automatically fetch article metadata (author, year, etc) from the web (like Mendeley and similar software do).</p>
 <h2 id="prerequisities">
-  <a class="text-decoration-none" href="#prerequisities">#</a>&nbsp;Prerequisities
+  <a class="text-decoration-none" href="#prerequisities">§</a>&nbsp;Prerequisities
 </h2><p>You will need:</p>
 <ul>
 <li>Firefox (the latest version for Ubuntu 12.04 can be installed via official <a href="https://launchpad.net/~mozillateam/+archive/firefox-next">ppa</a>)</li>
@@ -73,7 +73,7 @@
 <p>After installation of Zotero and Zotfile you will need to restart Firefox.</p>
 <p>I’ve created Zotero folder in my Yandex.Disk with two subfolders: Data for Zotero database and misc files and Library for renamed pdfs. No additional internal structure in Library is used: I wanted plain list of articles and books with name template Author2010.pdf.</p>
 <h2 id="configuring-zotero">
-  <a class="text-decoration-none" href="#configuring-zotero">#</a>&nbsp;Configuring Zotero
+  <a class="text-decoration-none" href="#configuring-zotero">§</a>&nbsp;Configuring Zotero
 </h2><p>Here I’d like to list several important options to change. You can toggle zotero pane visibility with shortkey (<code>Ctrl+Shift+Z</code> by default).</p>
 <ul>
 <li><code>Settings&gt; Preferences&gt; Advanced&gt; General</code>: Switch <code>Status bar icon</code> to <code>None</code> (now you can hide plugin panel at the bottom of Firefox window).</li>
@@ -83,7 +83,7 @@
 <p>Now you will be asked to quit Firefox. Do it and move old Data directory to a new location: move all data from <code>~/.mozilla/firefox/&lt;random_string&gt;/zotero/</code> to <code>~/Yandex.Disk/Zotero/Data</code>.</p>
 <p>Now start zotero again.</p>
 <h2 id="configuring-zotfile">
-  <a class="text-decoration-none" href="#configuring-zotfile">#</a>&nbsp;Configuring Zotfile
+  <a class="text-decoration-none" href="#configuring-zotfile">§</a>&nbsp;Configuring Zotfile
 </h2><p>Zotfile has many options for renaming files based on article attributes: year, author, etc. I use Author2010.pdf format, i.e. first author family name and full year.</p>
 <ul>
 <li><code>Settings&gt; Zotfile Preferences</code> set <code>Location Of Files</code> to <em>~/Yandex.Disk/Zotero/Library</em>. Renamed article files will be moved there.</li>
@@ -91,11 +91,11 @@
 <p>Set up Author2010 format for renaming. In <em>Settings&gt; Zotfile Preferences&gt; Renaming Rules</em> set <code>Format for all Item Types except Patents</code> to <code>{\%a}{\%y}</code>. I’ve also set <code>Maximum number of authors</code> to <code>1</code> and removed check at <code>Add suffix when authors are omitted</code>.</p>
 <p>Some books are in djvu format, allow djvu handling: at <em>Settings&gt; Zotfile Preferences&gt; Advanced Settings&gt; Other Advanced Settings</em> add <code>djvu</code> to <code>Only work with the following filetypes</code>.</p>
 <h2 id="workflow">
-  <a class="text-decoration-none" href="#workflow">#</a>&nbsp;Workflow
+  <a class="text-decoration-none" href="#workflow">§</a>&nbsp;Workflow
 </h2><p>Now, instead of downloading pdf file I can Save to Zotero and Retrieve metadata from pdf automatically. Then I open Zotero pane (<code>Ctrl+Shift+Z</code> by default), right click on newly added item in libary and choose <em>Manage Attachments&gt; Rename Attachments</em>. This will rename file according to defined in zotfile preferences format and move it to the Library subfolder. Double click on item will open file in Firefox’s embedded pdf viewer.</p>
 <p>In almost all cases metadata is extracted and downloaded correctly.</p>
 <h2 id="android-side">
-  <a class="text-decoration-none" href="#android-side">#</a>&nbsp;Android side
+  <a class="text-decoration-none" href="#android-side">§</a>&nbsp;Android side
 </h2><p>Syncing with mobile device is strongly needed. Otherwise, I need two-way sync for downloading annotated pdfs from tablet back to desktop computer. For this purpose I use free app <a href="https://play.google.com/store/apps/details?id=dk.tacit.android.foldersync.lite">FolderSync Lite</a>. This app can download and upload the whole folder from many cloud-based storage providers, Yandex.Disk among them. So, I set up two-way sync of Library subfolder.</p>
 <p>For reading and annotating I recommend <a href="https://play.google.com/store/apps/details?id=com.cerience.reader.app">RepliGo PDF Reader</a>. It is paid application.</p>
 <p>Screenshot: <img src="/assets/zotero.png" alt="Zotero View"></p>

@@ -30,7 +30,7 @@
       </ul>
     </div>
   </nav>
-</header><div class="container bg-light">
+</header><div class="container bg-light p-4">
 <div class="row text-center mb-5">
   <div class="col">
     <h1>Setting up RhodeCode on Ubuntu 12.04</h1>
@@ -54,9 +54,9 @@
   <div class="col">
     <p>This howto is based on a great guide with modifications. All settings are made for server domain hg.kenarius.org. You can replace it with your one easily.</p>
 <h2 id="preparation">
-  <a class="text-decoration-none" href="#preparation">#</a>&nbsp;Preparation
+  <a class="text-decoration-none" href="#preparation">§</a>&nbsp;Preparation
 </h2><h3 id="ubuntu">
-  <a class="text-decoration-none" href="#ubuntu">#</a>&nbsp;Ubuntu
+  <a class="text-decoration-none" href="#ubuntu">§</a>&nbsp;Ubuntu
 </h3><p>Update Ubuntu with the commands:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt-get update
 </span></span><span style="display:flex;"><span>sudo apt-get upgrade
@@ -64,7 +64,7 @@
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt-get install python-pip
 </span></span><span style="display:flex;"><span>sudo pip install virtualenv
 </span></span></code></pre></div><h3 id="nginx">
-  <a class="text-decoration-none" href="#nginx">#</a>&nbsp;Nginx
+  <a class="text-decoration-none" href="#nginx">§</a>&nbsp;Nginx
 </h3><p>Install nginx:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt-get install nginx
 </span></span></code></pre></div><p>Add create ssl certificates:</p>
@@ -78,7 +78,7 @@
 </span></span><span style="display:flex;"><span>ssl_certificate     /etc/nginx/ssl/host.pem;
 </span></span><span style="display:flex;"><span>ssl_certificate_key /etc/nginx/ssl/host.key;
 </span></span></code></pre></div><h2 id="installing-rhodecode">
-  <a class="text-decoration-none" href="#installing-rhodecode">#</a>&nbsp;Installing RhodeCode
+  <a class="text-decoration-none" href="#installing-rhodecode">§</a>&nbsp;Installing RhodeCode
 </h2><p>Install Python sources:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt-get install python-dev
 </span></span></code></pre></div><p>Create the base directory and temporarily give yourself ownership:</p>
@@ -98,7 +98,7 @@
 </span></span></code></pre></div><p>Generate the RhodeCode database and create the initial admin account:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">(</span>venv<span style="color:#f92672">)</span> paster setup-rhodecode production.ini
 </span></span></code></pre></div><h2 id="starting-rhodecode-on-boot">
-  <a class="text-decoration-none" href="#starting-rhodecode-on-boot">#</a>&nbsp;Starting RhodeCode on boot
+  <a class="text-decoration-none" href="#starting-rhodecode-on-boot">§</a>&nbsp;Starting RhodeCode on boot
 </h2><p>Create <code>start.sh</code> in <code>/srv/hg.kenarius.org</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e"># run this as the rhodecode user!</span>
@@ -197,7 +197,7 @@
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo service rhodecode start
 </span></span><span style="display:flex;"><span>sudo service rhodecode stop
 </span></span></code></pre></div><h2 id="adding-nginx-as-a-front-end-for-ssl">
-  <a class="text-decoration-none" href="#adding-nginx-as-a-front-end-for-ssl">#</a>&nbsp;Adding Nginx as a front-end for SSL
+  <a class="text-decoration-none" href="#adding-nginx-as-a-front-end-for-ssl">§</a>&nbsp;Adding Nginx as a front-end for SSL
 </h2><p>Create <code>/etc/nginx/proxy.conf</code> file:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>proxy_redirect              off;
 </span></span><span style="display:flex;"><span>proxy_set_header            Host $host;

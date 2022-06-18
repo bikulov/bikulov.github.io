@@ -30,7 +30,7 @@
       </ul>
     </div>
   </nav>
-</header><div class="container bg-light">
+</header><div class="container bg-light p-4">
 <div class="row text-center mb-5">
   <div class="col">
     <h1>Configuring Ubuntu 12.04 in OpenVZ on CentOS 6.4</h1>
@@ -55,7 +55,7 @@
     <p>This howto is based on two sources: <a href="http://openvz.org/Quick_Installation_CentOS_6">Official wiki</a> and Amutu blog <a href="http://amutu.com/blog/2013/03/centos_bridge_devic/">entry</a>. In short, the main difficulty is in bridge network configuration: correct network configuration doesn&rsquo;t work in CentOS 6.4 while NetworkManager is running. I compiled official documentation and fix found in Amutu blog here in one entry.</p>
 <p>I assume you have clean installed CentOS. I tried all on x32 hardware, so you may need to fix container type in container creation section if you use x64 CentOS. All commands below need to be issued as root.</p>
 <h2 id="installation-of-openvz">
-  <a class="text-decoration-none" href="#installation-of-openvz">#</a>&nbsp;Installation of OpenVZ
+  <a class="text-decoration-none" href="#installation-of-openvz">§</a>&nbsp;Installation of OpenVZ
 </h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>wget -O /etc/yum.repos.d/openvz.repo http://download.openvz.org/openvz.repo
 </span></span><span style="display:flex;"><span>rpm --import http://download.openvz.org/RPM-GPG-Key-OpenVZ
 </span></span><span style="display:flex;"><span>yum install vzkernel vzctl vzquota
@@ -86,14 +86,14 @@
 </span></span><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash</span>
 </span></span><span style="display:flex;"><span>EXTERNAL_SCRIPT<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/usr/sbin/vznetaddbr&#34;</span>
 </span></span></code></pre></div><h2 id="fixing-networkmanager-issue">
-  <a class="text-decoration-none" href="#fixing-networkmanager-issue">#</a>&nbsp;Fixing NetworkManager issue
+  <a class="text-decoration-none" href="#fixing-networkmanager-issue">§</a>&nbsp;Fixing NetworkManager issue
 </h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>chkconfig NetworkManager off
 </span></span><span style="display:flex;"><span>chkconfig --levels <span style="color:#ae81ff">35</span> network on
 </span></span><span style="display:flex;"><span>service NetworkManager stop
 </span></span><span style="display:flex;"><span>service network restart
 </span></span></code></pre></div><p>Reboot OpenVZ host system.</p>
 <h2 id="creation-of-container-with-bridged-connection">
-  <a class="text-decoration-none" href="#creation-of-container-with-bridged-connection">#</a>&nbsp;Creation of container with bridged connection
+  <a class="text-decoration-none" href="#creation-of-container-with-bridged-connection">§</a>&nbsp;Creation of container with bridged connection
 </h2><p>All commands below need to be issued as root. Create a container:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>vzctl create <span style="color:#ae81ff">101</span> --ostemplate ubuntu-12.04-x86 --config vswap-1g
 </span></span></code></pre></div><p>Configure the container, type in terminal:</p>

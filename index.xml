@@ -23,7 +23,7 @@
       <pubDate>Mon, 13 Jun 2022 01:35:28 +0300</pubDate>
       
       <guid>https://bikulov.org/resume/</guid>
-      <description>#&amp;nbsp;Resume #&amp;nbsp;Employment  2015, October – current programmer in Yandex. 2016, January – current physisist in Lomonosov Moscow State University, Physics Faculty. 2013, December – 2015, October junior programmer in Yandex. 2013, May – 2015, January research fellow in Lomonosov Moscow State University, Physics Faculty. 2012, October – 2013, November analyst in IntroVision LLC. 2011 – 2012 programmer in IntroVision LLC. 2007 – 2012 undergraduate education in Lomonosov Moscow State University.</description>
+      <description>§&amp;nbsp;Resume §&amp;nbsp;Employment  2015, October – current programmer in Yandex. 2016, January – current physisist in Lomonosov Moscow State University, Physics Faculty. 2013, December – 2015, October junior programmer in Yandex. 2013, May – 2015, January research fellow in Lomonosov Moscow State University, Physics Faculty. 2012, October – 2013, November analyst in IntroVision LLC. 2011 – 2012 programmer in IntroVision LLC. 2007 – 2012 undergraduate education in Lomonosov Moscow State University.</description>
     </item>
     
     <item>
@@ -33,7 +33,7 @@
       
       <guid>https://bikulov.org/blog/2021/02/02/how-to-setup-own-selfhosted-wiki/</guid>
       <description>Disclaimer: many links in this post are referral. If you are uncomfortable with it, just search for the text in the links and use results from the search engines.
-#&amp;nbsp;Plan  Spin up a new virtual server (1 CPU + 1 GB RAM is fairly enough) in Vultr, Digital Ocean, etc. Register a new domain name Install Docker and Docker Compose Use docker-compose to deploy a wiki Backups  #&amp;nbsp;Virtual server For example, let it be Digital Ocean.</description>
+§&amp;nbsp;Plan  Spin up a new virtual server (1 CPU + 1 GB RAM is fairly enough) in Vultr, Digital Ocean, etc. Register a new domain name Install Docker and Docker Compose Use docker-compose to deploy a wiki Backups  §&amp;nbsp;Virtual server For example, let it be Digital Ocean.</description>
     </item>
     
     <item>
@@ -43,7 +43,7 @@
       
       <guid>https://bikulov.org/blog/2019/12/22/wireguard-on-ubuntu-server-and-android-client/</guid>
       <description>WireGuard is lightweight VPN with extremely simple configuration. All below was tested on Ubuntu 18.04 as server and Anroid 8.0.0 as client.
-#&amp;nbsp;Server Installation from official ppa:
+§&amp;nbsp;Server Installation from official ppa:
 apt-add-repository ppa:wireguard/wireguard apt update apt install wireguard Client and server authenticate each other with asymmetric keys (like in SSH). Keys are generated with management utility wg:
 wg genkey This will be server auth key (client auth key can be generated with the same command or in mobile application, you will need public part in config).</description>
     </item>
@@ -90,7 +90,7 @@ useradd --home-dir /srv/lxc --create-home lxc echo &amp;#34;lxc veth lxcbr0 2&am
       
       <guid>https://bikulov.org/blog/2016/01/05/script-for-user-configurations-generation-and-sending-at-ubuntu-openvpn-server/</guid>
       <description>Ubuntu has a very detailed documentation about OpenVPN server configuration. The key feature of this note is script for automatic generation of single-file client configurations (keys and certs are embedded) and sending them by email. Looks interesting? Read below!
-#&amp;nbsp;Prerequisities All commands in this section must be executed as root user.
+§&amp;nbsp;Prerequisities All commands in this section must be executed as root user.
 Update package list:
 apt-get update apt-get -y upgrade Install needed packages (easy-rsa must be installed explicitly on modern Ubuntus):</description>
     </item>
@@ -122,7 +122,7 @@ scanimage --resolution 300 --mode Color --format tiff &amp;gt; document.tiff If 
       <pubDate>Sun, 05 Apr 2015 16:31:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2015/04/05/animations-from-scientific-data-using-paraview-4.3-and-python/</guid>
-      <description>#&amp;nbsp;Create frames This note describes usage of Paraview 4.3 (contrary to previous note with Paraview before 4.1). Some changes were made:
+      <description>§&amp;nbsp;Create frames This note describes usage of Paraview 4.3 (contrary to previous note with Paraview before 4.1). Some changes were made:
  command line arguments were added to make code more reusable it works with Paraview extracted from the archive (4.3.1) white background must be specified manually (SetViewProperties(view, Background = [1, 1, 1]) in the code)  Script is tested under Ubuntu 14.04 with Paraview 4.3.1. Paraview was downloaded from official site and extracted to /home/bikulov/bin/ParaView-4.</description>
     </item>
     
@@ -189,7 +189,7 @@ Full set of commands you need to install recent ipython notebook, numpy, scipy, 
       
       <guid>https://bikulov.org/blog/2014/02/13/research-papers-management-with-zotero-and-yandex.disk/</guid>
       <description>Zotero is an open source plugin for Firefox for managing research papers collections. You can use online zotero storage (pretty small) or use third-party sync application. I use Yandex Disk for this purpose: 10 Gb it quite enough for a moderate research library. zotero can automatically fetch article metadata (author, year, etc) from the web (like Mendeley and similar software do).
-#&amp;nbsp;Prerequisities You will need:
+§&amp;nbsp;Prerequisities You will need:
  Firefox (the latest version for Ubuntu 12.</description>
     </item>
     
@@ -332,8 +332,8 @@ All sources are placed in the src subdirectory. Intermediate object files are pl
       
       <guid>https://bikulov.org/blog/2013/08/26/install-and-configure-btsync-in-ubuntu-12.04/</guid>
       <description>This note describes installation of Bittorrent Sync on Ubuntu. Tutorial was tested on Ubuntu 12.04, but it must work for all Debian-based systems. Read full btsync manual for advanced information.
-#&amp;nbsp;Download and install btsync Btsync is provided as single binary file. We will place it into /usr/bin directory. So, download archive with binary file, extract it, remove archive, move binary:
-wget http://btsync.s3-website-us-east-1.amazonaws.com/btsync_x64.tar.gz tar xf btsync_x64.tar.gz rm btsync_x64.tar.gz sudo mv btsync /usr/bin/btsync #&amp;nbsp;Configure shared folder We will use configuration file instead of web interface.</description>
+§&amp;nbsp;Download and install btsync Btsync is provided as single binary file. We will place it into /usr/bin directory. So, download archive with binary file, extract it, remove archive, move binary:
+wget http://btsync.s3-website-us-east-1.amazonaws.com/btsync_x64.tar.gz tar xf btsync_x64.tar.gz rm btsync_x64.tar.gz sudo mv btsync /usr/bin/btsync §&amp;nbsp;Configure shared folder We will use configuration file instead of web interface.</description>
     </item>
     
     <item>
@@ -342,9 +342,9 @@ wget http://btsync.s3-website-us-east-1.amazonaws.com/btsync_x64.tar.gz tar xf b
       <pubDate>Mon, 19 Aug 2013 16:15:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2013/08/19/setting-up-joomla-3.1.5-with-postgresql-on-ubuntu-13.04/</guid>
-      <description>#&amp;nbsp;Installing dependencies Firstly you need to install webserver, php-related stuff and database server (we use PostgreSQL).
+      <description>§&amp;nbsp;Installing dependencies Firstly you need to install webserver, php-related stuff and database server (we use PostgreSQL).
 apt-get install -y php5-fpm nginx postgresql php5-pgsql Now download and install Joomla (currently 3.1.5 is the latest). Please, update following lines with latest version if nescessary:
-cd /srv wget http://joomlacode.org/gf/download/frsrelease/18622/83487/Joomla_3.1.5-Stable-Full_Package.zip unzip Joomla_3.1.5-Stable-Full_Package.zip -d joomla chown -R www-data:www-data joomla #&amp;nbsp;Database setup The only two things you need to do is to create user (joomla in example) and database (joomla in example).</description>
+cd /srv wget http://joomlacode.org/gf/download/frsrelease/18622/83487/Joomla_3.1.5-Stable-Full_Package.zip unzip Joomla_3.1.5-Stable-Full_Package.zip -d joomla chown -R www-data:www-data joomla §&amp;nbsp;Database setup The only two things you need to do is to create user (joomla in example) and database (joomla in example).</description>
     </item>
     
     <item>
@@ -365,7 +365,7 @@ cd /srv wget http://joomlacode.org/gf/download/frsrelease/18622/83487/Joomla_3.1
       <guid>https://bikulov.org/blog/2013/08/10/enable-tun-for-openvz-ubuntu-12.04-containers-in-centos-6.4/</guid>
       <description>To enable tun device in OpenVZ containers tun module
  needs to be loaded in the host system (in my case CentOS 6.4) containter (in my case Ubuntu Server 12.04) must be allowed to use tun  I&amp;rsquo;ve grabbed container configuration from askbuntu.
-#&amp;nbsp;Load tun after boot automatically Edit tun.modules:
+§&amp;nbsp;Load tun after boot automatically Edit tun.modules:
 # vim /etc/sysconfig/modules/tun.modules #!/bin/sh /sbin/modprobe tun Set permissions for tun.modules:
 chmod 755 /etc/sysconfig/modules/tun.modules Reboot host system and test tun module loaded:</description>
     </item>
@@ -423,7 +423,7 @@ Usually one physical or virtual computer (physical node) is one logical node is 
       <description>Default Drupal package in Ubuntu installs Apache, but I prefer nginx as a webserver. In this note I’ll describe steps necessary to get Drupal 7 work.
 All variables in square brackets must be replaced by your names or passwords.
 Site will be available at url [sitename].
-#&amp;nbsp;Installing packages Install all necessary packages:
+§&amp;nbsp;Installing packages Install all necessary packages:
 sudo apt-get install -y nginx php5-fpm php-apc php5-mysql mysql-client-core-5.5 mysql-server php5-gd During the installation MySQL will ask you for root password.</description>
     </item>
     
@@ -434,7 +434,7 @@ sudo apt-get install -y nginx php5-fpm php-apc php5-mysql mysql-client-core-5.5 
       
       <guid>https://bikulov.org/blog/2013/01/23/universal-screen-capturing-with-scrot-imagemagick-and-ffmpeg/</guid>
       <description>You can record your screen using only command line in Linux. Workflow will look like: Create a bunch of screenshots -&amp;gt; Crop screenshots -&amp;gt; Make a movie from images.
-#&amp;nbsp;Making screenshots scrot is command line screen capturing tool. It’s basic usage is very simple:
+§&amp;nbsp;Making screenshots scrot is command line screen capturing tool. It’s basic usage is very simple:
 $ scrot or
 $ scrot &amp;lt;filename&amp;gt;.png if you want to specify output filename.
 Let’s write script, which captures screen every 0.5 seconds and write result to screenshots/00000N.</description>
@@ -469,7 +469,7 @@ To play around *.pcap, you have to get such file somehow. There are two opposite
       <guid>https://bikulov.org/blog/2012/11/01/show-n-biggest-directories-in-linux-bash/</guid>
       <description>du (disk usage) utility in linux bash summarizes disk usage of each directory or file. By default, it outputs only directories. Just enter some dir and type
 $ du ./ But if ./ has many subdirectories, output will be too long. And it is unsorted. The stated in the title task can be achieved by piping.
-#&amp;nbsp;Sort output by size Cut the first line, it is size of the ./ dir as sum of other sizes Use &amp;ldquo;—human-readable&amp;rdquo; in du or divide by 1024 to get kbytes, mbytes, etc.</description>
+§&amp;nbsp;Sort output by size Cut the first line, it is size of the ./ dir as sum of other sizes Use &amp;ldquo;—human-readable&amp;rdquo; in du or divide by 1024 to get kbytes, mbytes, etc.</description>
     </item>
     
     <item>
@@ -480,7 +480,7 @@ $ du ./ But if ./ has many subdirectories, output will be too long. And it is un
       <guid>https://bikulov.org/blog/2012/10/31/toggling-string-case-in-linux-bash/</guid>
       <description>It’s quite an academic task, but anyway useful sometimes. I’ve collected different ways to do it in terminal in linux. Some of them work with UTF-8 characters (some it will toggle case for &amp;ldquo;й&amp;rdquo;, &amp;ldquo;ё&amp;rdquo; and so on. It will not in general handle special ligatures, such as &amp;ldquo;ß&amp;rdquo;&amp;quot; and &amp;ldquo;ﬁ&amp;rdquo;.)
 Ways are: sed, perl, python, awk, tr, bash, dd.
-#&amp;nbsp;Using sed Works with UTF-8 characters.
+§&amp;nbsp;Using sed Works with UTF-8 characters.
 It is quite straightforward and allows to add custom rules easily.</description>
     </item>
     
@@ -491,9 +491,9 @@ It is quite straightforward and allows to add custom rules easily.</description>
       
       <guid>https://bikulov.org/blog/2012/10/29/setting-up-rhodecode-on-ubuntu-12.04/</guid>
       <description>This howto is based on a great guide with modifications. All settings are made for server domain hg.kenarius.org. You can replace it with your one easily.
-#&amp;nbsp;Preparation #&amp;nbsp;Ubuntu Update Ubuntu with the commands:
+§&amp;nbsp;Preparation §&amp;nbsp;Ubuntu Update Ubuntu with the commands:
 sudo apt-get update sudo apt-get upgrade Install pip and virtualenv with the commands:
-sudo apt-get install python-pip sudo pip install virtualenv #&amp;nbsp;Nginx Install nginx:
+sudo apt-get install python-pip sudo pip install virtualenv §&amp;nbsp;Nginx Install nginx:
 sudo apt-get install nginx Add create ssl certificates:
 sudo openssl req -new -x509 -days 9999 -nodes -out host.</description>
     </item>
@@ -505,7 +505,7 @@ sudo openssl req -new -x509 -days 9999 -nodes -out host.</description>
       
       <guid>https://bikulov.org/blog/2012/10/25/awk-a-powerful-tool-for-programmer/</guid>
       <description>AWK is an acronym of first letters of its authors (Aho, Weinberger and Kernighan). It is a data-manipulating scripting language with huge possibilities. There are several implementations of it: awk is a canonical one, nawk (new awk), mawk (default in Ubuntu 12.04), gawk is GNU awk. I recommend latter one, because it works correct with unicode symbols in example:
-$ echo юникод | gawk &amp;#34;{res = toupper(\$1); print res;}&amp;#34; ЮНИКОД #&amp;nbsp;Basic usage Most useful feature is writing script files to be loaded in awk later.</description>
+$ echo юникод | gawk &amp;#34;{res = toupper(\$1); print res;}&amp;#34; ЮНИКОД §&amp;nbsp;Basic usage Most useful feature is writing script files to be loaded in awk later.</description>
     </item>
     
     <item>
@@ -517,7 +517,7 @@ $ echo юникод | gawk &amp;#34;{res = toupper(\$1); print res;}&amp;#34; Ю
       <description>We all do backups. This note is about doing them on Ubuntu 12.04.
 Tasks:
  archive important folders dump mysql databases upload all to yandex.disk (online web storage with 10GB space) delete old backups  I’ll save only backups for last five days.
-#&amp;nbsp;Archiving There are many different backup tools, see wiki list. I’ve chosen DAR.
+§&amp;nbsp;Archiving There are many different backup tools, see wiki list. I’ve chosen DAR.
 One can install it in Ubuntu 12.04 by typing
 # apt-get install dar It is a console utility and it can be confusing for beginner.</description>
     </item>

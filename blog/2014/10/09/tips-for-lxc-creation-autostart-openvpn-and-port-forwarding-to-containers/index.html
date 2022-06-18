@@ -30,7 +30,7 @@
       </ul>
     </div>
   </nav>
-</header><div class="container bg-light">
+</header><div class="container bg-light p-4">
 <div class="row text-center mb-5">
   <div class="col">
     <h1>Tips for LXC: creation, autostart, OpenVPN and port forwarding to containers</h1>
@@ -57,7 +57,7 @@
     <p>I&rsquo;ve completed setting up my comfort set of LXC containers and want to save some points I spent a lot of time for or things for copy-paste.</p>
 <p>I used the official <a href="https://help.ubuntu.com/lts/serverguide/lxc.html">Ubuntu Server Guide</a> but <a href="https://www.digitalocean.com/community/tutorials/getting-started-with-lxc-on-an-ubuntu-13-04-vps">note</a> at Digital Ocean knowledge base also helped me a lot. I created 3 containers: one for vpn, one for site on <a href="/blog/2014/08/09/setup-drupal-7-with-nginx-and-postgresql-on-ubuntu-14-dot-04/">Drupal</a> and last one as www proxy for second one with nginx only.</p>
 <h2 id="create-lxc-container">
-  <a class="text-decoration-none" href="#create-lxc-container">#</a>&nbsp;Create LXC container
+  <a class="text-decoration-none" href="#create-lxc-container">§</a>&nbsp;Create LXC container
 </h2><p>Pretty simple, create container with Ubuntu in it:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>lxc-create -n <span style="color:#f92672">[</span>container_name<span style="color:#f92672">]</span> -t ubuntu
 </span></span></code></pre></div><p>Next, start it:</p>
@@ -69,14 +69,14 @@
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>userdel ubuntu
 </span></span><span style="display:flex;"><span>rm -rf /home/ubuntu
 </span></span></code></pre></div><h2 id="autostart-lxc-container">
-  <a class="text-decoration-none" href="#autostart-lxc-container">#</a>&nbsp;Autostart LXC container
+  <a class="text-decoration-none" href="#autostart-lxc-container">§</a>&nbsp;Autostart LXC container
 </h2><p>I wanted all my containers to start automatically. You can find instructions in Ubuntu server guide (edit <code>/var/lib/lxc/[container_name]/config</code>):</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Autostart</span>
 </span></span><span style="display:flex;"><span>lxc.start.auto <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
 </span></span><span style="display:flex;"><span>lxc.start.delay <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>
 </span></span></code></pre></div><p>Read as follows: autostart container and wait 5 seconds before starting next one.</p>
 <h2 id="openvpn-in-lxc">
-  <a class="text-decoration-none" href="#openvpn-in-lxc">#</a>&nbsp;OpenVPN in LXC
+  <a class="text-decoration-none" href="#openvpn-in-lxc">§</a>&nbsp;OpenVPN in LXC
 </h2><p>VPN server is not working out-of-box in LXC container. You need to add following option in container config (<code>/var/lib/lxc/[container_name]/config</code>):</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># OpenVPN</span>
 </span></span><span style="display:flex;"><span>lxc.cgroup.devices.allow <span style="color:#f92672">=</span> c 10:200 rwm
@@ -86,7 +86,7 @@
 </span></span><span style="display:flex;"><span>chmod <span style="color:#ae81ff">0666</span> /dev/net/tun
 </span></span></code></pre></div><p>Notes from <a href="http://heider.io/blog/2013/10/26/openvpn-in-a-lxc-container/">heider.io</a> and <a href="http://www.boxtricks.com/openvpn-refuses-to-start-in-lxc-container/">boxtricks</a> helped me.</p>
 <h2 id="iptables-with-lxc-containers">
-  <a class="text-decoration-none" href="#iptables-with-lxc-containers">#</a>&nbsp;Iptables with LXC containers
+  <a class="text-decoration-none" href="#iptables-with-lxc-containers">§</a>&nbsp;Iptables with LXC containers
 </h2><p>I needed to forward 80 and 443 ports to container with ip 10.0.3.100 and 1194 (OpenVPN) port to 10.0.3.200. To do so, perform at host machine:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>iptables -t nat -A PREROUTING -i eth0 -p tcp --dport <span style="color:#ae81ff">80</span> -j DNAT --to 10.0.3.100:80
 </span></span><span style="display:flex;"><span>iptables -t nat -A PREROUTING -i eth0 -p tcp --dport <span style="color:#ae81ff">443</span> -j DNAT --to 10.0.3.100:443

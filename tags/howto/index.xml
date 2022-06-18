@@ -15,7 +15,7 @@
       
       <guid>https://bikulov.org/blog/2021/02/02/how-to-setup-own-selfhosted-wiki/</guid>
       <description>Disclaimer: many links in this post are referral. If you are uncomfortable with it, just search for the text in the links and use results from the search engines.
-#&amp;nbsp;Plan  Spin up a new virtual server (1 CPU + 1 GB RAM is fairly enough) in Vultr, Digital Ocean, etc. Register a new domain name Install Docker and Docker Compose Use docker-compose to deploy a wiki Backups  #&amp;nbsp;Virtual server For example, let it be Digital Ocean.</description>
+§&amp;nbsp;Plan  Spin up a new virtual server (1 CPU + 1 GB RAM is fairly enough) in Vultr, Digital Ocean, etc. Register a new domain name Install Docker and Docker Compose Use docker-compose to deploy a wiki Backups  §&amp;nbsp;Virtual server For example, let it be Digital Ocean.</description>
     </item>
     
     <item>
@@ -25,7 +25,7 @@
       
       <guid>https://bikulov.org/blog/2019/12/22/wireguard-on-ubuntu-server-and-android-client/</guid>
       <description>WireGuard is lightweight VPN with extremely simple configuration. All below was tested on Ubuntu 18.04 as server and Anroid 8.0.0 as client.
-#&amp;nbsp;Server Installation from official ppa:
+§&amp;nbsp;Server Installation from official ppa:
 apt-add-repository ppa:wireguard/wireguard apt update apt install wireguard Client and server authenticate each other with asymmetric keys (like in SSH). Keys are generated with management utility wg:
 wg genkey This will be server auth key (client auth key can be generated with the same command or in mobile application, you will need public part in config).</description>
     </item>
@@ -49,7 +49,7 @@ useradd --home-dir /srv/lxc --create-home lxc echo &amp;#34;lxc veth lxcbr0 2&am
       
       <guid>https://bikulov.org/blog/2016/01/05/script-for-user-configurations-generation-and-sending-at-ubuntu-openvpn-server/</guid>
       <description>Ubuntu has a very detailed documentation about OpenVPN server configuration. The key feature of this note is script for automatic generation of single-file client configurations (keys and certs are embedded) and sending them by email. Looks interesting? Read below!
-#&amp;nbsp;Prerequisities All commands in this section must be executed as root user.
+§&amp;nbsp;Prerequisities All commands in this section must be executed as root user.
 Update package list:
 apt-get update apt-get -y upgrade Install needed packages (easy-rsa must be installed explicitly on modern Ubuntus):</description>
     </item>
@@ -81,7 +81,7 @@ scanimage --resolution 300 --mode Color --format tiff &amp;gt; document.tiff If 
       <pubDate>Sun, 05 Apr 2015 16:31:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2015/04/05/animations-from-scientific-data-using-paraview-4.3-and-python/</guid>
-      <description>#&amp;nbsp;Create frames This note describes usage of Paraview 4.3 (contrary to previous note with Paraview before 4.1). Some changes were made:
+      <description>§&amp;nbsp;Create frames This note describes usage of Paraview 4.3 (contrary to previous note with Paraview before 4.1). Some changes were made:
  command line arguments were added to make code more reusable it works with Paraview extracted from the archive (4.3.1) white background must be specified manually (SetViewProperties(view, Background = [1, 1, 1]) in the code)  Script is tested under Ubuntu 14.04 with Paraview 4.3.1. Paraview was downloaded from official site and extracted to /home/bikulov/bin/ParaView-4.</description>
     </item>
     
@@ -227,8 +227,8 @@ All sources are placed in the src subdirectory. Intermediate object files are pl
       
       <guid>https://bikulov.org/blog/2013/08/26/install-and-configure-btsync-in-ubuntu-12.04/</guid>
       <description>This note describes installation of Bittorrent Sync on Ubuntu. Tutorial was tested on Ubuntu 12.04, but it must work for all Debian-based systems. Read full btsync manual for advanced information.
-#&amp;nbsp;Download and install btsync Btsync is provided as single binary file. We will place it into /usr/bin directory. So, download archive with binary file, extract it, remove archive, move binary:
-wget http://btsync.s3-website-us-east-1.amazonaws.com/btsync_x64.tar.gz tar xf btsync_x64.tar.gz rm btsync_x64.tar.gz sudo mv btsync /usr/bin/btsync #&amp;nbsp;Configure shared folder We will use configuration file instead of web interface.</description>
+§&amp;nbsp;Download and install btsync Btsync is provided as single binary file. We will place it into /usr/bin directory. So, download archive with binary file, extract it, remove archive, move binary:
+wget http://btsync.s3-website-us-east-1.amazonaws.com/btsync_x64.tar.gz tar xf btsync_x64.tar.gz rm btsync_x64.tar.gz sudo mv btsync /usr/bin/btsync §&amp;nbsp;Configure shared folder We will use configuration file instead of web interface.</description>
     </item>
     
     <item>
@@ -237,9 +237,9 @@ wget http://btsync.s3-website-us-east-1.amazonaws.com/btsync_x64.tar.gz tar xf b
       <pubDate>Mon, 19 Aug 2013 16:15:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2013/08/19/setting-up-joomla-3.1.5-with-postgresql-on-ubuntu-13.04/</guid>
-      <description>#&amp;nbsp;Installing dependencies Firstly you need to install webserver, php-related stuff and database server (we use PostgreSQL).
+      <description>§&amp;nbsp;Installing dependencies Firstly you need to install webserver, php-related stuff and database server (we use PostgreSQL).
 apt-get install -y php5-fpm nginx postgresql php5-pgsql Now download and install Joomla (currently 3.1.5 is the latest). Please, update following lines with latest version if nescessary:
-cd /srv wget http://joomlacode.org/gf/download/frsrelease/18622/83487/Joomla_3.1.5-Stable-Full_Package.zip unzip Joomla_3.1.5-Stable-Full_Package.zip -d joomla chown -R www-data:www-data joomla #&amp;nbsp;Database setup The only two things you need to do is to create user (joomla in example) and database (joomla in example).</description>
+cd /srv wget http://joomlacode.org/gf/download/frsrelease/18622/83487/Joomla_3.1.5-Stable-Full_Package.zip unzip Joomla_3.1.5-Stable-Full_Package.zip -d joomla chown -R www-data:www-data joomla §&amp;nbsp;Database setup The only two things you need to do is to create user (joomla in example) and database (joomla in example).</description>
     </item>
     
     <item>
@@ -259,9 +259,9 @@ I assume you have clean installed CentOS. I tried all on x32 hardware, so you ma
       
       <guid>https://bikulov.org/blog/2012/10/29/setting-up-rhodecode-on-ubuntu-12.04/</guid>
       <description>This howto is based on a great guide with modifications. All settings are made for server domain hg.kenarius.org. You can replace it with your one easily.
-#&amp;nbsp;Preparation #&amp;nbsp;Ubuntu Update Ubuntu with the commands:
+§&amp;nbsp;Preparation §&amp;nbsp;Ubuntu Update Ubuntu with the commands:
 sudo apt-get update sudo apt-get upgrade Install pip and virtualenv with the commands:
-sudo apt-get install python-pip sudo pip install virtualenv #&amp;nbsp;Nginx Install nginx:
+sudo apt-get install python-pip sudo pip install virtualenv §&amp;nbsp;Nginx Install nginx:
 sudo apt-get install nginx Add create ssl certificates:
 sudo openssl req -new -x509 -days 9999 -nodes -out host.</description>
     </item>

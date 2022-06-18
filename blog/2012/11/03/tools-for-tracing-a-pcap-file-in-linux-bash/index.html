@@ -30,7 +30,7 @@
       </ul>
     </div>
   </nav>
-</header><div class="container bg-light">
+</header><div class="container bg-light p-4">
 <div class="row text-center mb-5">
   <div class="col">
     <h1>Tools for tracing a pcap file in linux bash</h1>
@@ -62,22 +62,22 @@
 </span></span></code></pre></div><p>replace <code>capture.pcap</code> with desired output filename, <code>-i eth1</code> indicates the interface for the logging to be done.</p>
 <p>As soon as your <code>*.pcap</code> is created, it must be parsed for valuable data. Wireshark fits this task but let’s focuse on terminal utilities. I’ve found four ones, but I’m sure there is much more of them.</p>
 <h2 id="tpick">
-  <a class="text-decoration-none" href="#tpick">#</a>&nbsp;tpick
+  <a class="text-decoration-none" href="#tpick">§</a>&nbsp;tpick
 </h2><p>tcpick is able to capture network traffic, store data in different files for each connection and trace stored files. Colorful output in terminal is really neat.</p>
 <p>Reading <code>*.pcap</code> file:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>tcpick -C -r capture.pcap
 </span></span></code></pre></div><h2 id="tshark">
-  <a class="text-decoration-none" href="#tshark">#</a>&nbsp;tshark
+  <a class="text-decoration-none" href="#tshark">§</a>&nbsp;tshark
 </h2><p>Wireshark has a terminal twin names tshark. Latter is useful on old computers, for scripting and more convenient for console-boys. Can capture traffic and analyze captured files as well.</p>
 <p>Reading <code>*.pcap</code> file with specified fields to display:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>tshark -n -r capture.pcap -T fields -e ip.dst_host -e frame.time_delta
 </span></span></code></pre></div><h2 id="tcptrace">
-  <a class="text-decoration-none" href="#tcptrace">#</a>&nbsp;tcptrace
+  <a class="text-decoration-none" href="#tcptrace">§</a>&nbsp;tcptrace
 </h2><p>tcptrace is created for analysis of captured files. Has many options.</p>
 <p>Reading <code>*.pcap</code> file:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>tcptrace --tsv -xHTTP -f<span style="color:#e6db74">&#39;&#39;</span>port<span style="color:#f92672">=</span>80<span style="color:#e6db74">&#39;&#39;</span> -btn capture.pcap
 </span></span></code></pre></div><h2 id="tcpdump">
-  <a class="text-decoration-none" href="#tcpdump">#</a>&nbsp;tcpdump
+  <a class="text-decoration-none" href="#tcpdump">§</a>&nbsp;tcpdump
 </h2><p>tcpdump was already mentioned as a tool for capturing traffic to pcap-file. It also can be used as analyser.</p>
 <p>Reading <code>*.pcap</code> file:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>tcpdump -ttttnr capture.pcap

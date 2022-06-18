@@ -16,7 +16,7 @@
       <guid>https://bikulov.org/blog/2012/11/01/show-n-biggest-directories-in-linux-bash/</guid>
       <description>du (disk usage) utility in linux bash summarizes disk usage of each directory or file. By default, it outputs only directories. Just enter some dir and type
 $ du ./ But if ./ has many subdirectories, output will be too long. And it is unsorted. The stated in the title task can be achieved by piping.
-#&amp;nbsp;Sort output by size Cut the first line, it is size of the ./ dir as sum of other sizes Use &amp;ldquo;—human-readable&amp;rdquo; in du or divide by 1024 to get kbytes, mbytes, etc.</description>
+§&amp;nbsp;Sort output by size Cut the first line, it is size of the ./ dir as sum of other sizes Use &amp;ldquo;—human-readable&amp;rdquo; in du or divide by 1024 to get kbytes, mbytes, etc.</description>
     </item>
     
   </channel>

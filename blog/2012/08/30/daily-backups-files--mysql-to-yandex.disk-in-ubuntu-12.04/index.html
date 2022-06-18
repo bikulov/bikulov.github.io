@@ -30,7 +30,7 @@
       </ul>
     </div>
   </nav>
-</header><div class="container bg-light">
+</header><div class="container bg-light p-4">
 <div class="row text-center mb-5">
   <div class="col">
     <h1>Daily backups (files &#43; mysql) to yandex.disk in Ubuntu 12.04</h1>
@@ -60,7 +60,7 @@
 </ul>
 <p>I’ll save only backups for last five days.</p>
 <h2 id="archiving">
-  <a class="text-decoration-none" href="#archiving">#</a>&nbsp;Archiving
+  <a class="text-decoration-none" href="#archiving">§</a>&nbsp;Archiving
 </h2><p>There are many different backup tools, see wiki list. I’ve chosen DAR.</p>
 <p>One can install it in Ubuntu 12.04 by typing</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># apt-get install dar</span>
@@ -70,7 +70,7 @@
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>dar -m <span style="color:#ae81ff">256</span> -z -s 600M -D -R /srv -c <span style="color:#e6db74">`</span>date -I<span style="color:#e6db74">`</span>_data -Z <span style="color:#e6db74">&#34;*.gz&#34;</span> -Z <span style="color:#e6db74">&#34;*.bz2&#34;</span> -Z <span style="color:#e6db74">&#34;*.zip&#34;</span> -Z <span style="color:#e6db74">&#34;*.png&#34;</span>
 </span></span></code></pre></div><p>It creates file currentdate_data.X.dar, for example 2012-08-30_data.1.dar, with a backup. If archive is bigger than 600M (-s 600M), it splits in two slices. <code>X</code> in the filename represents slice number. For the full description read how-to.</p>
 <h2 id="dumping-mysql">
-  <a class="text-decoration-none" href="#dumping-mysql">#</a>&nbsp;Dumping MySQL
+  <a class="text-decoration-none" href="#dumping-mysql">§</a>&nbsp;Dumping MySQL
 </h2><p>Dumping MySQL is performed by mysqldump utility. You can list your databases in MySQL by entering into console with</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-mysql" data-lang="mysql"><span style="display:flex;"><span>mysql <span style="color:#f92672">-</span>uroot <span style="color:#f92672">-</span>ppassword
 </span></span></code></pre></div><p>and type there</p>
@@ -79,7 +79,7 @@
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mysqldump -u root -ppassword drupal &gt; <span style="color:#e6db74">`</span>date -I<span style="color:#e6db74">`</span>_drupal.mysqldump
 </span></span></code></pre></div><p>It creates file with all necessary stuff to create the same table from nothing.</p>
 <h2 id="uploading">
-  <a class="text-decoration-none" href="#uploading">#</a>&nbsp;Uploading
+  <a class="text-decoration-none" href="#uploading">§</a>&nbsp;Uploading
 </h2><p>Yandex.Disk can be accessed by WebDAV. Install vebdavfs2:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># apt-get install davfs2</span>
 </span></span></code></pre></div><p>Then edit /etc/davfs2/secrets. Just add line with address, login and password:</p>
@@ -91,7 +91,7 @@
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>rm <span style="color:#e6db74">`</span>ls *.dar | head -n -5<span style="color:#e6db74">`</span>
 </span></span></code></pre></div><p>It leaves only last five backups.</p>
 <h2 id="adding-to-cron">
-  <a class="text-decoration-none" href="#adding-to-cron">#</a>&nbsp;Adding to cron
+  <a class="text-decoration-none" href="#adding-to-cron">§</a>&nbsp;Adding to cron
 </h2><p>All commands from above in one script backup.sh:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>mount -t davfs https://webdav.yandex.ru /media/yandex

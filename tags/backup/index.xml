@@ -17,7 +17,7 @@
       <description>We all do backups. This note is about doing them on Ubuntu 12.04.
 Tasks:
  archive important folders dump mysql databases upload all to yandex.disk (online web storage with 10GB space) delete old backups  I’ll save only backups for last five days.
-#&amp;nbsp;Archiving There are many different backup tools, see wiki list. I’ve chosen DAR.
+§&amp;nbsp;Archiving There are many different backup tools, see wiki list. I’ve chosen DAR.
 One can install it in Ubuntu 12.04 by typing
 # apt-get install dar It is a console utility and it can be confusing for beginner.</description>
     </item>

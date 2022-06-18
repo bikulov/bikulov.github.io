@@ -30,7 +30,7 @@
       </ul>
     </div>
   </nav>
-</header><div class="container bg-light">
+</header><div class="container bg-light p-4">
 <div class="row text-center mb-5">
   <div class="col">
     <h1>AWK: a powerful tool for programmer</h1>
@@ -48,7 +48,7 @@
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ echo юникод | gawk <span style="color:#e6db74">&#34;{res = toupper(\$1); print res;}&#34;</span>
 </span></span><span style="display:flex;"><span>ЮНИКОД
 </span></span></code></pre></div><h2 id="basic-usage">
-  <a class="text-decoration-none" href="#basic-usage">#</a>&nbsp;Basic usage
+  <a class="text-decoration-none" href="#basic-usage">§</a>&nbsp;Basic usage
 </h2><p>Most useful feature is writing script files to be loaded in awk later. One can execute script file by</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>gawk <span style="color:#f92672">[</span>options<span style="color:#f92672">]</span> -f script_file.awk input_file
 </span></span></code></pre></div><p>If there is no input file awk will read standard input stream.</p>
@@ -104,7 +104,7 @@
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>awk <span style="color:#e6db74">&#34;BEGIN{blocks=0} /block/{blocks++} END{ print blocks}&#34;</span> script.awk
 </span></span></code></pre></div><p>Where <code>/regular expression/</code> controls whether block after it will be executed.</p>
 <h2 id="user-defined-functions">
-  <a class="text-decoration-none" href="#user-defined-functions">#</a>&nbsp;User-defined functions
+  <a class="text-decoration-none" href="#user-defined-functions">§</a>&nbsp;User-defined functions
 </h2><p>In awk user-defined functions can be added as follows:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/gawk -f
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>

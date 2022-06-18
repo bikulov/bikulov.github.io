@@ -16,7 +16,7 @@
       <guid>https://bikulov.org/blog/2012/11/01/show-n-biggest-directories-in-linux-bash/</guid>
       <description>du (disk usage) utility in linux bash summarizes disk usage of each directory or file. By default, it outputs only directories. Just enter some dir and type
 $ du ./ But if ./ has many subdirectories, output will be too long. And it is unsorted. The stated in the title task can be achieved by piping.
-#&amp;nbsp;Sort output by size Cut the first line, it is size of the ./ dir as sum of other sizes Use &amp;ldquo;—human-readable&amp;rdquo; in du or divide by 1024 to get kbytes, mbytes, etc.</description>
+§&amp;nbsp;Sort output by size Cut the first line, it is size of the ./ dir as sum of other sizes Use &amp;ldquo;—human-readable&amp;rdquo; in du or divide by 1024 to get kbytes, mbytes, etc.</description>
     </item>
     
     <item>
@@ -27,7 +27,7 @@ $ du ./ But if ./ has many subdirectories, output will be too long. And it is un
       <guid>https://bikulov.org/blog/2012/10/31/toggling-string-case-in-linux-bash/</guid>
       <description>It’s quite an academic task, but anyway useful sometimes. I’ve collected different ways to do it in terminal in linux. Some of them work with UTF-8 characters (some it will toggle case for &amp;ldquo;й&amp;rdquo;, &amp;ldquo;ё&amp;rdquo; and so on. It will not in general handle special ligatures, such as &amp;ldquo;ß&amp;rdquo;&amp;quot; and &amp;ldquo;ﬁ&amp;rdquo;.)
 Ways are: sed, perl, python, awk, tr, bash, dd.
-#&amp;nbsp;Using sed Works with UTF-8 characters.
+§&amp;nbsp;Using sed Works with UTF-8 characters.
 It is quite straightforward and allows to add custom rules easily.</description>
     </item>
     

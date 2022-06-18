@@ -30,7 +30,7 @@
       </ul>
     </div>
   </nav>
-</header><div class="container bg-light">
+</header><div class="container bg-light p-4">
 <div class="row text-center mb-5">
   <div class="col">
     <h1>Toggling string case in linux bash</h1>
@@ -63,7 +63,7 @@
     <p>It’s quite an academic task, but anyway useful sometimes. I’ve collected different ways to do it in terminal in linux. Some of them work with UTF-8 characters (some it will toggle case for &ldquo;й&rdquo;, &ldquo;ё&rdquo; and so on. It will not in general handle special ligatures, such as &ldquo;ß&rdquo;&quot; and &ldquo;ﬁ&rdquo;.)</p>
 <p>Ways are: sed, perl, python, awk, tr, bash, dd.</p>
 <h2 id="using-sed">
-  <a class="text-decoration-none" href="#using-sed">#</a>&nbsp;Using sed
+  <a class="text-decoration-none" href="#using-sed">§</a>&nbsp;Using sed
 </h2><p>Works with UTF-8 characters.</p>
 <p>It is quite straightforward and allows to add custom rules easily. For example, I’ve added special handling for ligatures &ldquo;ß&rdquo;&quot; and &ldquo;ﬁ&rdquo;. I should note that conversion SS -&gt; ß is not correct in general. So you may want to remove it.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ echo <span style="color:#e6db74">&#39;&#39;</span>Wie hйЮёßen Sieﬁ тест<span style="color:#e6db74">&#39;&#39;</span> | sed <span style="color:#e6db74">&#39;&#39;</span>s/.*/<span style="color:#ae81ff">\U</span>&amp;/;s/ß/SS/g;s/ﬁ/FI/g<span style="color:#e6db74">&#39;&#39;</span>
@@ -72,7 +72,7 @@
 </span></span><span style="display:flex;"><span>$ echo <span style="color:#e6db74">&#39;&#39;</span>WIE HЙЮЁSSEN SIEFI ТЕСТ<span style="color:#e6db74">&#39;&#39;</span> | sed <span style="color:#e6db74">&#39;&#39;</span>s/ß/SS/g;s/ﬁ/FI/g;s/.*/<span style="color:#ae81ff">\L</span>&amp;/<span style="color:#e6db74">&#39;&#39;</span>
 </span></span><span style="display:flex;"><span>wie hйюёssen siefi тест
 </span></span></code></pre></div><h2 id="using-perl">
-  <a class="text-decoration-none" href="#using-perl">#</a>&nbsp;Using perl
+  <a class="text-decoration-none" href="#using-perl">§</a>&nbsp;Using perl
 </h2><p>Doesn’t work with UTF-8 characters.</p>
 <p>I’m not a perl-ninja, may be there is a more efficient way. But it works.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ echo <span style="color:#e6db74">&#39;&#39;</span>Wie hйЮёßen Sieﬁ тест<span style="color:#e6db74">&#39;&#39;</span> | perl -ne <span style="color:#e6db74">&#39;&#39;</span>print uc<span style="color:#f92672">(</span>$_<span style="color:#f92672">)</span><span style="color:#e6db74">&#39;&#39;</span>
@@ -81,7 +81,7 @@
 </span></span><span style="display:flex;"><span>$ echo <span style="color:#e6db74">&#39;&#39;</span>WIE HЙЮЁSSEN SIEFI ТЕСТ<span style="color:#e6db74">&#39;&#39;</span> | perl -ne <span style="color:#e6db74">&#39;&#39;</span>print lc<span style="color:#f92672">(</span>$_<span style="color:#f92672">)</span><span style="color:#e6db74">&#39;&#39;</span>
 </span></span><span style="display:flex;"><span>wie hЙЮЁssen siefi ТЕСТ
 </span></span></code></pre></div><h2 id="using-python">
-  <a class="text-decoration-none" href="#using-python">#</a>&nbsp;Using python
+  <a class="text-decoration-none" href="#using-python">§</a>&nbsp;Using python
 </h2><p>Doesn’t work with UTF-8 characters.</p>
 <p>Python nowadays sometimes said to be replacement for perl. It can not convert Cyrillic letters (UTF-8) too.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ echo <span style="color:#e6db74">&#39;&#39;</span>Wie hйЮёßen Sieﬁ тест<span style="color:#e6db74">&#39;&#39;</span> | python -c <span style="color:#e6db74">&#34;import sys; [sys.stdout.write(arg.upper()) for arg in raw_input()]; print &#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;&#34;</span>
@@ -90,7 +90,7 @@
 </span></span><span style="display:flex;"><span>$ echo <span style="color:#e6db74">&#39;&#39;</span>WIE HЙЮЁSSEN SIEFI ТЕСТ<span style="color:#e6db74">&#39;&#39;</span> | python -c <span style="color:#e6db74">&#34;import sys; [sys.stdout.write(arg.lower()) for arg in raw_input()]; print &#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;&#34;</span>
 </span></span><span style="display:flex;"><span>wie hЙЮЁssen siefi ТЕСТ
 </span></span></code></pre></div><h2 id="using-awk">
-  <a class="text-decoration-none" href="#using-awk">#</a>&nbsp;Using awk
+  <a class="text-decoration-none" href="#using-awk">§</a>&nbsp;Using awk
 </h2><p>Doesn’t work with UTF-8 characters in mawk, works with UTF-8 characters in gawk.</p>
 <p>Default awk in Ubuntu 12.04 is mawk. To get UTF-8 support you have to install gawk and use it.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ echo <span style="color:#e6db74">&#39;&#39;</span>Wie hйЮёßen Sieﬁ тест<span style="color:#e6db74">&#39;&#39;</span> | gawk <span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">{</span><span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span>i<span style="color:#f92672">=</span>1; i&lt;<span style="color:#f92672">=</span>NF; i++<span style="color:#f92672">)</span> printf toupper<span style="color:#f92672">(</span>$i<span style="color:#f92672">)</span><span style="color:#e6db74">&#34; &#34;</span><span style="color:#f92672">}</span> END <span style="color:#f92672">{</span>print <span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">}</span><span style="color:#e6db74">&#39;&#39;</span>
@@ -99,7 +99,7 @@
 </span></span><span style="display:flex;"><span>$ echo <span style="color:#e6db74">&#39;&#39;</span>WIE HЙЮЁSSEN SIEFI ТЕСТ<span style="color:#e6db74">&#39;&#39;</span> | gawk <span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">{</span><span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span>i<span style="color:#f92672">=</span>1; i&lt;<span style="color:#f92672">=</span>NF; i++<span style="color:#f92672">)</span> printf tolower<span style="color:#f92672">(</span>$i<span style="color:#f92672">)</span><span style="color:#e6db74">&#34; &#34;</span><span style="color:#f92672">}</span> END <span style="color:#f92672">{</span>print <span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">}</span><span style="color:#e6db74">&#39;&#39;</span>
 </span></span><span style="display:flex;"><span>wie hйюёssen siefi тест
 </span></span></code></pre></div><h2 id="using-tr">
-  <a class="text-decoration-none" href="#using-tr">#</a>&nbsp;Using tr
+  <a class="text-decoration-none" href="#using-tr">§</a>&nbsp;Using tr
 </h2><p>Doesn’t work with UTF-8 characters.</p>
 <p>It works with current locale. But I work in us locale and my native language is Russian.</p>
 <p>It is the easiest way I believe. It also fits the purpose of tr — to translate and delete characters. It is possible to add custom rules such as “tr ‘ё’ ‘Ё’&quot;, but it caused new strange symbols to appear in the output.</p>
@@ -109,7 +109,7 @@
 </span></span><span style="display:flex;"><span>$ echo <span style="color:#e6db74">&#39;&#39;</span>WIE HЙЮЁSSEN SIEFI ТЕСТ<span style="color:#e6db74">&#39;&#39;</span> | tr <span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">[</span>:upper:<span style="color:#f92672">]</span><span style="color:#e6db74">&#39;&#39;</span> <span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">[</span>:lower:<span style="color:#f92672">]</span><span style="color:#e6db74">&#39;&#39;</span>
 </span></span><span style="display:flex;"><span>wie hЙЮЁssen siefi ТЕСТ
 </span></span></code></pre></div><h2 id="using-bash">
-  <a class="text-decoration-none" href="#using-bash">#</a>&nbsp;Using bash
+  <a class="text-decoration-none" href="#using-bash">§</a>&nbsp;Using bash
 </h2><p>Doesn’t work with UTF-8 characters.</p>
 <p>Warning! It’s weird way for converting strings, but a good way to convert variables in bash scripts.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ export a<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span>Wie hйЮёßen Sieﬁ тест<span style="color:#e6db74">&#39;&#39;</span> ; echo <span style="color:#e6db74">${</span>a^^<span style="color:#e6db74">}</span>
@@ -118,7 +118,7 @@
 </span></span><span style="display:flex;"><span>$ export a<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span>WIE HЙЮЁSSEN SIEFI ТЕСТ<span style="color:#e6db74">&#39;&#39;</span> ; echo <span style="color:#e6db74">${</span>a,,<span style="color:#e6db74">}</span>
 </span></span><span style="display:flex;"><span>wie hЙЮЁssen siefi ТЕСТ
 </span></span></code></pre></div><h2 id="using-dd">
-  <a class="text-decoration-none" href="#using-dd">#</a>&nbsp;Using dd
+  <a class="text-decoration-none" href="#using-dd">§</a>&nbsp;Using dd
 </h2><p>Doesn’t work with UTF-8 characters.</p>
 <p>The bad news it outputs more information than only toggled string. Just for collection.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ echo <span style="color:#e6db74">&#39;&#39;</span>Wie hйЮёßen Sieﬁ тест<span style="color:#e6db74">&#39;&#39;</span> | dd conv<span style="color:#f92672">=</span>ucase
@@ -133,7 +133,7 @@
 </span></span><span style="display:flex;"><span>0+1 records out
 </span></span><span style="display:flex;"><span><span style="color:#ae81ff">31</span> bytes <span style="color:#f92672">(</span><span style="color:#ae81ff">31</span> B<span style="color:#f92672">)</span> copied, 7.913e-05 s, <span style="color:#ae81ff">392</span> kB/s
 </span></span></code></pre></div><h2 id="using-php">
-  <a class="text-decoration-none" href="#using-php">#</a>&nbsp;Using php
+  <a class="text-decoration-none" href="#using-php">§</a>&nbsp;Using php
 </h2><p>Doesn’t work with UTF-8 characters.</p>
 <p>PHP can be used as scripting language for general purposes with php-cli.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ echo <span style="color:#e6db74">&#39;&#39;</span>Wie hйЮёßen Sieﬁ тест<span style="color:#e6db74">&#39;&#39;</span> | php -r <span style="color:#e6db74">&#34;print strtoupper(fgets(STDIN));&#34;</span>

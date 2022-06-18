@@ -28,7 +28,7 @@ sudo -u postgres -i createuser USER --pwprompt --encrypted createdb HOSTNAME_db 
       <description>Default Drupal package in Ubuntu installs Apache, but I prefer nginx as a webserver. In this note I’ll describe steps necessary to get Drupal 7 work.
 All variables in square brackets must be replaced by your names or passwords.
 Site will be available at url [sitename].
-#&amp;nbsp;Installing packages Install all necessary packages:
+§&amp;nbsp;Installing packages Install all necessary packages:
 sudo apt-get install -y nginx php5-fpm php-apc php5-mysql mysql-client-core-5.5 mysql-server php5-gd During the installation MySQL will ask you for root password.</description>
     </item>
     
