@@ -33,8 +33,10 @@ h6 {
   border-radius: 5px;
 }
 
+body,
 .volukib-header,
-.volukib-footer {
+.volukib-footer
+{
   background-color: #45464E;
 }
 
@@ -49,4 +51,8 @@ p img {
   margin-right: auto;
   max-width: 100%;
   padding: 1em;
+}
+
+.container {
+  border-radius: 5px;
 }
