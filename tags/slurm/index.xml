@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>slurm on :) bikulov.ORG</title>
+    <title>slurm on Bikulov&#39;s blog</title>
     <link>https://bikulov.org/tags/slurm/</link>
-    <description>Recent content in slurm on :) bikulov.ORG</description>
+    <description>Recent content in slurm on Bikulov&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <language>ru</language>
+    <copyright>Network Notes 2022</copyright>
     <lastBuildDate>Tue, 18 Jun 2013 09:00:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/slurm/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Ubuntu Server 12.04 &#43; Slurm 2.5.7 fatnodes</title>
-      <link>https://bikulov.org/blog/2013/06/18/ubuntu-server-12.04-slurm-2.5.7-fatnodes/</link>
+      <link>https://bikulov.org/blog/2013/06/18/ubuntu-server-12.04--slurm-2.5.7-fatnodes/</link>
       <pubDate>Tue, 18 Jun 2013 09:00:00 +0300</pubDate>
       
-      <guid>https://bikulov.org/blog/2013/06/18/ubuntu-server-12.04-slurm-2.5.7-fatnodes/</guid>
-      <description>&lt;p&gt;SLURM (Simple Linux Utility for Resource Management) — job scheduler and resource manager usually installed on supercomputers. For example, it runs on Lomonosov supercomputer in MSU, Moscow, Russia.&lt;/p&gt;</description>
+      <guid>https://bikulov.org/blog/2013/06/18/ubuntu-server-12.04--slurm-2.5.7-fatnodes/</guid>
+      <description>SLURM (Simple Linux Utility for Resource Management) — job scheduler and resource manager usually installed on supercomputers. For example, it runs on Lomonosov supercomputer in MSU, Moscow, Russia.
+Usually one physical or virtual computer (physical node) is one logical node is SLURM. If one physical node serve more than one logical nodes, it called «fat node». Fat nodes are needed in case you have a lot of memory at physical node or several GPUs on it.</description>
     </item>
     
   </channel>

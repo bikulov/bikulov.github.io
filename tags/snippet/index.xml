@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>snippet on :) bikulov.ORG</title>
+    <title>snippet on Bikulov&#39;s blog</title>
     <link>https://bikulov.org/tags/snippet/</link>
-    <description>Recent content in snippet on :) bikulov.ORG</description>
+    <description>Recent content in snippet on Bikulov&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <language>ru</language>
+    <copyright>Network Notes 2022</copyright>
     <lastBuildDate>Tue, 19 Nov 2013 23:53:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/snippet/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Sort strings from file in C&#43;&#43;</title>
@@ -13,7 +14,7 @@
       <pubDate>Tue, 19 Nov 2013 23:53:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2013/11/19/sort-strings-from-file-in-c-/</guid>
-      <description>&lt;p&gt;The very simple and common test program is to read bunch of strings from input file (let it be &lt;code&gt;input.txt&lt;/code&gt;), sort them and write down to another file (&lt;code&gt;output.txt&lt;/code&gt;). There is an &lt;a href=&#34;http://www.cyberforum.ru/post1673221.html&#34; target=&#34;_blank&#34;&gt;implementation&lt;/a&gt; with small bug: it adds extra empty line. I&amp;rsquo;ve modified original code a bit, so now it works correctly (note: if have last empty line in the input, you will have an empty line in the output). Fixed code is provided below.&lt;/p&gt;</description>
+      <description>The very simple and common test program is to read bunch of strings from input file (let it be input.txt), sort them and write down to another file (output.txt). There is an implementation with small bug: it adds extra empty line. I&amp;rsquo;ve modified original code a bit, so now it works correctly (note: if have last empty line in the input, you will have an empty line in the output). Fixed code is provided below.</description>
     </item>
     
     <item>
@@ -22,7 +23,9 @@
       <pubDate>Thu, 07 Nov 2013 18:27:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2013/11/07/randomized-quicksort-implementation-in-c-/</guid>
-      <description>&lt;p&gt;Quicksort has $O(N\log(N))$ computational complexity in best and average cases, $O(N^{2})$ for bad case. Extremely bad cases may be avoided by using randomized Quicksort.&lt;/p&gt;</description>
+      <description>Quicksort has $O(N\log(N))$ computational complexity in best and average cases, $O(N^{2})$ for bad case. Extremely bad cases may be avoided by using randomized Quicksort.
+Qucksort algorithm consists of three steps:
+ Choose reference element called pivot (in randomized version pivot choise is random) Rearrange array so that all elements smaller than pivot are placed before the pivot in array, all elements bigger than pivot are placed after the pivot Call Quicksort for elements before the pivot and Quicksort for elements after the pivot recursively (stop if array size is one or less)  My implementation of Quicksort in C++ is provided below.</description>
     </item>
     
     <item>
@@ -31,7 +34,9 @@
       <pubDate>Mon, 04 Nov 2013 21:33:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2013/11/04/heapsort-implementation-in-c-/</guid>
-      <description>&lt;p&gt;Heapsort is one of the fastest sorting algorithms. The best and the worst cases for heapsort have same $O(n\log(n))$ performance.&lt;/p&gt;</description>
+      <description>Heapsort is one of the fastest sorting algorithms. The best and the worst cases for heapsort have same $O(n\log(n))$ performance.
+At first heapsort creates heap from data with buildHeap function. Heap is organized in linear array as follows. Every $i$-th element has two children: $(2i)$-th element and $(2i+1)$-th one. The biggest element of the array is placed on the top of the heap.
+After heap building top element is swapped with the latest in the array, then heap is rebuilt for the array with size decreased by one.</description>
     </item>
     
     <item>
@@ -40,7 +45,8 @@
       <pubDate>Fri, 16 Aug 2013 12:14:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2013/08/16/cudasafecall-application-snippet/</guid>
-      <description>&lt;p&gt;It is a good tone to check CUDA API errors while calling cudaMalloc() and other functions. It also helps to find floating bugs caused by hardware (lack of memory, etc). I provide below an adapted version of CudaSafeCall I found many weeks ago in the &lt;a href=&#34;http://choorucode.com/2011/03/02/cuda-error-checking/&#34; target=&#34;_blank&#34;&gt;Internet&lt;/a&gt;. Simply remove &lt;code&gt;#define CUDA_ERROR_CHECK&lt;/code&gt; in production if unneeded.&lt;/p&gt;</description>
+      <description>It is a good tone to check CUDA API errors while calling cudaMalloc() and other functions. It also helps to find floating bugs caused by hardware (lack of memory, etc). I provide below an adapted version of CudaSafeCall I found many weeks ago in the Internet. Simply remove #define CUDA_ERROR_CHECK in production if unneeded.
+#include &amp;lt;iostream&amp;gt;#include &amp;lt;cuda.h&amp;gt; #define CUDA_ERROR_CHECK  #define CudaSafeCall(error) __cudaSafeCall(error, __FILE__, __LINE__)  inline void __cudaSafeCall(cudaError error, const char *file, const int line) { #ifdef CUDA_ERROR_CHECK  if (error !</description>
     </item>
     
     <item>
@@ -49,9 +55,8 @@
       <pubDate>Wed, 18 Jul 2012 09:00:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2012/07/18/montage-png-into-single-one/</guid>
-      <description>&lt;p&gt;Glue several png’s into one png &lt;code&gt;[1]+[2]+[3]+[4] = [[1][2][3][4]]&lt;/code&gt; with montage from ImageMagick:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;montage -geometry +1+1 -tile 4x1 image*.png final.png
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+      <description>Glue several png’s into one png [1]+[2]+[3]+[4] = [[1][2][3][4]] with montage from ImageMagick:
+montage -geometry +1+1 -tile 4x1 image*.png final.png </description>
     </item>
     
   </channel>

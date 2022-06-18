@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>numpy on :) bikulov.ORG</title>
+    <title>numpy on Bikulov&#39;s blog</title>
     <link>https://bikulov.org/tags/numpy/</link>
-    <description>Recent content in numpy on :) bikulov.ORG</description>
+    <description>Recent content in numpy on Bikulov&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <language>ru</language>
+    <copyright>Network Notes 2022</copyright>
     <lastBuildDate>Sat, 07 Nov 2015 11:24:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/numpy/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Install Jupyter Notebook and Scientific Environment in Ubuntu 14.04 With Python 3</title>
@@ -13,15 +14,8 @@
       <pubDate>Sat, 07 Nov 2015 11:24:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2015/11/07/install-jupyter-notebook-and-scientific-environment-in-ubuntu-14.04-with-python-3/</guid>
-      <description>&lt;p&gt;Several changes occured since my last &lt;a href=&#34;https://bikulov.org/blog/2014/05/14/install-up-to-date-scientific-environment-in-ubuntu-14-dot-04-with-python-3-dot-4/&#34;&gt;note&lt;/a&gt; about installing python scientific environment:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://ipython.org/notebook&#34; target=&#34;_blank&#34;&gt;IPython Notebook&lt;/a&gt; was succeeded by &lt;a href=&#34;http://jupyter.org/&#34; target=&#34;_blank&#34;&gt;Jupyter Notebook&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://stanford.edu/~mwaskom/software/seaborn/&#34; target=&#34;_blank&#34;&gt;seaborn&lt;/a&gt; package is used for the pretty matplotlib plots&lt;/li&gt;
-&lt;li&gt;raw &lt;a href=&#34;https://virtualenv.readthedocs.org/en/latest/&#34; target=&#34;_blank&#34;&gt;virtualenv&lt;/a&gt; was replaced by &lt;a href=&#34;https://virtualenvwrapper.readthedocs.org/en/latest/&#34; target=&#34;_blank&#34;&gt;virtualenvwrapper&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;procedure of notebook profiles creation and edition has been changed&lt;/li&gt;
-&lt;li&gt;ipython &lt;a href=&#34;https://bugs.launchpad.net/ubuntu/&amp;#43;source/python3.4/&amp;#43;bug/1290847&#34; target=&#34;_blank&#34;&gt;bug&lt;/a&gt; about pip in virtualenv is obsolete. But now another &lt;a href=&#34;https://github.com/matplotlib/matplotlib/issues/3029/&#34; target=&#34;_blank&#34;&gt;workaround&lt;/a&gt; is needed for packahes installation&lt;/li&gt;
-&lt;li&gt;pip installation from &lt;a href=&#34;https://bootstrap.pypa.io/get-pip.py&#34; target=&#34;_blank&#34;&gt;pypa&lt;/a&gt; is now one-liner&lt;/li&gt;
-&lt;/ul&gt;</description>
+      <description>Several changes occured since my last note about installing python scientific environment:
+ IPython Notebook was succeeded by Jupyter Notebook seaborn package is used for the pretty matplotlib plots raw virtualenv was replaced by virtualenvwrapper procedure of notebook profiles creation and edition has been changed ipython bug about pip in virtualenv is obsolete. But now another workaround is needed for packahes installation pip installation from pypa is now one-liner  Install prerequisities as root:</description>
     </item>
     
   </channel>

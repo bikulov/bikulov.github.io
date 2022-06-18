@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>paraview on :) bikulov.ORG</title>
+    <title>paraview on Bikulov&#39;s blog</title>
     <link>https://bikulov.org/tags/paraview/</link>
-    <description>Recent content in paraview on :) bikulov.ORG</description>
+    <description>Recent content in paraview on Bikulov&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <language>ru</language>
+    <copyright>Network Notes 2022</copyright>
     <lastBuildDate>Sun, 05 Apr 2015 16:31:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/paraview/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Animations from scientific data using Paraview 4.3 and python</title>
@@ -13,13 +14,8 @@
       <pubDate>Sun, 05 Apr 2015 16:31:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2015/04/05/animations-from-scientific-data-using-paraview-4.3-and-python/</guid>
-      <description>&lt;h3 id=&#34;create-frames&#34;&gt;Create frames&lt;/h3&gt;
-&lt;p&gt;This note describes usage of Paraview 4.3 (contrary to previous &lt;a href=&#34;https://bikulov.org/blog/2014/11/15/create-video-illustrations-from-numerical-experiments-data-with-paraview-and-python-2/&#34;&gt;note&lt;/a&gt; with Paraview before 4.1). Some changes were made:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;command line arguments were added to make code more reusable&lt;/li&gt;
-&lt;li&gt;it works with Paraview extracted from the archive (4.3.1)&lt;/li&gt;
-&lt;li&gt;white background must be specified manually (&lt;code&gt;SetViewProperties(view, Background = [1, 1, 1])&lt;/code&gt; in the code)&lt;/li&gt;
-&lt;/ul&gt;</description>
+      <description>#&amp;nbsp;Create frames This note describes usage of Paraview 4.3 (contrary to previous note with Paraview before 4.1). Some changes were made:
+ command line arguments were added to make code more reusable it works with Paraview extracted from the archive (4.3.1) white background must be specified manually (SetViewProperties(view, Background = [1, 1, 1]) in the code)  Script is tested under Ubuntu 14.04 with Paraview 4.3.1. Paraview was downloaded from official site and extracted to /home/bikulov/bin/ParaView-4.</description>
     </item>
     
     <item>
@@ -28,7 +24,9 @@
       <pubDate>Sat, 15 Nov 2014 01:56:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2014/11/15/create-video-illustrations-from-numerical-experiments-data-with-paraview-and-python-2/</guid>
-      <description>&lt;p&gt;See &lt;a href=&#34;http://bikulov.org/blog/2015/04/05/animations-from-scientific-data-using-paraview-4-dot-3-and-python/&#34; target=&#34;_blank&#34;&gt;updated&lt;/a&gt; note.&lt;/p&gt;</description>
+      <description>See updated note.
+One of the common tasks in computer modeling is visualization of numerical experiment as a movie. Usually it is one datafile per frame and target is to create frame-by-frame animation. If these files can be loaded and visualized in Paraview, it is easy to create the full video: load file in paraview with predefined parameters, create screenshot, load second file, etc. This process may be automated.
+We will use latest stable build of Paraview from official site.</description>
     </item>
     
   </channel>

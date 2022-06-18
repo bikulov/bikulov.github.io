@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>python on :) bikulov.ORG</title>
+    <title>python on Bikulov&#39;s blog</title>
     <link>https://bikulov.org/tags/python/</link>
-    <description>Recent content in python on :) bikulov.ORG</description>
+    <description>Recent content in python on Bikulov&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <language>ru</language>
+    <copyright>Network Notes 2022</copyright>
     <lastBuildDate>Fri, 22 Feb 2019 00:30:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/python/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Python program template</title>
@@ -13,14 +14,9 @@
       <pubDate>Fri, 22 Feb 2019 00:30:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2019/02/22/python-program-template/</guid>
-      <description>&lt;p&gt;For every simple python script you need same simple parts:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;command line arguments parsing&lt;/li&gt;
-&lt;li&gt;logging&lt;/li&gt;
-&lt;li&gt;[optional] submodules&lt;/li&gt;
-&lt;li&gt;[optional] building to a binary&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;I&amp;rsquo;ve prepared a simple python project with all these parts to use as template. It is available on &lt;a href=&#34;https://github.com/bikulov/python_template/&#34; target=&#34;_blank&#34;&gt;github&lt;/a&gt;.&lt;/p&gt;</description>
+      <description>For every simple python script you need same simple parts:
+ command line arguments parsing logging [optional] submodules [optional] building to a binary  I&amp;rsquo;ve prepared a simple python project with all these parts to use as template. It is available on github.
+Command line arguments parsing is done in parse_arguments. The most interesting thing there is setting default fuctions for submodules (and None for main module). It looks like:</description>
     </item>
     
     <item>
@@ -29,9 +25,10 @@
       <pubDate>Sat, 11 Mar 2017 23:32:41 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2017/03/11/python-sorting-objects-of-user-defined-class/</guid>
-      <description>&lt;p&gt;The most common way of sorting collections of custom objects in Python is to &lt;a href=&#34;https://docs.python.org/3.5/library/functions.html#sorted&#34; target=&#34;_blank&#34;&gt;provide&lt;/a&gt; key function that is used to extract a comparison key from each element:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;sorted(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Case insensitive Sorting is here&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;split(), key&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;str&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;lower)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+      <description>The most common way of sorting collections of custom objects in Python is to provide key function that is used to extract a comparison key from each element:
+sorted(&amp;#34;Case insensitive Sorting is here&amp;#34;.split(), key=str.lower) But sorted function compares objects by its nature, and it is possible to define comparison operators for your class t make sorted work automatically.
+Documentation guarantees that sorting uses only __lt__() method:
+ The sort routines are guaranteed to use __lt__() when making comparisons between two objects.</description>
     </item>
     
     <item>
@@ -40,15 +37,8 @@
       <pubDate>Sat, 07 Nov 2015 11:24:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2015/11/07/install-jupyter-notebook-and-scientific-environment-in-ubuntu-14.04-with-python-3/</guid>
-      <description>&lt;p&gt;Several changes occured since my last &lt;a href=&#34;https://bikulov.org/blog/2014/05/14/install-up-to-date-scientific-environment-in-ubuntu-14-dot-04-with-python-3-dot-4/&#34;&gt;note&lt;/a&gt; about installing python scientific environment:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://ipython.org/notebook&#34; target=&#34;_blank&#34;&gt;IPython Notebook&lt;/a&gt; was succeeded by &lt;a href=&#34;http://jupyter.org/&#34; target=&#34;_blank&#34;&gt;Jupyter Notebook&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://stanford.edu/~mwaskom/software/seaborn/&#34; target=&#34;_blank&#34;&gt;seaborn&lt;/a&gt; package is used for the pretty matplotlib plots&lt;/li&gt;
-&lt;li&gt;raw &lt;a href=&#34;https://virtualenv.readthedocs.org/en/latest/&#34; target=&#34;_blank&#34;&gt;virtualenv&lt;/a&gt; was replaced by &lt;a href=&#34;https://virtualenvwrapper.readthedocs.org/en/latest/&#34; target=&#34;_blank&#34;&gt;virtualenvwrapper&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;procedure of notebook profiles creation and edition has been changed&lt;/li&gt;
-&lt;li&gt;ipython &lt;a href=&#34;https://bugs.launchpad.net/ubuntu/&amp;#43;source/python3.4/&amp;#43;bug/1290847&#34; target=&#34;_blank&#34;&gt;bug&lt;/a&gt; about pip in virtualenv is obsolete. But now another &lt;a href=&#34;https://github.com/matplotlib/matplotlib/issues/3029/&#34; target=&#34;_blank&#34;&gt;workaround&lt;/a&gt; is needed for packahes installation&lt;/li&gt;
-&lt;li&gt;pip installation from &lt;a href=&#34;https://bootstrap.pypa.io/get-pip.py&#34; target=&#34;_blank&#34;&gt;pypa&lt;/a&gt; is now one-liner&lt;/li&gt;
-&lt;/ul&gt;</description>
+      <description>Several changes occured since my last note about installing python scientific environment:
+ IPython Notebook was succeeded by Jupyter Notebook seaborn package is used for the pretty matplotlib plots raw virtualenv was replaced by virtualenvwrapper procedure of notebook profiles creation and edition has been changed ipython bug about pip in virtualenv is obsolete. But now another workaround is needed for packahes installation pip installation from pypa is now one-liner  Install prerequisities as root:</description>
     </item>
     
     <item>
@@ -57,13 +47,8 @@
       <pubDate>Sun, 05 Apr 2015 16:31:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2015/04/05/animations-from-scientific-data-using-paraview-4.3-and-python/</guid>
-      <description>&lt;h3 id=&#34;create-frames&#34;&gt;Create frames&lt;/h3&gt;
-&lt;p&gt;This note describes usage of Paraview 4.3 (contrary to previous &lt;a href=&#34;https://bikulov.org/blog/2014/11/15/create-video-illustrations-from-numerical-experiments-data-with-paraview-and-python-2/&#34;&gt;note&lt;/a&gt; with Paraview before 4.1). Some changes were made:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;command line arguments were added to make code more reusable&lt;/li&gt;
-&lt;li&gt;it works with Paraview extracted from the archive (4.3.1)&lt;/li&gt;
-&lt;li&gt;white background must be specified manually (&lt;code&gt;SetViewProperties(view, Background = [1, 1, 1])&lt;/code&gt; in the code)&lt;/li&gt;
-&lt;/ul&gt;</description>
+      <description>#&amp;nbsp;Create frames This note describes usage of Paraview 4.3 (contrary to previous note with Paraview before 4.1). Some changes were made:
+ command line arguments were added to make code more reusable it works with Paraview extracted from the archive (4.3.1) white background must be specified manually (SetViewProperties(view, Background = [1, 1, 1]) in the code)  Script is tested under Ubuntu 14.04 with Paraview 4.3.1. Paraview was downloaded from official site and extracted to /home/bikulov/bin/ParaView-4.</description>
     </item>
     
     <item>
@@ -72,7 +57,9 @@
       <pubDate>Sat, 15 Nov 2014 01:56:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2014/11/15/create-video-illustrations-from-numerical-experiments-data-with-paraview-and-python-2/</guid>
-      <description>&lt;p&gt;See &lt;a href=&#34;http://bikulov.org/blog/2015/04/05/animations-from-scientific-data-using-paraview-4-dot-3-and-python/&#34; target=&#34;_blank&#34;&gt;updated&lt;/a&gt; note.&lt;/p&gt;</description>
+      <description>See updated note.
+One of the common tasks in computer modeling is visualization of numerical experiment as a movie. Usually it is one datafile per frame and target is to create frame-by-frame animation. If these files can be loaded and visualized in Paraview, it is easy to create the full video: load file in paraview with predefined parameters, create screenshot, load second file, etc. This process may be automated.
+We will use latest stable build of Paraview from official site.</description>
     </item>
     
     <item>
@@ -81,7 +68,10 @@
       <pubDate>Wed, 14 May 2014 16:16:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2014/05/14/install-up-to-date-scientific-environment-in-ubuntu-14.04-with-python-3.4/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: I&amp;rsquo;ve created an &lt;a href=&#34;https://bikulov.org/blog/2015/11/07/install-jupyter-notebook-and-scientific-environment-in-ubuntu-14-dot-04-with-python-3/&#34;&gt;updated page&lt;/a&gt; with most recent instructions for &lt;a href=&#34;http://jupyter.org/&#34; target=&#34;_blank&#34;&gt;Jupyter Notebook&lt;/a&gt;.&lt;/p&gt;</description>
+      <description>Note: I&amp;rsquo;ve created an updated page with most recent instructions for Jupyter Notebook.
+I use IPython notebook for processing numerical experiments results and plotting. The default Python 3 in Ubuntu 14.04 is 3.4, so it is easier to install really up-to-date bunch of software.
+Full set of commands you need to install recent ipython notebook, numpy, scipy, etc in virtual environment almost without affecting shiny-new Ubuntu 14.04.
+#!/usr/bin/env bash  sudo su # install python development packages and g++ apt-get install -y python3-dev g++  # install dependencies for scipy apt-get install -y libblas-dev liblapack-dev gfortran  # install dependencies for matplotlib apt-get install -y libfreetype6-dev libpng-dev exit  # ipython notebook has bug: # https://bugs.</description>
     </item>
     
     <item>
@@ -90,9 +80,9 @@
       <pubDate>Sat, 02 Nov 2013 21:53:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2013/11/02/set-application-version-in-gengetopt-config-based-on-mercurial-revision/</guid>
-      <description>&lt;p&gt;Previously I wrote about gengetopt tool to parse command line arguments. There was a line about application version.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;version &amp;quot;13.10.25&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;It is important to keep this line up to date every time you compile and deploy binary.&lt;/p&gt;</description>
+      <description>Previously I wrote about gengetopt tool to parse command line arguments. There was a line about application version.
+version &amp;#34;13.10.25&amp;#34; It is important to keep this line up to date every time you compile and deploy binary.
+I suggest to use Python script for this. Preliminaries: hg id -n returns local revision number, hg id -i returns global revision id. Combining date, local revision and global revision I generate version enough to determine source files used to create binary.</description>
     </item>
     
     <item>
@@ -101,7 +91,8 @@
       <pubDate>Thu, 03 Oct 2013 10:37:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2013/10/03/creation-of-paper-ready-plots-with-matlotlib/</guid>
-      <description>&lt;p&gt;I used to utilize gnuplot for creation of plots with arbitrary data. The main problem was to postprocess data before plotting: I had to integrate postprocess into calculation code itself or to write additional script to do so. I&amp;rsquo;d like to provide an example of good-looking plotting with Python and matplotlib. Python has bataries included, so there will be no problem with preparation of data to be plotted.&lt;/p&gt;</description>
+      <description>I used to utilize gnuplot for creation of plots with arbitrary data. The main problem was to postprocess data before plotting: I had to integrate postprocess into calculation code itself or to write additional script to do so. I&amp;rsquo;d like to provide an example of good-looking plotting with Python and matplotlib. Python has bataries included, so there will be no problem with preparation of data to be plotted.
+Example script plot_example.</description>
     </item>
     
     <item>
@@ -110,7 +101,8 @@
       <pubDate>Tue, 01 Oct 2013 08:33:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2013/10/01/using-cuda-c-functions-in-python-via-.so-and-ctypes/</guid>
-      <description>&lt;p&gt;I&amp;rsquo;d like to show how to use HPC part written on C++ with CUDA in Python code. So, every heavy part may be done on GPU with CUDA, all gluing tasks (with beautiful matplotlib plots) are done on CPU with Python.&lt;/p&gt;</description>
+      <description>I&amp;rsquo;d like to show how to use HPC part written on C++ with CUDA in Python code. So, every heavy part may be done on GPU with CUDA, all gluing tasks (with beautiful matplotlib plots) are done on CPU with Python.
+We will use shared object, compiled from C++ CUDA code in Python. The only uncertain part here is conversation of types from «high-level» Python ones to «low-level» C++ ones. We will write application for parallel calculation of elementwise sum for two arrays.</description>
     </item>
     
     <item>
@@ -119,9 +111,9 @@
       <pubDate>Mon, 09 Sep 2013 23:24:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2013/09/09/email-notification-if-ip-is-changed-with-python-and-cron/</guid>
-      <description>&lt;p&gt;This Python script retrieves computer&amp;rsquo;s external IP address (using internet.yandex.ru) and emails message with new IP if IP has been changed since last check. BeautifulSoup module is needed, so install it if you have no installed version:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;sudo pip install beautifulsoup
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+      <description>This Python script retrieves computer&amp;rsquo;s external IP address (using internet.yandex.ru) and emails message with new IP if IP has been changed since last check. BeautifulSoup module is needed, so install it if you have no installed version:
+sudo pip install beautifulsoup Script:
+#!/usr/bin/env python  from BeautifulSoup import BeautifulSoup import urllib2 import re import smtplib from email.mime.text import MIMEText  logFile = &amp;#39;/var/log/ippywatchdog.log&amp;#39;  request = urllib2.urlopen(&amp;#39;http://internet.yandex.ru&amp;#39;)  soup = BeautifulSoup(request) yandexIpResponse = soup.</description>
     </item>
     
     <item>
@@ -130,7 +122,10 @@
       <pubDate>Wed, 31 Oct 2012 09:00:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2012/10/31/toggling-string-case-in-linux-bash/</guid>
-      <description>&lt;p&gt;It’s quite an academic task, but anyway useful sometimes. I’ve collected different ways to do it in terminal in linux. Some of them work with UTF-8 characters (some it will toggle case for &amp;ldquo;й&amp;rdquo;, &amp;ldquo;ё&amp;rdquo; and so on. It will not in general handle special ligatures, such as &amp;ldquo;ß&amp;rdquo;&amp;quot; and &amp;ldquo;ﬁ&amp;rdquo;.)&lt;/p&gt;</description>
+      <description>It’s quite an academic task, but anyway useful sometimes. I’ve collected different ways to do it in terminal in linux. Some of them work with UTF-8 characters (some it will toggle case for &amp;ldquo;й&amp;rdquo;, &amp;ldquo;ё&amp;rdquo; and so on. It will not in general handle special ligatures, such as &amp;ldquo;ß&amp;rdquo;&amp;quot; and &amp;ldquo;ﬁ&amp;rdquo;.)
+Ways are: sed, perl, python, awk, tr, bash, dd.
+#&amp;nbsp;Using sed Works with UTF-8 characters.
+It is quite straightforward and allows to add custom rules easily.</description>
     </item>
     
     <item>
@@ -139,7 +134,10 @@
       <pubDate>Wed, 11 Apr 2012 09:00:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2012/04/11/blender-and-python-molecules-visualization/</guid>
-      <description>&lt;p&gt;Blender is a free software for 3D graphics. In old virsions many operations were binded to hotkeys, so it was believed that Blender is very hard to master. Now it has more userfriendly interface with button in addition to hotkeys.&lt;/p&gt;</description>
+      <description>Blender is a free software for 3D graphics. In old virsions many operations were binded to hotkeys, so it was believed that Blender is very hard to master. Now it has more userfriendly interface with button in addition to hotkeys.
+One of the most useful features of Blender is scripting. Below I provide python script for drawing molecules with cylinders and spheres.
+Command to draw a sphere:
+bpy.ops.mesh.primitive_uv_sphere_add() To draw a cylinder, you need to specify cylinder center and rotation.</description>
     </item>
     
   </channel>

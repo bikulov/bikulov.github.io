@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all">
+  <link href="/css/style.css" rel="stylesheet" type="text/css" media="all">
+  <link href="/css/custom.css" rel="stylesheet" type="text/css" media="all">
+  <script src="/js/bootstrap.bundle.min.js"></script>
+  <link rel="apple-touch-icon" href="/logo.png" type="image/png">
+  <link rel="icon" href="/img/logo.svg" type="image/svg+xml">
+  <link rel="icon" href="/img/logo.png" type="image/png">
+  <title>Bikulov&#39;s blog</title>
+</head><body>
+<header>
+  <nav class="navbar navbar-expand navbar-dark volukib-header">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="https://bikulov.org/"><img src="/img/logo.png" class="volukib-logo" alt="logo"> Bikulov&#39;s blog</a>
+      <ul class="navbar-nav">
+        
+        <li class="nav-item">
+          
+          <a class="nav-link text-uppercase " href="/">Home</a>
+        </li>
+        
+        <li class="nav-item">
+          
+          <a class="nav-link text-uppercase " href="/resume/">Resume</a>
+        </li>
+        
+      </ul>
+    </div>
+  </nav>
+</header><div class="container">
+<div class="row text-center mb-5">
+  <div class="col">
+    <h1>Ubuntu Server 12.04 &#43; Slurm 2.5.7 fatnodes</h1>
+    <div>2013-06-18</div>
+    <div>
+      
+      <a class="" href="/tags/ubuntu">#ubuntu</a>
+      
+      <a class="" href="/tags/server">#server</a>
+      
+      <a class="" href="/tags/slurm">#slurm</a>
+      
+      <a class="" href="/tags/fatnode">#fatnode</a>
+      
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <p>SLURM (Simple Linux Utility for Resource Management) — job scheduler and resource manager usually installed on supercomputers. For example, it runs on Lomonosov supercomputer in MSU, Moscow, Russia.</p>
+<p>Usually one physical or virtual computer (physical node) is one logical node is SLURM. If one physical node serve more than one logical nodes, it called «fat node». Fat nodes are needed in case you have a lot of memory at physical node or several GPUs on it. Sometimes fat nodes are convenient.</p>
+<p>System is Ubuntu 12.04 Server x64. We need additional configuration parameter, so SLURM will be built from the sources.</p>
+<h2 id="prerequisites">
+  <a class="text-decoration-none" href="#prerequisites">#</a>&nbsp;Prerequisites
+</h2><p>Munge for nodes authentication and build-essential for building from sources are needed:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt-get install -y libmunge-dev munge build-essential
+</span></span></code></pre></div><h2 id="building-slurm">
+  <a class="text-decoration-none" href="#building-slurm">#</a>&nbsp;Building SLURM
+</h2><p>Get, unpack and cd to slurm dir:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>wget http://www.schedmd.com/download/latest/slurm-2.5.7.tar.bz2
+</span></span><span style="display:flex;"><span>tar xvf slurm-2.5.7.tar.bz2
+</span></span><span style="display:flex;"><span>cd slurm-2.5.7/
+</span></span></code></pre></div><p>Configure SLURM to enable fat nodes, make and install it:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>./configure --enable-multiple-slurmd
+</span></span><span style="display:flex;"><span>make
+</span></span><span style="display:flex;"><span>sudo make install
+</span></span></code></pre></div><h2 id="configuring-system">
+  <a class="text-decoration-none" href="#configuring-system">#</a>&nbsp;Configuring system
+</h2><p>We need to add user slurm and add him to group with the same name:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo adduser slurm
+</span></span><span style="display:flex;"><span>sudo adduser slurm slurm
+</span></span></code></pre></div><p>Create munge key and start munge daemon:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo /usr/sbin/create-munge-key
+</span></span><span style="display:flex;"><span>sudo service munge start
+</span></span></code></pre></div><h2 id="configuring-slurm">
+  <a class="text-decoration-none" href="#configuring-slurm">#</a>&nbsp;Configuring SLURM
+</h2><p>Now create configuration file <code>/usr/local/etc/slurm.conf</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#a6e22e">ClusterName</span><span style="color:#f92672">=</span><span style="color:#e6db74">ubuntu #&lt; change this to your hostname</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">ControlMachine</span><span style="color:#f92672">=</span><span style="color:#e6db74">ubuntu #&lt; change this to your host name</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">SlurmUser</span><span style="color:#f92672">=</span><span style="color:#e6db74">slurm</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">SlurmctldPort</span><span style="color:#f92672">=</span><span style="color:#e6db74">6817</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">AuthType</span><span style="color:#f92672">=</span><span style="color:#e6db74">auth/munge</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">StateSaveLocation</span><span style="color:#f92672">=</span><span style="color:#e6db74">/tmp</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">SlurmdSpoolDir</span><span style="color:#f92672">=</span><span style="color:#e6db74">/tmp/slurmd%n/</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">SwitchType</span><span style="color:#f92672">=</span><span style="color:#e6db74">switch/none</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">MpiDefault</span><span style="color:#f92672">=</span><span style="color:#e6db74">none</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">SlurmctldPidFile</span><span style="color:#f92672">=</span><span style="color:#e6db74">/var/run/slurmctld.pid</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">SlurmdPidFile</span><span style="color:#f92672">=</span><span style="color:#e6db74">/var/run/slurmd%n.pid</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">ProctrackType</span><span style="color:#f92672">=</span><span style="color:#e6db74">proctrack/pgid</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">CacheGroups</span><span style="color:#f92672">=</span><span style="color:#e6db74">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">ReturnToService</span><span style="color:#f92672">=</span><span style="color:#e6db74">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># TIMERS</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">SlurmctldTimeout</span><span style="color:#f92672">=</span><span style="color:#e6db74">300</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">SlurmdTimeout</span><span style="color:#f92672">=</span><span style="color:#e6db74">300</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">InactiveLimit</span><span style="color:#f92672">=</span><span style="color:#e6db74">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">MinJobAge</span><span style="color:#f92672">=</span><span style="color:#e6db74">300</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">KillWait</span><span style="color:#f92672">=</span><span style="color:#e6db74">30</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Waittime</span><span style="color:#f92672">=</span><span style="color:#e6db74">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># SCHEDULING</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">SchedulerType</span><span style="color:#f92672">=</span><span style="color:#e6db74">sched/backfill</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">SelectType</span><span style="color:#f92672">=</span><span style="color:#e6db74">select/linear</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">FastSchedule</span><span style="color:#f92672">=</span><span style="color:#e6db74">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># LOGGING</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">SlurmctldDebug</span><span style="color:#f92672">=</span><span style="color:#e6db74">3</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">SlurmdDebug</span><span style="color:#f92672">=</span><span style="color:#e6db74">3</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">JobCompType</span><span style="color:#f92672">=</span><span style="color:#e6db74">jobcomp/none</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># COMPUTE NODES</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># control node</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">NodeName</span><span style="color:#f92672">=</span><span style="color:#e6db74">ubuntu NodeAddr=127.0.0.1 Port=17000 State=UNKNOWN</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># each logical node is on the same physical node, so we need different ports for them</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># name node-[*] is arbitrary</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">NodeName</span><span style="color:#f92672">=</span><span style="color:#e6db74">node-0 NodeAddr=127.0.0.1 Port=17001 State=UNKNOWN</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">NodeName</span><span style="color:#f92672">=</span><span style="color:#e6db74">node-1 NodeAddr=127.0.0.1 Port=17002 State=UNKNOWN</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">NodeName</span><span style="color:#f92672">=</span><span style="color:#e6db74">node-2 NodeAddr=127.0.0.1 Port=17003 State=UNKNOWN</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">NodeName</span><span style="color:#f92672">=</span><span style="color:#e6db74">node-3 NodeAddr=127.0.0.1 Port=17004 State=UNKNOWN</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">NodeName</span><span style="color:#f92672">=</span><span style="color:#e6db74">node-4 NodeAddr=127.0.0.1 Port=17005 State=UNKNOWN</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># PARTITIONS</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># partition name is arbitrary</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">PartitionName</span><span style="color:#f92672">=</span><span style="color:#e6db74">cpu Nodes=node-[0-4] Default=YES MaxTime=INFINITE State=UP</span>
+</span></span></code></pre></div><h2 id="starting-slurm">
+  <a class="text-decoration-none" href="#starting-slurm">#</a>&nbsp;Starting SLURM
+</h2><p>Start SLURM control daemon:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo slurmctld -c
+</span></span></code></pre></div><p>Start SLURM daemons for each logical node:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo slurmd -c -N node-0
+</span></span><span style="display:flex;"><span>sudo slurmd -c -N node-1
+</span></span><span style="display:flex;"><span>sudo slurmd -c -N node-2
+</span></span><span style="display:flex;"><span>sudo slurmd -c -N node-3
+</span></span><span style="display:flex;"><span>sudo slurmd -c -N node-4
+</span></span></code></pre></div><p>Check if everything is alright:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sinfo
+</span></span></code></pre></div><p>You must see that nodes are ready for work:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cpu*         up   infinite      <span style="color:#ae81ff">5</span>   idle node-<span style="color:#f92672">[</span>0-4<span style="color:#f92672">]</span>
+</span></span></code></pre></div>
+  </div>
+</div>
+
+  </div><div class="container-fluid volukib-footer p-2">
+  <footer class="text-center">
+    <a class="text-decoration-none text-light" href="https://bikulov.org/">Bikulov&#39;s blog 2022</a>
+  </footer>
+</div></body>
+
+</html>

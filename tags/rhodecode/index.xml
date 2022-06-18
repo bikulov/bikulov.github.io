@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>rhodecode on :) bikulov.ORG</title>
+    <title>rhodecode on Bikulov&#39;s blog</title>
     <link>https://bikulov.org/tags/rhodecode/</link>
-    <description>Recent content in rhodecode on :) bikulov.ORG</description>
+    <description>Recent content in rhodecode on Bikulov&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <language>ru</language>
+    <copyright>Network Notes 2022</copyright>
     <lastBuildDate>Mon, 29 Oct 2012 09:00:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/rhodecode/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Setting up RhodeCode on Ubuntu 12.04</title>
@@ -13,7 +14,12 @@
       <pubDate>Mon, 29 Oct 2012 09:00:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2012/10/29/setting-up-rhodecode-on-ubuntu-12.04/</guid>
-      <description>&lt;p&gt;This howto is based on a great guide with modifications. All settings are made for server domain hg.kenarius.org. You can replace it with your one easily.&lt;/p&gt;</description>
+      <description>This howto is based on a great guide with modifications. All settings are made for server domain hg.kenarius.org. You can replace it with your one easily.
+#&amp;nbsp;Preparation #&amp;nbsp;Ubuntu Update Ubuntu with the commands:
+sudo apt-get update sudo apt-get upgrade Install pip and virtualenv with the commands:
+sudo apt-get install python-pip sudo pip install virtualenv #&amp;nbsp;Nginx Install nginx:
+sudo apt-get install nginx Add create ssl certificates:
+sudo openssl req -new -x509 -days 9999 -nodes -out host.</description>
     </item>
     
   </channel>

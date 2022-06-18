@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>template on :) bikulov.ORG</title>
+    <title>template on Bikulov&#39;s blog</title>
     <link>https://bikulov.org/tags/template/</link>
-    <description>Recent content in template on :) bikulov.ORG</description>
+    <description>Recent content in template on Bikulov&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <language>ru</language>
+    <copyright>Network Notes 2022</copyright>
     <lastBuildDate>Fri, 16 Aug 2013 12:14:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/template/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>CudaSafeCall application snippet</title>
@@ -13,7 +14,8 @@
       <pubDate>Fri, 16 Aug 2013 12:14:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2013/08/16/cudasafecall-application-snippet/</guid>
-      <description>&lt;p&gt;It is a good tone to check CUDA API errors while calling cudaMalloc() and other functions. It also helps to find floating bugs caused by hardware (lack of memory, etc). I provide below an adapted version of CudaSafeCall I found many weeks ago in the &lt;a href=&#34;http://choorucode.com/2011/03/02/cuda-error-checking/&#34; target=&#34;_blank&#34;&gt;Internet&lt;/a&gt;. Simply remove &lt;code&gt;#define CUDA_ERROR_CHECK&lt;/code&gt; in production if unneeded.&lt;/p&gt;</description>
+      <description>It is a good tone to check CUDA API errors while calling cudaMalloc() and other functions. It also helps to find floating bugs caused by hardware (lack of memory, etc). I provide below an adapted version of CudaSafeCall I found many weeks ago in the Internet. Simply remove #define CUDA_ERROR_CHECK in production if unneeded.
+#include &amp;lt;iostream&amp;gt;#include &amp;lt;cuda.h&amp;gt; #define CUDA_ERROR_CHECK  #define CudaSafeCall(error) __cudaSafeCall(error, __FILE__, __LINE__)  inline void __cudaSafeCall(cudaError error, const char *file, const int line) { #ifdef CUDA_ERROR_CHECK  if (error !</description>
     </item>
     
   </channel>

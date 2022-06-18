@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>linux on :) bikulov.ORG</title>
+    <title>linux on Bikulov&#39;s blog</title>
     <link>https://bikulov.org/tags/linux/</link>
-    <description>Recent content in linux on :) bikulov.ORG</description>
+    <description>Recent content in linux on Bikulov&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <language>ru</language>
+    <copyright>Network Notes 2022</copyright>
     <lastBuildDate>Sat, 26 Sep 2015 20:05:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/linux/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Scan images from command line in Linux</title>
@@ -13,7 +14,9 @@
       <pubDate>Sat, 26 Sep 2015 20:05:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2015/09/26/scan-images-from-command-line-in-linux/</guid>
-      <description>&lt;p&gt;Console utilities in Linuxes are cool: &lt;a href=&#34;https://mcabber.com/&#34; target=&#34;_blank&#34;&gt;mcabber&lt;/a&gt; for jabber, &lt;a href=&#34;http://www.mutt.org/&#34; target=&#34;_blank&#34;&gt;mutt&lt;/a&gt; for mail, &lt;a href=&#34;http://moc.daper.net/&#34; target=&#34;_blank&#34;&gt;mocp&lt;/a&gt; for music, &lt;a href=&#34;http://www.vim.org/&#34; target=&#34;_blank&#34;&gt;vim&lt;/a&gt; to rule them all! This note is about scaning from the console (I assume your scanner is already set-up). Aim is to scan document with good quality into pdf with reasonable size.&lt;/p&gt;</description>
+      <description>Console utilities in Linuxes are cool: mcabber for jabber, mutt for mail, mocp for music, vim to rule them all! This note is about scaning from the console (I assume your scanner is already set-up). Aim is to scan document with good quality into pdf with reasonable size.
+Scanning is done by scanimage utility:
+scanimage --resolution 300 --mode Color --format tiff &amp;gt; document.tiff If there is more than one scanner in your system, list them all by scanimage -L commant and use specify name with --device-name argument.</description>
     </item>
     
     <item>
@@ -22,7 +25,7 @@
       <pubDate>Sat, 25 Jan 2014 16:32:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2014/01/25/ssh-config-for-multiple-hops-in-linux/</guid>
-      <description>&lt;p&gt;Often some hosts in corporate network are available only from several gateway machines. The scheme looks like that: you connect to gateway &lt;code&gt;ssh -A gateway.public.net&lt;/code&gt; and then to desired host from gateway machines &lt;code&gt;ssh -A host.private.net&lt;/code&gt;. But the problem arises when you want to copy or download something from &lt;em&gt;host.private.net&lt;/em&gt;. You have to do it in two hops, because &lt;code&gt;host.private.net&lt;/code&gt; is not available from your machine directly. The solution is ssh forwarding.&lt;/p&gt;</description>
+      <description>Often some hosts in corporate network are available only from several gateway machines. The scheme looks like that: you connect to gateway ssh -A gateway.public.net and then to desired host from gateway machines ssh -A host.private.net. But the problem arises when you want to copy or download something from host.private.net. You have to do it in two hops, because host.private.net is not available from your machine directly. The solution is ssh forwarding.</description>
     </item>
     
     <item>
@@ -31,9 +34,11 @@
       <pubDate>Fri, 12 Jul 2013 09:00:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2013/07/12/configuration-of-hosts-for-convenient-ssh-connections/</guid>
-      <description>&lt;p&gt;It is possible to save configuration of ssh connection for later usage. For example, one had to type&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;ssh &amp;lt;username&amp;gt;@&amp;lt;ip address&amp;gt; -p &amp;lt;port&amp;gt; -i &amp;lt;path to key file&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;every time one wants to connect to server.&lt;/p&gt;</description>
+      <description>It is possible to save configuration of ssh connection for later usage. For example, one had to type
+ssh &amp;lt;username&amp;gt;@&amp;lt;ip address&amp;gt; -p &amp;lt;port&amp;gt; -i &amp;lt;path to key file&amp;gt; every time one wants to connect to server.
+Create ~/.ssh/config with following content:
+Host &amp;lt;name&amp;gt;  Hostname &amp;lt;ip address&amp;gt;  Port &amp;lt;port&amp;gt;  User &amp;lt;username&amp;gt;  IdentityFile &amp;lt;path to key file (if any)&amp;gt; Now just type
+ssh &amp;lt;name&amp;gt; to get connected to the server.</description>
     </item>
     
     <item>
@@ -42,7 +47,8 @@
       <pubDate>Sat, 03 Nov 2012 09:31:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2012/11/03/tools-for-tracing-a-pcap-file-in-linux-bash/</guid>
-      <description>&lt;p&gt;Pcap files are pocket capture files. They usually contain raw log of network connections and packets. It is the most popular format and it available in almost all network analysis tool.&lt;/p&gt;</description>
+      <description>Pcap files are pocket capture files. They usually contain raw log of network connections and packets. It is the most popular format and it available in almost all network analysis tool.
+To play around *.pcap, you have to get such file somehow. There are two opposite ways: to generate it by yourself or to pick a ready one. To generate it by yourself, you can use wireshark or tcpdump in terminal:</description>
     </item>
     
     <item>
@@ -51,9 +57,9 @@
       <pubDate>Thu, 01 Nov 2012 09:00:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2012/11/01/show-n-biggest-directories-in-linux-bash/</guid>
-      <description>&lt;p&gt;du (disk usage) utility in linux bash summarizes disk usage of each directory or file. By default, it outputs only directories. Just enter some dir and type&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;$ du ./
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+      <description>du (disk usage) utility in linux bash summarizes disk usage of each directory or file. By default, it outputs only directories. Just enter some dir and type
+$ du ./ But if ./ has many subdirectories, output will be too long. And it is unsorted. The stated in the title task can be achieved by piping.
+#&amp;nbsp;Sort output by size Cut the first line, it is size of the ./ dir as sum of other sizes Use &amp;ldquo;—human-readable&amp;rdquo; in du or divide by 1024 to get kbytes, mbytes, etc.</description>
     </item>
     
     <item>
@@ -62,7 +68,10 @@
       <pubDate>Wed, 31 Oct 2012 09:00:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2012/10/31/toggling-string-case-in-linux-bash/</guid>
-      <description>&lt;p&gt;It’s quite an academic task, but anyway useful sometimes. I’ve collected different ways to do it in terminal in linux. Some of them work with UTF-8 characters (some it will toggle case for &amp;ldquo;й&amp;rdquo;, &amp;ldquo;ё&amp;rdquo; and so on. It will not in general handle special ligatures, such as &amp;ldquo;ß&amp;rdquo;&amp;quot; and &amp;ldquo;ﬁ&amp;rdquo;.)&lt;/p&gt;</description>
+      <description>It’s quite an academic task, but anyway useful sometimes. I’ve collected different ways to do it in terminal in linux. Some of them work with UTF-8 characters (some it will toggle case for &amp;ldquo;й&amp;rdquo;, &amp;ldquo;ё&amp;rdquo; and so on. It will not in general handle special ligatures, such as &amp;ldquo;ß&amp;rdquo;&amp;quot; and &amp;ldquo;ﬁ&amp;rdquo;.)
+Ways are: sed, perl, python, awk, tr, bash, dd.
+#&amp;nbsp;Using sed Works with UTF-8 characters.
+It is quite straightforward and allows to add custom rules easily.</description>
     </item>
     
     <item>
@@ -71,7 +80,10 @@
       <pubDate>Fri, 24 Aug 2012 09:00:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2012/08/24/fixing-missing-icons-in-pcmanfm/</guid>
-      <description>&lt;p&gt;After moving to i3 I’ve installed PCManFM as GUI file manager. To fix missing icons one have to define icon theme. These instructions are tested on Ubuntu 12.04, but it must work with other distros.&lt;/p&gt;</description>
+      <description>After moving to i3 I’ve installed PCManFM as GUI file manager. To fix missing icons one have to define icon theme. These instructions are tested on Ubuntu 12.04, but it must work with other distros.
+Install icon theme:
+sudo apt-get install tango-icon-theme* To apply theme, create .gtkrc-2.0 file in home directory:
+$ cat ~/.gtkrc-2.0 gtk-icon-theme-name = &amp;#34;Tango&amp;#34; After this icons will be enabled.</description>
     </item>
     
   </channel>

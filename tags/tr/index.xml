@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>tr on :) bikulov.ORG</title>
+    <title>tr on Bikulov&#39;s blog</title>
     <link>https://bikulov.org/tags/tr/</link>
-    <description>Recent content in tr on :) bikulov.ORG</description>
+    <description>Recent content in tr on Bikulov&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <language>ru</language>
+    <copyright>Network Notes 2022</copyright>
     <lastBuildDate>Wed, 31 Oct 2012 09:00:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/tr/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Toggling string case in linux bash</title>
@@ -13,7 +14,10 @@
       <pubDate>Wed, 31 Oct 2012 09:00:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2012/10/31/toggling-string-case-in-linux-bash/</guid>
-      <description>&lt;p&gt;It’s quite an academic task, but anyway useful sometimes. I’ve collected different ways to do it in terminal in linux. Some of them work with UTF-8 characters (some it will toggle case for &amp;ldquo;й&amp;rdquo;, &amp;ldquo;ё&amp;rdquo; and so on. It will not in general handle special ligatures, such as &amp;ldquo;ß&amp;rdquo;&amp;quot; and &amp;ldquo;ﬁ&amp;rdquo;.)&lt;/p&gt;</description>
+      <description>It’s quite an academic task, but anyway useful sometimes. I’ve collected different ways to do it in terminal in linux. Some of them work with UTF-8 characters (some it will toggle case for &amp;ldquo;й&amp;rdquo;, &amp;ldquo;ё&amp;rdquo; and so on. It will not in general handle special ligatures, such as &amp;ldquo;ß&amp;rdquo;&amp;quot; and &amp;ldquo;ﬁ&amp;rdquo;.)
+Ways are: sed, perl, python, awk, tr, bash, dd.
+#&amp;nbsp;Using sed Works with UTF-8 characters.
+It is quite straightforward and allows to add custom rules easily.</description>
     </item>
     
   </channel>

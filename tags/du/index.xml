@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>du on :) bikulov.ORG</title>
+    <title>du on Bikulov&#39;s blog</title>
     <link>https://bikulov.org/tags/du/</link>
-    <description>Recent content in du on :) bikulov.ORG</description>
+    <description>Recent content in du on Bikulov&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <language>ru</language>
+    <copyright>Network Notes 2022</copyright>
     <lastBuildDate>Thu, 01 Nov 2012 09:00:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/du/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Show N biggest directories in linux bash</title>
@@ -13,9 +14,9 @@
       <pubDate>Thu, 01 Nov 2012 09:00:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2012/11/01/show-n-biggest-directories-in-linux-bash/</guid>
-      <description>&lt;p&gt;du (disk usage) utility in linux bash summarizes disk usage of each directory or file. By default, it outputs only directories. Just enter some dir and type&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;$ du ./
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+      <description>du (disk usage) utility in linux bash summarizes disk usage of each directory or file. By default, it outputs only directories. Just enter some dir and type
+$ du ./ But if ./ has many subdirectories, output will be too long. And it is unsorted. The stated in the title task can be achieved by piping.
+#&amp;nbsp;Sort output by size Cut the first line, it is size of the ./ dir as sum of other sizes Use &amp;ldquo;—human-readable&amp;rdquo; in du or divide by 1024 to get kbytes, mbytes, etc.</description>
     </item>
     
   </channel>

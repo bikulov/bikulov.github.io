@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>tpick on :) bikulov.ORG</title>
+    <title>tpick on Bikulov&#39;s blog</title>
     <link>https://bikulov.org/tags/tpick/</link>
-    <description>Recent content in tpick on :) bikulov.ORG</description>
+    <description>Recent content in tpick on Bikulov&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <language>ru</language>
+    <copyright>Network Notes 2022</copyright>
     <lastBuildDate>Sat, 03 Nov 2012 09:31:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/tpick/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Tools for tracing a pcap file in linux bash</title>
@@ -13,7 +14,8 @@
       <pubDate>Sat, 03 Nov 2012 09:31:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2012/11/03/tools-for-tracing-a-pcap-file-in-linux-bash/</guid>
-      <description>&lt;p&gt;Pcap files are pocket capture files. They usually contain raw log of network connections and packets. It is the most popular format and it available in almost all network analysis tool.&lt;/p&gt;</description>
+      <description>Pcap files are pocket capture files. They usually contain raw log of network connections and packets. It is the most popular format and it available in almost all network analysis tool.
+To play around *.pcap, you have to get such file somehow. There are two opposite ways: to generate it by yourself or to pick a ready one. To generate it by yourself, you can use wireshark or tcpdump in terminal:</description>
     </item>
     
   </channel>

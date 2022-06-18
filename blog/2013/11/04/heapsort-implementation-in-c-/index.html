@@ -1,1078 +1,130 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<meta name="HandheldFriendly" content="True" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-<meta name="generator" content="Hugo 0.80.0" />
-
-
-<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon.ico" />
-
-
-<title>Heapsort implementation in C&#43;&#43; - :) bikulov.ORG</title>
-
-
-<meta name="author" content="bikulov" />
-
-
-<meta name="description" content="Static notes about information technologies." />
-
-
-<meta name="keywords" content="cpp, heapsort, howto, snippet" />
-
-
-<meta property="og:title" content="Heapsort implementation in C&#43;&#43;" />
-<meta name="twitter:title" content="Heapsort implementation in C&#43;&#43;" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://bikulov.org/blog/2013/11/04/heapsort-implementation-in-c-/" /><meta property="og:description" content="Heapsort is one of the fastest sorting algorithms. The best and the worst cases for heapsort have same $O(n\log(n))$ performance." />
-<meta name="twitter:description" content="Heapsort is one of the fastest sorting algorithms. The best and the worst cases for heapsort have same $O(n\log(n))$ performance." /><meta property="og:image" content="https://bikulov.org/img/og.png" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://bikulov.org/img/og.png" /><meta property="article:published_time" content="2013-11-04T21:33:00+03:00" /><meta property="article:modified_time" content="2013-11-04T21:33:00+03:00" />
-
-
-<style>
-    @media (prefers-color-scheme: dark) {
-        body[data-theme='auto'] img {
-            filter: brightness(60%);
-        }
-    }
-
-    body[data-theme='dark'] img {
-        filter: brightness(60%);
-    }
-</style>
-
-
-
-<link rel="stylesheet" href="https://bikulov.org/assets/css/fuji.min.css" />
-
-
-
-
-
-</head>
-
-<body data-theme="auto">
-    <script data-cfasync="false">
-  
-  var fujiThemeData = localStorage.getItem('fuji_data-theme');
-  
-  if (!fujiThemeData) {
-    localStorage.setItem('fuji_data-theme', 'auto');
-  } else {
-    
-    if (fujiThemeData !== 'auto') {
-      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
-    }
-  }
-</script>
-    <header>
-    <div class="container-lg clearfix">
-        <div class="col-12 header">
-            <a class="title-main" href="https://bikulov.org">:) bikulov.ORG</a>
-            
-            <span class="title-sub">Static notes about information technologies</span>
-            
-        </div>
+<html><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all">
+  <link href="/css/style.css" rel="stylesheet" type="text/css" media="all">
+  <link href="/css/custom.css" rel="stylesheet" type="text/css" media="all">
+  <script src="/js/bootstrap.bundle.min.js"></script>
+  <link rel="apple-touch-icon" href="/logo.png" type="image/png">
+  <link rel="icon" href="/img/logo.svg" type="image/svg+xml">
+  <link rel="icon" href="/img/logo.png" type="image/png">
+  <title>Bikulov&#39;s blog</title>
+</head><body>
+<header>
+  <nav class="navbar navbar-expand navbar-dark volukib-header">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="https://bikulov.org/"><img src="/img/logo.png" class="volukib-logo" alt="logo"> Bikulov&#39;s blog</a>
+      <ul class="navbar-nav">
+        
+        <li class="nav-item">
+          
+          <a class="nav-link text-uppercase " href="/">Home</a>
+        </li>
+        
+        <li class="nav-item">
+          
+          <a class="nav-link text-uppercase " href="/resume/">Resume</a>
+        </li>
+        
+      </ul>
     </div>
-</header>
-
-    <main>
-        <div class="container-lg clearfix">
-            
-            <div class="col-12 col-md-9 float-left content">
-                
-<article>
-    
-    <h2 class="post-item post-title">
-        <a href="https://bikulov.org/blog/2013/11/04/heapsort-implementation-in-c-/">Heapsort implementation in C&#43;&#43;</a>
-    </h2>
-    <div class="post-item post-meta">
-        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2013-11-04</span><span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/cpp">cpp</a>&nbsp;<a href="/tags/heapsort">heapsort</a>&nbsp;<a href="/tags/howto">howto</a>&nbsp;<a href="/tags/snippet">snippet</a>&nbsp;</span>
-
+  </nav>
+</header><div class="container">
+<div class="row text-center mb-5">
+  <div class="col">
+    <h1>Heapsort implementation in C&#43;&#43;</h1>
+    <div>2013-11-04</div>
+    <div>
+      
+      <a class="" href="/tags/cpp">#cpp</a>
+      
+      <a class="" href="/tags/heapsort">#heapsort</a>
+      
+      <a class="" href="/tags/howto">#howto</a>
+      
+      <a class="" href="/tags/snippet">#snippet</a>
+      
     </div>
-    
-    <div class="post-content markdown-body">
-        <p>Heapsort is one of the fastest sorting algorithms. The best and the worst cases for heapsort have same $O(n\log(n))$ performance.</p>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <p>Heapsort is one of the fastest sorting algorithms. The best and the worst cases for heapsort have same $O(n\log(n))$ performance.</p>
 <p>At first heapsort creates heap from data with <code>buildHeap</code> function. Heap is organized in linear array as follows. Every $i$-th element has two children: $(2i)$-th element and $(2i+1)$-th one. The biggest element of the array is placed on the top of the heap.</p>
 <p>After heap building top element is swapped with the latest in the array, then heap is rebuilt for the array with size decreased by one. These operations repeat till array size is bigger than one. Note that array indexes have to start from one for this implementation to work correctly (that is why I use <code>size+1</code> for array size).</p>
 <p>My implementation of heapsort is presented below. <code>heapsort.cpp</code>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;cstdlib&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;algorithm&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
-<span style="color:#66d9ef">void</span> checkRootNode(T <span style="color:#f92672">*</span>array, size_t root, size_t size) {
-	size_t left <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>root;
-	size_t right <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>root <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;
-	<span style="color:#66d9ef">if</span> (left <span style="color:#f92672">&lt;</span> size <span style="color:#f92672">&amp;&amp;</span> array[root] <span style="color:#f92672">&lt;</span> array[left]) {
-		std<span style="color:#f92672">::</span>swap(array[root], array[left]);
-		checkRootNode(array, left, size);
-	}
-	<span style="color:#66d9ef">if</span> (right <span style="color:#f92672">&lt;</span> size <span style="color:#f92672">&amp;&amp;</span> array[root] <span style="color:#f92672">&lt;</span> array[right]) {
-		std<span style="color:#f92672">::</span>swap(array[root], array[right]);
-		checkRootNode(array, right, size);
-	}
-}
-
-<span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
-<span style="color:#66d9ef">void</span> buildHeap(T <span style="color:#f92672">*</span>array, size_t size) {
-	<span style="color:#66d9ef">for</span> (size_t i<span style="color:#f92672">=</span>size<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>; i<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">0</span>; <span style="color:#f92672">--</span>i) {
-		checkRootNode(array, i, size);
-	}
-}
-
-<span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
-<span style="color:#66d9ef">void</span> heapSort(T <span style="color:#f92672">*</span>array, size_t size) {
-	<span style="color:#66d9ef">while</span> (size <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>) {
-		std<span style="color:#f92672">::</span>swap(array[<span style="color:#ae81ff">1</span>], array[size<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]);
-		checkRootNode(array, <span style="color:#ae81ff">1</span>, <span style="color:#f92672">--</span>size);
-	}
-}
-
-<span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
-<span style="color:#66d9ef">void</span> printArray(T <span style="color:#f92672">*</span>array, size_t size) {
-	<span style="color:#66d9ef">for</span> (size_t i<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>; i <span style="color:#f92672">&lt;</span> size; <span style="color:#f92672">++</span>i) {
-		std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> array[i] <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#39; &#39;</span>;
-	}
-	std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
-}
-
-<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">void</span>) {
-	size_t size <span style="color:#f92672">=</span> <span style="color:#ae81ff">23</span>;
-	<span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>array <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">int</span>[size<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>];
-
-	<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>; i<span style="color:#f92672">&lt;</span>size<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>; <span style="color:#f92672">++</span>i) {
-		array[i] <span style="color:#f92672">=</span> (<span style="color:#ae81ff">100.0</span><span style="color:#f92672">*</span>rand())<span style="color:#f92672">/</span>RAND_MAX;
-	}
-
-	printArray(array, size);
-	buildHeap(array, size);
-	heapSort(array, size);
-	printArray(array, size);
-
-	<span style="color:#66d9ef">delete</span> [] array;
-
-	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
-}
-</code></pre></div><p>Results:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>kenarius@cudasus<span style="color:#f92672">]</span>$ g++ heapsort.cpp
-<span style="color:#f92672">[</span>kenarius@cudasus<span style="color:#f92672">]</span>$ ./a.out
-<span style="color:#ae81ff">84</span> <span style="color:#ae81ff">39</span> <span style="color:#ae81ff">78</span> <span style="color:#ae81ff">79</span> <span style="color:#ae81ff">91</span> <span style="color:#ae81ff">19</span> <span style="color:#ae81ff">33</span> <span style="color:#ae81ff">76</span> <span style="color:#ae81ff">27</span> <span style="color:#ae81ff">55</span> <span style="color:#ae81ff">47</span> <span style="color:#ae81ff">62</span> <span style="color:#ae81ff">36</span> <span style="color:#ae81ff">51</span> <span style="color:#ae81ff">95</span> <span style="color:#ae81ff">91</span> <span style="color:#ae81ff">63</span> <span style="color:#ae81ff">71</span> <span style="color:#ae81ff">14</span> <span style="color:#ae81ff">60</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">24</span>
-<span style="color:#ae81ff">1</span> <span style="color:#ae81ff">14</span> <span style="color:#ae81ff">19</span> <span style="color:#ae81ff">24</span> <span style="color:#ae81ff">27</span> <span style="color:#ae81ff">33</span> <span style="color:#ae81ff">36</span> <span style="color:#ae81ff">39</span> <span style="color:#ae81ff">47</span> <span style="color:#ae81ff">51</span> <span style="color:#ae81ff">55</span> <span style="color:#ae81ff">60</span> <span style="color:#ae81ff">62</span> <span style="color:#ae81ff">63</span> <span style="color:#ae81ff">71</span> <span style="color:#ae81ff">76</span> <span style="color:#ae81ff">78</span> <span style="color:#ae81ff">79</span> <span style="color:#ae81ff">84</span> <span style="color:#ae81ff">91</span> <span style="color:#ae81ff">91</span> <span style="color:#ae81ff">95</span>
-</code></pre></div>
-    </div>
-</article>
-
-
-
-
-            </div>
-            <aside class="col-12 col-md-3 float-left sidebar">
-    
-    <div class="sidebar-item sidebar-pages">
-        <h3>Pages</h3>
-        <ul>
-            
-            <li>
-                <a href="/">Home</a>
-            </li>
-            
-            <li>
-                <a href="/resume/">Resume</a>
-            </li>
-            
-            <li>
-                <a href="/index.xml">RSS</a>
-            </li>
-            
-        </ul>
-    </div>
-    
-    <div class="sidebar-item sidebar-links">
-        <h3>Links</h3>
-        <ul>
-            
-            <li>
-                <a href="https://github.com/bikulov" target="_blank"><span>Github</span></a>
-            </li>
-            
-            <li>
-                <a href="https://linkedin.com/in/bikulov" target="_blank"><span>LinkedIn</span></a>
-            </li>
-            
-            <li>
-                <a href="https://twitter.com/volukib" target="_blank"><span>Twitter</span></a>
-            </li>
-            
-        </ul>
-    </div>
-    
-    <div class="sidebar-item sidebar-tags">
-        <h3>Tags</h3>
-        <div>
-            
-            <span>
-                <a href="/tags/awk/">awk</a>
-            </span>
-            
-            <span>
-                <a href="/tags/backup/">backup</a>
-            </span>
-            
-            <span>
-                <a href="/tags/bash/">bash</a>
-            </span>
-            
-            <span>
-                <a href="/tags/blender/">blender</a>
-            </span>
-            
-            <span>
-                <a href="/tags/btsync/">btsync</a>
-            </span>
-            
-            <span>
-                <a href="/tags/c/">c</a>
-            </span>
-            
-            <span>
-                <a href="/tags/c&#43;&#43;/">c&#43;&#43;</a>
-            </span>
-            
-            <span>
-                <a href="/tags/centos/">centos</a>
-            </span>
-            
-            <span>
-                <a href="/tags/cmake/">cmake</a>
-            </span>
-            
-            <span>
-                <a href="/tags/config/">config</a>
-            </span>
-            
-            <span>
-                <a href="/tags/console/">console</a>
-            </span>
-            
-            <span>
-                <a href="/tags/cpp/">cpp</a>
-            </span>
-            
-            <span>
-                <a href="/tags/cron/">cron</a>
-            </span>
-            
-            <span>
-                <a href="/tags/cuda/">cuda</a>
-            </span>
-            
-            <span>
-                <a href="/tags/dd/">dd</a>
-            </span>
-            
-            <span>
-                <a href="/tags/docker/">docker</a>
-            </span>
-            
-            <span>
-                <a href="/tags/dokuwiki/">dokuwiki</a>
-            </span>
-            
-            <span>
-                <a href="/tags/drupal/">drupal</a>
-            </span>
-            
-            <span>
-                <a href="/tags/du/">du</a>
-            </span>
-            
-            <span>
-                <a href="/tags/exceptions/">exceptions</a>
-            </span>
-            
-            <span>
-                <a href="/tags/fatnode/">fatnode</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ffmpeg/">ffmpeg</a>
-            </span>
-            
-            <span>
-                <a href="/tags/firefox/">firefox</a>
-            </span>
-            
-            <span>
-                <a href="/tags/gengetopt/">gengetopt</a>
-            </span>
-            
-            <span>
-                <a href="/tags/heapsort/">heapsort</a>
-            </span>
-            
-            <span>
-                <a href="/tags/howto/">howto</a>
-            </span>
-            
-            <span>
-                <a href="/tags/i3/">i3</a>
-            </span>
-            
-            <span>
-                <a href="/tags/imagemagick/">imagemagick</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ip/">ip</a>
-            </span>
-            
-            <span>
-                <a href="/tags/iptables/">iptables</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ipython/">ipython</a>
-            </span>
-            
-            <span>
-                <a href="/tags/joomla/">joomla</a>
-            </span>
-            
-            <span>
-                <a href="/tags/jupyter/">jupyter</a>
-            </span>
-            
-            <span>
-                <a href="/tags/latex/">latex</a>
-            </span>
-            
-            <span>
-                <a href="/tags/libcheese/">libcheese</a>
-            </span>
-            
-            <span>
-                <a href="/tags/linux/">linux</a>
-            </span>
-            
-            <span>
-                <a href="/tags/lxc/">lxc</a>
-            </span>
-            
-            <span>
-                <a href="/tags/makefile/">makefile</a>
-            </span>
-            
-            <span>
-                <a href="/tags/matplotlib/">matplotlib</a>
-            </span>
-            
-            <span>
-                <a href="/tags/mercurial/">mercurial</a>
-            </span>
-            
-            <span>
-                <a href="/tags/montage/">montage</a>
-            </span>
-            
-            <span>
-                <a href="/tags/mysql/">mysql</a>
-            </span>
-            
-            <span>
-                <a href="/tags/nautilus/">nautilus</a>
-            </span>
-            
-            <span>
-                <a href="/tags/nginx/">nginx</a>
-            </span>
-            
-            <span>
-                <a href="/tags/numpy/">numpy</a>
-            </span>
-            
-            <span>
-                <a href="/tags/openvpn/">openvpn</a>
-            </span>
-            
-            <span>
-                <a href="/tags/openvz/">openvz</a>
-            </span>
-            
-            <span>
-                <a href="/tags/paraview/">paraview</a>
-            </span>
-            
-            <span>
-                <a href="/tags/pcap/">pcap</a>
-            </span>
-            
-            <span>
-                <a href="/tags/pcmanfm/">PCManFM</a>
-            </span>
-            
-            <span>
-                <a href="/tags/pdf/">pdf</a>
-            </span>
-            
-            <span>
-                <a href="/tags/perl/">perl</a>
-            </span>
-            
-            <span>
-                <a href="/tags/plots/">plots</a>
-            </span>
-            
-            <span>
-                <a href="/tags/png/">png</a>
-            </span>
-            
-            <span>
-                <a href="/tags/postgres/">postgres</a>
-            </span>
-            
-            <span>
-                <a href="/tags/postgresql/">postgresql</a>
-            </span>
-            
-            <span>
-                <a href="/tags/programmer-tools/">programmer tools</a>
-            </span>
-            
-            <span>
-                <a href="/tags/python/">python</a>
-            </span>
-            
-            <span>
-                <a href="/tags/quicksort/">quicksort</a>
-            </span>
-            
-            <span>
-                <a href="/tags/research/">research</a>
-            </span>
-            
-            <span>
-                <a href="/tags/rhodecode/">rhodecode</a>
-            </span>
-            
-            <span>
-                <a href="/tags/scan/">scan</a>
-            </span>
-            
-            <span>
-                <a href="/tags/scanimage/">scanimage</a>
-            </span>
-            
-            <span>
-                <a href="/tags/science/">science</a>
-            </span>
-            
-            <span>
-                <a href="/tags/scipy/">scipy</a>
-            </span>
-            
-            <span>
-                <a href="/tags/screen-capture/">screen capture</a>
-            </span>
-            
-            <span>
-                <a href="/tags/script/">script</a>
-            </span>
-            
-            <span>
-                <a href="/tags/scrot/">scrot</a>
-            </span>
-            
-            <span>
-                <a href="/tags/seaborn/">seaborn</a>
-            </span>
-            
-            <span>
-                <a href="/tags/sed/">sed</a>
-            </span>
-            
-            <span>
-                <a href="/tags/selfhosted/">selfhosted</a>
-            </span>
-            
-            <span>
-                <a href="/tags/server/">server</a>
-            </span>
-            
-            <span>
-                <a href="/tags/slurm/">slurm</a>
-            </span>
-            
-            <span>
-                <a href="/tags/snippet/">snippet</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ssh/">ssh</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tcpdump/">tcpdump</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tcptrace/">tcptrace</a>
-            </span>
-            
-            <span>
-                <a href="/tags/template/">template</a>
-            </span>
-            
-            <span>
-                <a href="/tags/terminal/">terminal</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tiff/">tiff</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tips-and-tricks/">tips and tricks</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tpick/">tpick</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tr/">tr</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tshark/">tshark</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tun/">tun</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tutorial/">tutorial</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ubuntu/">ubuntu</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ubuntu-12.04/">ubuntu 12.04</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ubuntu-server/">ubuntu server</a>
-            </span>
-            
-            <span>
-                <a href="/tags/visualization/">visualization</a>
-            </span>
-            
-            <span>
-                <a href="/tags/vpn/">vpn</a>
-            </span>
-            
-            <span>
-                <a href="/tags/yandex.disk/">yandex.disk</a>
-            </span>
-            
-            <span>
-                <a href="/tags/zotero/">zotero</a>
-            </span>
-            
-            <span>
-                <a href="/tags/zotfile/">zotfile</a>
-            </span>
-            
-        </div>
-    </div>
-    <div class="sidebar-item sidebar-toc">
-        <h3>TOC</h3><nav id="TableOfContents"></nav></div>
-</aside>
-        </div>
-        <div class="btn">
-    <div class="btn-menu" id="btn-menu">
-        <i class="iconfont icon-grid-sharp"></i>
-    </div>
-    <div class="btn-toggle-mode">
-        <i class="iconfont icon-contrast-sharp"></i>
-    </div>
-    <div class="btn-scroll-top">
-        <i class="iconfont icon-chevron-up-circle-sharp"></i>
-    </div>
-</div>
-<aside class="sidebar-mobile" style="display: none;">
-  <div class="sidebar-wrapper">
-    
-    <div class="sidebar-item sidebar-pages">
-        <h3>Pages</h3>
-        <ul>
-            
-            <li>
-                <a href="/">Home</a>
-            </li>
-            
-            <li>
-                <a href="/resume/">Resume</a>
-            </li>
-            
-            <li>
-                <a href="/index.xml">RSS</a>
-            </li>
-            
-        </ul>
-    </div>
-    
-    <div class="sidebar-item sidebar-links">
-        <h3>Links</h3>
-        <ul>
-            
-            <li>
-                <a href="https://github.com/bikulov" target="_blank"><span>Github</span></a>
-            </li>
-            
-            <li>
-                <a href="https://linkedin.com/in/bikulov" target="_blank"><span>LinkedIn</span></a>
-            </li>
-            
-            <li>
-                <a href="https://twitter.com/volukib" target="_blank"><span>Twitter</span></a>
-            </li>
-            
-        </ul>
-    </div>
-    
-    <div class="sidebar-item sidebar-tags">
-        <h3>Tags</h3>
-        <div>
-            
-            <span>
-                <a href="/tags/awk/">awk</a>
-            </span>
-            
-            <span>
-                <a href="/tags/backup/">backup</a>
-            </span>
-            
-            <span>
-                <a href="/tags/bash/">bash</a>
-            </span>
-            
-            <span>
-                <a href="/tags/blender/">blender</a>
-            </span>
-            
-            <span>
-                <a href="/tags/btsync/">btsync</a>
-            </span>
-            
-            <span>
-                <a href="/tags/c/">c</a>
-            </span>
-            
-            <span>
-                <a href="/tags/c&#43;&#43;/">c&#43;&#43;</a>
-            </span>
-            
-            <span>
-                <a href="/tags/centos/">centos</a>
-            </span>
-            
-            <span>
-                <a href="/tags/cmake/">cmake</a>
-            </span>
-            
-            <span>
-                <a href="/tags/config/">config</a>
-            </span>
-            
-            <span>
-                <a href="/tags/console/">console</a>
-            </span>
-            
-            <span>
-                <a href="/tags/cpp/">cpp</a>
-            </span>
-            
-            <span>
-                <a href="/tags/cron/">cron</a>
-            </span>
-            
-            <span>
-                <a href="/tags/cuda/">cuda</a>
-            </span>
-            
-            <span>
-                <a href="/tags/dd/">dd</a>
-            </span>
-            
-            <span>
-                <a href="/tags/docker/">docker</a>
-            </span>
-            
-            <span>
-                <a href="/tags/dokuwiki/">dokuwiki</a>
-            </span>
-            
-            <span>
-                <a href="/tags/drupal/">drupal</a>
-            </span>
-            
-            <span>
-                <a href="/tags/du/">du</a>
-            </span>
-            
-            <span>
-                <a href="/tags/exceptions/">exceptions</a>
-            </span>
-            
-            <span>
-                <a href="/tags/fatnode/">fatnode</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ffmpeg/">ffmpeg</a>
-            </span>
-            
-            <span>
-                <a href="/tags/firefox/">firefox</a>
-            </span>
-            
-            <span>
-                <a href="/tags/gengetopt/">gengetopt</a>
-            </span>
-            
-            <span>
-                <a href="/tags/heapsort/">heapsort</a>
-            </span>
-            
-            <span>
-                <a href="/tags/howto/">howto</a>
-            </span>
-            
-            <span>
-                <a href="/tags/i3/">i3</a>
-            </span>
-            
-            <span>
-                <a href="/tags/imagemagick/">imagemagick</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ip/">ip</a>
-            </span>
-            
-            <span>
-                <a href="/tags/iptables/">iptables</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ipython/">ipython</a>
-            </span>
-            
-            <span>
-                <a href="/tags/joomla/">joomla</a>
-            </span>
-            
-            <span>
-                <a href="/tags/jupyter/">jupyter</a>
-            </span>
-            
-            <span>
-                <a href="/tags/latex/">latex</a>
-            </span>
-            
-            <span>
-                <a href="/tags/libcheese/">libcheese</a>
-            </span>
-            
-            <span>
-                <a href="/tags/linux/">linux</a>
-            </span>
-            
-            <span>
-                <a href="/tags/lxc/">lxc</a>
-            </span>
-            
-            <span>
-                <a href="/tags/makefile/">makefile</a>
-            </span>
-            
-            <span>
-                <a href="/tags/matplotlib/">matplotlib</a>
-            </span>
-            
-            <span>
-                <a href="/tags/mercurial/">mercurial</a>
-            </span>
-            
-            <span>
-                <a href="/tags/montage/">montage</a>
-            </span>
-            
-            <span>
-                <a href="/tags/mysql/">mysql</a>
-            </span>
-            
-            <span>
-                <a href="/tags/nautilus/">nautilus</a>
-            </span>
-            
-            <span>
-                <a href="/tags/nginx/">nginx</a>
-            </span>
-            
-            <span>
-                <a href="/tags/numpy/">numpy</a>
-            </span>
-            
-            <span>
-                <a href="/tags/openvpn/">openvpn</a>
-            </span>
-            
-            <span>
-                <a href="/tags/openvz/">openvz</a>
-            </span>
-            
-            <span>
-                <a href="/tags/paraview/">paraview</a>
-            </span>
-            
-            <span>
-                <a href="/tags/pcap/">pcap</a>
-            </span>
-            
-            <span>
-                <a href="/tags/pcmanfm/">PCManFM</a>
-            </span>
-            
-            <span>
-                <a href="/tags/pdf/">pdf</a>
-            </span>
-            
-            <span>
-                <a href="/tags/perl/">perl</a>
-            </span>
-            
-            <span>
-                <a href="/tags/plots/">plots</a>
-            </span>
-            
-            <span>
-                <a href="/tags/png/">png</a>
-            </span>
-            
-            <span>
-                <a href="/tags/postgres/">postgres</a>
-            </span>
-            
-            <span>
-                <a href="/tags/postgresql/">postgresql</a>
-            </span>
-            
-            <span>
-                <a href="/tags/programmer-tools/">programmer tools</a>
-            </span>
-            
-            <span>
-                <a href="/tags/python/">python</a>
-            </span>
-            
-            <span>
-                <a href="/tags/quicksort/">quicksort</a>
-            </span>
-            
-            <span>
-                <a href="/tags/research/">research</a>
-            </span>
-            
-            <span>
-                <a href="/tags/rhodecode/">rhodecode</a>
-            </span>
-            
-            <span>
-                <a href="/tags/scan/">scan</a>
-            </span>
-            
-            <span>
-                <a href="/tags/scanimage/">scanimage</a>
-            </span>
-            
-            <span>
-                <a href="/tags/science/">science</a>
-            </span>
-            
-            <span>
-                <a href="/tags/scipy/">scipy</a>
-            </span>
-            
-            <span>
-                <a href="/tags/screen-capture/">screen capture</a>
-            </span>
-            
-            <span>
-                <a href="/tags/script/">script</a>
-            </span>
-            
-            <span>
-                <a href="/tags/scrot/">scrot</a>
-            </span>
-            
-            <span>
-                <a href="/tags/seaborn/">seaborn</a>
-            </span>
-            
-            <span>
-                <a href="/tags/sed/">sed</a>
-            </span>
-            
-            <span>
-                <a href="/tags/selfhosted/">selfhosted</a>
-            </span>
-            
-            <span>
-                <a href="/tags/server/">server</a>
-            </span>
-            
-            <span>
-                <a href="/tags/slurm/">slurm</a>
-            </span>
-            
-            <span>
-                <a href="/tags/snippet/">snippet</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ssh/">ssh</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tcpdump/">tcpdump</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tcptrace/">tcptrace</a>
-            </span>
-            
-            <span>
-                <a href="/tags/template/">template</a>
-            </span>
-            
-            <span>
-                <a href="/tags/terminal/">terminal</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tiff/">tiff</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tips-and-tricks/">tips and tricks</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tpick/">tpick</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tr/">tr</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tshark/">tshark</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tun/">tun</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tutorial/">tutorial</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ubuntu/">ubuntu</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ubuntu-12.04/">ubuntu 12.04</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ubuntu-server/">ubuntu server</a>
-            </span>
-            
-            <span>
-                <a href="/tags/visualization/">visualization</a>
-            </span>
-            
-            <span>
-                <a href="/tags/vpn/">vpn</a>
-            </span>
-            
-            <span>
-                <a href="/tags/yandex.disk/">yandex.disk</a>
-            </span>
-            
-            <span>
-                <a href="/tags/zotero/">zotero</a>
-            </span>
-            
-            <span>
-                <a href="/tags/zotfile/">zotfile</a>
-            </span>
-            
-        </div>
-    </div>
-    
-    
-    
-    <div class="sidebar-item sidebar-toc">
-        <h3>TOC</h3>
-        <nav id="TableOfContents"></nav>
-    </div>
-    
-    
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;cstdlib&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;algorithm&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> checkRootNode(T <span style="color:#f92672">*</span>array, size_t root, size_t size) {
+</span></span><span style="display:flex;"><span>	size_t left <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>root;
+</span></span><span style="display:flex;"><span>	size_t right <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>root <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> (left <span style="color:#f92672">&lt;</span> size <span style="color:#f92672">&amp;&amp;</span> array[root] <span style="color:#f92672">&lt;</span> array[left]) {
+</span></span><span style="display:flex;"><span>		std<span style="color:#f92672">::</span>swap(array[root], array[left]);
+</span></span><span style="display:flex;"><span>		checkRootNode(array, left, size);
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> (right <span style="color:#f92672">&lt;</span> size <span style="color:#f92672">&amp;&amp;</span> array[root] <span style="color:#f92672">&lt;</span> array[right]) {
+</span></span><span style="display:flex;"><span>		std<span style="color:#f92672">::</span>swap(array[root], array[right]);
+</span></span><span style="display:flex;"><span>		checkRootNode(array, right, size);
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> buildHeap(T <span style="color:#f92672">*</span>array, size_t size) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> (size_t i<span style="color:#f92672">=</span>size<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>; i<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">0</span>; <span style="color:#f92672">--</span>i) {
+</span></span><span style="display:flex;"><span>		checkRootNode(array, i, size);
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> heapSort(T <span style="color:#f92672">*</span>array, size_t size) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">while</span> (size <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>) {
+</span></span><span style="display:flex;"><span>		std<span style="color:#f92672">::</span>swap(array[<span style="color:#ae81ff">1</span>], array[size<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]);
+</span></span><span style="display:flex;"><span>		checkRootNode(array, <span style="color:#ae81ff">1</span>, <span style="color:#f92672">--</span>size);
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> printArray(T <span style="color:#f92672">*</span>array, size_t size) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> (size_t i<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>; i <span style="color:#f92672">&lt;</span> size; <span style="color:#f92672">++</span>i) {
+</span></span><span style="display:flex;"><span>		std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> array[i] <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#39; &#39;</span>;
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">void</span>) {
+</span></span><span style="display:flex;"><span>	size_t size <span style="color:#f92672">=</span> <span style="color:#ae81ff">23</span>;
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>array <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">int</span>[size<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>; i<span style="color:#f92672">&lt;</span>size<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>; <span style="color:#f92672">++</span>i) {
+</span></span><span style="display:flex;"><span>		array[i] <span style="color:#f92672">=</span> (<span style="color:#ae81ff">100.0</span><span style="color:#f92672">*</span>rand())<span style="color:#f92672">/</span>RAND_MAX;
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	printArray(array, size);
+</span></span><span style="display:flex;"><span>	buildHeap(array, size);
+</span></span><span style="display:flex;"><span>	heapSort(array, size);
+</span></span><span style="display:flex;"><span>	printArray(array, size);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">delete</span> [] array;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Results:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>kenarius@cudasus<span style="color:#f92672">]</span>$ g++ heapsort.cpp
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>kenarius@cudasus<span style="color:#f92672">]</span>$ ./a.out
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">84</span> <span style="color:#ae81ff">39</span> <span style="color:#ae81ff">78</span> <span style="color:#ae81ff">79</span> <span style="color:#ae81ff">91</span> <span style="color:#ae81ff">19</span> <span style="color:#ae81ff">33</span> <span style="color:#ae81ff">76</span> <span style="color:#ae81ff">27</span> <span style="color:#ae81ff">55</span> <span style="color:#ae81ff">47</span> <span style="color:#ae81ff">62</span> <span style="color:#ae81ff">36</span> <span style="color:#ae81ff">51</span> <span style="color:#ae81ff">95</span> <span style="color:#ae81ff">91</span> <span style="color:#ae81ff">63</span> <span style="color:#ae81ff">71</span> <span style="color:#ae81ff">14</span> <span style="color:#ae81ff">60</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">24</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span> <span style="color:#ae81ff">14</span> <span style="color:#ae81ff">19</span> <span style="color:#ae81ff">24</span> <span style="color:#ae81ff">27</span> <span style="color:#ae81ff">33</span> <span style="color:#ae81ff">36</span> <span style="color:#ae81ff">39</span> <span style="color:#ae81ff">47</span> <span style="color:#ae81ff">51</span> <span style="color:#ae81ff">55</span> <span style="color:#ae81ff">60</span> <span style="color:#ae81ff">62</span> <span style="color:#ae81ff">63</span> <span style="color:#ae81ff">71</span> <span style="color:#ae81ff">76</span> <span style="color:#ae81ff">78</span> <span style="color:#ae81ff">79</span> <span style="color:#ae81ff">84</span> <span style="color:#ae81ff">91</span> <span style="color:#ae81ff">91</span> <span style="color:#ae81ff">95</span>
+</span></span></code></pre></div>
   </div>
-</aside>
-    </main>
+</div>
 
-    <footer>
-    <div class="container-lg clearfix">
-        <div class="col-12 footer">
-            
-            <span>&copy; 2012-2021
-                <a href="https://bikulov.org">bikulov</a>
-                 | <a href="https://github.com/bikulov/bikulov.github.io">Source code</a> 
-                | Powered by <a href="https://github.com/amzrk2/hugo-theme-fuji/"
-                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
-                                                    target="_blank">Hugo</a> 
-            </span>
-        </div>
-    </div>
-</footer>
-
-    
-<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.0/lazysizes.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
-
-
-
-<script defer src="/assets/js/fuji.min.js"></script>
-
-
-</body>
+  </div><div class="container-fluid volukib-footer p-2">
+  <footer class="text-center">
+    <a class="text-decoration-none text-light" href="https://bikulov.org/">Bikulov&#39;s blog 2022</a>
+  </footer>
+</div></body>
 
 </html>

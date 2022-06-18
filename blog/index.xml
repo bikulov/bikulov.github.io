@@ -1,0 +1,551 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blogs on Bikulov&#39;s blog</title>
+    <link>https://bikulov.org/blog/</link>
+    <description>Recent content in Blogs on Bikulov&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ru</language>
+    <copyright>Network Notes 2022</copyright>
+    <lastBuildDate>Sat, 18 Jun 2022 12:02:28 +0300</lastBuildDate><atom:link href="https://bikulov.org/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hugo Theme</title>
+      <link>https://bikulov.org/blog/2022/06/18/hugo-theme/</link>
+      <pubDate>Sat, 18 Jun 2022 12:02:28 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2022/06/18/hugo-theme/</guid>
+      <description>Hugo theme</description>
+    </item>
+    
+    <item>
+      <title>How to setup own selfhosted wiki</title>
+      <link>https://bikulov.org/blog/2021/02/02/how-to-setup-own-selfhosted-wiki/</link>
+      <pubDate>Tue, 02 Feb 2021 09:30:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2021/02/02/how-to-setup-own-selfhosted-wiki/</guid>
+      <description>Disclaimer: many links in this post are referral. If you are uncomfortable with it, just search for the text in the links and use results from the search engines.
+#&amp;nbsp;Plan  Spin up a new virtual server (1 CPU + 1 GB RAM is fairly enough) in Vultr, Digital Ocean, etc. Register a new domain name Install Docker and Docker Compose Use docker-compose to deploy a wiki Backups  #&amp;nbsp;Virtual server For example, let it be Digital Ocean.</description>
+    </item>
+    
+    <item>
+      <title>WireGuard on Ubuntu (server) and Android (client)</title>
+      <link>https://bikulov.org/blog/2019/12/22/wireguard-on-ubuntu-server-and-android-client/</link>
+      <pubDate>Sun, 22 Dec 2019 02:30:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2019/12/22/wireguard-on-ubuntu-server-and-android-client/</guid>
+      <description>WireGuard is lightweight VPN with extremely simple configuration. All below was tested on Ubuntu 18.04 as server and Anroid 8.0.0 as client.
+#&amp;nbsp;Server Installation from official ppa:
+apt-add-repository ppa:wireguard/wireguard apt update apt install wireguard Client and server authenticate each other with asymmetric keys (like in SSH). Keys are generated with management utility wg:
+wg genkey This will be server auth key (client auth key can be generated with the same command or in mobile application, you will need public part in config).</description>
+    </item>
+    
+    <item>
+      <title>Python program template</title>
+      <link>https://bikulov.org/blog/2019/02/22/python-program-template/</link>
+      <pubDate>Fri, 22 Feb 2019 00:30:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2019/02/22/python-program-template/</guid>
+      <description>For every simple python script you need same simple parts:
+ command line arguments parsing logging [optional] submodules [optional] building to a binary  I&amp;rsquo;ve prepared a simple python project with all these parts to use as template. It is available on github.
+Command line arguments parsing is done in parse_arguments. The most interesting thing there is setting default fuctions for submodules (and None for main module). It looks like:</description>
+    </item>
+    
+    <item>
+      <title>Python sorting objects of user defined class</title>
+      <link>https://bikulov.org/blog/2017/03/11/python-sorting-objects-of-user-defined-class/</link>
+      <pubDate>Sat, 11 Mar 2017 23:32:41 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2017/03/11/python-sorting-objects-of-user-defined-class/</guid>
+      <description>The most common way of sorting collections of custom objects in Python is to provide key function that is used to extract a comparison key from each element:
+sorted(&amp;#34;Case insensitive Sorting is here&amp;#34;.split(), key=str.lower) But sorted function compares objects by its nature, and it is possible to define comparison operators for your class t make sorted work automatically.
+Documentation guarantees that sorting uses only __lt__() method:
+ The sort routines are guaranteed to use __lt__() when making comparisons between two objects.</description>
+    </item>
+    
+    <item>
+      <title>Tips for LXC 2: unprivileged containers</title>
+      <link>https://bikulov.org/blog/2016/08/19/tips-for-lxc-2-unprivileged-containers/</link>
+      <pubDate>Fri, 19 Aug 2016 18:26:36 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2016/08/19/tips-for-lxc-2-unprivileged-containers/</guid>
+      <description>LXC containers are great for application isolation and safe deployment. Running unprivileged containers is the safest way to run containers in a production environment. This note contains enough information to create your own safe container.
+Install LXC:
+apt-get install -y lxc Now create non-root system user for lxc:
+useradd --home-dir /srv/lxc --create-home lxc echo &amp;#34;lxc veth lxcbr0 2&amp;#34; | sudo tee -a /etc/lxc/lxc-usernet passwd lxc &amp;lt;type password&amp;gt; I recommend to add autostart as default behaviour:</description>
+    </item>
+    
+    <item>
+      <title>Script for user configurations generation and sending at Ubuntu OpenVPN server</title>
+      <link>https://bikulov.org/blog/2016/01/05/script-for-user-configurations-generation-and-sending-at-ubuntu-openvpn-server/</link>
+      <pubDate>Tue, 05 Jan 2016 23:07:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2016/01/05/script-for-user-configurations-generation-and-sending-at-ubuntu-openvpn-server/</guid>
+      <description>Ubuntu has a very detailed documentation about OpenVPN server configuration. The key feature of this note is script for automatic generation of single-file client configurations (keys and certs are embedded) and sending them by email. Looks interesting? Read below!
+#&amp;nbsp;Prerequisities All commands in this section must be executed as root user.
+Update package list:
+apt-get update apt-get -y upgrade Install needed packages (easy-rsa must be installed explicitly on modern Ubuntus):</description>
+    </item>
+    
+    <item>
+      <title>Install Jupyter Notebook and Scientific Environment in Ubuntu 14.04 With Python 3</title>
+      <link>https://bikulov.org/blog/2015/11/07/install-jupyter-notebook-and-scientific-environment-in-ubuntu-14.04-with-python-3/</link>
+      <pubDate>Sat, 07 Nov 2015 11:24:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2015/11/07/install-jupyter-notebook-and-scientific-environment-in-ubuntu-14.04-with-python-3/</guid>
+      <description>Several changes occured since my last note about installing python scientific environment:
+ IPython Notebook was succeeded by Jupyter Notebook seaborn package is used for the pretty matplotlib plots raw virtualenv was replaced by virtualenvwrapper procedure of notebook profiles creation and edition has been changed ipython bug about pip in virtualenv is obsolete. But now another workaround is needed for packahes installation pip installation from pypa is now one-liner  Install prerequisities as root:</description>
+    </item>
+    
+    <item>
+      <title>Scan images from command line in Linux</title>
+      <link>https://bikulov.org/blog/2015/09/26/scan-images-from-command-line-in-linux/</link>
+      <pubDate>Sat, 26 Sep 2015 20:05:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2015/09/26/scan-images-from-command-line-in-linux/</guid>
+      <description>Console utilities in Linuxes are cool: mcabber for jabber, mutt for mail, mocp for music, vim to rule them all! This note is about scaning from the console (I assume your scanner is already set-up). Aim is to scan document with good quality into pdf with reasonable size.
+Scanning is done by scanimage utility:
+scanimage --resolution 300 --mode Color --format tiff &amp;gt; document.tiff If there is more than one scanner in your system, list them all by scanimage -L commant and use specify name with --device-name argument.</description>
+    </item>
+    
+    <item>
+      <title>Animations from scientific data using Paraview 4.3 and python</title>
+      <link>https://bikulov.org/blog/2015/04/05/animations-from-scientific-data-using-paraview-4.3-and-python/</link>
+      <pubDate>Sun, 05 Apr 2015 16:31:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2015/04/05/animations-from-scientific-data-using-paraview-4.3-and-python/</guid>
+      <description>#&amp;nbsp;Create frames This note describes usage of Paraview 4.3 (contrary to previous note with Paraview before 4.1). Some changes were made:
+ command line arguments were added to make code more reusable it works with Paraview extracted from the archive (4.3.1) white background must be specified manually (SetViewProperties(view, Background = [1, 1, 1]) in the code)  Script is tested under Ubuntu 14.04 with Paraview 4.3.1. Paraview was downloaded from official site and extracted to /home/bikulov/bin/ParaView-4.</description>
+    </item>
+    
+    <item>
+      <title>Install CUDA 6.5 on clean Ubuntu 14.04</title>
+      <link>https://bikulov.org/blog/2015/02/28/install-cuda-6.5-on-clean-ubuntu-14.04/</link>
+      <pubDate>Sat, 28 Feb 2015 08:54:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2015/02/28/install-cuda-6.5-on-clean-ubuntu-14.04/</guid>
+      <description>Lately NVIDIA added repository for Ubuntu 12.04 and Ubuntu 14.04. Recently I hit problem with missing dependencies for libcheese-gtk23 and libcheese7 libraries while installing latest CUDA 6.5 on clean Ubuntu 14.04. Remedy to this can be found on askubuntu. So, the complete set of commands is below.
+At first, add CUDA repository package:
+wget http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1404/x86_64/cuda-repo-ubuntu1404_6.5-14_amd64.deb sudo dpkg -i cuda-repo-ubuntu1404_6.5-14_amd64.deb Now, install CUDA:
+sudo apt-get update &amp;amp;&amp;amp; sudo apt-get upgrade  # install nvidia driver sudo apt-get install nvidia-current # at this point you need to reboot computer  # remove broken packages, beware: some GUI parts of your system will be broken or removed sudo apt-get remove libcheese*  # install CUDA sudo apt-get install cuda  # restore broken GUI parts sudo apt-get install ubuntu-desktop By the way, libcheese is library for video and photo capturing, including enumeration of capturing devices.</description>
+    </item>
+    
+    <item>
+      <title>Create video illustrations from numerical experiments data with Paraview and Python 2</title>
+      <link>https://bikulov.org/blog/2014/11/15/create-video-illustrations-from-numerical-experiments-data-with-paraview-and-python-2/</link>
+      <pubDate>Sat, 15 Nov 2014 01:56:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2014/11/15/create-video-illustrations-from-numerical-experiments-data-with-paraview-and-python-2/</guid>
+      <description>See updated note.
+One of the common tasks in computer modeling is visualization of numerical experiment as a movie. Usually it is one datafile per frame and target is to create frame-by-frame animation. If these files can be loaded and visualized in Paraview, it is easy to create the full video: load file in paraview with predefined parameters, create screenshot, load second file, etc. This process may be automated.
+We will use latest stable build of Paraview from official site.</description>
+    </item>
+    
+    <item>
+      <title>Tips for LXC: creation, autostart, OpenVPN and port forwarding to containers</title>
+      <link>https://bikulov.org/blog/2014/10/09/tips-for-lxc-creation-autostart-openvpn-and-port-forwarding-to-containers/</link>
+      <pubDate>Thu, 09 Oct 2014 10:02:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2014/10/09/tips-for-lxc-creation-autostart-openvpn-and-port-forwarding-to-containers/</guid>
+      <description>I&amp;rsquo;ve completed setting up my comfort set of LXC containers and want to save some points I spent a lot of time for or things for copy-paste.
+I used the official Ubuntu Server Guide but note at Digital Ocean knowledge base also helped me a lot. I created 3 containers: one for vpn, one for site on Drupal and last one as www proxy for second one with nginx only.</description>
+    </item>
+    
+    <item>
+      <title>Setup Drupal 7 with nginx and PostgreSQL on Ubuntu 14.04</title>
+      <link>https://bikulov.org/blog/2014/08/09/setup-drupal-7-with-nginx-and-postgresql-on-ubuntu-14.04/</link>
+      <pubDate>Sat, 09 Aug 2014 17:34:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2014/08/09/setup-drupal-7-with-nginx-and-postgresql-on-ubuntu-14.04/</guid>
+      <description>This note is similar to previous drupal and joomla installations. Install requirements (webserver, php5, DB server, DB adapter for php) as root:
+apt-get install -y nginx php5-fpm nginx postgresql php5-pgsql php5-gd Create user and database (replace USER with desired username and HOSTNAME_db with database name, we will need this values in Drupal setup later) for future site:
+sudo -u postgres -i createuser USER --pwprompt --encrypted createdb HOSTNAME_db exit Now setup nginx.</description>
+    </item>
+    
+    <item>
+      <title>Install up-to-date scientific environment in Ubuntu 14.04 with Python 3.4</title>
+      <link>https://bikulov.org/blog/2014/05/14/install-up-to-date-scientific-environment-in-ubuntu-14.04-with-python-3.4/</link>
+      <pubDate>Wed, 14 May 2014 16:16:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2014/05/14/install-up-to-date-scientific-environment-in-ubuntu-14.04-with-python-3.4/</guid>
+      <description>Note: I&amp;rsquo;ve created an updated page with most recent instructions for Jupyter Notebook.
+I use IPython notebook for processing numerical experiments results and plotting. The default Python 3 in Ubuntu 14.04 is 3.4, so it is easier to install really up-to-date bunch of software.
+Full set of commands you need to install recent ipython notebook, numpy, scipy, etc in virtual environment almost without affecting shiny-new Ubuntu 14.04.
+#!/usr/bin/env bash  sudo su # install python development packages and g++ apt-get install -y python3-dev g++  # install dependencies for scipy apt-get install -y libblas-dev liblapack-dev gfortran  # install dependencies for matplotlib apt-get install -y libfreetype6-dev libpng-dev exit  # ipython notebook has bug: # https://bugs.</description>
+    </item>
+    
+    <item>
+      <title>Research Papers Management With Zotero and Yandex.Disk</title>
+      <link>https://bikulov.org/blog/2014/02/13/research-papers-management-with-zotero-and-yandex.disk/</link>
+      <pubDate>Thu, 13 Feb 2014 10:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2014/02/13/research-papers-management-with-zotero-and-yandex.disk/</guid>
+      <description>Zotero is an open source plugin for Firefox for managing research papers collections. You can use online zotero storage (pretty small) or use third-party sync application. I use Yandex Disk for this purpose: 10 Gb it quite enough for a moderate research library. zotero can automatically fetch article metadata (author, year, etc) from the web (like Mendeley and similar software do).
+#&amp;nbsp;Prerequisities You will need:
+ Firefox (the latest version for Ubuntu 12.</description>
+    </item>
+    
+    <item>
+      <title>SSH config for multiple hops in Linux</title>
+      <link>https://bikulov.org/blog/2014/01/25/ssh-config-for-multiple-hops-in-linux/</link>
+      <pubDate>Sat, 25 Jan 2014 16:32:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2014/01/25/ssh-config-for-multiple-hops-in-linux/</guid>
+      <description>Often some hosts in corporate network are available only from several gateway machines. The scheme looks like that: you connect to gateway ssh -A gateway.public.net and then to desired host from gateway machines ssh -A host.private.net. But the problem arises when you want to copy or download something from host.private.net. You have to do it in two hops, because host.private.net is not available from your machine directly. The solution is ssh forwarding.</description>
+    </item>
+    
+    <item>
+      <title>Example of CMake file for CUDA&#43;CPP code</title>
+      <link>https://bikulov.org/blog/2013/12/24/example-of-cmake-file-for-cuda-cpp-code/</link>
+      <pubDate>Tue, 24 Dec 2013 22:44:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/12/24/example-of-cmake-file-for-cuda-cpp-code/</guid>
+      <description>Makefiles are quite straightforward and easy to write (in reasonable situations). But GNU Make is not crossplafrom. CMake is cross-platform, cross-application (it can generate projects for different IDEs and Makefile itself).
+It also allows you to split source directory and directory with intermediate files and compiled binary. Now CMake natively supports CUDA.
+Here is CMakeLists.txt example I use (simply place it next to your source files to try yourself):
+CMAKE_MINIMUM_REQUIRED(VERSION 2.</description>
+    </item>
+    
+    <item>
+      <title>throw() in function signature in C&#43;&#43;</title>
+      <link>https://bikulov.org/blog/2013/11/23/throw-in-function-signature-in-c-/</link>
+      <pubDate>Sat, 23 Nov 2013 17:42:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/11/23/throw-in-function-signature-in-c-/</guid>
+      <description>There is base class exception in standard library (header &amp;lt;exception&amp;gt;). It has default constructor, copy constructor, copy operator and destructor and virtual what() function. Latter returns string with additional information about exception.
+#include &amp;lt;exception&amp;gt;class MyException: public std::exception {  virtual const char* what() const throw()  {  return &amp;#34;My Exception happened&amp;#34;;  } } The most confusing part in the above code is throw(). It assures no exception will be thrown from the what() function.</description>
+    </item>
+    
+    <item>
+      <title>Sort strings from file in C&#43;&#43;</title>
+      <link>https://bikulov.org/blog/2013/11/19/sort-strings-from-file-in-c-/</link>
+      <pubDate>Tue, 19 Nov 2013 23:53:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/11/19/sort-strings-from-file-in-c-/</guid>
+      <description>The very simple and common test program is to read bunch of strings from input file (let it be input.txt), sort them and write down to another file (output.txt). There is an implementation with small bug: it adds extra empty line. I&amp;rsquo;ve modified original code a bit, so now it works correctly (note: if have last empty line in the input, you will have an empty line in the output). Fixed code is provided below.</description>
+    </item>
+    
+    <item>
+      <title>Randomized quicksort implementation in C&#43;&#43;</title>
+      <link>https://bikulov.org/blog/2013/11/07/randomized-quicksort-implementation-in-c-/</link>
+      <pubDate>Thu, 07 Nov 2013 18:27:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/11/07/randomized-quicksort-implementation-in-c-/</guid>
+      <description>Quicksort has $O(N\log(N))$ computational complexity in best and average cases, $O(N^{2})$ for bad case. Extremely bad cases may be avoided by using randomized Quicksort.
+Qucksort algorithm consists of three steps:
+ Choose reference element called pivot (in randomized version pivot choise is random) Rearrange array so that all elements smaller than pivot are placed before the pivot in array, all elements bigger than pivot are placed after the pivot Call Quicksort for elements before the pivot and Quicksort for elements after the pivot recursively (stop if array size is one or less)  My implementation of Quicksort in C++ is provided below.</description>
+    </item>
+    
+    <item>
+      <title>Heapsort implementation in C&#43;&#43;</title>
+      <link>https://bikulov.org/blog/2013/11/04/heapsort-implementation-in-c-/</link>
+      <pubDate>Mon, 04 Nov 2013 21:33:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/11/04/heapsort-implementation-in-c-/</guid>
+      <description>Heapsort is one of the fastest sorting algorithms. The best and the worst cases for heapsort have same $O(n\log(n))$ performance.
+At first heapsort creates heap from data with buildHeap function. Heap is organized in linear array as follows. Every $i$-th element has two children: $(2i)$-th element and $(2i+1)$-th one. The biggest element of the array is placed on the top of the heap.
+After heap building top element is swapped with the latest in the array, then heap is rebuilt for the array with size decreased by one.</description>
+    </item>
+    
+    <item>
+      <title>Set application version in gengetopt config based on Mercurial revision</title>
+      <link>https://bikulov.org/blog/2013/11/02/set-application-version-in-gengetopt-config-based-on-mercurial-revision/</link>
+      <pubDate>Sat, 02 Nov 2013 21:53:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/11/02/set-application-version-in-gengetopt-config-based-on-mercurial-revision/</guid>
+      <description>Previously I wrote about gengetopt tool to parse command line arguments. There was a line about application version.
+version &amp;#34;13.10.25&amp;#34; It is important to keep this line up to date every time you compile and deploy binary.
+I suggest to use Python script for this. Preliminaries: hg id -n returns local revision number, hg id -i returns global revision id. Combining date, local revision and global revision I generate version enough to determine source files used to create binary.</description>
+    </item>
+    
+    <item>
+      <title>Command line arguments in C and C&#43;&#43; with gengetopt</title>
+      <link>https://bikulov.org/blog/2013/10/26/command-line-arguments-in-c-and-c-with-gengetopt/</link>
+      <pubDate>Sat, 26 Oct 2013 00:03:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/10/26/command-line-arguments-in-c-and-c-with-gengetopt/</guid>
+      <description>Gengetopt is a tool for parsing command line arguments in C and C++ applications. It generates cmdline.c and cmdline.h files in pure C, which contain parser, helper functions, error handling and structure to store argument values. Arguments to be included in auto-generated file are defined in config. I usually gengetopt config file as cmdline.ggo. In this note I provide an example of gengetopt config file and arguments usage in code.</description>
+    </item>
+    
+    <item>
+      <title>Hybrid symmetric-asymmetric encryption for large files</title>
+      <link>https://bikulov.org/blog/2013/10/12/hybrid-symmetric-asymmetric-encryption-for-large-files/</link>
+      <pubDate>Sat, 12 Oct 2013 15:33:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/10/12/hybrid-symmetric-asymmetric-encryption-for-large-files/</guid>
+      <description>Assymetric encryption is useful if you want to encrypt data at remote server via script. In case you use bash script for symmetric encryption job, you have to store password inside this script. So, if remote server is compromized, you will loose both the encrypted data and the key to decrypt it. Assymetric encryption allows you not to store decryption key at remote machine. So, data will be in safe even if server is hacked.</description>
+    </item>
+    
+    <item>
+      <title>Creation of paper-ready plots with matlotlib</title>
+      <link>https://bikulov.org/blog/2013/10/03/creation-of-paper-ready-plots-with-matlotlib/</link>
+      <pubDate>Thu, 03 Oct 2013 10:37:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/10/03/creation-of-paper-ready-plots-with-matlotlib/</guid>
+      <description>I used to utilize gnuplot for creation of plots with arbitrary data. The main problem was to postprocess data before plotting: I had to integrate postprocess into calculation code itself or to write additional script to do so. I&amp;rsquo;d like to provide an example of good-looking plotting with Python and matplotlib. Python has bataries included, so there will be no problem with preparation of data to be plotted.
+Example script plot_example.</description>
+    </item>
+    
+    <item>
+      <title>Using CUDA C&#43;&#43; functions in Python via `*.so` and ctypes</title>
+      <link>https://bikulov.org/blog/2013/10/01/using-cuda-c-functions-in-python-via-.so-and-ctypes/</link>
+      <pubDate>Tue, 01 Oct 2013 08:33:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/10/01/using-cuda-c-functions-in-python-via-.so-and-ctypes/</guid>
+      <description>I&amp;rsquo;d like to show how to use HPC part written on C++ with CUDA in Python code. So, every heavy part may be done on GPU with CUDA, all gluing tasks (with beautiful matplotlib plots) are done on CPU with Python.
+We will use shared object, compiled from C++ CUDA code in Python. The only uncertain part here is conversation of types from «high-level» Python ones to «low-level» C++ ones. We will write application for parallel calculation of elementwise sum for two arrays.</description>
+    </item>
+    
+    <item>
+      <title>Email notification if IP is changed with Python and cron</title>
+      <link>https://bikulov.org/blog/2013/09/09/email-notification-if-ip-is-changed-with-python-and-cron/</link>
+      <pubDate>Mon, 09 Sep 2013 23:24:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/09/09/email-notification-if-ip-is-changed-with-python-and-cron/</guid>
+      <description>This Python script retrieves computer&amp;rsquo;s external IP address (using internet.yandex.ru) and emails message with new IP if IP has been changed since last check. BeautifulSoup module is needed, so install it if you have no installed version:
+sudo pip install beautifulsoup Script:
+#!/usr/bin/env python  from BeautifulSoup import BeautifulSoup import urllib2 import re import smtplib from email.mime.text import MIMEText  logFile = &amp;#39;/var/log/ippywatchdog.log&amp;#39;  request = urllib2.urlopen(&amp;#39;http://internet.yandex.ru&amp;#39;)  soup = BeautifulSoup(request) yandexIpResponse = soup.</description>
+    </item>
+    
+    <item>
+      <title>Universal simple Makefile</title>
+      <link>https://bikulov.org/blog/2013/09/02/universal-simple-makefile/</link>
+      <pubDate>Mon, 02 Sep 2013 18:05:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/09/02/universal-simple-makefile/</guid>
+      <description>I often work on my netbook, so I prefer to use Sublime Text with Makefiles instead of full-featured IDEs. To automate build process I&amp;rsquo;ve constructed (with help of Vasily Picard and examples from the Internet) universal Makefile. It assumes the following structure of files.
+All sources are placed in the src subdirectory. Intermediate object files are placed in obj subdirectory, it must be created before compilation. Resulting binary file is placed into bin subdirectory.</description>
+    </item>
+    
+    <item>
+      <title>Install and configure btsync in Ubuntu 12.04</title>
+      <link>https://bikulov.org/blog/2013/08/26/install-and-configure-btsync-in-ubuntu-12.04/</link>
+      <pubDate>Mon, 26 Aug 2013 18:42:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/08/26/install-and-configure-btsync-in-ubuntu-12.04/</guid>
+      <description>This note describes installation of Bittorrent Sync on Ubuntu. Tutorial was tested on Ubuntu 12.04, but it must work for all Debian-based systems. Read full btsync manual for advanced information.
+#&amp;nbsp;Download and install btsync Btsync is provided as single binary file. We will place it into /usr/bin directory. So, download archive with binary file, extract it, remove archive, move binary:
+wget http://btsync.s3-website-us-east-1.amazonaws.com/btsync_x64.tar.gz tar xf btsync_x64.tar.gz rm btsync_x64.tar.gz sudo mv btsync /usr/bin/btsync #&amp;nbsp;Configure shared folder We will use configuration file instead of web interface.</description>
+    </item>
+    
+    <item>
+      <title>Setting up Joomla 3.1.5 with PostgreSQL on Ubuntu 13.04</title>
+      <link>https://bikulov.org/blog/2013/08/19/setting-up-joomla-3.1.5-with-postgresql-on-ubuntu-13.04/</link>
+      <pubDate>Mon, 19 Aug 2013 16:15:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/08/19/setting-up-joomla-3.1.5-with-postgresql-on-ubuntu-13.04/</guid>
+      <description>#&amp;nbsp;Installing dependencies Firstly you need to install webserver, php-related stuff and database server (we use PostgreSQL).
+apt-get install -y php5-fpm nginx postgresql php5-pgsql Now download and install Joomla (currently 3.1.5 is the latest). Please, update following lines with latest version if nescessary:
+cd /srv wget http://joomlacode.org/gf/download/frsrelease/18622/83487/Joomla_3.1.5-Stable-Full_Package.zip unzip Joomla_3.1.5-Stable-Full_Package.zip -d joomla chown -R www-data:www-data joomla #&amp;nbsp;Database setup The only two things you need to do is to create user (joomla in example) and database (joomla in example).</description>
+    </item>
+    
+    <item>
+      <title>CudaSafeCall application snippet</title>
+      <link>https://bikulov.org/blog/2013/08/16/cudasafecall-application-snippet/</link>
+      <pubDate>Fri, 16 Aug 2013 12:14:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/08/16/cudasafecall-application-snippet/</guid>
+      <description>It is a good tone to check CUDA API errors while calling cudaMalloc() and other functions. It also helps to find floating bugs caused by hardware (lack of memory, etc). I provide below an adapted version of CudaSafeCall I found many weeks ago in the Internet. Simply remove #define CUDA_ERROR_CHECK in production if unneeded.
+#include &amp;lt;iostream&amp;gt;#include &amp;lt;cuda.h&amp;gt; #define CUDA_ERROR_CHECK  #define CudaSafeCall(error) __cudaSafeCall(error, __FILE__, __LINE__)  inline void __cudaSafeCall(cudaError error, const char *file, const int line) { #ifdef CUDA_ERROR_CHECK  if (error !</description>
+    </item>
+    
+    <item>
+      <title>Enable tun for OpenVZ Ubuntu 12.04 containers in CentOS 6.4</title>
+      <link>https://bikulov.org/blog/2013/08/10/enable-tun-for-openvz-ubuntu-12.04-containers-in-centos-6.4/</link>
+      <pubDate>Sat, 10 Aug 2013 09:14:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/08/10/enable-tun-for-openvz-ubuntu-12.04-containers-in-centos-6.4/</guid>
+      <description>To enable tun device in OpenVZ containers tun module
+ needs to be loaded in the host system (in my case CentOS 6.4) containter (in my case Ubuntu Server 12.04) must be allowed to use tun  I&amp;rsquo;ve grabbed container configuration from askbuntu.
+#&amp;nbsp;Load tun after boot automatically Edit tun.modules:
+# vim /etc/sysconfig/modules/tun.modules #!/bin/sh /sbin/modprobe tun Set permissions for tun.modules:
+chmod 755 /etc/sysconfig/modules/tun.modules Reboot host system and test tun module loaded:</description>
+    </item>
+    
+    <item>
+      <title>Configuring Ubuntu 12.04 in OpenVZ on CentOS 6.4</title>
+      <link>https://bikulov.org/blog/2013/08/08/configuring-ubuntu-12.04-in-openvz-on-centos-6.4/</link>
+      <pubDate>Thu, 08 Aug 2013 20:54:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/08/08/configuring-ubuntu-12.04-in-openvz-on-centos-6.4/</guid>
+      <description>This howto is based on two sources: Official wiki and Amutu blog entry. In short, the main difficulty is in bridge network configuration: correct network configuration doesn&amp;rsquo;t work in CentOS 6.4 while NetworkManager is running. I compiled official documentation and fix found in Amutu blog here in one entry.
+I assume you have clean installed CentOS. I tried all on x32 hardware, so you may need to fix container type in container creation section if you use x64 CentOS.</description>
+    </item>
+    
+    <item>
+      <title>Creating Zip With VPN Client Keys and Configuration Files</title>
+      <link>https://bikulov.org/blog/2013/07/31/creating-zip-with-vpn-client-keys-and-configuration-files/</link>
+      <pubDate>Wed, 31 Jul 2013 09:31:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/07/31/creating-zip-with-vpn-client-keys-and-configuration-files/</guid>
+      <description>Depends on server configuration, each OpenVPN client needs configuration file (client.conf for *nix and client.ovpn for windows), certificate authority (ca.crt), [optional] tls auth file (ta.key), user crt and key.
+Typical OpenVPN client configuration file looks like (ca and ta files in server subdirectory):
+client remote &amp;lt;vpn server address&amp;gt; port 1194 proto udp dev tun dev-type tun ns-cert-type server reneg-sec 86400 comp-lzo yes verb 3 ca server/ca.crt cert &amp;lt;user crt&amp;gt; key &amp;lt;user key&amp;gt; tls-auth server/ta.</description>
+    </item>
+    
+    <item>
+      <title>Configuration of hosts for convenient ssh connections</title>
+      <link>https://bikulov.org/blog/2013/07/12/configuration-of-hosts-for-convenient-ssh-connections/</link>
+      <pubDate>Fri, 12 Jul 2013 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/07/12/configuration-of-hosts-for-convenient-ssh-connections/</guid>
+      <description>It is possible to save configuration of ssh connection for later usage. For example, one had to type
+ssh &amp;lt;username&amp;gt;@&amp;lt;ip address&amp;gt; -p &amp;lt;port&amp;gt; -i &amp;lt;path to key file&amp;gt; every time one wants to connect to server.
+Create ~/.ssh/config with following content:
+Host &amp;lt;name&amp;gt;  Hostname &amp;lt;ip address&amp;gt;  Port &amp;lt;port&amp;gt;  User &amp;lt;username&amp;gt;  IdentityFile &amp;lt;path to key file (if any)&amp;gt; Now just type
+ssh &amp;lt;name&amp;gt; to get connected to the server.</description>
+    </item>
+    
+    <item>
+      <title>Ubuntu Server 12.04 &#43; Slurm 2.5.7 fatnodes</title>
+      <link>https://bikulov.org/blog/2013/06/18/ubuntu-server-12.04--slurm-2.5.7-fatnodes/</link>
+      <pubDate>Tue, 18 Jun 2013 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/06/18/ubuntu-server-12.04--slurm-2.5.7-fatnodes/</guid>
+      <description>SLURM (Simple Linux Utility for Resource Management) — job scheduler and resource manager usually installed on supercomputers. For example, it runs on Lomonosov supercomputer in MSU, Moscow, Russia.
+Usually one physical or virtual computer (physical node) is one logical node is SLURM. If one physical node serve more than one logical nodes, it called «fat node». Fat nodes are needed in case you have a lot of memory at physical node or several GPUs on it.</description>
+    </item>
+    
+    <item>
+      <title>Ubuntu Server 12.04 &#43; Drupal 7 &#43; nginx &#43; MySQL</title>
+      <link>https://bikulov.org/blog/2013/04/28/ubuntu-server-12.04--drupal-7--nginx--mysql/</link>
+      <pubDate>Sun, 28 Apr 2013 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/04/28/ubuntu-server-12.04--drupal-7--nginx--mysql/</guid>
+      <description>Default Drupal package in Ubuntu installs Apache, but I prefer nginx as a webserver. In this note I’ll describe steps necessary to get Drupal 7 work.
+All variables in square brackets must be replaced by your names or passwords.
+Site will be available at url [sitename].
+#&amp;nbsp;Installing packages Install all necessary packages:
+sudo apt-get install -y nginx php5-fpm php-apc php5-mysql mysql-client-core-5.5 mysql-server php5-gd During the installation MySQL will ask you for root password.</description>
+    </item>
+    
+    <item>
+      <title>Universal screen capturing with scrot, imagemagick and ffmpeg</title>
+      <link>https://bikulov.org/blog/2013/01/23/universal-screen-capturing-with-scrot-imagemagick-and-ffmpeg/</link>
+      <pubDate>Wed, 23 Jan 2013 09:31:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2013/01/23/universal-screen-capturing-with-scrot-imagemagick-and-ffmpeg/</guid>
+      <description>You can record your screen using only command line in Linux. Workflow will look like: Create a bunch of screenshots -&amp;gt; Crop screenshots -&amp;gt; Make a movie from images.
+#&amp;nbsp;Making screenshots scrot is command line screen capturing tool. It’s basic usage is very simple:
+$ scrot or
+$ scrot &amp;lt;filename&amp;gt;.png if you want to specify output filename.
+Let’s write script, which captures screen every 0.5 seconds and write result to screenshots/00000N.</description>
+    </item>
+    
+    <item>
+      <title>Get rid of Desktop window while launching Nautilus in i3</title>
+      <link>https://bikulov.org/blog/2012/11/08/get-rid-of-desktop-window-while-launching-nautilus-in-i3/</link>
+      <pubDate>Thu, 08 Nov 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2012/11/08/get-rid-of-desktop-window-while-launching-nautilus-in-i3/</guid>
+      <description>In i3 window manager by default Nautilus actually opens two windows: Desktop window and Nautilus itself. The former can’t be closed by the default shortcut $Mod+Shift+Q.
+To get rid of unwanted window, set desktop.background and show-desktop-icons to false by typing:
+$ gsettings set org.gnome.desktop.background show-desktop-icons false </description>
+    </item>
+    
+    <item>
+      <title>Tools for tracing a pcap file in linux bash</title>
+      <link>https://bikulov.org/blog/2012/11/03/tools-for-tracing-a-pcap-file-in-linux-bash/</link>
+      <pubDate>Sat, 03 Nov 2012 09:31:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2012/11/03/tools-for-tracing-a-pcap-file-in-linux-bash/</guid>
+      <description>Pcap files are pocket capture files. They usually contain raw log of network connections and packets. It is the most popular format and it available in almost all network analysis tool.
+To play around *.pcap, you have to get such file somehow. There are two opposite ways: to generate it by yourself or to pick a ready one. To generate it by yourself, you can use wireshark or tcpdump in terminal:</description>
+    </item>
+    
+    <item>
+      <title>Show N biggest directories in linux bash</title>
+      <link>https://bikulov.org/blog/2012/11/01/show-n-biggest-directories-in-linux-bash/</link>
+      <pubDate>Thu, 01 Nov 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2012/11/01/show-n-biggest-directories-in-linux-bash/</guid>
+      <description>du (disk usage) utility in linux bash summarizes disk usage of each directory or file. By default, it outputs only directories. Just enter some dir and type
+$ du ./ But if ./ has many subdirectories, output will be too long. And it is unsorted. The stated in the title task can be achieved by piping.
+#&amp;nbsp;Sort output by size Cut the first line, it is size of the ./ dir as sum of other sizes Use &amp;ldquo;—human-readable&amp;rdquo; in du or divide by 1024 to get kbytes, mbytes, etc.</description>
+    </item>
+    
+    <item>
+      <title>Toggling string case in linux bash</title>
+      <link>https://bikulov.org/blog/2012/10/31/toggling-string-case-in-linux-bash/</link>
+      <pubDate>Wed, 31 Oct 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2012/10/31/toggling-string-case-in-linux-bash/</guid>
+      <description>It’s quite an academic task, but anyway useful sometimes. I’ve collected different ways to do it in terminal in linux. Some of them work with UTF-8 characters (some it will toggle case for &amp;ldquo;й&amp;rdquo;, &amp;ldquo;ё&amp;rdquo; and so on. It will not in general handle special ligatures, such as &amp;ldquo;ß&amp;rdquo;&amp;quot; and &amp;ldquo;ﬁ&amp;rdquo;.)
+Ways are: sed, perl, python, awk, tr, bash, dd.
+#&amp;nbsp;Using sed Works with UTF-8 characters.
+It is quite straightforward and allows to add custom rules easily.</description>
+    </item>
+    
+    <item>
+      <title>Setting up RhodeCode on Ubuntu 12.04</title>
+      <link>https://bikulov.org/blog/2012/10/29/setting-up-rhodecode-on-ubuntu-12.04/</link>
+      <pubDate>Mon, 29 Oct 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2012/10/29/setting-up-rhodecode-on-ubuntu-12.04/</guid>
+      <description>This howto is based on a great guide with modifications. All settings are made for server domain hg.kenarius.org. You can replace it with your one easily.
+#&amp;nbsp;Preparation #&amp;nbsp;Ubuntu Update Ubuntu with the commands:
+sudo apt-get update sudo apt-get upgrade Install pip and virtualenv with the commands:
+sudo apt-get install python-pip sudo pip install virtualenv #&amp;nbsp;Nginx Install nginx:
+sudo apt-get install nginx Add create ssl certificates:
+sudo openssl req -new -x509 -days 9999 -nodes -out host.</description>
+    </item>
+    
+    <item>
+      <title>AWK: a powerful tool for programmer</title>
+      <link>https://bikulov.org/blog/2012/10/25/awk-a-powerful-tool-for-programmer/</link>
+      <pubDate>Thu, 25 Oct 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2012/10/25/awk-a-powerful-tool-for-programmer/</guid>
+      <description>AWK is an acronym of first letters of its authors (Aho, Weinberger and Kernighan). It is a data-manipulating scripting language with huge possibilities. There are several implementations of it: awk is a canonical one, nawk (new awk), mawk (default in Ubuntu 12.04), gawk is GNU awk. I recommend latter one, because it works correct with unicode symbols in example:
+$ echo юникод | gawk &amp;#34;{res = toupper(\$1); print res;}&amp;#34; ЮНИКОД #&amp;nbsp;Basic usage Most useful feature is writing script files to be loaded in awk later.</description>
+    </item>
+    
+    <item>
+      <title>Daily backups (files &#43; mysql) to yandex.disk in Ubuntu 12.04</title>
+      <link>https://bikulov.org/blog/2012/08/30/daily-backups-files--mysql-to-yandex.disk-in-ubuntu-12.04/</link>
+      <pubDate>Thu, 30 Aug 2012 09:30:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2012/08/30/daily-backups-files--mysql-to-yandex.disk-in-ubuntu-12.04/</guid>
+      <description>We all do backups. This note is about doing them on Ubuntu 12.04.
+Tasks:
+ archive important folders dump mysql databases upload all to yandex.disk (online web storage with 10GB space) delete old backups  I’ll save only backups for last five days.
+#&amp;nbsp;Archiving There are many different backup tools, see wiki list. I’ve chosen DAR.
+One can install it in Ubuntu 12.04 by typing
+# apt-get install dar It is a console utility and it can be confusing for beginner.</description>
+    </item>
+    
+    <item>
+      <title>Fixing missing icons in PCManFM</title>
+      <link>https://bikulov.org/blog/2012/08/24/fixing-missing-icons-in-pcmanfm/</link>
+      <pubDate>Fri, 24 Aug 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2012/08/24/fixing-missing-icons-in-pcmanfm/</guid>
+      <description>After moving to i3 I’ve installed PCManFM as GUI file manager. To fix missing icons one have to define icon theme. These instructions are tested on Ubuntu 12.04, but it must work with other distros.
+Install icon theme:
+sudo apt-get install tango-icon-theme* To apply theme, create .gtkrc-2.0 file in home directory:
+$ cat ~/.gtkrc-2.0 gtk-icon-theme-name = &amp;#34;Tango&amp;#34; After this icons will be enabled.</description>
+    </item>
+    
+    <item>
+      <title>Montage png into single one</title>
+      <link>https://bikulov.org/blog/2012/07/18/montage-png-into-single-one/</link>
+      <pubDate>Wed, 18 Jul 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2012/07/18/montage-png-into-single-one/</guid>
+      <description>Glue several png’s into one png [1]+[2]+[3]+[4] = [[1][2][3][4]] with montage from ImageMagick:
+montage -geometry +1+1 -tile 4x1 image*.png final.png </description>
+    </item>
+    
+    <item>
+      <title>Blender and Python molecules visualization</title>
+      <link>https://bikulov.org/blog/2012/04/11/blender-and-python-molecules-visualization/</link>
+      <pubDate>Wed, 11 Apr 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/blog/2012/04/11/blender-and-python-molecules-visualization/</guid>
+      <description>Blender is a free software for 3D graphics. In old virsions many operations were binded to hotkeys, so it was believed that Blender is very hard to master. Now it has more userfriendly interface with button in addition to hotkeys.
+One of the most useful features of Blender is scripting. Below I provide python script for drawing molecules with cylinders and spheres.
+Command to draw a sphere:
+bpy.ops.mesh.primitive_uv_sphere_add() To draw a cylinder, you need to specify cylinder center and rotation.</description>
+    </item>
+    
+  </channel>
+</rss>

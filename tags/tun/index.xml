@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>tun on :) bikulov.ORG</title>
+    <title>tun on Bikulov&#39;s blog</title>
     <link>https://bikulov.org/tags/tun/</link>
-    <description>Recent content in tun on :) bikulov.ORG</description>
+    <description>Recent content in tun on Bikulov&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <language>ru</language>
+    <copyright>Network Notes 2022</copyright>
     <lastBuildDate>Sat, 10 Aug 2013 09:14:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/tun/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Enable tun for OpenVZ Ubuntu 12.04 containers in CentOS 6.4</title>
@@ -13,11 +14,11 @@
       <pubDate>Sat, 10 Aug 2013 09:14:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2013/08/10/enable-tun-for-openvz-ubuntu-12.04-containers-in-centos-6.4/</guid>
-      <description>&lt;p&gt;To enable tun device in OpenVZ containers tun module&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;needs to be loaded in the host system (in my case CentOS 6.4)&lt;/li&gt;
-&lt;li&gt;containter (in my case Ubuntu Server 12.04) must be allowed to use tun&lt;/li&gt;
-&lt;/ul&gt;</description>
+      <description>To enable tun device in OpenVZ containers tun module
+ needs to be loaded in the host system (in my case CentOS 6.4) containter (in my case Ubuntu Server 12.04) must be allowed to use tun  I&amp;rsquo;ve grabbed container configuration from askbuntu.
+#&amp;nbsp;Load tun after boot automatically Edit tun.modules:
+# vim /etc/sysconfig/modules/tun.modules #!/bin/sh /sbin/modprobe tun Set permissions for tun.modules:
+chmod 755 /etc/sysconfig/modules/tun.modules Reboot host system and test tun module loaded:</description>
     </item>
     
   </channel>

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>blender on :) bikulov.ORG</title>
+    <title>blender on Bikulov&#39;s blog</title>
     <link>https://bikulov.org/tags/blender/</link>
-    <description>Recent content in blender on :) bikulov.ORG</description>
+    <description>Recent content in blender on Bikulov&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <language>ru</language>
+    <copyright>Network Notes 2022</copyright>
     <lastBuildDate>Wed, 11 Apr 2012 09:00:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/blender/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Blender and Python molecules visualization</title>
@@ -13,7 +14,10 @@
       <pubDate>Wed, 11 Apr 2012 09:00:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2012/04/11/blender-and-python-molecules-visualization/</guid>
-      <description>&lt;p&gt;Blender is a free software for 3D graphics. In old virsions many operations were binded to hotkeys, so it was believed that Blender is very hard to master. Now it has more userfriendly interface with button in addition to hotkeys.&lt;/p&gt;</description>
+      <description>Blender is a free software for 3D graphics. In old virsions many operations were binded to hotkeys, so it was believed that Blender is very hard to master. Now it has more userfriendly interface with button in addition to hotkeys.
+One of the most useful features of Blender is scripting. Below I provide python script for drawing molecules with cylinders and spheres.
+Command to draw a sphere:
+bpy.ops.mesh.primitive_uv_sphere_add() To draw a cylinder, you need to specify cylinder center and rotation.</description>
     </item>
     
   </channel>

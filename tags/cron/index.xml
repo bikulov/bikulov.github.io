@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>cron on :) bikulov.ORG</title>
+    <title>cron on Bikulov&#39;s blog</title>
     <link>https://bikulov.org/tags/cron/</link>
-    <description>Recent content in cron on :) bikulov.ORG</description>
+    <description>Recent content in cron on Bikulov&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <language>ru</language>
+    <copyright>Network Notes 2022</copyright>
     <lastBuildDate>Mon, 09 Sep 2013 23:24:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/cron/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Email notification if IP is changed with Python and cron</title>
@@ -13,9 +14,9 @@
       <pubDate>Mon, 09 Sep 2013 23:24:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2013/09/09/email-notification-if-ip-is-changed-with-python-and-cron/</guid>
-      <description>&lt;p&gt;This Python script retrieves computer&amp;rsquo;s external IP address (using internet.yandex.ru) and emails message with new IP if IP has been changed since last check. BeautifulSoup module is needed, so install it if you have no installed version:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;sudo pip install beautifulsoup
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+      <description>This Python script retrieves computer&amp;rsquo;s external IP address (using internet.yandex.ru) and emails message with new IP if IP has been changed since last check. BeautifulSoup module is needed, so install it if you have no installed version:
+sudo pip install beautifulsoup Script:
+#!/usr/bin/env python  from BeautifulSoup import BeautifulSoup import urllib2 import re import smtplib from email.mime.text import MIMEText  logFile = &amp;#39;/var/log/ippywatchdog.log&amp;#39;  request = urllib2.urlopen(&amp;#39;http://internet.yandex.ru&amp;#39;)  soup = BeautifulSoup(request) yandexIpResponse = soup.</description>
     </item>
     
   </channel>

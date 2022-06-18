@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>btsync on :) bikulov.ORG</title>
+    <title>btsync on Bikulov&#39;s blog</title>
     <link>https://bikulov.org/tags/btsync/</link>
-    <description>Recent content in btsync on :) bikulov.ORG</description>
+    <description>Recent content in btsync on Bikulov&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <language>ru</language>
+    <copyright>Network Notes 2022</copyright>
     <lastBuildDate>Mon, 26 Aug 2013 18:42:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/btsync/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Install and configure btsync in Ubuntu 12.04</title>
@@ -13,7 +14,9 @@
       <pubDate>Mon, 26 Aug 2013 18:42:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2013/08/26/install-and-configure-btsync-in-ubuntu-12.04/</guid>
-      <description>&lt;p&gt;This note describes installation of Bittorrent Sync on Ubuntu. Tutorial was tested on Ubuntu 12.04, but it must work for all Debian-based systems. Read full btsync  &lt;a href=&#34;http://btsync.s3-website-us-east-1.amazonaws.com/BitTorrentSyncUserGuide.pdf&#34; target=&#34;_blank&#34;&gt;manual&lt;/a&gt; for advanced information.&lt;/p&gt;</description>
+      <description>This note describes installation of Bittorrent Sync on Ubuntu. Tutorial was tested on Ubuntu 12.04, but it must work for all Debian-based systems. Read full btsync manual for advanced information.
+#&amp;nbsp;Download and install btsync Btsync is provided as single binary file. We will place it into /usr/bin directory. So, download archive with binary file, extract it, remove archive, move binary:
+wget http://btsync.s3-website-us-east-1.amazonaws.com/btsync_x64.tar.gz tar xf btsync_x64.tar.gz rm btsync_x64.tar.gz sudo mv btsync /usr/bin/btsync #&amp;nbsp;Configure shared folder We will use configuration file instead of web interface.</description>
     </item>
     
   </channel>

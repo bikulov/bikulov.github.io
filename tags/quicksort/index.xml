@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>quicksort on :) bikulov.ORG</title>
+    <title>quicksort on Bikulov&#39;s blog</title>
     <link>https://bikulov.org/tags/quicksort/</link>
-    <description>Recent content in quicksort on :) bikulov.ORG</description>
+    <description>Recent content in quicksort on Bikulov&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <language>ru</language>
+    <copyright>Network Notes 2022</copyright>
     <lastBuildDate>Thu, 07 Nov 2013 18:27:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/quicksort/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Randomized quicksort implementation in C&#43;&#43;</title>
@@ -13,7 +14,9 @@
       <pubDate>Thu, 07 Nov 2013 18:27:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2013/11/07/randomized-quicksort-implementation-in-c-/</guid>
-      <description>&lt;p&gt;Quicksort has $O(N\log(N))$ computational complexity in best and average cases, $O(N^{2})$ for bad case. Extremely bad cases may be avoided by using randomized Quicksort.&lt;/p&gt;</description>
+      <description>Quicksort has $O(N\log(N))$ computational complexity in best and average cases, $O(N^{2})$ for bad case. Extremely bad cases may be avoided by using randomized Quicksort.
+Qucksort algorithm consists of three steps:
+ Choose reference element called pivot (in randomized version pivot choise is random) Rearrange array so that all elements smaller than pivot are placed before the pivot in array, all elements bigger than pivot are placed after the pivot Call Quicksort for elements before the pivot and Quicksort for elements after the pivot recursively (stop if array size is one or less)  My implementation of Quicksort in C++ is provided below.</description>
     </item>
     
   </channel>

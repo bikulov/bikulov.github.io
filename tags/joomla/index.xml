@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>joomla on :) bikulov.ORG</title>
+    <title>joomla on Bikulov&#39;s blog</title>
     <link>https://bikulov.org/tags/joomla/</link>
-    <description>Recent content in joomla on :) bikulov.ORG</description>
+    <description>Recent content in joomla on Bikulov&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <language>ru</language>
+    <copyright>Network Notes 2022</copyright>
     <lastBuildDate>Mon, 19 Aug 2013 16:15:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/joomla/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Setting up Joomla 3.1.5 with PostgreSQL on Ubuntu 13.04</title>
@@ -13,7 +14,9 @@
       <pubDate>Mon, 19 Aug 2013 16:15:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2013/08/19/setting-up-joomla-3.1.5-with-postgresql-on-ubuntu-13.04/</guid>
-      <description></description>
+      <description>#&amp;nbsp;Installing dependencies Firstly you need to install webserver, php-related stuff and database server (we use PostgreSQL).
+apt-get install -y php5-fpm nginx postgresql php5-pgsql Now download and install Joomla (currently 3.1.5 is the latest). Please, update following lines with latest version if nescessary:
+cd /srv wget http://joomlacode.org/gf/download/frsrelease/18622/83487/Joomla_3.1.5-Stable-Full_Package.zip unzip Joomla_3.1.5-Stable-Full_Package.zip -d joomla chown -R www-data:www-data joomla #&amp;nbsp;Database setup The only two things you need to do is to create user (joomla in example) and database (joomla in example).</description>
     </item>
     
   </channel>

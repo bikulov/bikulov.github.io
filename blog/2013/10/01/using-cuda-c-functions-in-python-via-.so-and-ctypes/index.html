@@ -1,1086 +1,141 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<meta name="HandheldFriendly" content="True" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-<meta name="generator" content="Hugo 0.80.0" />
-
-
-<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon.ico" />
-
-
-<title>Using CUDA C&#43;&#43; functions in Python via `*.so` and ctypes - :) bikulov.ORG</title>
-
-
-<meta name="author" content="bikulov" />
-
-
-<meta name="description" content="Static notes about information technologies." />
-
-
-<meta name="keywords" content="cuda, howto, c&#43;&#43;, bash, python" />
-
-
-<meta property="og:title" content="Using CUDA C&#43;&#43; functions in Python via `*.so` and ctypes" />
-<meta name="twitter:title" content="Using CUDA C&#43;&#43; functions in Python via `*.so` and ctypes" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://bikulov.org/blog/2013/10/01/using-cuda-c-functions-in-python-via-.so-and-ctypes/" /><meta property="og:description" content="I&rsquo;d like to show how to use HPC part written on C&#43;&#43; with CUDA in Python code. So, every heavy part may be done on GPU with CUDA, all gluing tasks (with beautiful matplotlib plots) are done on CPU with Python." />
-<meta name="twitter:description" content="I&rsquo;d like to show how to use HPC part written on C&#43;&#43; with CUDA in Python code. So, every heavy part may be done on GPU with CUDA, all gluing tasks (with beautiful matplotlib plots) are done on CPU with Python." /><meta property="og:image" content="https://bikulov.org/img/og.png" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://bikulov.org/img/og.png" /><meta property="article:published_time" content="2013-10-01T08:33:00+03:00" /><meta property="article:modified_time" content="2013-10-01T08:33:00+03:00" />
-
-
-<style>
-    @media (prefers-color-scheme: dark) {
-        body[data-theme='auto'] img {
-            filter: brightness(60%);
-        }
-    }
-
-    body[data-theme='dark'] img {
-        filter: brightness(60%);
-    }
-</style>
-
-
-
-<link rel="stylesheet" href="https://bikulov.org/assets/css/fuji.min.css" />
-
-
-
-
-
-</head>
-
-<body data-theme="auto">
-    <script data-cfasync="false">
-  
-  var fujiThemeData = localStorage.getItem('fuji_data-theme');
-  
-  if (!fujiThemeData) {
-    localStorage.setItem('fuji_data-theme', 'auto');
-  } else {
-    
-    if (fujiThemeData !== 'auto') {
-      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
-    }
-  }
-</script>
-    <header>
-    <div class="container-lg clearfix">
-        <div class="col-12 header">
-            <a class="title-main" href="https://bikulov.org">:) bikulov.ORG</a>
-            
-            <span class="title-sub">Static notes about information technologies</span>
-            
-        </div>
+<html><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all">
+  <link href="/css/style.css" rel="stylesheet" type="text/css" media="all">
+  <link href="/css/custom.css" rel="stylesheet" type="text/css" media="all">
+  <script src="/js/bootstrap.bundle.min.js"></script>
+  <link rel="apple-touch-icon" href="/logo.png" type="image/png">
+  <link rel="icon" href="/img/logo.svg" type="image/svg+xml">
+  <link rel="icon" href="/img/logo.png" type="image/png">
+  <title>Bikulov&#39;s blog</title>
+</head><body>
+<header>
+  <nav class="navbar navbar-expand navbar-dark volukib-header">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="https://bikulov.org/"><img src="/img/logo.png" class="volukib-logo" alt="logo"> Bikulov&#39;s blog</a>
+      <ul class="navbar-nav">
+        
+        <li class="nav-item">
+          
+          <a class="nav-link text-uppercase " href="/">Home</a>
+        </li>
+        
+        <li class="nav-item">
+          
+          <a class="nav-link text-uppercase " href="/resume/">Resume</a>
+        </li>
+        
+      </ul>
     </div>
-</header>
-
-    <main>
-        <div class="container-lg clearfix">
-            
-            <div class="col-12 col-md-9 float-left content">
-                
-<article>
-    
-    <h2 class="post-item post-title">
-        <a href="https://bikulov.org/blog/2013/10/01/using-cuda-c-functions-in-python-via-.so-and-ctypes/">Using CUDA C&#43;&#43; functions in Python via `*.so` and ctypes</a>
-    </h2>
-    <div class="post-item post-meta">
-        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2013-10-01</span><span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/cuda">cuda</a>&nbsp;<a href="/tags/howto">howto</a>&nbsp;<a href="/tags/c&#43;&#43;">c&#43;&#43;</a>&nbsp;<a href="/tags/bash">bash</a>&nbsp;<a href="/tags/python">python</a>&nbsp;</span>
-
+  </nav>
+</header><div class="container">
+<div class="row text-center mb-5">
+  <div class="col">
+    <h1>Using CUDA C&#43;&#43; functions in Python via `*.so` and ctypes</h1>
+    <div>2013-10-01</div>
+    <div>
+      
+      <a class="" href="/tags/cuda">#cuda</a>
+      
+      <a class="" href="/tags/howto">#howto</a>
+      
+      <a class="" href="/tags/c&#43;&#43;">#c&#43;&#43;</a>
+      
+      <a class="" href="/tags/bash">#bash</a>
+      
+      <a class="" href="/tags/python">#python</a>
+      
     </div>
-    
-    <div class="post-content markdown-body">
-        <p>I&rsquo;d like to show how to use HPC part written on C++ with CUDA in Python code. So, every heavy part may be done on GPU with CUDA, all gluing tasks (with beautiful matplotlib plots) are done on CPU with Python.</p>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <p>I&rsquo;d like to show how to use HPC part written on C++ with CUDA in Python code. So, every heavy part may be done on GPU with CUDA, all gluing tasks (with beautiful matplotlib plots) are done on CPU with Python.</p>
 <p>We will use shared object, compiled from C++ CUDA code in Python. The only uncertain part here is conversation of types from «high-level» Python ones to «low-level» C++ ones. We will write application for parallel calculation of elementwise sum for two arrays.</p>
 <p>First, CUDA code. CUDA kernel <code>cuda_sum_kernel</code> is doing job on GPU, wrapper <code>cuda_sum</code> prepares arrays for GPU and frees memory after calculation is done. Note <code>extern &quot;C&quot;</code> line. It is important for correct  function name in the compiled shared object later.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;cuda.h&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;cuda_runtime_api.h&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>
-__global__ <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">cuda_sum_kernel</span>(<span style="color:#66d9ef">float</span> <span style="color:#f92672">*</span>a, <span style="color:#66d9ef">float</span> <span style="color:#f92672">*</span>b, <span style="color:#66d9ef">float</span> <span style="color:#f92672">*</span>c, size_t size)
-{
-    size_t idx <span style="color:#f92672">=</span> blockIdx.x <span style="color:#f92672">*</span> blockDim.x <span style="color:#f92672">+</span> threadIdx.x;
-    <span style="color:#66d9ef">if</span> (idx <span style="color:#f92672">&gt;=</span> size) {
-        <span style="color:#66d9ef">return</span>;
-    }
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;cuda.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;cuda_runtime_api.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>__global__ <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">cuda_sum_kernel</span>(<span style="color:#66d9ef">float</span> <span style="color:#f92672">*</span>a, <span style="color:#66d9ef">float</span> <span style="color:#f92672">*</span>b, <span style="color:#66d9ef">float</span> <span style="color:#f92672">*</span>c, size_t size)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    size_t idx <span style="color:#f92672">=</span> blockIdx.x <span style="color:#f92672">*</span> blockDim.x <span style="color:#f92672">+</span> threadIdx.x;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (idx <span style="color:#f92672">&gt;=</span> size) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    c[idx] <span style="color:#f92672">=</span> a[idx] <span style="color:#f92672">+</span> b[idx];
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">extern</span> <span style="color:#e6db74">&#34;C&#34;</span> {
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">cuda_sum</span>(<span style="color:#66d9ef">float</span> <span style="color:#f92672">*</span>a, <span style="color:#66d9ef">float</span> <span style="color:#f92672">*</span>b, <span style="color:#66d9ef">float</span> <span style="color:#f92672">*</span>c, size_t size)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">float</span> <span style="color:#f92672">*</span>d_a, <span style="color:#f92672">*</span>d_b, <span style="color:#f92672">*</span>d_c;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    cudaMalloc((<span style="color:#66d9ef">void</span> <span style="color:#f92672">**</span>)<span style="color:#f92672">&amp;</span>d_a, size <span style="color:#f92672">*</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">float</span>));
+</span></span><span style="display:flex;"><span>    cudaMalloc((<span style="color:#66d9ef">void</span> <span style="color:#f92672">**</span>)<span style="color:#f92672">&amp;</span>d_b, size <span style="color:#f92672">*</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">float</span>));
+</span></span><span style="display:flex;"><span>    cudaMalloc((<span style="color:#66d9ef">void</span> <span style="color:#f92672">**</span>)<span style="color:#f92672">&amp;</span>d_c, size <span style="color:#f92672">*</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">float</span>));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    cudaMemcpy(d_a, a, size <span style="color:#f92672">*</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">float</span>), cudaMemcpyHostToDevice);
+</span></span><span style="display:flex;"><span>    cudaMemcpy(d_b, b, size <span style="color:#f92672">*</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">float</span>), cudaMemcpyHostToDevice);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    cuda_sum_kernel <span style="color:#f92672">&lt;&lt;&lt;</span> ceil(size <span style="color:#f92672">/</span> <span style="color:#ae81ff">256.0</span>), <span style="color:#ae81ff">256</span> <span style="color:#f92672">&gt;&gt;&gt;</span> (d_a, d_b, d_c, size);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    cudaMemcpy(c, d_c, size <span style="color:#f92672">*</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">float</span>), cudaMemcpyDeviceToHost);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    cudaFree(d_a);
+</span></span><span style="display:flex;"><span>    cudaFree(d_b);
+</span></span><span style="display:flex;"><span>    cudaFree(d_c);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Compile it to <code>*.so</code> file with nvcc compiler:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/usr/local/cuda/bin/nvcc -Xcompiler -fPIC -shared -o cuda_sum.so cuda_sum.cu
+</span></span></code></pre></div><p>The last part is to use function <code>cuda_sum</code> from created <code>cuda_sum.so</code> file in Python script. Example (with comments):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> ctypes
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> ctypes <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># extract cuda_sum function pointer in the shared object cuda_sum.so</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_cuda_sum</span>():
+</span></span><span style="display:flex;"><span>    dll <span style="color:#f92672">=</span> ctypes<span style="color:#f92672">.</span>CDLL(<span style="color:#e6db74">&#39;./cuda_sum.so&#39;</span>, mode<span style="color:#f92672">=</span>ctypes<span style="color:#f92672">.</span>RTLD_GLOBAL)
+</span></span><span style="display:flex;"><span>    func <span style="color:#f92672">=</span> dll<span style="color:#f92672">.</span>cuda_sum
+</span></span><span style="display:flex;"><span>    func<span style="color:#f92672">.</span>argtypes <span style="color:#f92672">=</span> [POINTER(c_float), POINTER(c_float), POINTER(c_float), c_size_t]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> func
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># create __cuda_sum function with get_cuda_sum()</span>
+</span></span><span style="display:flex;"><span>__cuda_sum <span style="color:#f92672">=</span> get_cuda_sum()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># convenient python wrapper for __cuda_sum</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># it does all job with types convertation</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># from python ones to C++ ones</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">cuda_sum</span>(a, b, c, size):
+</span></span><span style="display:flex;"><span>    a_p <span style="color:#f92672">=</span> a<span style="color:#f92672">.</span>ctypes<span style="color:#f92672">.</span>data_as(POINTER(c_float))
+</span></span><span style="display:flex;"><span>    b_p <span style="color:#f92672">=</span> b<span style="color:#f92672">.</span>ctypes<span style="color:#f92672">.</span>data_as(POINTER(c_float))
+</span></span><span style="display:flex;"><span>    c_p <span style="color:#f92672">=</span> c<span style="color:#f92672">.</span>ctypes<span style="color:#f92672">.</span>data_as(POINTER(c_float))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    __cuda_sum(a_p, b_p, c_p, size)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># testing, sum of two arrays of ones and output head part of resulting array</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
+</span></span><span style="display:flex;"><span>    size<span style="color:#f92672">=</span>int(<span style="color:#ae81ff">1024</span><span style="color:#f92672">*</span><span style="color:#ae81ff">1024</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>ones(size)<span style="color:#f92672">.</span>astype(<span style="color:#e6db74">&#39;float32&#39;</span>)
+</span></span><span style="display:flex;"><span>    b <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>ones(size)<span style="color:#f92672">.</span>astype(<span style="color:#e6db74">&#39;float32&#39;</span>)
+</span></span><span style="display:flex;"><span>    c <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros(size)<span style="color:#f92672">.</span>astype(<span style="color:#e6db74">&#39;float32&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    cuda_sum(a, b, c, size)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    print c[:<span style="color:#ae81ff">10</span>]
+</span></span></code></pre></div><p>Now you can desing the code above into full-featured Python module.</p>
 
-    c[idx] <span style="color:#f92672">=</span> a[idx] <span style="color:#f92672">+</span> b[idx];
-}
-
-<span style="color:#66d9ef">extern</span> <span style="color:#e6db74">&#34;C&#34;</span> {
-<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">cuda_sum</span>(<span style="color:#66d9ef">float</span> <span style="color:#f92672">*</span>a, <span style="color:#66d9ef">float</span> <span style="color:#f92672">*</span>b, <span style="color:#66d9ef">float</span> <span style="color:#f92672">*</span>c, size_t size)
-{
-    <span style="color:#66d9ef">float</span> <span style="color:#f92672">*</span>d_a, <span style="color:#f92672">*</span>d_b, <span style="color:#f92672">*</span>d_c;
-
-    cudaMalloc((<span style="color:#66d9ef">void</span> <span style="color:#f92672">**</span>)<span style="color:#f92672">&amp;</span>d_a, size <span style="color:#f92672">*</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">float</span>));
-    cudaMalloc((<span style="color:#66d9ef">void</span> <span style="color:#f92672">**</span>)<span style="color:#f92672">&amp;</span>d_b, size <span style="color:#f92672">*</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">float</span>));
-    cudaMalloc((<span style="color:#66d9ef">void</span> <span style="color:#f92672">**</span>)<span style="color:#f92672">&amp;</span>d_c, size <span style="color:#f92672">*</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">float</span>));
-
-    cudaMemcpy(d_a, a, size <span style="color:#f92672">*</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">float</span>), cudaMemcpyHostToDevice);
-    cudaMemcpy(d_b, b, size <span style="color:#f92672">*</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">float</span>), cudaMemcpyHostToDevice);
-
-    cuda_sum_kernel <span style="color:#f92672">&lt;&lt;&lt;</span> ceil(size <span style="color:#f92672">/</span> <span style="color:#ae81ff">256.0</span>), <span style="color:#ae81ff">256</span> <span style="color:#f92672">&gt;&gt;&gt;</span> (d_a, d_b, d_c, size);
-
-    cudaMemcpy(c, d_c, size <span style="color:#f92672">*</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">float</span>), cudaMemcpyDeviceToHost);
-
-    cudaFree(d_a);
-    cudaFree(d_b);
-    cudaFree(d_c);
-}
-}
-</code></pre></div><p>Compile it to <code>*.so</code> file with nvcc compiler:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">/usr/local/cuda/bin/nvcc -Xcompiler -fPIC -shared -o cuda_sum.so cuda_sum.cu
-</code></pre></div><p>The last part is to use function <code>cuda_sum</code> from created <code>cuda_sum.so</code> file in Python script. Example (with comments):</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
-<span style="color:#f92672">import</span> ctypes
-<span style="color:#f92672">from</span> ctypes <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
-
-<span style="color:#75715e"># extract cuda_sum function pointer in the shared object cuda_sum.so</span>
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_cuda_sum</span>():
-    dll <span style="color:#f92672">=</span> ctypes<span style="color:#f92672">.</span>CDLL(<span style="color:#e6db74">&#39;./cuda_sum.so&#39;</span>, mode<span style="color:#f92672">=</span>ctypes<span style="color:#f92672">.</span>RTLD_GLOBAL)
-    func <span style="color:#f92672">=</span> dll<span style="color:#f92672">.</span>cuda_sum
-    func<span style="color:#f92672">.</span>argtypes <span style="color:#f92672">=</span> [POINTER(c_float), POINTER(c_float), POINTER(c_float), c_size_t]
-    <span style="color:#66d9ef">return</span> func
-
-<span style="color:#75715e"># create __cuda_sum function with get_cuda_sum()</span>
-__cuda_sum <span style="color:#f92672">=</span> get_cuda_sum()
-
-<span style="color:#75715e"># convenient python wrapper for __cuda_sum</span>
-<span style="color:#75715e"># it does all job with types convertation</span>
-<span style="color:#75715e"># from python ones to C++ ones</span>
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">cuda_sum</span>(a, b, c, size):
-    a_p <span style="color:#f92672">=</span> a<span style="color:#f92672">.</span>ctypes<span style="color:#f92672">.</span>data_as(POINTER(c_float))
-    b_p <span style="color:#f92672">=</span> b<span style="color:#f92672">.</span>ctypes<span style="color:#f92672">.</span>data_as(POINTER(c_float))
-    c_p <span style="color:#f92672">=</span> c<span style="color:#f92672">.</span>ctypes<span style="color:#f92672">.</span>data_as(POINTER(c_float))
-
-    __cuda_sum(a_p, b_p, c_p, size)
-
-<span style="color:#75715e"># testing, sum of two arrays of ones and output head part of resulting array</span>
-<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
-    size<span style="color:#f92672">=</span>int(<span style="color:#ae81ff">1024</span><span style="color:#f92672">*</span><span style="color:#ae81ff">1024</span>)
-
-    a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>ones(size)<span style="color:#f92672">.</span>astype(<span style="color:#e6db74">&#39;float32&#39;</span>)
-    b <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>ones(size)<span style="color:#f92672">.</span>astype(<span style="color:#e6db74">&#39;float32&#39;</span>)
-    c <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros(size)<span style="color:#f92672">.</span>astype(<span style="color:#e6db74">&#39;float32&#39;</span>)
-
-    cuda_sum(a, b, c, size)
-
-    <span style="color:#66d9ef">print</span> c[:<span style="color:#ae81ff">10</span>]
-</code></pre></div><p>Now you can desing the code above into full-featured Python module.</p>
-    </div>
-</article>
-
-
-
-
-            </div>
-            <aside class="col-12 col-md-3 float-left sidebar">
-    
-    <div class="sidebar-item sidebar-pages">
-        <h3>Pages</h3>
-        <ul>
-            
-            <li>
-                <a href="/">Home</a>
-            </li>
-            
-            <li>
-                <a href="/resume/">Resume</a>
-            </li>
-            
-            <li>
-                <a href="/index.xml">RSS</a>
-            </li>
-            
-        </ul>
-    </div>
-    
-    <div class="sidebar-item sidebar-links">
-        <h3>Links</h3>
-        <ul>
-            
-            <li>
-                <a href="https://github.com/bikulov" target="_blank"><span>Github</span></a>
-            </li>
-            
-            <li>
-                <a href="https://linkedin.com/in/bikulov" target="_blank"><span>LinkedIn</span></a>
-            </li>
-            
-            <li>
-                <a href="https://twitter.com/volukib" target="_blank"><span>Twitter</span></a>
-            </li>
-            
-        </ul>
-    </div>
-    
-    <div class="sidebar-item sidebar-tags">
-        <h3>Tags</h3>
-        <div>
-            
-            <span>
-                <a href="/tags/awk/">awk</a>
-            </span>
-            
-            <span>
-                <a href="/tags/backup/">backup</a>
-            </span>
-            
-            <span>
-                <a href="/tags/bash/">bash</a>
-            </span>
-            
-            <span>
-                <a href="/tags/blender/">blender</a>
-            </span>
-            
-            <span>
-                <a href="/tags/btsync/">btsync</a>
-            </span>
-            
-            <span>
-                <a href="/tags/c/">c</a>
-            </span>
-            
-            <span>
-                <a href="/tags/c&#43;&#43;/">c&#43;&#43;</a>
-            </span>
-            
-            <span>
-                <a href="/tags/centos/">centos</a>
-            </span>
-            
-            <span>
-                <a href="/tags/cmake/">cmake</a>
-            </span>
-            
-            <span>
-                <a href="/tags/config/">config</a>
-            </span>
-            
-            <span>
-                <a href="/tags/console/">console</a>
-            </span>
-            
-            <span>
-                <a href="/tags/cpp/">cpp</a>
-            </span>
-            
-            <span>
-                <a href="/tags/cron/">cron</a>
-            </span>
-            
-            <span>
-                <a href="/tags/cuda/">cuda</a>
-            </span>
-            
-            <span>
-                <a href="/tags/dd/">dd</a>
-            </span>
-            
-            <span>
-                <a href="/tags/docker/">docker</a>
-            </span>
-            
-            <span>
-                <a href="/tags/dokuwiki/">dokuwiki</a>
-            </span>
-            
-            <span>
-                <a href="/tags/drupal/">drupal</a>
-            </span>
-            
-            <span>
-                <a href="/tags/du/">du</a>
-            </span>
-            
-            <span>
-                <a href="/tags/exceptions/">exceptions</a>
-            </span>
-            
-            <span>
-                <a href="/tags/fatnode/">fatnode</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ffmpeg/">ffmpeg</a>
-            </span>
-            
-            <span>
-                <a href="/tags/firefox/">firefox</a>
-            </span>
-            
-            <span>
-                <a href="/tags/gengetopt/">gengetopt</a>
-            </span>
-            
-            <span>
-                <a href="/tags/heapsort/">heapsort</a>
-            </span>
-            
-            <span>
-                <a href="/tags/howto/">howto</a>
-            </span>
-            
-            <span>
-                <a href="/tags/i3/">i3</a>
-            </span>
-            
-            <span>
-                <a href="/tags/imagemagick/">imagemagick</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ip/">ip</a>
-            </span>
-            
-            <span>
-                <a href="/tags/iptables/">iptables</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ipython/">ipython</a>
-            </span>
-            
-            <span>
-                <a href="/tags/joomla/">joomla</a>
-            </span>
-            
-            <span>
-                <a href="/tags/jupyter/">jupyter</a>
-            </span>
-            
-            <span>
-                <a href="/tags/latex/">latex</a>
-            </span>
-            
-            <span>
-                <a href="/tags/libcheese/">libcheese</a>
-            </span>
-            
-            <span>
-                <a href="/tags/linux/">linux</a>
-            </span>
-            
-            <span>
-                <a href="/tags/lxc/">lxc</a>
-            </span>
-            
-            <span>
-                <a href="/tags/makefile/">makefile</a>
-            </span>
-            
-            <span>
-                <a href="/tags/matplotlib/">matplotlib</a>
-            </span>
-            
-            <span>
-                <a href="/tags/mercurial/">mercurial</a>
-            </span>
-            
-            <span>
-                <a href="/tags/montage/">montage</a>
-            </span>
-            
-            <span>
-                <a href="/tags/mysql/">mysql</a>
-            </span>
-            
-            <span>
-                <a href="/tags/nautilus/">nautilus</a>
-            </span>
-            
-            <span>
-                <a href="/tags/nginx/">nginx</a>
-            </span>
-            
-            <span>
-                <a href="/tags/numpy/">numpy</a>
-            </span>
-            
-            <span>
-                <a href="/tags/openvpn/">openvpn</a>
-            </span>
-            
-            <span>
-                <a href="/tags/openvz/">openvz</a>
-            </span>
-            
-            <span>
-                <a href="/tags/paraview/">paraview</a>
-            </span>
-            
-            <span>
-                <a href="/tags/pcap/">pcap</a>
-            </span>
-            
-            <span>
-                <a href="/tags/pcmanfm/">PCManFM</a>
-            </span>
-            
-            <span>
-                <a href="/tags/pdf/">pdf</a>
-            </span>
-            
-            <span>
-                <a href="/tags/perl/">perl</a>
-            </span>
-            
-            <span>
-                <a href="/tags/plots/">plots</a>
-            </span>
-            
-            <span>
-                <a href="/tags/png/">png</a>
-            </span>
-            
-            <span>
-                <a href="/tags/postgres/">postgres</a>
-            </span>
-            
-            <span>
-                <a href="/tags/postgresql/">postgresql</a>
-            </span>
-            
-            <span>
-                <a href="/tags/programmer-tools/">programmer tools</a>
-            </span>
-            
-            <span>
-                <a href="/tags/python/">python</a>
-            </span>
-            
-            <span>
-                <a href="/tags/quicksort/">quicksort</a>
-            </span>
-            
-            <span>
-                <a href="/tags/research/">research</a>
-            </span>
-            
-            <span>
-                <a href="/tags/rhodecode/">rhodecode</a>
-            </span>
-            
-            <span>
-                <a href="/tags/scan/">scan</a>
-            </span>
-            
-            <span>
-                <a href="/tags/scanimage/">scanimage</a>
-            </span>
-            
-            <span>
-                <a href="/tags/science/">science</a>
-            </span>
-            
-            <span>
-                <a href="/tags/scipy/">scipy</a>
-            </span>
-            
-            <span>
-                <a href="/tags/screen-capture/">screen capture</a>
-            </span>
-            
-            <span>
-                <a href="/tags/script/">script</a>
-            </span>
-            
-            <span>
-                <a href="/tags/scrot/">scrot</a>
-            </span>
-            
-            <span>
-                <a href="/tags/seaborn/">seaborn</a>
-            </span>
-            
-            <span>
-                <a href="/tags/sed/">sed</a>
-            </span>
-            
-            <span>
-                <a href="/tags/selfhosted/">selfhosted</a>
-            </span>
-            
-            <span>
-                <a href="/tags/server/">server</a>
-            </span>
-            
-            <span>
-                <a href="/tags/slurm/">slurm</a>
-            </span>
-            
-            <span>
-                <a href="/tags/snippet/">snippet</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ssh/">ssh</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tcpdump/">tcpdump</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tcptrace/">tcptrace</a>
-            </span>
-            
-            <span>
-                <a href="/tags/template/">template</a>
-            </span>
-            
-            <span>
-                <a href="/tags/terminal/">terminal</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tiff/">tiff</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tips-and-tricks/">tips and tricks</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tpick/">tpick</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tr/">tr</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tshark/">tshark</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tun/">tun</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tutorial/">tutorial</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ubuntu/">ubuntu</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ubuntu-12.04/">ubuntu 12.04</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ubuntu-server/">ubuntu server</a>
-            </span>
-            
-            <span>
-                <a href="/tags/visualization/">visualization</a>
-            </span>
-            
-            <span>
-                <a href="/tags/vpn/">vpn</a>
-            </span>
-            
-            <span>
-                <a href="/tags/yandex.disk/">yandex.disk</a>
-            </span>
-            
-            <span>
-                <a href="/tags/zotero/">zotero</a>
-            </span>
-            
-            <span>
-                <a href="/tags/zotfile/">zotfile</a>
-            </span>
-            
-        </div>
-    </div>
-    <div class="sidebar-item sidebar-toc">
-        <h3>TOC</h3><nav id="TableOfContents"></nav></div>
-</aside>
-        </div>
-        <div class="btn">
-    <div class="btn-menu" id="btn-menu">
-        <i class="iconfont icon-grid-sharp"></i>
-    </div>
-    <div class="btn-toggle-mode">
-        <i class="iconfont icon-contrast-sharp"></i>
-    </div>
-    <div class="btn-scroll-top">
-        <i class="iconfont icon-chevron-up-circle-sharp"></i>
-    </div>
-</div>
-<aside class="sidebar-mobile" style="display: none;">
-  <div class="sidebar-wrapper">
-    
-    <div class="sidebar-item sidebar-pages">
-        <h3>Pages</h3>
-        <ul>
-            
-            <li>
-                <a href="/">Home</a>
-            </li>
-            
-            <li>
-                <a href="/resume/">Resume</a>
-            </li>
-            
-            <li>
-                <a href="/index.xml">RSS</a>
-            </li>
-            
-        </ul>
-    </div>
-    
-    <div class="sidebar-item sidebar-links">
-        <h3>Links</h3>
-        <ul>
-            
-            <li>
-                <a href="https://github.com/bikulov" target="_blank"><span>Github</span></a>
-            </li>
-            
-            <li>
-                <a href="https://linkedin.com/in/bikulov" target="_blank"><span>LinkedIn</span></a>
-            </li>
-            
-            <li>
-                <a href="https://twitter.com/volukib" target="_blank"><span>Twitter</span></a>
-            </li>
-            
-        </ul>
-    </div>
-    
-    <div class="sidebar-item sidebar-tags">
-        <h3>Tags</h3>
-        <div>
-            
-            <span>
-                <a href="/tags/awk/">awk</a>
-            </span>
-            
-            <span>
-                <a href="/tags/backup/">backup</a>
-            </span>
-            
-            <span>
-                <a href="/tags/bash/">bash</a>
-            </span>
-            
-            <span>
-                <a href="/tags/blender/">blender</a>
-            </span>
-            
-            <span>
-                <a href="/tags/btsync/">btsync</a>
-            </span>
-            
-            <span>
-                <a href="/tags/c/">c</a>
-            </span>
-            
-            <span>
-                <a href="/tags/c&#43;&#43;/">c&#43;&#43;</a>
-            </span>
-            
-            <span>
-                <a href="/tags/centos/">centos</a>
-            </span>
-            
-            <span>
-                <a href="/tags/cmake/">cmake</a>
-            </span>
-            
-            <span>
-                <a href="/tags/config/">config</a>
-            </span>
-            
-            <span>
-                <a href="/tags/console/">console</a>
-            </span>
-            
-            <span>
-                <a href="/tags/cpp/">cpp</a>
-            </span>
-            
-            <span>
-                <a href="/tags/cron/">cron</a>
-            </span>
-            
-            <span>
-                <a href="/tags/cuda/">cuda</a>
-            </span>
-            
-            <span>
-                <a href="/tags/dd/">dd</a>
-            </span>
-            
-            <span>
-                <a href="/tags/docker/">docker</a>
-            </span>
-            
-            <span>
-                <a href="/tags/dokuwiki/">dokuwiki</a>
-            </span>
-            
-            <span>
-                <a href="/tags/drupal/">drupal</a>
-            </span>
-            
-            <span>
-                <a href="/tags/du/">du</a>
-            </span>
-            
-            <span>
-                <a href="/tags/exceptions/">exceptions</a>
-            </span>
-            
-            <span>
-                <a href="/tags/fatnode/">fatnode</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ffmpeg/">ffmpeg</a>
-            </span>
-            
-            <span>
-                <a href="/tags/firefox/">firefox</a>
-            </span>
-            
-            <span>
-                <a href="/tags/gengetopt/">gengetopt</a>
-            </span>
-            
-            <span>
-                <a href="/tags/heapsort/">heapsort</a>
-            </span>
-            
-            <span>
-                <a href="/tags/howto/">howto</a>
-            </span>
-            
-            <span>
-                <a href="/tags/i3/">i3</a>
-            </span>
-            
-            <span>
-                <a href="/tags/imagemagick/">imagemagick</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ip/">ip</a>
-            </span>
-            
-            <span>
-                <a href="/tags/iptables/">iptables</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ipython/">ipython</a>
-            </span>
-            
-            <span>
-                <a href="/tags/joomla/">joomla</a>
-            </span>
-            
-            <span>
-                <a href="/tags/jupyter/">jupyter</a>
-            </span>
-            
-            <span>
-                <a href="/tags/latex/">latex</a>
-            </span>
-            
-            <span>
-                <a href="/tags/libcheese/">libcheese</a>
-            </span>
-            
-            <span>
-                <a href="/tags/linux/">linux</a>
-            </span>
-            
-            <span>
-                <a href="/tags/lxc/">lxc</a>
-            </span>
-            
-            <span>
-                <a href="/tags/makefile/">makefile</a>
-            </span>
-            
-            <span>
-                <a href="/tags/matplotlib/">matplotlib</a>
-            </span>
-            
-            <span>
-                <a href="/tags/mercurial/">mercurial</a>
-            </span>
-            
-            <span>
-                <a href="/tags/montage/">montage</a>
-            </span>
-            
-            <span>
-                <a href="/tags/mysql/">mysql</a>
-            </span>
-            
-            <span>
-                <a href="/tags/nautilus/">nautilus</a>
-            </span>
-            
-            <span>
-                <a href="/tags/nginx/">nginx</a>
-            </span>
-            
-            <span>
-                <a href="/tags/numpy/">numpy</a>
-            </span>
-            
-            <span>
-                <a href="/tags/openvpn/">openvpn</a>
-            </span>
-            
-            <span>
-                <a href="/tags/openvz/">openvz</a>
-            </span>
-            
-            <span>
-                <a href="/tags/paraview/">paraview</a>
-            </span>
-            
-            <span>
-                <a href="/tags/pcap/">pcap</a>
-            </span>
-            
-            <span>
-                <a href="/tags/pcmanfm/">PCManFM</a>
-            </span>
-            
-            <span>
-                <a href="/tags/pdf/">pdf</a>
-            </span>
-            
-            <span>
-                <a href="/tags/perl/">perl</a>
-            </span>
-            
-            <span>
-                <a href="/tags/plots/">plots</a>
-            </span>
-            
-            <span>
-                <a href="/tags/png/">png</a>
-            </span>
-            
-            <span>
-                <a href="/tags/postgres/">postgres</a>
-            </span>
-            
-            <span>
-                <a href="/tags/postgresql/">postgresql</a>
-            </span>
-            
-            <span>
-                <a href="/tags/programmer-tools/">programmer tools</a>
-            </span>
-            
-            <span>
-                <a href="/tags/python/">python</a>
-            </span>
-            
-            <span>
-                <a href="/tags/quicksort/">quicksort</a>
-            </span>
-            
-            <span>
-                <a href="/tags/research/">research</a>
-            </span>
-            
-            <span>
-                <a href="/tags/rhodecode/">rhodecode</a>
-            </span>
-            
-            <span>
-                <a href="/tags/scan/">scan</a>
-            </span>
-            
-            <span>
-                <a href="/tags/scanimage/">scanimage</a>
-            </span>
-            
-            <span>
-                <a href="/tags/science/">science</a>
-            </span>
-            
-            <span>
-                <a href="/tags/scipy/">scipy</a>
-            </span>
-            
-            <span>
-                <a href="/tags/screen-capture/">screen capture</a>
-            </span>
-            
-            <span>
-                <a href="/tags/script/">script</a>
-            </span>
-            
-            <span>
-                <a href="/tags/scrot/">scrot</a>
-            </span>
-            
-            <span>
-                <a href="/tags/seaborn/">seaborn</a>
-            </span>
-            
-            <span>
-                <a href="/tags/sed/">sed</a>
-            </span>
-            
-            <span>
-                <a href="/tags/selfhosted/">selfhosted</a>
-            </span>
-            
-            <span>
-                <a href="/tags/server/">server</a>
-            </span>
-            
-            <span>
-                <a href="/tags/slurm/">slurm</a>
-            </span>
-            
-            <span>
-                <a href="/tags/snippet/">snippet</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ssh/">ssh</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tcpdump/">tcpdump</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tcptrace/">tcptrace</a>
-            </span>
-            
-            <span>
-                <a href="/tags/template/">template</a>
-            </span>
-            
-            <span>
-                <a href="/tags/terminal/">terminal</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tiff/">tiff</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tips-and-tricks/">tips and tricks</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tpick/">tpick</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tr/">tr</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tshark/">tshark</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tun/">tun</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tutorial/">tutorial</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ubuntu/">ubuntu</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ubuntu-12.04/">ubuntu 12.04</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ubuntu-server/">ubuntu server</a>
-            </span>
-            
-            <span>
-                <a href="/tags/visualization/">visualization</a>
-            </span>
-            
-            <span>
-                <a href="/tags/vpn/">vpn</a>
-            </span>
-            
-            <span>
-                <a href="/tags/yandex.disk/">yandex.disk</a>
-            </span>
-            
-            <span>
-                <a href="/tags/zotero/">zotero</a>
-            </span>
-            
-            <span>
-                <a href="/tags/zotfile/">zotfile</a>
-            </span>
-            
-        </div>
-    </div>
-    
-    
-    
-    <div class="sidebar-item sidebar-toc">
-        <h3>TOC</h3>
-        <nav id="TableOfContents"></nav>
-    </div>
-    
-    
   </div>
-</aside>
-    </main>
+</div>
 
-    <footer>
-    <div class="container-lg clearfix">
-        <div class="col-12 footer">
-            
-            <span>&copy; 2012-2021
-                <a href="https://bikulov.org">bikulov</a>
-                 | <a href="https://github.com/bikulov/bikulov.github.io">Source code</a> 
-                | Powered by <a href="https://github.com/amzrk2/hugo-theme-fuji/"
-                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
-                                                    target="_blank">Hugo</a> 
-            </span>
-        </div>
-    </div>
-</footer>
-
-    
-<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.0/lazysizes.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
-
-
-
-<script defer src="/assets/js/fuji.min.js"></script>
-
-
-</body>
+  </div><div class="container-fluid volukib-footer p-2">
+  <footer class="text-center">
+    <a class="text-decoration-none text-light" href="https://bikulov.org/">Bikulov&#39;s blog 2022</a>
+  </footer>
+</div></body>
 
 </html>

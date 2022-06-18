@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>heapsort on :) bikulov.ORG</title>
+    <title>heapsort on Bikulov&#39;s blog</title>
     <link>https://bikulov.org/tags/heapsort/</link>
-    <description>Recent content in heapsort on :) bikulov.ORG</description>
+    <description>Recent content in heapsort on Bikulov&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <language>ru</language>
+    <copyright>Network Notes 2022</copyright>
     <lastBuildDate>Mon, 04 Nov 2013 21:33:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/heapsort/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Heapsort implementation in C&#43;&#43;</title>
@@ -13,7 +14,9 @@
       <pubDate>Mon, 04 Nov 2013 21:33:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2013/11/04/heapsort-implementation-in-c-/</guid>
-      <description>&lt;p&gt;Heapsort is one of the fastest sorting algorithms. The best and the worst cases for heapsort have same $O(n\log(n))$ performance.&lt;/p&gt;</description>
+      <description>Heapsort is one of the fastest sorting algorithms. The best and the worst cases for heapsort have same $O(n\log(n))$ performance.
+At first heapsort creates heap from data with buildHeap function. Heap is organized in linear array as follows. Every $i$-th element has two children: $(2i)$-th element and $(2i+1)$-th one. The biggest element of the array is placed on the top of the heap.
+After heap building top element is swapped with the latest in the array, then heap is rebuilt for the array with size decreased by one.</description>
     </item>
     
   </channel>

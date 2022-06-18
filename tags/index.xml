@@ -1,814 +1,794 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags on Bikulov Octonotes</title>
-    <link>http://localhost:1313/tags/</link>
-    <description>Recent content in Tags on Bikulov Octonotes</description>
+    <title>Tags on Bikulov&#39;s blog</title>
+    <link>https://bikulov.org/tags/</link>
+    <description>Recent content in Tags on Bikulov&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
-    <lastBuildDate>Tue, 02 Feb 2021 09:30:00 +0300</lastBuildDate>
-    
-        <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <language>ru</language>
+    <copyright>Network Notes 2022</copyright>
+    <lastBuildDate>Tue, 02 Feb 2021 09:30:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>How to setup own selfhosted wiki</title>
-      <link>http://localhost:1313/post/2021-02-02-selfhosted-wiki/</link>
+      <title>docker</title>
+      <link>https://bikulov.org/tags/docker/</link>
       <pubDate>Tue, 02 Feb 2021 09:30:00 +0300</pubDate>
       
-      <guid>http://localhost:1313/post/2021-02-02-selfhosted-wiki/</guid>
-      <description>&lt;p&gt;Disclaimer: many links in this post are referral. If you are uncomfortable with it, just search for the text in the links and use results from the search engines.&lt;/p&gt;
-&lt;h2 id=&#34;plan&#34;&gt;Plan&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;Spin up a new virtual server (1 CPU + 1 GB RAM is fairly enough) in &lt;a href=&#34;https://www.vultr.com/?ref=7552058&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;Vultr&lt;/a&gt;
-, &lt;a href=&#34;https://m.do.co/c/8aba7c4cd737&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;Digital Ocean&lt;/a&gt;
-, etc.&lt;/li&gt;
-&lt;li&gt;Register a new domain name&lt;/li&gt;
-&lt;li&gt;Install Docker and Docker Compose&lt;/li&gt;
-&lt;li&gt;Use docker-compose to deploy a wiki&lt;/li&gt;
-&lt;li&gt;Backups&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&#34;virtual-server&#34;&gt;Virtual server&lt;/h2&gt;
-&lt;p&gt;For example, let it be Digital Ocean.&lt;/p&gt;
-&lt;p&gt;You need to create a 5$ basic droplet with Ubuntu 20.04 (Droplets -&amp;gt; Create droplet). Choose:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Latest stable Ubuntu (in this time it is Ubuntu 20.04)&lt;/li&gt;
-&lt;li&gt;Basic plan&lt;/li&gt;
-&lt;li&gt;$5 size&lt;/li&gt;
-&lt;li&gt;Any datacenter. Choose those that are closer to you.&lt;/li&gt;
-&lt;li&gt;In additional settings check «IPv6» because it is cool 😎&lt;/li&gt;
-&lt;li&gt;Authentication: SSH is must-have, generate key if needed&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&#34;domain-name&#34;&gt;Domain name&lt;/h2&gt;
-&lt;p&gt;One can register a domain name at the registrar of your choice. For Russian domains, I use &lt;a href=&#34;https://www.reg.ru/?rlink=reflink-6310513&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;reg.ru&lt;/a&gt;
-.&lt;/p&gt;
-&lt;p&gt;After registration (and some wait time, while DNS records are being updated across the world), add resource record in DNS editor: &lt;code&gt;A&lt;/code&gt; for IPv4 and &lt;code&gt;AAAA&lt;/code&gt; for IPv6. IPs you can find on the virtual machine info page.&lt;/p&gt;
-&lt;p&gt;More about resource records: &lt;a href=&#34;https://en.wikipedia.org/wiki/List_of_DNS_record_types&#34;&gt;https://en.wikipedia.org/wiki/List_of_DNS_record_types&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&#34;docker-and-docker-compose&#34;&gt;Docker and docker-compose&lt;/h2&gt;
-&lt;p&gt;For installation of Docker use the &lt;a href=&#34;https://docs.docker.com/engine/install/ubuntu/&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;official doc&lt;/a&gt;
-:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;# run as root
-apt install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-apt-key fingerprint 0EBFCD88
-add-apt-repository &amp;quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable&amp;quot;
-apt update &amp;amp;&amp;amp; apt install docker-ce docker-ce-cli containerd.io
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;And install docker-compose by the &lt;a href=&#34;https://docs.docker.com/compose/install/&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;official doc&lt;/a&gt;
-:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;# run as root
-curl -L &amp;quot;https://github.com/docker/compose/releases/download/1.28.2/docker-compose-$(uname -s)-$(uname -m)&amp;quot; -o /usr/local/bin/docker-compose
-chmod +x /usr/local/bin/docker-compose
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;deploy-wiki&#34;&gt;Deploy wiki&lt;/h2&gt;
-&lt;p&gt;You need to &lt;a href=&#34;https://github.com/awesome-selfhosted/awesome-selfhosted#wikis&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;choose&lt;/a&gt;
- wiki to install. Let it be &lt;a href=&#34;https://www.dokuwiki.org&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;Dokuwiki&lt;/a&gt;
-.&lt;/p&gt;
-&lt;p&gt;All you need is just a single &lt;code&gt;docker-compose.yaml&lt;/code&gt;:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;version: &amp;quot;3.4&amp;quot;
-services:
-  proxy:
-    image: traefik:v2.0
-    container_name: proxy
-    restart: always
-    command:
-      - &amp;quot;--providers.docker=true&amp;quot;
-      - &amp;quot;--providers.docker.exposedbydefault=false&amp;quot;
-      - &amp;quot;--entrypoints.web.address=:80&amp;quot;
-      - &amp;quot;--entrypoints.websecure.address=:443&amp;quot;
-      - &amp;quot;--certificatesresolvers.lech.acme.tlschallenge=true&amp;quot;
-      - &amp;quot;--certificatesresolvers.lech.acme.email=blog@bikulov.org&amp;quot;
-      - &amp;quot;--certificatesresolvers.lech.acme.storage=/letsencrypt/acme.json&amp;quot;
-    labels:
-      - &amp;quot;traefik.enable=true&amp;quot;
-      - &amp;quot;traefik.http.routers.https-redirect.entrypoints=web&amp;quot;
-      - &amp;quot;traefik.http.routers.https-redirect.rule=HostRegexp(`{any:.*}`)&amp;quot;
-      - &amp;quot;traefik.http.routers.https-redirect.middlewares=https-redirect&amp;quot;
-      - &amp;quot;traefik.http.middlewares.https-redirect.redirectscheme.scheme=https&amp;quot;
-    ports:
-      - &amp;quot;443:443&amp;quot;
-      - &amp;quot;80:80&amp;quot;
-    volumes:
-      - proxy-data:/letsencrypt
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-  
-  dokuwiki:
-    image: linuxserver/dokuwiki
-    container_name: dokuwiki
-    restart: always
-    labels:
-      - &amp;quot;traefik.enable=true&amp;quot;
-      - &amp;quot;traefik.http.routers.dokuwiki.rule=Host(`wiki.bikulov.org`)&amp;quot;
-      - &amp;quot;traefik.http.routers.dokuwiki.entrypoints=websecure&amp;quot;
-      - &amp;quot;traefik.http.routers.dokuwiki.tls.certresolver=lech&amp;quot;
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/Moscow
-    volumes:
-      - dokuwiki-data:/config
-
-volumes:
-  proxy-data:
-  dokuwiki-data:
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;You need to change:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;certificatesresolvers.lech.acme.email&lt;/code&gt; to your email&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;traefik.http.routers.dokuwiki.rule&lt;/code&gt; to your host&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;There are two services &lt;code&gt;proxy&lt;/code&gt; and &lt;code&gt;dokuwiki&lt;/code&gt; with two data volumes. &lt;code&gt;proxy&lt;/code&gt; knows about &lt;code&gt;dokuwiki&lt;/code&gt; via labels. Only &lt;code&gt;proxy&lt;/code&gt; exposes 80 and 443 ports to host machine and routes traffic to &lt;code&gt;dokuwiki&lt;/code&gt; by matching rule &lt;code&gt;Host(`wiki.bikulov.org`)&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;Just run in directory with yaml:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;docker-compose up -d
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;a href=&#34;https://docs.docker.com/compose/&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;More about docker-compose&lt;/a&gt;
-. &lt;a href=&#34;https://docs.docker.com/storage/volumes/&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;More about data volumes&lt;/a&gt;
-. &lt;a href=&#34;https://doc.traefik.io/traefik/v2.0/user-guides/docker-compose/acme-tls/&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;More about traefic&lt;/a&gt;
-.&lt;/p&gt;
-&lt;h2 id=&#34;backups&#34;&gt;Backups&lt;/h2&gt;
-&lt;p&gt;More at backups can be fount in the &lt;a href=&#34;https://docs.docker.com/storage/volumes/#backup-restore-or-migrate-data-volumes&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;official doc&lt;/a&gt;
-. Below I rovide the most essential: backup bash command.&lt;/p&gt;
-&lt;p&gt;Backup:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;docker run --rm --volumes-from dokuwiki -v $(pwd):/backup ubuntu bash -c &amp;quot;tar cvfz /backup/dokuwiki_$(date +%s).tar.gz /config&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Restore:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ docker run --rm --volumes-from dokuwiki -v $(pwd):/backup ubuntu bash -c &amp;quot;cd /config &amp;amp;&amp;amp; rm -rf * &amp;amp;&amp;amp; tar xvf /backup/backup.tar --strip 1&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;So, the last building blog is to sync tars fom server elsewhere. You can achieve it with &lt;a href=&#34;https://syncthing.net&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;Syncthing&lt;/a&gt;
-, &lt;a href=&#34;https://disk.yandex.ru/&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;Yandex Disk&lt;/a&gt;
-, &lt;a href=&#34;https://rclone.org/&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;rclone&lt;/a&gt;
- and many others.&lt;/p&gt;
-</description>
+      <guid>https://bikulov.org/tags/docker/</guid>
+      <description></description>
     </item>
     
     <item>
-      <title>WireGuard on Ubuntu (server) and Android (client)</title>
-      <link>http://localhost:1313/post/2019-12-22-wireguard/</link>
+      <title>dokuwiki</title>
+      <link>https://bikulov.org/tags/dokuwiki/</link>
+      <pubDate>Tue, 02 Feb 2021 09:30:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/dokuwiki/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>howto</title>
+      <link>https://bikulov.org/tags/howto/</link>
+      <pubDate>Tue, 02 Feb 2021 09:30:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/howto/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>selfhosted</title>
+      <link>https://bikulov.org/tags/selfhosted/</link>
+      <pubDate>Tue, 02 Feb 2021 09:30:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/selfhosted/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>server</title>
+      <link>https://bikulov.org/tags/server/</link>
+      <pubDate>Tue, 02 Feb 2021 09:30:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/server/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ubuntu</title>
+      <link>https://bikulov.org/tags/ubuntu/</link>
+      <pubDate>Tue, 02 Feb 2021 09:30:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/ubuntu/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>vpn</title>
+      <link>https://bikulov.org/tags/vpn/</link>
       <pubDate>Sun, 22 Dec 2019 02:30:00 +0300</pubDate>
       
-      <guid>http://localhost:1313/post/2019-12-22-wireguard/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;https://www.wireguard.com/&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;WireGuard&lt;/a&gt;
- is lightweight VPN with extremely simple configuration. All below was tested on Ubuntu 18.04 as server and Anroid 8.0.0 as client.&lt;/p&gt;
-&lt;h3 id=&#34;server&#34;&gt;Server&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;https://www.wireguard.com/install/&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;Installation&lt;/a&gt;
- from official ppa:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-(bash)&#34; data-lang=&#34;(bash)&#34;&gt;apt-add-repository ppa:wireguard/wireguard
-apt update
-apt install wireguard
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Client and server authenticate each other with asymmetric keys (like in SSH). Keys are generated with management utility &lt;code&gt;wg&lt;/code&gt;:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-(bash)&#34; data-lang=&#34;(bash)&#34;&gt;wg genkey
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;This will be server auth key (client auth key can be generated with the same command or in mobile application, you will need public part in config).&lt;/p&gt;
-&lt;p&gt;Add configuration file &lt;code&gt;sudo vim /etc/wireguard/wg0.conf&lt;/code&gt;:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;[Interface]
-Address = 10.9.0.1/24
-PrivateKey = &amp;lt;generaed by wg0 private key&amp;gt;
-ListenPort = 51820
-PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
-PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
-
-[Peer]
-PublicKey = &amp;lt;public key generated on client (android app)&amp;gt;
-AllowedIPs = 10.9.0.2/32
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;And fix chmod:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;chmod 600 /etc/wireguard/wg0.conf
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;This configuration includes routing internet requests from VPN clients. If you do not need it (communication between server and client is enough), omit &lt;code&gt;MASQUERADE&lt;/code&gt; lines.&lt;/p&gt;
-&lt;p&gt;Enable systemd to autorun service:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;sudo systemctl enable wg-quick@wg0.service
-sudo systemctl daemon-reload
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Start it manually first time:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;wg-quick up wg0
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Enable web forwarding if you have kept MASQUERADE lines in the config:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;vim /etc/sysctl.conf
-net.ipv4.ip_forward=1
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;client&#34;&gt;Client&lt;/h3&gt;
-&lt;p&gt;Install application from &lt;a href=&#34;https://play.google.com/store/apps/details?id=com.wireguard.android&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;Play&lt;/a&gt;
-&lt;/p&gt;
-&lt;p&gt;Create configuration from scratch.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Name is anything&lt;/li&gt;
-&lt;li&gt;Private key can be generated with &amp;ldquo;generate&amp;rdquo; button or with &lt;code&gt;wg&lt;/code&gt; utility on server and copied from there&lt;/li&gt;
-&lt;li&gt;Addresses is the same as in client section of server (&lt;code&gt;10.9.0.2/32&lt;/code&gt; in this note)&lt;/li&gt;
-&lt;li&gt;Listen port is any, you can keep 51820 similar to server&lt;/li&gt;
-&lt;li&gt;DNS server - any, use Yandex&amp;rsquo;s 77.88.8.8 or Google&amp;rsquo;s 8.8.8.8&lt;/li&gt;
-&lt;li&gt;MTU &lt;a href=&#34;https://www.reddit.com/r/WireGuard/comments/aru07q/wireguard_slow/&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;copy&lt;/a&gt;
- from server (after starting wireguard service, run &lt;code&gt;ifconfig wg0&lt;/code&gt;)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Peer section - server config:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Public key: public part of server key (you can extract it fdom private with &lt;code&gt;echo public key | wg pubkey&lt;/code&gt;)&lt;/li&gt;
-&lt;li&gt;Allowed IPS: server IP &lt;code&gt;10.9.0.1&lt;/code&gt; if do not want to route all traffic via server, or &lt;code&gt;0.0.0.0/0&lt;/code&gt; if you want it&lt;/li&gt;
-&lt;li&gt;Endpoint: server_host:server port (like myhost.com:51820)&lt;/li&gt;
-&lt;/ul&gt;</description>
+      <guid>https://bikulov.org/tags/vpn/</guid>
+      <description></description>
     </item>
     
     <item>
-      <title>Python program template</title>
-      <link>http://localhost:1313/post/2019-02-22-python-program-template/</link>
+      <title>python</title>
+      <link>https://bikulov.org/tags/python/</link>
       <pubDate>Fri, 22 Feb 2019 00:30:00 +0300</pubDate>
       
-      <guid>http://localhost:1313/post/2019-02-22-python-program-template/</guid>
-      <description>&lt;p&gt;For every simple python script you need same simple parts:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;command line arguments parsing&lt;/li&gt;
-&lt;li&gt;logging&lt;/li&gt;
-&lt;li&gt;[optional] submodules&lt;/li&gt;
-&lt;li&gt;[optional] building to a binary&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;I&amp;rsquo;ve prepared a simple python project with all these parts to use as template. It is available on &lt;a href=&#34;https://github.com/bikulov/python_template/&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;github&lt;/a&gt;
-.&lt;/p&gt;
-&lt;p&gt;Command line arguments parsing is done in &lt;code&gt;parse_arguments&lt;/code&gt;. The most interesting thing there is setting default fuctions for submodules (and &lt;code&gt;None&lt;/code&gt; for main module). It looks like:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;n&#34;&gt;first_module_parser&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;set_defaults&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;first_module&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;and allows to address needed by chosen submodule function as simple as&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;args&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;args&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;args&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Logging initialization is simple and has only two modes: verbose (with &lt;code&gt;DEBUG&lt;/code&gt; level enabled) and non-verbose (only &lt;code&gt;INFO&lt;/code&gt; messages):&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;n&#34;&gt;logging&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;basicConfig&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;level&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;logging&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;DEBUG&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;args&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;verbose&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;else&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;logging&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;INFO&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;format&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;[&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;%(filename)s&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;%(lineno)d&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;] &lt;/span&gt;&lt;span class=&#34;si&#34;&gt;%(levelname)-8s&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt; [&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;%(asctime)s&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;]  &lt;/span&gt;&lt;span class=&#34;si&#34;&gt;%(message)s&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;datefmt&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;%Y-%m-&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;%d&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt; %H:%M:%S&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;These is also a &lt;code&gt;Makefile&lt;/code&gt; in the project with simple compilation from python code to binary (&lt;code&gt;python-&amp;gt;cython-&amp;gt;gcc-&amp;gt;binary&lt;/code&gt;):&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-Makefile&#34; data-lang=&#34;Makefile&#34;&gt;&lt;span class=&#34;err&#34;&gt;cp&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;python_template.py&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;python_template.pyx&lt;/span&gt;
-&lt;span class=&#34;err&#34;&gt;cython&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;*.pyx&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;--embed&lt;/span&gt;
-&lt;span class=&#34;err&#34;&gt;gcc&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;-Os&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;-I&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;/usr/include/python3.5m&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;-o&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;python_template&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;python_template.c&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;-lpython3.5m&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;-lpthread&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;-lm&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;-lutil&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;-ldl&lt;/span&gt;
-&lt;span class=&#34;err&#34;&gt;rm&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;python_template.pyx&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;python_template.c&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;pytest&lt;/code&gt; test is located in the separate file &lt;code&gt;test_python_template.py&lt;/code&gt; and may be invoced as:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;make &lt;span class=&#34;nb&#34;&gt;test&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Sample output:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;$ make &lt;span class=&#34;nb&#34;&gt;test&lt;/span&gt;
-py.test test_python_template.py
-&lt;span class=&#34;o&#34;&gt;================================&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;test&lt;/span&gt; session &lt;span class=&#34;nv&#34;&gt;starts&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=================================&lt;/span&gt;
-platform linux2 -- Python 2.7.12, pytest-2.8.7, py-1.4.31, pluggy-0.3.1
-rootdir: /home/bikulov/Projects/python_template, inifile:
-collected &lt;span class=&#34;m&#34;&gt;3&lt;/span&gt; items
-
-test_python_template.py ...
-
-&lt;span class=&#34;o&#34;&gt;==============================&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;3&lt;/span&gt; passed in 0.01 &lt;span class=&#34;nv&#34;&gt;seconds&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==============================&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+      <guid>https://bikulov.org/tags/python/</guid>
+      <description></description>
     </item>
     
     <item>
-      <title>Resume</title>
-      <link>http://localhost:1313/resume/</link>
-      <pubDate>Mon, 18 Feb 2019 15:41:22 +0300</pubDate>
-      
-      <guid>http://localhost:1313/resume/</guid>
-      <description>&lt;h3 id=&#34;employment&#34;&gt;Employment&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;2015, October – current programmer in Yandex.&lt;/li&gt;
-&lt;li&gt;2016, January – current physisist in Lomonosov Moscow State University, Physics Faculty.&lt;/li&gt;
-&lt;li&gt;2013, December – 2015, October junior programmer in Yandex.&lt;/li&gt;
-&lt;li&gt;2013, May – 2015, January research fellow in Lomonosov Moscow State University, Physics Faculty.&lt;/li&gt;
-&lt;li&gt;2012, October – 2013, November analyst in IntroVision LLC.&lt;/li&gt;
-&lt;li&gt;2011 – 2012 programmer in IntroVision LLC.&lt;/li&gt;
-&lt;li&gt;2007 – 2012 undergraduate education in Lomonosov Moscow State University.&lt;/li&gt;
-&lt;li&gt;2011, summer research trainee in Clarkson University, Potsdam, NY, USA.&lt;/li&gt;
-&lt;li&gt;2010, summer research trainee in Clarkson University, Potsdam, NY, USA.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;education&#34;&gt;Education&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;2016 PhD dissertation «Modeling of transport phenomena in porous medium with hybrid supercomputer systems».&lt;/li&gt;
-&lt;li&gt;2012 – 2015 Computer Methods of Physics, Lomonosov Moscow State University, PhD student.&lt;/li&gt;
-&lt;li&gt;2012, fall CIT at Yandex&lt;/li&gt;
-&lt;li&gt;2007 – 2012 Computer Methods of Physics, Lomonosov Moscow State University, Diploma.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;interests&#34;&gt;Interests&lt;/h3&gt;
-&lt;p&gt;Mathematical and computer modeling, computational physics, high performance computations, NVIDIA CUDA computations, cross-platform programming. Linux as a desktop and a server, automatization of everything.&lt;/p&gt;
-&lt;p&gt;I’ve created:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://cmp.phys.msu.ru/&#34;&gt;http://cmp.phys.msu.ru/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://csmlab.ru/&#34;&gt;http://csmlab.ru/&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;scientific-experience&#34;&gt;Scientific Experience&lt;/h3&gt;
-&lt;p&gt;High performance computations on local workstations, CPU clusters and GPU clusters. Linux system administration for small network, websites creation and maintaining.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;hydrodynamics modeling with Lattice Boltzmann Method (single relaxation time, multiple relaxation time, color gradient, thermal LBM, diffusion equation) for multiple-GPU cluster&lt;/li&gt;
-&lt;li&gt;modeling of DNA dynamics in nanochannel&lt;/li&gt;
-&lt;li&gt;biological cell motility modeling&lt;/li&gt;
-&lt;li&gt;biological neuron networks modeling&lt;/li&gt;
-&lt;li&gt;molecular dynamics&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;software-experience&#34;&gt;Software Experience&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;Python 2⁄3: numpy, scipy, matplotlib/seaborn, django, cherrypy, bottle&lt;/li&gt;
-&lt;li&gt;C++: Qt, CUDA, MPI, OpenMP&lt;/li&gt;
-&lt;li&gt;web: HTML5, CSS, JavaScript&lt;/li&gt;
-&lt;li&gt;setup: DokuWiki, Drupal, Joomla, Redmine, YouTrack, Jira, Taiga.io&lt;/li&gt;
-&lt;li&gt;tools: (bash, sed, awk, etc, ssh), (svn, hg, git), (latex, inkscape, gimp)&lt;/li&gt;
-&lt;li&gt;scientific: MATLAB, Octave, Maxima, QtiPlot, ParaView&lt;/li&gt;
-&lt;li&gt;administration: LXC, OpenVZ, OpenVPN, PPTP, SLURM, Samba&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;publications&#34;&gt;Publications&lt;/h3&gt;
-&lt;h4 id=&#34;journals&#34;&gt;Journals&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;Bikulov D.A. An efficient implementation of the lattice Boltzmann method for hybrid supercomputers // Numerical methods and programming. 205-214. 2015. 16.&lt;/li&gt;
-&lt;li&gt;Bikulov D.A., Saratov A.A, Grachev E.A. Prediction of the permeability of proppant packs under load // International Journal of Modern Physics C. 1-18. 2015.&lt;/li&gt;
-&lt;li&gt;Bikulov D.A., Senin D.S. Implementation of the lattice Boltzmann method without stored distribution functions on GPU // Numerical methods and programming. 370-374. 2013. 14.&lt;/li&gt;
-&lt;li&gt;Bikulov D.A., Senin D.S., Demin D.S., Dmitriev A.V., Grachev N.E. Implementation of Lattice Boltzmann method for computations on GPU Cluster // Numerical methods and programming. 13-19. 2012. 13.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&#34;conferences&#34;&gt;Conferences&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;Computer modelling of ischemic stroke development with CUDA // Conference Science Service in the Internet: all sides of parallel computing. 2013.&lt;/li&gt;
-&lt;li&gt;Bikulov D. Implementation of pulse blood flow in a vessel with elastic boundaries using NVIDIA CUDA // «Lomonosov-2013» conference, section «Computational mathematics and cybernetics»&lt;/li&gt;
-&lt;li&gt;Bikulov D. Implementation of Lattice Boltzmann method for computations on GPU Cluster // «Lomonosov-2012» conference, section «Computational mathematics and cybernetics»&lt;/li&gt;
-&lt;li&gt;Senin D., Bikulov D., Dmitriev A., Grachev N. Digital Core Analysis with GPU application // GTC 2012&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&#34;digests&#34;&gt;Digests&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;Bikulov D.A. An efficient implementation of the lattice Boltzmann method for hybrid supercomputers // CUDA Almanac. 15-15. 2015.&lt;/li&gt;
-&lt;li&gt;Bikulov D.A., Saratov A.A, Grachev E.A. Determination of the permeability of proppant packs with Lattice Boltzmann Method // «Theoretical Foundations and Designing Numerical Algorithms of Problem Solving in Mathematical Physics» deducated to the memory of K. I. Babenko. 2014.&lt;/li&gt;
-&lt;li&gt;Makarov S., Bikulov D., Kochetov A., Grachev E., Gubskiy L. Computer simulation of brain cell dynamics during ischemic stroke // Supercomputing Technologies in Science, Education and Industry: Almanac. 61-68. 2013. 5.&lt;/li&gt;
-&lt;li&gt;Bikulov D.A. Mathamatical model of the pulse blood flow in a vessel // CUDA Almanac. 11-11. 2013.&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Python sorting objects of user defined class</title>
-      <link>http://localhost:1313/post/2017-03-11-python-sorting-objects-of-user-defined-class/</link>
-      <pubDate>Sat, 11 Mar 2017 23:32:41 +0300</pubDate>
-      
-      <guid>http://localhost:1313/post/2017-03-11-python-sorting-objects-of-user-defined-class/</guid>
-      <description>&lt;p&gt;The most common way of sorting collections of custom objects in Python is to &lt;a href=&#34;https://docs.python.org/3.5/library/functions.html#sorted&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;provide&lt;/a&gt;
- key function that is used to extract a comparison key from each element:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;nb&#34;&gt;sorted&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;Case insensitive Sorting is here&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;split&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(),&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;key&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;str&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;lower&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;But sorted function compares objects by its nature, and it is possible to define comparison operators for your class t make sorted work automatically.&lt;/p&gt;
-&lt;p&gt;Documentation &lt;a href=&#34;https://docs.python.org/3.5/howto/sorting.html#odd-and-ends&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;guarantees&lt;/a&gt;
- that sorting uses only &lt;code&gt;__lt__()&lt;/code&gt; method:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;The sort routines are guaranteed to use &lt;code&gt;__lt__()&lt;/code&gt; when making comparisons between two objects. So, it is easy to add a standard sort order to a class by defining an &lt;code&gt;__lt__()&lt;/code&gt; method.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;But it is &lt;a href=&#34;http://stackoverflow.com/a/8796908&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;recommended&lt;/a&gt;
- to define all comparison methods for your class for the sake of safety and code completeness. It can be done with &lt;a href=&#34;https://docs.python.org/3/library/functools.html#functools.total_ordering&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;total_ordering&lt;/a&gt;
- decorator from the functools standard module. Lets look at class:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;functools&lt;/span&gt;
-
-&lt;span class=&#34;nd&#34;&gt;@functools.total_ordering&lt;/span&gt;
-&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Point&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-
-    &lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;fm&#34;&gt;__init__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;y&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;y&lt;/span&gt;
-
-    &lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;fm&#34;&gt;__lt__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;other&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-        &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;other&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;other&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-
-    &lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;fm&#34;&gt;__eq__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;other&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-        &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;other&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;other&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Example usage:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;n&#34;&gt;points&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Point&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;y&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;range&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;y&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;range&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)]&lt;/span&gt;
-
-&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;Not sorted:&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;, &amp;#39;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;join&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;map&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;({0.x}, {0.y})&amp;#39;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;format&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;points&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)))&lt;/span&gt;
-&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;Sorted:&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;, &amp;#39;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;join&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;map&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;({0.x}, {0.y})&amp;#39;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;format&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;sorted&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;points&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))))&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;will produce output:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;Not sorted: &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;2, 3&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;, &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;2, 2&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;, &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;2, 1&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;, &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;1, 3&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;, &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;1, 2&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;, &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;1, 1&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
-Sorted: &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;1, 1&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;, &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;1, 2&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;, &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;1, 3&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;, &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;2, 1&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;, &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;2, 2&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;, &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;2, 3&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;total_ordering decorator is excessive here, but may be useful in the future. What it does? It &lt;a href=&#34;https://hg.python.org/cpython/file/3.5/Lib/functools.py&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;completes&lt;/a&gt;
- remaining comparison methods from implemented ones. So you implement &lt;code&gt;__eq__&lt;/code&gt; and &lt;code&gt;__lt__&lt;/code&gt;, it complements &lt;code&gt;__le__&lt;/code&gt;, &lt;code&gt;__gt__&lt;/code&gt;, &lt;code&gt;__ge__&lt;/code&gt;. Or you implement &lt;code&gt;__eq__&lt;/code&gt; and &lt;code&gt;__le__&lt;/code&gt;, it complements &lt;code&gt;__lt__&lt;/code&gt;, &lt;code&gt;__gt__&lt;/code&gt;, &lt;code&gt;__ge__&lt;/code&gt;. And so on. It requires &lt;code&gt;__eq__&lt;/code&gt; and one other comparison method to be defined.&lt;/p&gt;
-&lt;p&gt;Essential part of the generator code is:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;total_ordering&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;cls&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-    &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&amp;#34;Class decorator that fills in missing ordering methods&amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
-    &lt;span class=&#34;c1&#34;&gt;# Find user-defined comparisons (not those inherited from object).&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;roots&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;op&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;op&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_convert&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;getattr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;cls&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;op&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;None&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;is&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;not&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;getattr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;object&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;op&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;None&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)]&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;not&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;roots&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-        &lt;span class=&#34;k&#34;&gt;raise&lt;/span&gt; &lt;span class=&#34;ne&#34;&gt;ValueError&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;must define at least one ordering operation: &amp;lt; &amp;gt; &amp;lt;= &amp;gt;=&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;root&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;max&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;roots&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;       &lt;span class=&#34;c1&#34;&gt;# prefer __lt__ to __le__ to __gt__ to __ge__&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;opname&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;opfunc&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_convert&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;root&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]:&lt;/span&gt;
-        &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;opname&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;not&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;roots&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-            &lt;span class=&#34;n&#34;&gt;opfunc&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;vm&#34;&gt;__name__&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;opname&lt;/span&gt;
-            &lt;span class=&#34;nb&#34;&gt;setattr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;cls&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;opname&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;opfunc&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;cls&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;where &lt;code&gt;_convert&lt;/code&gt; is dict of predefined implementations of comparison methods via each other. Code gets all defined is cls comparison methods, prefers one (if several are defined) and defines other methods.&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Tips for LXC 2: unprivileged containers</title>
-      <link>http://localhost:1313/post/2016-08-19-lxc-tips-2-unprivileged-containers/</link>
+      <title>lxc</title>
+      <link>https://bikulov.org/tags/lxc/</link>
       <pubDate>Fri, 19 Aug 2016 18:26:36 +0300</pubDate>
       
-      <guid>http://localhost:1313/post/2016-08-19-lxc-tips-2-unprivileged-containers/</guid>
-      <description>&lt;p&gt;LXC containers are great for application isolation and safe deployment. &lt;a href=&#34;http://unix.stackexchange.com/questions/181341/what-are-benefits-and-downsides-of-unprivileged-containers&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;Running unprivileged containers is the safest way to run containers in a production environment&lt;/a&gt;
-. This note contains enough information to create your own safe container.&lt;/p&gt;
-&lt;p&gt;Install LXC:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;apt-get install -y lxc
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Now create non-root system user for lxc:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;useradd --home-dir /srv/lxc --create-home lxc
-&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;lxc veth lxcbr0 2&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; sudo tee -a /etc/lxc/lxc-usernet
-passwd lxc &amp;lt;&lt;span class=&#34;nb&#34;&gt;type&lt;/span&gt; password&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;I recommend to add &lt;a href=&#34;http://bikulov.org/blog/2014/10/09/tips-for-lxc/&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;autostart&lt;/a&gt;
- as default behaviour:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;su lxcusr
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;and add lines&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-ini&#34; data-lang=&#34;ini&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Autostart&lt;/span&gt;
-&lt;span class=&#34;na&#34;&gt;lxc.start.auto&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;1&lt;/span&gt;
-&lt;span class=&#34;na&#34;&gt;lxc.start.delay&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;5&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;to file &lt;code&gt;~/.config/lxc/default.conf&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;Add uid mappings in &lt;code&gt;~/.config/lxc/default.conf&lt;/code&gt;:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-ini&#34; data-lang=&#34;ini&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# UID mappings&lt;/span&gt;
-&lt;span class=&#34;na&#34;&gt;lxc.include&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;/etc/lxc/default.conf&lt;/span&gt;
-&lt;span class=&#34;na&#34;&gt;lxc.id_map&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;u 0 100000 65536&lt;/span&gt;
-&lt;span class=&#34;na&#34;&gt;lxc.id_map&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;g 0 100000 65536&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Before container creation, you must login as lxc user directly (like &lt;code&gt;ssh lxc@server.name&lt;/code&gt;), or you will get &lt;a href=&#34;https://gist.github.com/julianlam/4e2bd91d8dedee21ca6f&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;error&lt;/a&gt;
-.&lt;/p&gt;
-&lt;p&gt;Create first container:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;lxc-create -t download -n sample.dima.io -- -d ubuntu -r xenial -a amd64
-lxc-start -d -n sample.dima.io
-lxc-attach -n sample.dima.io
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Don not forget to delete default user in container:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;userdel ubuntu &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; rm -rf /home/ubuntu
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+      <guid>https://bikulov.org/tags/lxc/</guid>
+      <description></description>
     </item>
     
     <item>
-      <title>Script for user configurations generation and sending at Ubuntu OpenVPN server</title>
-      <link>http://localhost:1313/post/2016-01-05-script-for-user-configurations-generation-and-sending-at-ubuntu-openvpn-server/</link>
+      <title>openvpn</title>
+      <link>https://bikulov.org/tags/openvpn/</link>
       <pubDate>Tue, 05 Jan 2016 23:07:00 +0300</pubDate>
       
-      <guid>http://localhost:1313/post/2016-01-05-script-for-user-configurations-generation-and-sending-at-ubuntu-openvpn-server/</guid>
-      <description>&lt;p&gt;Ubuntu has a very detailed documentation about &lt;a href=&#34;https://help.ubuntu.com/lts/serverguide/openvpn.html&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;OpenVPN server&lt;/a&gt;
- configuration. The key feature of this note is script for automatic generation of single-file client configurations (keys and certs are embedded) and sending them by email. Looks interesting? Read below!&lt;/p&gt;
-&lt;h2 id=&#34;prerequisities&#34;&gt;Prerequisities&lt;/h2&gt;
-&lt;p&gt;All commands in this section must be executed as root user.&lt;/p&gt;
-&lt;p&gt;Update package list:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;apt-get update
-apt-get -y upgrade
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Install needed packages (easy-rsa must be installed explicitly on modern Ubuntus):&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;apt-get install -y openvpn easy-rsa
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;configure-openvpn-server-on-ubuntu-1404&#34;&gt;Configure OpenVPN server on Ubuntu 14.04&lt;/h2&gt;
-&lt;p&gt;Copy default configuration:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;cp -r /usr/share/easy-rsa /etc/openvpn/easy-rsa
-&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; /etc/openvpn/easy-rsa
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Edit vars file in &lt;code&gt;/etc/openvpn/easy-rsa&lt;/code&gt; folder corresponding to your settings. Change the following lines corresponding to your options:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;KEY_SIZE&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;2048&lt;/span&gt;
-
-&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;KEY_COUNTRY&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;US&amp;#34;&lt;/span&gt;
-&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;KEY_PROVINCE&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;State&amp;#34;&lt;/span&gt;
-&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;KEY_CITY&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;BigCityName&amp;#34;&lt;/span&gt;
-&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;KEY_ORG&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;OrganizationName&amp;#34;&lt;/span&gt;
-&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;KEY_EMAIL&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;mail@organization.com&amp;#34;&lt;/span&gt;
-&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;KEY_OU&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;vpn.organization.com&amp;#34;&lt;/span&gt;
-
-&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;KEY_NAME&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;vpn.organization.com&amp;#34;&lt;/span&gt;
-
-&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;KEY_CN&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;vpn.organization.com&amp;#34;&lt;/span&gt;
-&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;KEY_ALTNAMES&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;vpn.organization.com&amp;#34;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Activate saved settings:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;nb&#34;&gt;source&lt;/span&gt; vars
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;And generate server keys:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;./clean-all
-./build-ca
-./build-key-server vpn.organization.com
-./build-dh
-openvpn --genkey --secret keys/ta.key
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Example of server config (must be placed into &lt;code&gt;/etc/openvpn&lt;/code&gt; folder):&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# /etc/openvpn/server.conf&lt;/span&gt;
-&lt;span class=&#34;c1&#34;&gt;# Which TCP/UDP port should OpenVPN listen on&lt;/span&gt;
-port &lt;span class=&#34;m&#34;&gt;1594&lt;/span&gt;
-
-&lt;span class=&#34;c1&#34;&gt;# Ip&amp;#39;s&lt;/span&gt;
-server 10.10.10.0 255.255.255.0
-
-&lt;span class=&#34;c1&#34;&gt;# UDP server&lt;/span&gt;
-proto udp
-
-&lt;span class=&#34;c1&#34;&gt;# Create a routed IP tunnel&lt;/span&gt;
-dev tun
-
-&lt;span class=&#34;c1&#34;&gt;# Root certificate, certificate, private key, DH key, SSL/TLS key&lt;/span&gt;
-ca       easy-rsa/keys/ca.crt
-cert     easy-rsa/keys/vpn.organization.com.crt
-key      easy-rsa/keys/vpn.organization.com.key
-dh       easy-rsa/keys/dh2048.pem
-tls-auth easy-rsa/keys/ta.key &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;
-
-&lt;span class=&#34;c1&#34;&gt;# Maintain a record of client &amp;lt;-&amp;gt; virtual IP address&lt;/span&gt;
-ifconfig-pool-persist ipp.txt
-
-&lt;span class=&#34;c1&#34;&gt;# Allow different clients to be able to &amp;#34;see&amp;#34; each other&lt;/span&gt;
-client-to-client
-
-&lt;span class=&#34;c1&#34;&gt;# Ping every 10 seconds, peer is down if no pong during a 120 seconds&lt;/span&gt;
-keepalive &lt;span class=&#34;m&#34;&gt;10&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;120&lt;/span&gt;
-
-&lt;span class=&#34;c1&#34;&gt;# Cryptographic cipher&lt;/span&gt;
-cipher AES-256-CBC
-
-&lt;span class=&#34;c1&#34;&gt;# Enable compression on the VPN link&lt;/span&gt;
-comp-lzo
-
-&lt;span class=&#34;c1&#34;&gt;# Reduce the OpenVPN daemon&amp;#39;s privileges after initialization&lt;/span&gt;
-user nobody
-group nogroup
-
-&lt;span class=&#34;c1&#34;&gt;# Avoid errors caused by the privilege downgrade&lt;/span&gt;
-persist-key
-persist-tun
-
-&lt;span class=&#34;c1&#34;&gt;# Status file&lt;/span&gt;
-status openvpn-status.log
-
-&lt;span class=&#34;c1&#34;&gt;# Set the appropriate level of log verbosity&lt;/span&gt;
-verb &lt;span class=&#34;m&#34;&gt;3&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Be sure that your keys &lt;code&gt;ca.crt&lt;/code&gt;, &lt;code&gt;vpn.organization.com.crt&lt;/code&gt;, &lt;code&gt;vpn.organization.com.key&lt;/code&gt;, &lt;code&gt;dh2048.pem&lt;/code&gt;, &lt;code&gt;ta.key&lt;/code&gt; are in the correct place corresponding to server config.&lt;/p&gt;
-&lt;h2 id=&#34;client-configuration&#34;&gt;Client configuration&lt;/h2&gt;
-&lt;p&gt;Client configuration must correspond to server one. For the above server config client one is:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# /etc/openvpn/easy-rsa/client.conf&lt;/span&gt;
-&lt;span class=&#34;c1&#34;&gt;# Specify that it is a client&lt;/span&gt;
-client
-
-&lt;span class=&#34;c1&#34;&gt;# Use the same setting as on the server.&lt;/span&gt;
-dev tun
-proto udp
-
-&lt;span class=&#34;c1&#34;&gt;# The hostname/IP and port of the server.&lt;/span&gt;
-remote vpn.organization.com &lt;span class=&#34;m&#34;&gt;1594&lt;/span&gt;
-
-&lt;span class=&#34;c1&#34;&gt;# Keep trying indefinitely to resolve the host name of the OpenVPN server&lt;/span&gt;
-resolv-retry infinite
-
-&lt;span class=&#34;c1&#34;&gt;# Most clients don&amp;#39;t need to bind to a specific local port number&lt;/span&gt;
-nobind
-
-&lt;span class=&#34;c1&#34;&gt;# Downgrade privileges after initialization (non-Windows only)&lt;/span&gt;
-user nobody
-group nogroup
-
-&lt;span class=&#34;c1&#34;&gt;# Try to preserve some state across restarts&lt;/span&gt;
-persist-key
-persist-tun
-
-&lt;span class=&#34;c1&#34;&gt;# Verify server certificate&lt;/span&gt;
-ns-cert-type server
-
-&lt;span class=&#34;c1&#34;&gt;# Enable compression on the VPN link&lt;/span&gt;
-comp-lzo
-
-&lt;span class=&#34;c1&#34;&gt;# Set log file verbosity.&lt;/span&gt;
-verb &lt;span class=&#34;m&#34;&gt;3&lt;/span&gt;
-
-&lt;span class=&#34;c1&#34;&gt;# Set key direction for tls-auth&lt;/span&gt;
-key-direction &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;
-
-&lt;span class=&#34;c1&#34;&gt;# Cryptographic cipher&lt;/span&gt;
-cipher AES-256-CBC
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;сonvenient-autosending-of-client-configurations&#34;&gt;Сonvenient autosending of client configurations&lt;/h2&gt;
-&lt;p&gt;Save the following script into folder:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#!/usr/bin/env bash
-&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;
-&lt;span class=&#34;nv&#34;&gt;CLIENT&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$1&lt;/span&gt;
-&lt;span class=&#34;nv&#34;&gt;CLIENT_MAIL&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$2&lt;/span&gt;
-&lt;span class=&#34;nv&#34;&gt;SERVER&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;vpn.dima.io
-
-&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; /etc/openvpn/easy-rsa
-
-&lt;span class=&#34;nb&#34;&gt;source&lt;/span&gt; vars
-
-mkdir -p bundles
-
-./build-key &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;CLIENT&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;.at.&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;SERVER&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;
-
-cp client.conf bundles/&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;CLIENT&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;.at.&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;SERVER&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;.conf
-
-&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;lt;ca&amp;gt;&amp;#34;&lt;/span&gt;  &amp;gt;&amp;gt; bundles/&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;CLIENT&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;.at.&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;SERVER&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;.conf
-cat keys/ca.crt &amp;gt;&amp;gt; bundles/&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;CLIENT&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;.at.&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;SERVER&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;.conf
-&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;lt;/ca&amp;gt;&amp;#34;&lt;/span&gt; &amp;gt;&amp;gt; bundles/&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;CLIENT&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;.at.&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;SERVER&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;.conf
-
-&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;lt;cert&amp;gt;&amp;#34;&lt;/span&gt;  &amp;gt;&amp;gt; bundles/&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;CLIENT&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;.at.&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;SERVER&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;.conf
-cat keys/&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;CLIENT&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;.at.&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;SERVER&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;.crt &amp;gt;&amp;gt; bundles/&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;CLIENT&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;.at.&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;SERVER&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;.conf
-&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;lt;/cert&amp;gt;&amp;#34;&lt;/span&gt; &amp;gt;&amp;gt; bundles/&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;CLIENT&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;.at.&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;SERVER&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;.conf
-
-&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;lt;key&amp;gt;&amp;#34;&lt;/span&gt;  &amp;gt;&amp;gt; bundles/&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;CLIENT&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;.at.&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;SERVER&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;.conf
-cat keys/&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;CLIENT&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;.at.&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;SERVER&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;.key &amp;gt;&amp;gt; bundles/&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;CLIENT&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;.at.&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;SERVER&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;.conf
-&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;lt;/key&amp;gt;&amp;#34;&lt;/span&gt; &amp;gt;&amp;gt; bundles/&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;CLIENT&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;.at.&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;SERVER&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;.conf
-
-&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;lt;tls-auth&amp;gt;&amp;#34;&lt;/span&gt;  &amp;gt;&amp;gt; bundles/&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;CLIENT&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;.at.&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;SERVER&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;.conf
-cat keys/ta.key &amp;gt;&amp;gt; bundles/&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;CLIENT&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;.at.&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;SERVER&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;.conf
-&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;lt;/tls-auth&amp;gt;&amp;#34;&lt;/span&gt; &amp;gt;&amp;gt; bundles/&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;CLIENT&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;.at.&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;SERVER&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;.conf
-
-&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt; -n &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$CLIENT_MAIL&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;then&lt;/span&gt;
-    &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; -e &lt;span class=&#34;s2&#34;&gt;&amp;#34;Hello, &lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;CLIENT&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;!\n\nConfiguration with embedded certificates is attached.&amp;#34;&lt;/span&gt; &amp;gt; mail.txt
-    &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;If you use Windows system, rename configuration from *.conf to *.ovpn.&amp;#34;&lt;/span&gt; &amp;gt;&amp;gt; mail.txt
-    &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;This mail is automatically generated. Please do not respond to it.&amp;#34;&lt;/span&gt; &amp;gt;&amp;gt; mail.txt
-    &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;--&amp;#34;&lt;/span&gt;
-    &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;SERVER&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt; team.&amp;#34;&lt;/span&gt;
-    cat mail.txt &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; mutt -s &lt;span class=&#34;s2&#34;&gt;&amp;#34;Configuration for &lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$CLIENT&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt; on &lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$SERVER&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt; OpenVPN server&amp;#34;&lt;/span&gt; -a bundles/&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;CLIENT&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;.at.&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;SERVER&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;.conf -- &lt;span class=&#34;nv&#34;&gt;$CLIENT_MAIL&lt;/span&gt;
-&lt;span class=&#34;k&#34;&gt;fi&lt;/span&gt;
-
-rm mail.txt
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;add-key&lt;/p&gt;
-&lt;p&gt;And make it executable:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;chmod +x add-key
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;You will have to install &lt;code&gt;mutt&lt;/code&gt; (it is used for sending emails with attachments). Your server must have full hostname like &lt;code&gt;server.organization.com&lt;/code&gt;, otherwise sendmail may hang during the install, so change it before mutt installation.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;apt-get install -y mutt
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;if-you-install-in-lxc-container&#34;&gt;If you install in LXC container&lt;/h2&gt;
-&lt;p&gt;If you install VPN server into LXC container, you have to make additional steps. Firstly, add rule for iptabels in host system (use ip of your VPN container and port from VPN server config):&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;iptables -t nat -A PREROUTING -i eth0 -p udp --dport &lt;span class=&#34;m&#34;&gt;1594&lt;/span&gt; -j DNAT --to 10.0.3.111:1594
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;To make it persistent, you may use &lt;a href=&#34;http://stackoverflow.com/questions/30818931/debian-8-iptables-persistent&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;iptables-persistent&lt;/a&gt;
-.&lt;/p&gt;
-&lt;p&gt;Secondly, confugure &lt;a href=&#34;http://localhost:1313/blog/2014/10/09/tips-for-lxc/&#34;&gt;tun device&lt;/a&gt;
- for lxc.&lt;/p&gt;</description>
+      <guid>https://bikulov.org/tags/openvpn/</guid>
+      <description></description>
     </item>
     
     <item>
-      <title>Install Jupyter Notebook and Scientific Environment in Ubuntu 14.04 With Python 3</title>
-      <link>http://localhost:1313/post/2015-11-07-install-jupyter-notebook-and-scientific-environment-in-ubuntu-14-dot-04-with-python-3/</link>
+      <title>script</title>
+      <link>https://bikulov.org/tags/script/</link>
+      <pubDate>Tue, 05 Jan 2016 23:07:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/script/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ipython</title>
+      <link>https://bikulov.org/tags/ipython/</link>
       <pubDate>Sat, 07 Nov 2015 11:24:00 +0300</pubDate>
       
-      <guid>http://localhost:1313/post/2015-11-07-install-jupyter-notebook-and-scientific-environment-in-ubuntu-14-dot-04-with-python-3/</guid>
-      <description>&lt;p&gt;Several changes occured since my last &lt;a href=&#34;http://localhost:1313/blog/2014/05/14/install-up-to-date-scientific-environment-in-ubuntu-14-dot-04-with-python-3-dot-4/&#34;&gt;note&lt;/a&gt;
- about installing python scientific environment:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://ipython.org/notebook&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;IPython Notebook&lt;/a&gt;
- was succeeded by &lt;a href=&#34;http://jupyter.org/&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;Jupyter Notebook&lt;/a&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://stanford.edu/~mwaskom/software/seaborn/&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;seaborn&lt;/a&gt;
- package is used for the pretty matplotlib plots&lt;/li&gt;
-&lt;li&gt;raw &lt;a href=&#34;https://virtualenv.readthedocs.org/en/latest/&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;virtualenv&lt;/a&gt;
- was replaced by &lt;a href=&#34;https://virtualenvwrapper.readthedocs.org/en/latest/&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;virtualenvwrapper&lt;/a&gt;
-&lt;/li&gt;
-&lt;li&gt;procedure of notebook profiles creation and edition has been changed&lt;/li&gt;
-&lt;li&gt;ipython &lt;a href=&#34;https://bugs.launchpad.net/ubuntu/&amp;#43;source/python3.4/&amp;#43;bug/1290847&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;bug&lt;/a&gt;
- about pip in virtualenv is obsolete. But now another &lt;a href=&#34;https://github.com/matplotlib/matplotlib/issues/3029/&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;workaround&lt;/a&gt;
- is needed for packahes installation&lt;/li&gt;
-&lt;li&gt;pip installation from &lt;a href=&#34;https://bootstrap.pypa.io/get-pip.py&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;pypa&lt;/a&gt;
- is now one-liner&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Install prerequisities as root:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# install curl virtualenvwrapper&lt;/span&gt;
-apt-get install -y curl virtualenvwrapper
-
-&lt;span class=&#34;c1&#34;&gt;# install as workaround for https://github.com/matplotlib/matplotlib/issues/3029/&lt;/span&gt;
-apt-get install -y pkg-config
-
-&lt;span class=&#34;c1&#34;&gt;# install python development packages and g++&lt;/span&gt;
-apt-get install -y python3-dev g++
-
-&lt;span class=&#34;c1&#34;&gt;# install dependencies for scipy&lt;/span&gt;
-apt-get install -y libblas-dev liblapack-dev gfortran
-
-&lt;span class=&#34;c1&#34;&gt;# install some dependencies for matplotlib&lt;/span&gt;
-apt-get install -y libfreetype6-dev libpng-dev libjpeg8-dev
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Now create and activate virtualenv, install all the packages via pip:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# create and activate virtual environment using mkvirtualenv wrapper (env name is jupnb)&lt;/span&gt;
-mkvirtualenv --no-setuptools --python /usr/bin/python3.4 jupnb
-
-&lt;span class=&#34;c1&#34;&gt;# install fresh pip&lt;/span&gt;
-curl https://bootstrap.pypa.io/get-pip.py &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; python
-
-&lt;span class=&#34;c1&#34;&gt;# install fresh setuptools&lt;/span&gt;
-pip install setuptools distribute
-
-&lt;span class=&#34;c1&#34;&gt;# install numpy as it is dependecy for many others&lt;/span&gt;
-pip install numpy
-
-&lt;span class=&#34;c1&#34;&gt;# install scientific packages (seaborn instead of matplotlib for pretty plots)&lt;/span&gt;
-pip install sympy scipy seaborn pandas jupyter
-
-&lt;span class=&#34;c1&#34;&gt;# install scikit-learn separately, it depends on numpy and scipy&lt;/span&gt;
-pip install scikit-learn
-
-&lt;span class=&#34;c1&#34;&gt;# deactivate venv&lt;/span&gt;
-deactivate
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Configure notebook profile with SSL encryption. Use real ssl certificate instead of self-generated (if you have one). You can use &lt;code&gt;jupyter notebook --generate-config&lt;/code&gt; command to create default config with comments about all the options, or use following snippet for minimal config generation:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;mkdir -p ~/.jupyter
-&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; ~/.jupyter
-openssl req -x509 -nodes -days &lt;span class=&#34;m&#34;&gt;365&lt;/span&gt; -newkey rsa:1024 -keyout &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;ENV&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;.pem -out jupnb.pem
-&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;c.NotebookApp.ip = &amp;#39;*&amp;#39;&amp;#34;&lt;/span&gt; &amp;gt;&amp;gt; jupyter_notebook_config.py
-&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;c.NotebookApp.port = 8888&amp;#34;&lt;/span&gt; &amp;gt;&amp;gt; jupyter_notebook_config.py
-&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;c.NotebookApp.open_browser = False&amp;#34;&lt;/span&gt; &amp;gt;&amp;gt; jupyter_notebook_config.py
-&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;c.NotebookApp.password = u&amp;#39;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;ipython -c &lt;span class=&#34;s1&#34;&gt;&amp;#39;from notebook.auth import passwd; print(passwd())&amp;#39;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#39;&amp;#34;&lt;/span&gt; &amp;gt;&amp;gt; jupyter_notebook_config.py
-&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;c.NotebookApp.certfile = u&amp;#39;jupnb.pem&amp;#39;&amp;#34;&lt;/span&gt; &amp;gt;&amp;gt; jupyter_notebook_config.py
-&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;c.NotebookApp.cookie_secret_file = &amp;#39;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$HOME&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;/.jupyter/secret_cookie&amp;#39;&amp;#34;&lt;/span&gt; &amp;gt;&amp;gt; jupyter_notebook_config.py
-&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; -
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;That&amp;rsquo;s all. To use notebook, activate virtual env, run server and open http://127.0.0.1:8888/ in your browser:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;workon jupnb
-jupyter notebook
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+      <guid>https://bikulov.org/tags/ipython/</guid>
+      <description></description>
     </item>
     
     <item>
-      <title>Scan images from command line in Linux</title>
-      <link>http://localhost:1313/post/2015-09-26-scan-images-from-command-line-in-linux/</link>
+      <title>jupyter</title>
+      <link>https://bikulov.org/tags/jupyter/</link>
+      <pubDate>Sat, 07 Nov 2015 11:24:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/jupyter/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>numpy</title>
+      <link>https://bikulov.org/tags/numpy/</link>
+      <pubDate>Sat, 07 Nov 2015 11:24:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/numpy/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>scipy</title>
+      <link>https://bikulov.org/tags/scipy/</link>
+      <pubDate>Sat, 07 Nov 2015 11:24:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/scipy/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>seaborn</title>
+      <link>https://bikulov.org/tags/seaborn/</link>
+      <pubDate>Sat, 07 Nov 2015 11:24:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/seaborn/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>linux</title>
+      <link>https://bikulov.org/tags/linux/</link>
       <pubDate>Sat, 26 Sep 2015 20:05:00 +0300</pubDate>
       
-      <guid>http://localhost:1313/post/2015-09-26-scan-images-from-command-line-in-linux/</guid>
-      <description>&lt;p&gt;Console utilities in Linuxes are cool: &lt;a href=&#34;https://mcabber.com/&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;mcabber&lt;/a&gt;
- for jabber, &lt;a href=&#34;http://www.mutt.org/&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;mutt&lt;/a&gt;
- for mail, &lt;a href=&#34;http://moc.daper.net/&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;mocp&lt;/a&gt;
- for music, &lt;a href=&#34;http://www.vim.org/&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;vim&lt;/a&gt;
- to rule them all! This note is about scaning from the console (I assume your scanner is already set-up). Aim is to scan document with good quality into pdf with reasonable size.&lt;/p&gt;
-&lt;p&gt;Scanning is done by &lt;a href=&#34;http://www.sane-project.org/man/scanimage.1.html&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;scanimage&lt;/a&gt;
- utility:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;scanimage --resolution &lt;span class=&#34;m&#34;&gt;300&lt;/span&gt; --mode Color --format tiff &amp;gt; document.tiff
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;If there is more than one scanner in your system, list them all by &lt;code&gt;scanimage -L&lt;/code&gt; commant and use specify name with &lt;code&gt;--device-name&lt;/code&gt; argument.&lt;/p&gt;
-&lt;p&gt;Next step is to convert tiff into pdf image. It can be done with &lt;a href=&#34;http://www.imagemagick.org/script/index.php&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;imagemagick&lt;/a&gt;
-:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;convert document.tiff document-big.pdf
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;But resulting pdf is too big and must be reduced. I&amp;rsquo;ve found &lt;a href=&#34;http://www.alfredklomp.com/programming/shrinkpdf/&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;shrinkpdf&lt;/a&gt;
- bash script very helpful for this purpose with correction: IMHO 72 DPI resolution is too small, so I&amp;rsquo;ve changed it to 300 dpi. Essential part of that script is &lt;a href=&#34;http://www.ghostscript.com/&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;ghostscript&lt;/a&gt;
- call:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;gs -q -dNOPAUSE -dBATCH -dSAFER        &lt;span class=&#34;se&#34;&gt;\
-&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;   -sDEVICE&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;pdfwrite                   &lt;span class=&#34;se&#34;&gt;\
-&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;   -dCompatibilityLevel&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;1.3            &lt;span class=&#34;se&#34;&gt;\
-&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;   -dPDFSETTINGS&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;/screen               &lt;span class=&#34;se&#34;&gt;\
-&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;   -dEmbedAllFonts&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;true&lt;/span&gt;                &lt;span class=&#34;se&#34;&gt;\
-&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;   -dSubsetFonts&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;true&lt;/span&gt;                  &lt;span class=&#34;se&#34;&gt;\
-&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;   -dColorImageDownsampleType&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;/Bicubic &lt;span class=&#34;se&#34;&gt;\
-&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;   -dColorImageResolution&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;300&lt;/span&gt;          &lt;span class=&#34;se&#34;&gt;\
-&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;   -dGrayImageDownsampleType&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;/Bicubic  &lt;span class=&#34;se&#34;&gt;\
-&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;   -dGrayImageResolution&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;300&lt;/span&gt;           &lt;span class=&#34;se&#34;&gt;\
-&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;   -dMonoImageDownsampleType&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;/Bicubic  &lt;span class=&#34;se&#34;&gt;\
-&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;   -dMonoImageResolution&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;300&lt;/span&gt;           &lt;span class=&#34;se&#34;&gt;\
-&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;   -sOutputFile&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;document.pdf           &lt;span class=&#34;se&#34;&gt;\
-&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;   document-big.pdf
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+      <guid>https://bikulov.org/tags/linux/</guid>
+      <description></description>
     </item>
     
     <item>
-      <title>Animations from scientific data using Paraview 4.3 and python</title>
-      <link>http://localhost:1313/post/2015-04-05-animations-from-scientific-data-using-paraview-4-dot-3-and-python/</link>
+      <title>pdf</title>
+      <link>https://bikulov.org/tags/pdf/</link>
+      <pubDate>Sat, 26 Sep 2015 20:05:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/pdf/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>scan</title>
+      <link>https://bikulov.org/tags/scan/</link>
+      <pubDate>Sat, 26 Sep 2015 20:05:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/scan/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>scanimage</title>
+      <link>https://bikulov.org/tags/scanimage/</link>
+      <pubDate>Sat, 26 Sep 2015 20:05:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/scanimage/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tiff</title>
+      <link>https://bikulov.org/tags/tiff/</link>
+      <pubDate>Sat, 26 Sep 2015 20:05:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/tiff/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>paraview</title>
+      <link>https://bikulov.org/tags/paraview/</link>
       <pubDate>Sun, 05 Apr 2015 16:31:00 +0300</pubDate>
       
-      <guid>http://localhost:1313/post/2015-04-05-animations-from-scientific-data-using-paraview-4-dot-3-and-python/</guid>
-      <description>&lt;h3 id=&#34;create-frames&#34;&gt;Create frames&lt;/h3&gt;
-&lt;p&gt;This note describes usage of Paraview 4.3 (contrary to previous &lt;a href=&#34;http://localhost:1313/blog/2014/11/15/create-video-illustrations-from-numerical-experiments-data-with-paraview-and-python-2/&#34;&gt;note&lt;/a&gt;
- with Paraview before 4.1). Some changes were made:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;command line arguments were added to make code more reusable&lt;/li&gt;
-&lt;li&gt;it works with Paraview extracted from the archive (4.3.1)&lt;/li&gt;
-&lt;li&gt;white background must be specified manually (&lt;code&gt;SetViewProperties(view, Background = [1, 1, 1])&lt;/code&gt; in the code)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Script is tested under Ubuntu 14.04 with Paraview 4.3.1. Paraview was downloaded from official &lt;a href=&#34;http://www.paraview.org/download/&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;site&lt;/a&gt;
- and extracted to &lt;code&gt;/home/bikulov/bin/ParaView-4.3.1-Linux-64bit/lib/paraview-4.3&lt;/code&gt; (you have to change this line in script to your destination). State file must be prepared in the same Paraview 4.3.1 to avoid compatibility issues (or you may have errors about &lt;code&gt;ColorArrayName&lt;/code&gt;).&lt;/p&gt;
-&lt;p&gt;Script (also available as a &lt;a href=&#34;https://gist.github.com/bikulov/60ab87063ca6a1ae1bf2&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;gist&lt;/a&gt;
-):&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;ch&#34;&gt;#!/usr/bin/env python&lt;/span&gt;
-
-&lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;os&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;sys&lt;/span&gt;
-&lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;glob&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;natsort&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;argparse&lt;/span&gt;
-
-&lt;span class=&#34;n&#34;&gt;ParaviewPath&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;/home/bikulov/bin/ParaView-4.3.1-Linux-64bit/lib/paraview-4.3&amp;#34;&lt;/span&gt;
-&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;export LD_LIBRARY_PATH={ParaviewPath}:$LD_LIBRARY_PATH&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;format&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ParaviewPath&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ParaviewPath&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
-
-&lt;span class=&#34;n&#34;&gt;sys&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;append&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;os&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;join&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ParaviewPath&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;site-packages&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;sys&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;append&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;os&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;join&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ParaviewPath&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;site-packages/vtk&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
-&lt;span class=&#34;kn&#34;&gt;from&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;paraview.simple&lt;/span&gt; &lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;
-
-&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pipeline&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;state&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;files&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;output&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;filenames&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;natsort&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;natsorted&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;files&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;servermanager&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;LoadState&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;state&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;view&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;servermanager&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GetRenderView&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;camera&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;view&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GetActiveCamera&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;phase&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;FindSource&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pipeline&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-
-    &lt;span class=&#34;c1&#34;&gt;# Set white background&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;SetViewProperties&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;view&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Background&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;])&lt;/span&gt;
-
-    &lt;span class=&#34;k&#34;&gt;try&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-         &lt;span class=&#34;n&#34;&gt;os&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;makedirs&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;output&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;except&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-        &lt;span class=&#34;k&#34;&gt;pass&lt;/span&gt;
-
-    &lt;span class=&#34;n&#34;&gt;imgNum&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;
-
-    &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;f&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;filenames&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;phase&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;FilePrefix&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;f&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;phase&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;FileNameChanged&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;view&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;WriteImage&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;os&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;join&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;output&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;str&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;imgNum&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;zfill&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;6&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;.png&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;vtkPNGWriter&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;imgNum&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
-
-&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;vm&#34;&gt;__name__&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;__main__&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;parser&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;argparse&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ArgumentParser&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;prog&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;PROG&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;description&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;Draw With Paraview&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;parser&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;add_argument&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;--state&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;type&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;str&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;help&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;State file to load&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;default&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;state.pvsm&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;parser&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;add_argument&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;--pipeline&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;type&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;str&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;help&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;Pipiline name for changing file&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;default&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;data&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;parser&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;add_argument&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;--output&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;type&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;str&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;help&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;Output path for images&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;default&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;img&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;parser&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;add_argument&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;files&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;nargs&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;*&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;help&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;Files to be used in the pipeline&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-
-    &lt;span class=&#34;n&#34;&gt;args&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;parser&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;parse_args&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-
-    &lt;span class=&#34;n&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pipeline&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;args&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pipeline&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;state&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;args&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;state&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;files&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;args&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;files&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;output&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;args&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;output&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Command line arguments explanation:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;--state&lt;/code&gt; is filename with state to be loaded (&lt;code&gt;File-&amp;gt;Save State in Paraview&lt;/code&gt;)&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--pipeline&lt;/code&gt; is the name of pipeline inside state (item in &lt;code&gt;Pipeline browser&lt;/code&gt;, for which you want to change &lt;code&gt;File Prefix&lt;/code&gt;)&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--output&lt;/code&gt; is path to dir where images will be saved&lt;/li&gt;
-&lt;li&gt;files are bunch of raw binary images you whant to visualize as video&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Example run (will process all &lt;code&gt;*-phase.raw&lt;/code&gt; files in directory and save resulting images into &lt;code&gt;imgtest&lt;/code&gt; directory):&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;./draw_with_paraview.py --state state.pvsm --pipeline data --output imgtest *-phase.raw
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Note: you must add path to paraview libraries in &lt;code&gt;LD_LIBRARY_PATH&lt;/code&gt; before run (script prints out this line for convenience):&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;LD_LIBRARY_PATH&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;/home/bikulov/bin/ParaView-4.3.1-Linux-64bit/lib/paraview-4.3:&lt;span class=&#34;nv&#34;&gt;$LD_LIBRARY_PATH&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;postprocess-frames&#34;&gt;Postprocess frames&lt;/h3&gt;
-&lt;p&gt;You may want to crop images in the output folder. For mp4 width and height must be divisible by two, so you may need to &lt;a href=&#34;http://www.alecjacobson.com/weblog/?p=2872&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;crop&lt;/a&gt;
- for identify them accordingly (in &lt;a href=&#34;http://superuser.com/questions/745523/how-can-i-run-mogrify-over-the-3-million-jpg-files&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;parallel&lt;/a&gt;
- for speed):&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;nv&#34;&gt;img&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;ls *.png&lt;span class=&#34;p&#34;&gt;|&lt;/span&gt;head -n 1&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;nv&#34;&gt;width&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(($(&lt;/span&gt;identify -format &lt;span class=&#34;s2&#34;&gt;&amp;#34;(%[fx:w]/2)*2&amp;#34;&lt;/span&gt; &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;img&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;)))&lt;/span&gt;
-&lt;span class=&#34;nv&#34;&gt;height&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(($(&lt;/span&gt;identify -format &lt;span class=&#34;s2&#34;&gt;&amp;#34;(%[fx:h]/2)*2&amp;#34;&lt;/span&gt; &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;img&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;)))&lt;/span&gt;
-find -name &lt;span class=&#34;s1&#34;&gt;&amp;#39;*.png&amp;#39;&lt;/span&gt; -exec mogrify -crop &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;width&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;height&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;+0+0&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt; +
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Or the same commands in one line:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;nv&#34;&gt;img&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;ls *.png&lt;span class=&#34;p&#34;&gt;|&lt;/span&gt;head -n 1&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;width&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(($(&lt;/span&gt;identify -format &lt;span class=&#34;s2&#34;&gt;&amp;#34;(%[fx:w]/2)*2&amp;#34;&lt;/span&gt; &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;img&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;)))&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;height&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(($(&lt;/span&gt;identify -format &lt;span class=&#34;s2&#34;&gt;&amp;#34;(%[fx:h]/2)*2&amp;#34;&lt;/span&gt; &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;img&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;)))&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; find -name &lt;span class=&#34;s1&#34;&gt;&amp;#39;*.png&amp;#39;&lt;/span&gt; -exec mogrify -crop &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;width&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;height&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;+0+0&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt; +
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;You may also need to crop images to some specific size, just use the final line:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;find -name &lt;span class=&#34;s1&#34;&gt;&amp;#39;*.png&amp;#39;&lt;/span&gt; -exec mogrify -crop &amp;lt;width&amp;gt;x&amp;lt;height&amp;gt;+&amp;lt;x_shift&amp;gt;+&amp;lt;y_shift&amp;gt; &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt; +
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;create-animation-from-the-frames&#34;&gt;Create animation from the frames&lt;/h3&gt;
-&lt;p&gt;Create video from images (&lt;a href=&#34;http://bikulov.org/blog/2013/01/23/universal-screen-capturing-with-scrot-imagemagick-and/&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;ffmpeg&lt;/a&gt;
- no longer supported, so use avconv):&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;avconf -qscale &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; -r &lt;span class=&#34;m&#34;&gt;20&lt;/span&gt; -b &lt;span class=&#34;m&#34;&gt;9600&lt;/span&gt; -i %06d.png output_file.mp4
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+      <guid>https://bikulov.org/tags/paraview/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cuda</title>
+      <link>https://bikulov.org/tags/cuda/</link>
+      <pubDate>Sat, 28 Feb 2015 08:54:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/cuda/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>libcheese</title>
+      <link>https://bikulov.org/tags/libcheese/</link>
+      <pubDate>Sat, 28 Feb 2015 08:54:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/libcheese/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>science</title>
+      <link>https://bikulov.org/tags/science/</link>
+      <pubDate>Sat, 15 Nov 2014 01:56:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/science/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>visualization</title>
+      <link>https://bikulov.org/tags/visualization/</link>
+      <pubDate>Sat, 15 Nov 2014 01:56:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/visualization/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>iptables</title>
+      <link>https://bikulov.org/tags/iptables/</link>
+      <pubDate>Thu, 09 Oct 2014 10:02:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/iptables/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>nginx</title>
+      <link>https://bikulov.org/tags/nginx/</link>
+      <pubDate>Sat, 09 Aug 2014 17:34:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/nginx/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>postgresql</title>
+      <link>https://bikulov.org/tags/postgresql/</link>
+      <pubDate>Sat, 09 Aug 2014 17:34:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/postgresql/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>firefox</title>
+      <link>https://bikulov.org/tags/firefox/</link>
+      <pubDate>Thu, 13 Feb 2014 10:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/firefox/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>research</title>
+      <link>https://bikulov.org/tags/research/</link>
+      <pubDate>Thu, 13 Feb 2014 10:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/research/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>yandex.disk</title>
+      <link>https://bikulov.org/tags/yandex.disk/</link>
+      <pubDate>Thu, 13 Feb 2014 10:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/yandex.disk/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>zotero</title>
+      <link>https://bikulov.org/tags/zotero/</link>
+      <pubDate>Thu, 13 Feb 2014 10:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/zotero/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>zotfile</title>
+      <link>https://bikulov.org/tags/zotfile/</link>
+      <pubDate>Thu, 13 Feb 2014 10:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/zotfile/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>config</title>
+      <link>https://bikulov.org/tags/config/</link>
+      <pubDate>Sat, 25 Jan 2014 16:32:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/config/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ssh</title>
+      <link>https://bikulov.org/tags/ssh/</link>
+      <pubDate>Sat, 25 Jan 2014 16:32:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/ssh/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>c&#43;&#43;</title>
+      <link>https://bikulov.org/tags/c&#43;&#43;/</link>
+      <pubDate>Tue, 24 Dec 2013 22:44:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/c&#43;&#43;/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cmake</title>
+      <link>https://bikulov.org/tags/cmake/</link>
+      <pubDate>Tue, 24 Dec 2013 22:44:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/cmake/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>exceptions</title>
+      <link>https://bikulov.org/tags/exceptions/</link>
+      <pubDate>Sat, 23 Nov 2013 17:42:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/exceptions/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>snippet</title>
+      <link>https://bikulov.org/tags/snippet/</link>
+      <pubDate>Tue, 19 Nov 2013 23:53:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/snippet/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cpp</title>
+      <link>https://bikulov.org/tags/cpp/</link>
+      <pubDate>Thu, 07 Nov 2013 18:27:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/cpp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>quicksort</title>
+      <link>https://bikulov.org/tags/quicksort/</link>
+      <pubDate>Thu, 07 Nov 2013 18:27:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/quicksort/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>heapsort</title>
+      <link>https://bikulov.org/tags/heapsort/</link>
+      <pubDate>Mon, 04 Nov 2013 21:33:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/heapsort/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>gengetopt</title>
+      <link>https://bikulov.org/tags/gengetopt/</link>
+      <pubDate>Sat, 02 Nov 2013 21:53:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/gengetopt/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>mercurial</title>
+      <link>https://bikulov.org/tags/mercurial/</link>
+      <pubDate>Sat, 02 Nov 2013 21:53:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/mercurial/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>c</title>
+      <link>https://bikulov.org/tags/c/</link>
+      <pubDate>Sat, 26 Oct 2013 00:03:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/c/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tutorial</title>
+      <link>https://bikulov.org/tags/tutorial/</link>
+      <pubDate>Sat, 26 Oct 2013 00:03:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/tutorial/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>bash</title>
+      <link>https://bikulov.org/tags/bash/</link>
+      <pubDate>Sat, 12 Oct 2013 15:33:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/bash/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>latex</title>
+      <link>https://bikulov.org/tags/latex/</link>
+      <pubDate>Thu, 03 Oct 2013 10:37:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/latex/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>matplotlib</title>
+      <link>https://bikulov.org/tags/matplotlib/</link>
+      <pubDate>Thu, 03 Oct 2013 10:37:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/matplotlib/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>plots</title>
+      <link>https://bikulov.org/tags/plots/</link>
+      <pubDate>Thu, 03 Oct 2013 10:37:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/plots/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cron</title>
+      <link>https://bikulov.org/tags/cron/</link>
+      <pubDate>Mon, 09 Sep 2013 23:24:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/cron/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ip</title>
+      <link>https://bikulov.org/tags/ip/</link>
+      <pubDate>Mon, 09 Sep 2013 23:24:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/ip/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>makefile</title>
+      <link>https://bikulov.org/tags/makefile/</link>
+      <pubDate>Mon, 02 Sep 2013 18:05:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/makefile/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>btsync</title>
+      <link>https://bikulov.org/tags/btsync/</link>
+      <pubDate>Mon, 26 Aug 2013 18:42:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/btsync/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>joomla</title>
+      <link>https://bikulov.org/tags/joomla/</link>
+      <pubDate>Mon, 19 Aug 2013 16:15:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/joomla/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>postgres</title>
+      <link>https://bikulov.org/tags/postgres/</link>
+      <pubDate>Mon, 19 Aug 2013 16:15:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/postgres/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>template</title>
+      <link>https://bikulov.org/tags/template/</link>
+      <pubDate>Fri, 16 Aug 2013 12:14:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/template/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>centos</title>
+      <link>https://bikulov.org/tags/centos/</link>
+      <pubDate>Sat, 10 Aug 2013 09:14:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/centos/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>openvz</title>
+      <link>https://bikulov.org/tags/openvz/</link>
+      <pubDate>Sat, 10 Aug 2013 09:14:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/openvz/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tun</title>
+      <link>https://bikulov.org/tags/tun/</link>
+      <pubDate>Sat, 10 Aug 2013 09:14:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/tun/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>console</title>
+      <link>https://bikulov.org/tags/console/</link>
+      <pubDate>Fri, 12 Jul 2013 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/console/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>fatnode</title>
+      <link>https://bikulov.org/tags/fatnode/</link>
+      <pubDate>Tue, 18 Jun 2013 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/fatnode/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>slurm</title>
+      <link>https://bikulov.org/tags/slurm/</link>
+      <pubDate>Tue, 18 Jun 2013 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/slurm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>drupal</title>
+      <link>https://bikulov.org/tags/drupal/</link>
+      <pubDate>Sun, 28 Apr 2013 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/drupal/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>mysql</title>
+      <link>https://bikulov.org/tags/mysql/</link>
+      <pubDate>Sun, 28 Apr 2013 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/mysql/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ffmpeg</title>
+      <link>https://bikulov.org/tags/ffmpeg/</link>
+      <pubDate>Wed, 23 Jan 2013 09:31:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/ffmpeg/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>scrot</title>
+      <link>https://bikulov.org/tags/scrot/</link>
+      <pubDate>Wed, 23 Jan 2013 09:31:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/scrot/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>i3</title>
+      <link>https://bikulov.org/tags/i3/</link>
+      <pubDate>Thu, 08 Nov 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/i3/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>nautilus</title>
+      <link>https://bikulov.org/tags/nautilus/</link>
+      <pubDate>Thu, 08 Nov 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/nautilus/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>pcap</title>
+      <link>https://bikulov.org/tags/pcap/</link>
+      <pubDate>Sat, 03 Nov 2012 09:31:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/pcap/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tcpdump</title>
+      <link>https://bikulov.org/tags/tcpdump/</link>
+      <pubDate>Sat, 03 Nov 2012 09:31:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/tcpdump/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tcptrace</title>
+      <link>https://bikulov.org/tags/tcptrace/</link>
+      <pubDate>Sat, 03 Nov 2012 09:31:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/tcptrace/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tpick</title>
+      <link>https://bikulov.org/tags/tpick/</link>
+      <pubDate>Sat, 03 Nov 2012 09:31:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/tpick/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tshark</title>
+      <link>https://bikulov.org/tags/tshark/</link>
+      <pubDate>Sat, 03 Nov 2012 09:31:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/tshark/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>awk</title>
+      <link>https://bikulov.org/tags/awk/</link>
+      <pubDate>Thu, 01 Nov 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/awk/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>du</title>
+      <link>https://bikulov.org/tags/du/</link>
+      <pubDate>Thu, 01 Nov 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/du/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>sed</title>
+      <link>https://bikulov.org/tags/sed/</link>
+      <pubDate>Thu, 01 Nov 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/sed/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>dd</title>
+      <link>https://bikulov.org/tags/dd/</link>
+      <pubDate>Wed, 31 Oct 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/dd/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>perl</title>
+      <link>https://bikulov.org/tags/perl/</link>
+      <pubDate>Wed, 31 Oct 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/perl/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tr</title>
+      <link>https://bikulov.org/tags/tr/</link>
+      <pubDate>Wed, 31 Oct 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/tr/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>rhodecode</title>
+      <link>https://bikulov.org/tags/rhodecode/</link>
+      <pubDate>Mon, 29 Oct 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/rhodecode/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>backup</title>
+      <link>https://bikulov.org/tags/backup/</link>
+      <pubDate>Thu, 30 Aug 2012 09:30:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/backup/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>PCManFM</title>
+      <link>https://bikulov.org/tags/pcmanfm/</link>
+      <pubDate>Fri, 24 Aug 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/pcmanfm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>imagemagick</title>
+      <link>https://bikulov.org/tags/imagemagick/</link>
+      <pubDate>Wed, 18 Jul 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/imagemagick/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>montage</title>
+      <link>https://bikulov.org/tags/montage/</link>
+      <pubDate>Wed, 18 Jul 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/montage/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>blender</title>
+      <link>https://bikulov.org/tags/blender/</link>
+      <pubDate>Wed, 11 Apr 2012 09:00:00 +0300</pubDate>
+      
+      <guid>https://bikulov.org/tags/blender/</guid>
+      <description></description>
     </item>
     
   </channel>

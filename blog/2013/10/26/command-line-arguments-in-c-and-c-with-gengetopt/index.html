@@ -1,1114 +1,169 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<meta name="HandheldFriendly" content="True" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-<meta name="generator" content="Hugo 0.80.0" />
-
-
-<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon.ico" />
-
-
-<title>Command line arguments in C and C&#43;&#43; with gengetopt - :) bikulov.ORG</title>
-
-
-<meta name="author" content="bikulov" />
-
-
-<meta name="description" content="Static notes about information technologies." />
-
-
-<meta name="keywords" content="howto, tutorial, gengetopt, cpp, c" />
-
-
-<meta property="og:title" content="Command line arguments in C and C&#43;&#43; with gengetopt" />
-<meta name="twitter:title" content="Command line arguments in C and C&#43;&#43; with gengetopt" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://bikulov.org/blog/2013/10/26/command-line-arguments-in-c-and-c-with-gengetopt/" /><meta property="og:description" content="Gengetopt is a tool for parsing command line arguments in C and C&#43;&#43; applications. It generates cmdline.c and cmdline.h files in pure C, which contain parser, helper functions, error handling and structure to store argument values. Arguments to be included in auto-generated file are defined in config. I usually gengetopt config file as cmdline.ggo. In this note I provide an example of gengetopt config file and arguments usage in code." />
-<meta name="twitter:description" content="Gengetopt is a tool for parsing command line arguments in C and C&#43;&#43; applications. It generates cmdline.c and cmdline.h files in pure C, which contain parser, helper functions, error handling and structure to store argument values. Arguments to be included in auto-generated file are defined in config. I usually gengetopt config file as cmdline.ggo. In this note I provide an example of gengetopt config file and arguments usage in code." /><meta property="og:image" content="https://bikulov.org/img/og.png" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://bikulov.org/img/og.png" /><meta property="article:published_time" content="2013-10-26T00:03:00+03:00" /><meta property="article:modified_time" content="2013-10-26T00:03:00+03:00" />
-
-
-<style>
-    @media (prefers-color-scheme: dark) {
-        body[data-theme='auto'] img {
-            filter: brightness(60%);
-        }
-    }
-
-    body[data-theme='dark'] img {
-        filter: brightness(60%);
-    }
-</style>
-
-
-
-<link rel="stylesheet" href="https://bikulov.org/assets/css/fuji.min.css" />
-
-
-
-
-
-</head>
-
-<body data-theme="auto">
-    <script data-cfasync="false">
-  
-  var fujiThemeData = localStorage.getItem('fuji_data-theme');
-  
-  if (!fujiThemeData) {
-    localStorage.setItem('fuji_data-theme', 'auto');
-  } else {
-    
-    if (fujiThemeData !== 'auto') {
-      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
-    }
-  }
-</script>
-    <header>
-    <div class="container-lg clearfix">
-        <div class="col-12 header">
-            <a class="title-main" href="https://bikulov.org">:) bikulov.ORG</a>
-            
-            <span class="title-sub">Static notes about information technologies</span>
-            
-        </div>
+<html><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all">
+  <link href="/css/style.css" rel="stylesheet" type="text/css" media="all">
+  <link href="/css/custom.css" rel="stylesheet" type="text/css" media="all">
+  <script src="/js/bootstrap.bundle.min.js"></script>
+  <link rel="apple-touch-icon" href="/logo.png" type="image/png">
+  <link rel="icon" href="/img/logo.svg" type="image/svg+xml">
+  <link rel="icon" href="/img/logo.png" type="image/png">
+  <title>Bikulov&#39;s blog</title>
+</head><body>
+<header>
+  <nav class="navbar navbar-expand navbar-dark volukib-header">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="https://bikulov.org/"><img src="/img/logo.png" class="volukib-logo" alt="logo"> Bikulov&#39;s blog</a>
+      <ul class="navbar-nav">
+        
+        <li class="nav-item">
+          
+          <a class="nav-link text-uppercase " href="/">Home</a>
+        </li>
+        
+        <li class="nav-item">
+          
+          <a class="nav-link text-uppercase " href="/resume/">Resume</a>
+        </li>
+        
+      </ul>
     </div>
-</header>
-
-    <main>
-        <div class="container-lg clearfix">
-            
-            <div class="col-12 col-md-9 float-left content">
-                
-<article>
-    
-    <h2 class="post-item post-title">
-        <a href="https://bikulov.org/blog/2013/10/26/command-line-arguments-in-c-and-c-with-gengetopt/">Command line arguments in C and C&#43;&#43; with gengetopt</a>
-    </h2>
-    <div class="post-item post-meta">
-        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2013-10-26</span><span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/howto">howto</a>&nbsp;<a href="/tags/tutorial">tutorial</a>&nbsp;<a href="/tags/gengetopt">gengetopt</a>&nbsp;<a href="/tags/cpp">cpp</a>&nbsp;<a href="/tags/c">c</a>&nbsp;</span>
-
+  </nav>
+</header><div class="container">
+<div class="row text-center mb-5">
+  <div class="col">
+    <h1>Command line arguments in C and C&#43;&#43; with gengetopt</h1>
+    <div>2013-10-26</div>
+    <div>
+      
+      <a class="" href="/tags/howto">#howto</a>
+      
+      <a class="" href="/tags/tutorial">#tutorial</a>
+      
+      <a class="" href="/tags/gengetopt">#gengetopt</a>
+      
+      <a class="" href="/tags/cpp">#cpp</a>
+      
+      <a class="" href="/tags/c">#c</a>
+      
     </div>
-    
-    <div class="post-content markdown-body">
-        <p><a href="http://www.gnu.org/software/gengetopt/gengetopt.html" target="_blank">Gengetopt</a> is a tool for parsing command line arguments in C and C++ applications. It generates <code>cmdline.c</code> and <code>cmdline.h</code> files in pure C, which contain parser, helper functions, error handling and structure to store argument values. Arguments to be included in auto-generated file are defined in config. I usually gengetopt config file as <code>cmdline.ggo</code>. In this note I provide an example of gengetopt config file and arguments usage in code.</p>
-<p>Header of config file contains information about version, app name and description. You can use the following template:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#a6e22e">version &#34;13.10.25&#34;</span>
-<span style="color:#a6e22e">package &#34;app&#34;</span>
-<span style="color:#a6e22e">purpose &#34;Sample application description.</span>
-
-<span style="color:#a6e22e">By John Doe &lt;sample@example.com&gt;&#34;</span>
-</code></pre></div><p>Arguments are listed after header in the same config file. Even if no options given below the header, two default ones are defined: <code>-h</code> shows help message and <code>-V</code> shows app version string. You can specify long option name (in call it can be used as <code>--long-option</code>), short option name, option type and whether option is required.</p>
-<p>String option with long name <code>filename</code> and short name <code>f</code>, description <code>String argument</code> and it is required. Option can be called as <code>-f myfile</code> or <code>--filename myfile</code>.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#a6e22e">option &#34;filename&#34; f &#34;String argument&#34; string required</span>
-</code></pre></div><p>It is possible to define options that takes several values, separated by comma. The following opition takes exactly 3 arguments with type <code>int</code>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#a6e22e">option &#34;size&#34; s &#34;Optional argument, takes exactly 3 int values separated by commas&#34; multiple(3) optional int</span>
-</code></pre></div><p>Option can take «one (two, etc) or more» arguments:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#a6e22e">option &#34;array&#34; a &#34;Required argument, takes 1 or more args&#34; multiple(1-) required int</span>
-</code></pre></div><p>It is possible not to specify short name:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#a6e22e">option &#34;long-option&#34; - &#34;Option without short version&#34; optional float</span>
-</code></pre></div><p>You can provide default value for an option. The default value is used if option is not used in app call.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#a6e22e">option &#34;default-value&#34; d &#34;Argument with default value&#34; optional float default</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;0.003&#34;</span>
-</code></pre></div><p>There is flags. If flag is provided in app call, it&rsquo;s value triggered to opposite:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#a6e22e">option &#34;console&#34; c &#34;Flag with default &#39;off&#39;&#34; flag off</span>
-</code></pre></div><p>The whole config file:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#a6e22e">version &#34;13.10.25&#34;</span>
-<span style="color:#a6e22e">package &#34;app&#34;</span>
-<span style="color:#a6e22e">purpose &#34;Sample application description.</span>
-
-<span style="color:#a6e22e">By John Doe &lt;sample@example.com&gt;&#34;</span>
-
-<span style="color:#75715e"># Options</span>
-<span style="color:#a6e22e">option &#34;filename&#34; f &#34;String argument&#34; string required</span>
-<span style="color:#a6e22e">option &#34;size&#34; s &#34;Optional argument, takes exactly 3 int values separated by commas&#34; multiple(3) optional int</span>
-<span style="color:#a6e22e">option &#34;array&#34; a &#34;Required argument, takes 1 or more args&#34; multiple(1-) required int</span>
-<span style="color:#a6e22e">option &#34;long-option&#34; - &#34;Option without short version&#34; optional float</span>
-<span style="color:#a6e22e">option &#34;default-value&#34; d &#34;Argument with default value&#34; optional float default</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;0.003&#34;</span>
-<span style="color:#a6e22e">option &#34;console&#34; c &#34;Flag with default &#39;off&#39;&#34; flag off</span>
-</code></pre></div><p>Arguments are used in source code via gengeopt_args_info structure defined in cmdline.h. Example:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;cstdlib&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>
-<span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;cmdline.h&#34;</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>argv[])
-{
-    gengetopt_args_info ai;
-    <span style="color:#66d9ef">if</span> (cmdline_parser (argc, argv, <span style="color:#f92672">&amp;</span>ai) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>) {
-        exit(<span style="color:#ae81ff">1</span>);
-    }
-
-    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> ai.filename_arg <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
-
-    <span style="color:#66d9ef">if</span> (ai.size_given) {
-        std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> ai.size_arg[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; &#34;</span>
-                  <span style="color:#f92672">&lt;&lt;</span> ai.size_arg[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; &#34;</span>
-                  <span style="color:#f92672">&lt;&lt;</span> ai.size_arg[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
-    }
-
-    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>; i<span style="color:#f92672">&lt;</span>ai.array_given; <span style="color:#f92672">++</span>i) {
-        std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> ai.array_arg[i] <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; &#34;</span>;
-    }
-    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
-
-    <span style="color:#66d9ef">if</span> (ai.long_option_given) {
-        std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> ai.long_option_arg <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
-    }
-
-    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> ai.default_value_arg <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
-    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> ai.console_flag <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
-
-    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
-}
-</code></pre></div><p>And Makefile to make them all (you need gengetopt to be installed):</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">APPNAME <span style="color:#f92672">=</span> app
-OBJECTS <span style="color:#f92672">=</span> main.o cmdline.o
-
-CC <span style="color:#f92672">=</span> gcc
-CXX <span style="color:#f92672">=</span> g++
-
-all: <span style="color:#66d9ef">$(</span>OBJECTS<span style="color:#66d9ef">)</span>
-	<span style="color:#66d9ef">$(</span>CXX<span style="color:#66d9ef">)</span> <span style="color:#66d9ef">$(</span>OBJECTS<span style="color:#66d9ef">)</span> -o <span style="color:#66d9ef">$(</span>APPNAME<span style="color:#66d9ef">)</span>
-cmdline.o: cmdline.c
-	<span style="color:#66d9ef">$(</span>CC<span style="color:#66d9ef">)</span> -c $&lt; -o $@
-main.o: main.cpp
-	<span style="color:#66d9ef">$(</span>CXX<span style="color:#66d9ef">)</span> -c $&lt; -o $@
-cmdline.c: cmdline.ggo
-	gengetopt --input<span style="color:#f92672">=</span>cmdline.ggo --include-getopt
-clean:
-	rm -rf *.o <span style="color:#66d9ef">$(</span>APPNAME<span style="color:#66d9ef">)</span>
-</code></pre></div><p>Place <code>main.cpp</code>, <code>cmdline.ggo</code> and <code>Makefile</code> in one folder and build this example.</p>
-<p>Output samples:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ./app -a 1,2,3,4,5,6 -f test -s 16,32,64 --long-option 0.4 -d 0.8
-test
-<span style="color:#ae81ff">16</span> <span style="color:#ae81ff">32</span> <span style="color:#ae81ff">64</span>
-<span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">4</span> <span style="color:#ae81ff">5</span> <span style="color:#ae81ff">6</span>
-0.4
-0.8
-<span style="color:#ae81ff">0</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ./app -a <span style="color:#ae81ff">1</span> -f test -c
-test
-<span style="color:#ae81ff">1</span>
-0.003
-<span style="color:#ae81ff">1</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ./app
-./app: <span style="color:#e6db74">&#39;--filename&#39;</span> <span style="color:#f92672">(</span><span style="color:#e6db74">&#39;-f&#39;</span><span style="color:#f92672">)</span> option required
-./app: <span style="color:#e6db74">&#39;--array&#39;</span> <span style="color:#f92672">(</span><span style="color:#e6db74">&#39;-a&#39;</span><span style="color:#f92672">)</span> option required
-</code></pre></div><p>Have fun!</p>
-    </div>
-</article>
-
-
-
-
-            </div>
-            <aside class="col-12 col-md-3 float-left sidebar">
-    
-    <div class="sidebar-item sidebar-pages">
-        <h3>Pages</h3>
-        <ul>
-            
-            <li>
-                <a href="/">Home</a>
-            </li>
-            
-            <li>
-                <a href="/resume/">Resume</a>
-            </li>
-            
-            <li>
-                <a href="/index.xml">RSS</a>
-            </li>
-            
-        </ul>
-    </div>
-    
-    <div class="sidebar-item sidebar-links">
-        <h3>Links</h3>
-        <ul>
-            
-            <li>
-                <a href="https://github.com/bikulov" target="_blank"><span>Github</span></a>
-            </li>
-            
-            <li>
-                <a href="https://linkedin.com/in/bikulov" target="_blank"><span>LinkedIn</span></a>
-            </li>
-            
-            <li>
-                <a href="https://twitter.com/volukib" target="_blank"><span>Twitter</span></a>
-            </li>
-            
-        </ul>
-    </div>
-    
-    <div class="sidebar-item sidebar-tags">
-        <h3>Tags</h3>
-        <div>
-            
-            <span>
-                <a href="/tags/awk/">awk</a>
-            </span>
-            
-            <span>
-                <a href="/tags/backup/">backup</a>
-            </span>
-            
-            <span>
-                <a href="/tags/bash/">bash</a>
-            </span>
-            
-            <span>
-                <a href="/tags/blender/">blender</a>
-            </span>
-            
-            <span>
-                <a href="/tags/btsync/">btsync</a>
-            </span>
-            
-            <span>
-                <a href="/tags/c/">c</a>
-            </span>
-            
-            <span>
-                <a href="/tags/c&#43;&#43;/">c&#43;&#43;</a>
-            </span>
-            
-            <span>
-                <a href="/tags/centos/">centos</a>
-            </span>
-            
-            <span>
-                <a href="/tags/cmake/">cmake</a>
-            </span>
-            
-            <span>
-                <a href="/tags/config/">config</a>
-            </span>
-            
-            <span>
-                <a href="/tags/console/">console</a>
-            </span>
-            
-            <span>
-                <a href="/tags/cpp/">cpp</a>
-            </span>
-            
-            <span>
-                <a href="/tags/cron/">cron</a>
-            </span>
-            
-            <span>
-                <a href="/tags/cuda/">cuda</a>
-            </span>
-            
-            <span>
-                <a href="/tags/dd/">dd</a>
-            </span>
-            
-            <span>
-                <a href="/tags/docker/">docker</a>
-            </span>
-            
-            <span>
-                <a href="/tags/dokuwiki/">dokuwiki</a>
-            </span>
-            
-            <span>
-                <a href="/tags/drupal/">drupal</a>
-            </span>
-            
-            <span>
-                <a href="/tags/du/">du</a>
-            </span>
-            
-            <span>
-                <a href="/tags/exceptions/">exceptions</a>
-            </span>
-            
-            <span>
-                <a href="/tags/fatnode/">fatnode</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ffmpeg/">ffmpeg</a>
-            </span>
-            
-            <span>
-                <a href="/tags/firefox/">firefox</a>
-            </span>
-            
-            <span>
-                <a href="/tags/gengetopt/">gengetopt</a>
-            </span>
-            
-            <span>
-                <a href="/tags/heapsort/">heapsort</a>
-            </span>
-            
-            <span>
-                <a href="/tags/howto/">howto</a>
-            </span>
-            
-            <span>
-                <a href="/tags/i3/">i3</a>
-            </span>
-            
-            <span>
-                <a href="/tags/imagemagick/">imagemagick</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ip/">ip</a>
-            </span>
-            
-            <span>
-                <a href="/tags/iptables/">iptables</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ipython/">ipython</a>
-            </span>
-            
-            <span>
-                <a href="/tags/joomla/">joomla</a>
-            </span>
-            
-            <span>
-                <a href="/tags/jupyter/">jupyter</a>
-            </span>
-            
-            <span>
-                <a href="/tags/latex/">latex</a>
-            </span>
-            
-            <span>
-                <a href="/tags/libcheese/">libcheese</a>
-            </span>
-            
-            <span>
-                <a href="/tags/linux/">linux</a>
-            </span>
-            
-            <span>
-                <a href="/tags/lxc/">lxc</a>
-            </span>
-            
-            <span>
-                <a href="/tags/makefile/">makefile</a>
-            </span>
-            
-            <span>
-                <a href="/tags/matplotlib/">matplotlib</a>
-            </span>
-            
-            <span>
-                <a href="/tags/mercurial/">mercurial</a>
-            </span>
-            
-            <span>
-                <a href="/tags/montage/">montage</a>
-            </span>
-            
-            <span>
-                <a href="/tags/mysql/">mysql</a>
-            </span>
-            
-            <span>
-                <a href="/tags/nautilus/">nautilus</a>
-            </span>
-            
-            <span>
-                <a href="/tags/nginx/">nginx</a>
-            </span>
-            
-            <span>
-                <a href="/tags/numpy/">numpy</a>
-            </span>
-            
-            <span>
-                <a href="/tags/openvpn/">openvpn</a>
-            </span>
-            
-            <span>
-                <a href="/tags/openvz/">openvz</a>
-            </span>
-            
-            <span>
-                <a href="/tags/paraview/">paraview</a>
-            </span>
-            
-            <span>
-                <a href="/tags/pcap/">pcap</a>
-            </span>
-            
-            <span>
-                <a href="/tags/pcmanfm/">PCManFM</a>
-            </span>
-            
-            <span>
-                <a href="/tags/pdf/">pdf</a>
-            </span>
-            
-            <span>
-                <a href="/tags/perl/">perl</a>
-            </span>
-            
-            <span>
-                <a href="/tags/plots/">plots</a>
-            </span>
-            
-            <span>
-                <a href="/tags/png/">png</a>
-            </span>
-            
-            <span>
-                <a href="/tags/postgres/">postgres</a>
-            </span>
-            
-            <span>
-                <a href="/tags/postgresql/">postgresql</a>
-            </span>
-            
-            <span>
-                <a href="/tags/programmer-tools/">programmer tools</a>
-            </span>
-            
-            <span>
-                <a href="/tags/python/">python</a>
-            </span>
-            
-            <span>
-                <a href="/tags/quicksort/">quicksort</a>
-            </span>
-            
-            <span>
-                <a href="/tags/research/">research</a>
-            </span>
-            
-            <span>
-                <a href="/tags/rhodecode/">rhodecode</a>
-            </span>
-            
-            <span>
-                <a href="/tags/scan/">scan</a>
-            </span>
-            
-            <span>
-                <a href="/tags/scanimage/">scanimage</a>
-            </span>
-            
-            <span>
-                <a href="/tags/science/">science</a>
-            </span>
-            
-            <span>
-                <a href="/tags/scipy/">scipy</a>
-            </span>
-            
-            <span>
-                <a href="/tags/screen-capture/">screen capture</a>
-            </span>
-            
-            <span>
-                <a href="/tags/script/">script</a>
-            </span>
-            
-            <span>
-                <a href="/tags/scrot/">scrot</a>
-            </span>
-            
-            <span>
-                <a href="/tags/seaborn/">seaborn</a>
-            </span>
-            
-            <span>
-                <a href="/tags/sed/">sed</a>
-            </span>
-            
-            <span>
-                <a href="/tags/selfhosted/">selfhosted</a>
-            </span>
-            
-            <span>
-                <a href="/tags/server/">server</a>
-            </span>
-            
-            <span>
-                <a href="/tags/slurm/">slurm</a>
-            </span>
-            
-            <span>
-                <a href="/tags/snippet/">snippet</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ssh/">ssh</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tcpdump/">tcpdump</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tcptrace/">tcptrace</a>
-            </span>
-            
-            <span>
-                <a href="/tags/template/">template</a>
-            </span>
-            
-            <span>
-                <a href="/tags/terminal/">terminal</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tiff/">tiff</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tips-and-tricks/">tips and tricks</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tpick/">tpick</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tr/">tr</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tshark/">tshark</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tun/">tun</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tutorial/">tutorial</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ubuntu/">ubuntu</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ubuntu-12.04/">ubuntu 12.04</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ubuntu-server/">ubuntu server</a>
-            </span>
-            
-            <span>
-                <a href="/tags/visualization/">visualization</a>
-            </span>
-            
-            <span>
-                <a href="/tags/vpn/">vpn</a>
-            </span>
-            
-            <span>
-                <a href="/tags/yandex.disk/">yandex.disk</a>
-            </span>
-            
-            <span>
-                <a href="/tags/zotero/">zotero</a>
-            </span>
-            
-            <span>
-                <a href="/tags/zotfile/">zotfile</a>
-            </span>
-            
-        </div>
-    </div>
-    <div class="sidebar-item sidebar-toc">
-        <h3>TOC</h3><nav id="TableOfContents"></nav></div>
-</aside>
-        </div>
-        <div class="btn">
-    <div class="btn-menu" id="btn-menu">
-        <i class="iconfont icon-grid-sharp"></i>
-    </div>
-    <div class="btn-toggle-mode">
-        <i class="iconfont icon-contrast-sharp"></i>
-    </div>
-    <div class="btn-scroll-top">
-        <i class="iconfont icon-chevron-up-circle-sharp"></i>
-    </div>
-</div>
-<aside class="sidebar-mobile" style="display: none;">
-  <div class="sidebar-wrapper">
-    
-    <div class="sidebar-item sidebar-pages">
-        <h3>Pages</h3>
-        <ul>
-            
-            <li>
-                <a href="/">Home</a>
-            </li>
-            
-            <li>
-                <a href="/resume/">Resume</a>
-            </li>
-            
-            <li>
-                <a href="/index.xml">RSS</a>
-            </li>
-            
-        </ul>
-    </div>
-    
-    <div class="sidebar-item sidebar-links">
-        <h3>Links</h3>
-        <ul>
-            
-            <li>
-                <a href="https://github.com/bikulov" target="_blank"><span>Github</span></a>
-            </li>
-            
-            <li>
-                <a href="https://linkedin.com/in/bikulov" target="_blank"><span>LinkedIn</span></a>
-            </li>
-            
-            <li>
-                <a href="https://twitter.com/volukib" target="_blank"><span>Twitter</span></a>
-            </li>
-            
-        </ul>
-    </div>
-    
-    <div class="sidebar-item sidebar-tags">
-        <h3>Tags</h3>
-        <div>
-            
-            <span>
-                <a href="/tags/awk/">awk</a>
-            </span>
-            
-            <span>
-                <a href="/tags/backup/">backup</a>
-            </span>
-            
-            <span>
-                <a href="/tags/bash/">bash</a>
-            </span>
-            
-            <span>
-                <a href="/tags/blender/">blender</a>
-            </span>
-            
-            <span>
-                <a href="/tags/btsync/">btsync</a>
-            </span>
-            
-            <span>
-                <a href="/tags/c/">c</a>
-            </span>
-            
-            <span>
-                <a href="/tags/c&#43;&#43;/">c&#43;&#43;</a>
-            </span>
-            
-            <span>
-                <a href="/tags/centos/">centos</a>
-            </span>
-            
-            <span>
-                <a href="/tags/cmake/">cmake</a>
-            </span>
-            
-            <span>
-                <a href="/tags/config/">config</a>
-            </span>
-            
-            <span>
-                <a href="/tags/console/">console</a>
-            </span>
-            
-            <span>
-                <a href="/tags/cpp/">cpp</a>
-            </span>
-            
-            <span>
-                <a href="/tags/cron/">cron</a>
-            </span>
-            
-            <span>
-                <a href="/tags/cuda/">cuda</a>
-            </span>
-            
-            <span>
-                <a href="/tags/dd/">dd</a>
-            </span>
-            
-            <span>
-                <a href="/tags/docker/">docker</a>
-            </span>
-            
-            <span>
-                <a href="/tags/dokuwiki/">dokuwiki</a>
-            </span>
-            
-            <span>
-                <a href="/tags/drupal/">drupal</a>
-            </span>
-            
-            <span>
-                <a href="/tags/du/">du</a>
-            </span>
-            
-            <span>
-                <a href="/tags/exceptions/">exceptions</a>
-            </span>
-            
-            <span>
-                <a href="/tags/fatnode/">fatnode</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ffmpeg/">ffmpeg</a>
-            </span>
-            
-            <span>
-                <a href="/tags/firefox/">firefox</a>
-            </span>
-            
-            <span>
-                <a href="/tags/gengetopt/">gengetopt</a>
-            </span>
-            
-            <span>
-                <a href="/tags/heapsort/">heapsort</a>
-            </span>
-            
-            <span>
-                <a href="/tags/howto/">howto</a>
-            </span>
-            
-            <span>
-                <a href="/tags/i3/">i3</a>
-            </span>
-            
-            <span>
-                <a href="/tags/imagemagick/">imagemagick</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ip/">ip</a>
-            </span>
-            
-            <span>
-                <a href="/tags/iptables/">iptables</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ipython/">ipython</a>
-            </span>
-            
-            <span>
-                <a href="/tags/joomla/">joomla</a>
-            </span>
-            
-            <span>
-                <a href="/tags/jupyter/">jupyter</a>
-            </span>
-            
-            <span>
-                <a href="/tags/latex/">latex</a>
-            </span>
-            
-            <span>
-                <a href="/tags/libcheese/">libcheese</a>
-            </span>
-            
-            <span>
-                <a href="/tags/linux/">linux</a>
-            </span>
-            
-            <span>
-                <a href="/tags/lxc/">lxc</a>
-            </span>
-            
-            <span>
-                <a href="/tags/makefile/">makefile</a>
-            </span>
-            
-            <span>
-                <a href="/tags/matplotlib/">matplotlib</a>
-            </span>
-            
-            <span>
-                <a href="/tags/mercurial/">mercurial</a>
-            </span>
-            
-            <span>
-                <a href="/tags/montage/">montage</a>
-            </span>
-            
-            <span>
-                <a href="/tags/mysql/">mysql</a>
-            </span>
-            
-            <span>
-                <a href="/tags/nautilus/">nautilus</a>
-            </span>
-            
-            <span>
-                <a href="/tags/nginx/">nginx</a>
-            </span>
-            
-            <span>
-                <a href="/tags/numpy/">numpy</a>
-            </span>
-            
-            <span>
-                <a href="/tags/openvpn/">openvpn</a>
-            </span>
-            
-            <span>
-                <a href="/tags/openvz/">openvz</a>
-            </span>
-            
-            <span>
-                <a href="/tags/paraview/">paraview</a>
-            </span>
-            
-            <span>
-                <a href="/tags/pcap/">pcap</a>
-            </span>
-            
-            <span>
-                <a href="/tags/pcmanfm/">PCManFM</a>
-            </span>
-            
-            <span>
-                <a href="/tags/pdf/">pdf</a>
-            </span>
-            
-            <span>
-                <a href="/tags/perl/">perl</a>
-            </span>
-            
-            <span>
-                <a href="/tags/plots/">plots</a>
-            </span>
-            
-            <span>
-                <a href="/tags/png/">png</a>
-            </span>
-            
-            <span>
-                <a href="/tags/postgres/">postgres</a>
-            </span>
-            
-            <span>
-                <a href="/tags/postgresql/">postgresql</a>
-            </span>
-            
-            <span>
-                <a href="/tags/programmer-tools/">programmer tools</a>
-            </span>
-            
-            <span>
-                <a href="/tags/python/">python</a>
-            </span>
-            
-            <span>
-                <a href="/tags/quicksort/">quicksort</a>
-            </span>
-            
-            <span>
-                <a href="/tags/research/">research</a>
-            </span>
-            
-            <span>
-                <a href="/tags/rhodecode/">rhodecode</a>
-            </span>
-            
-            <span>
-                <a href="/tags/scan/">scan</a>
-            </span>
-            
-            <span>
-                <a href="/tags/scanimage/">scanimage</a>
-            </span>
-            
-            <span>
-                <a href="/tags/science/">science</a>
-            </span>
-            
-            <span>
-                <a href="/tags/scipy/">scipy</a>
-            </span>
-            
-            <span>
-                <a href="/tags/screen-capture/">screen capture</a>
-            </span>
-            
-            <span>
-                <a href="/tags/script/">script</a>
-            </span>
-            
-            <span>
-                <a href="/tags/scrot/">scrot</a>
-            </span>
-            
-            <span>
-                <a href="/tags/seaborn/">seaborn</a>
-            </span>
-            
-            <span>
-                <a href="/tags/sed/">sed</a>
-            </span>
-            
-            <span>
-                <a href="/tags/selfhosted/">selfhosted</a>
-            </span>
-            
-            <span>
-                <a href="/tags/server/">server</a>
-            </span>
-            
-            <span>
-                <a href="/tags/slurm/">slurm</a>
-            </span>
-            
-            <span>
-                <a href="/tags/snippet/">snippet</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ssh/">ssh</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tcpdump/">tcpdump</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tcptrace/">tcptrace</a>
-            </span>
-            
-            <span>
-                <a href="/tags/template/">template</a>
-            </span>
-            
-            <span>
-                <a href="/tags/terminal/">terminal</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tiff/">tiff</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tips-and-tricks/">tips and tricks</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tpick/">tpick</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tr/">tr</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tshark/">tshark</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tun/">tun</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tutorial/">tutorial</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ubuntu/">ubuntu</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ubuntu-12.04/">ubuntu 12.04</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ubuntu-server/">ubuntu server</a>
-            </span>
-            
-            <span>
-                <a href="/tags/visualization/">visualization</a>
-            </span>
-            
-            <span>
-                <a href="/tags/vpn/">vpn</a>
-            </span>
-            
-            <span>
-                <a href="/tags/yandex.disk/">yandex.disk</a>
-            </span>
-            
-            <span>
-                <a href="/tags/zotero/">zotero</a>
-            </span>
-            
-            <span>
-                <a href="/tags/zotfile/">zotfile</a>
-            </span>
-            
-        </div>
-    </div>
-    
-    
-    
-    <div class="sidebar-item sidebar-toc">
-        <h3>TOC</h3>
-        <nav id="TableOfContents"></nav>
-    </div>
-    
-    
   </div>
-</aside>
-    </main>
+</div>
+<div class="row">
+  <div class="col">
+    <p><a href="http://www.gnu.org/software/gengetopt/gengetopt.html">Gengetopt</a> is a tool for parsing command line arguments in C and C++ applications. It generates <code>cmdline.c</code> and <code>cmdline.h</code> files in pure C, which contain parser, helper functions, error handling and structure to store argument values. Arguments to be included in auto-generated file are defined in config. I usually gengetopt config file as <code>cmdline.ggo</code>. In this note I provide an example of gengetopt config file and arguments usage in code.</p>
+<p>Header of config file contains information about version, app name and description. You can use the following template:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#a6e22e">version &#34;13.10.25&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">package &#34;app&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">purpose &#34;Sample application description.</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">By John Doe &lt;sample@example.com&gt;&#34;</span>
+</span></span></code></pre></div><p>Arguments are listed after header in the same config file. Even if no options given below the header, two default ones are defined: <code>-h</code> shows help message and <code>-V</code> shows app version string. You can specify long option name (in call it can be used as <code>--long-option</code>), short option name, option type and whether option is required.</p>
+<p>String option with long name <code>filename</code> and short name <code>f</code>, description <code>String argument</code> and it is required. Option can be called as <code>-f myfile</code> or <code>--filename myfile</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#a6e22e">option &#34;filename&#34; f &#34;String argument&#34; string required</span>
+</span></span></code></pre></div><p>It is possible to define options that takes several values, separated by comma. The following opition takes exactly 3 arguments with type <code>int</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#a6e22e">option &#34;size&#34; s &#34;Optional argument, takes exactly 3 int values separated by commas&#34; multiple(3) optional int</span>
+</span></span></code></pre></div><p>Option can take «one (two, etc) or more» arguments:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#a6e22e">option &#34;array&#34; a &#34;Required argument, takes 1 or more args&#34; multiple(1-) required int</span>
+</span></span></code></pre></div><p>It is possible not to specify short name:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#a6e22e">option &#34;long-option&#34; - &#34;Option without short version&#34; optional float</span>
+</span></span></code></pre></div><p>You can provide default value for an option. The default value is used if option is not used in app call.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#a6e22e">option &#34;default-value&#34; d &#34;Argument with default value&#34; optional float default</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;0.003&#34;</span>
+</span></span></code></pre></div><p>There is flags. If flag is provided in app call, it&rsquo;s value triggered to opposite:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#a6e22e">option &#34;console&#34; c &#34;Flag with default &#39;off&#39;&#34; flag off</span>
+</span></span></code></pre></div><p>The whole config file:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#a6e22e">version &#34;13.10.25&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">package &#34;app&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">purpose &#34;Sample application description.</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">By John Doe &lt;sample@example.com&gt;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Options</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option &#34;filename&#34; f &#34;String argument&#34; string required</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option &#34;size&#34; s &#34;Optional argument, takes exactly 3 int values separated by commas&#34; multiple(3) optional int</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option &#34;array&#34; a &#34;Required argument, takes 1 or more args&#34; multiple(1-) required int</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option &#34;long-option&#34; - &#34;Option without short version&#34; optional float</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option &#34;default-value&#34; d &#34;Argument with default value&#34; optional float default</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;0.003&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option &#34;console&#34; c &#34;Flag with default &#39;off&#39;&#34; flag off</span>
+</span></span></code></pre></div><p>Arguments are used in source code via gengeopt_args_info structure defined in cmdline.h. Example:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;cstdlib&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;cmdline.h&#34;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>argv[])
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    gengetopt_args_info ai;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (cmdline_parser (argc, argv, <span style="color:#f92672">&amp;</span>ai) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>        exit(<span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> ai.filename_arg <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (ai.size_given) {
+</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> ai.size_arg[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; &#34;</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#f92672">&lt;&lt;</span> ai.size_arg[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; &#34;</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#f92672">&lt;&lt;</span> ai.size_arg[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>; i<span style="color:#f92672">&lt;</span>ai.array_given; <span style="color:#f92672">++</span>i) {
+</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> ai.array_arg[i] <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; &#34;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (ai.long_option_given) {
+</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> ai.long_option_arg <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> ai.default_value_arg <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> ai.console_flag <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>And Makefile to make them all (you need gengetopt to be installed):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>APPNAME <span style="color:#f92672">=</span> app
+</span></span><span style="display:flex;"><span>OBJECTS <span style="color:#f92672">=</span> main.o cmdline.o
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>CC <span style="color:#f92672">=</span> gcc
+</span></span><span style="display:flex;"><span>CXX <span style="color:#f92672">=</span> g++
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>all: <span style="color:#66d9ef">$(</span>OBJECTS<span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">$(</span>CXX<span style="color:#66d9ef">)</span> <span style="color:#66d9ef">$(</span>OBJECTS<span style="color:#66d9ef">)</span> -o <span style="color:#66d9ef">$(</span>APPNAME<span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>cmdline.o: cmdline.c
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">$(</span>CC<span style="color:#66d9ef">)</span> -c $&lt; -o $@
+</span></span><span style="display:flex;"><span>main.o: main.cpp
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">$(</span>CXX<span style="color:#66d9ef">)</span> -c $&lt; -o $@
+</span></span><span style="display:flex;"><span>cmdline.c: cmdline.ggo
+</span></span><span style="display:flex;"><span>	gengetopt --input<span style="color:#f92672">=</span>cmdline.ggo --include-getopt
+</span></span><span style="display:flex;"><span>clean:
+</span></span><span style="display:flex;"><span>	rm -rf *.o <span style="color:#66d9ef">$(</span>APPNAME<span style="color:#66d9ef">)</span>
+</span></span></code></pre></div><p>Place <code>main.cpp</code>, <code>cmdline.ggo</code> and <code>Makefile</code> in one folder and build this example.</p>
+<p>Output samples:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ ./app -a 1,2,3,4,5,6 -f test -s 16,32,64 --long-option 0.4 -d 0.8
+</span></span><span style="display:flex;"><span>test
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">16</span> <span style="color:#ae81ff">32</span> <span style="color:#ae81ff">64</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">4</span> <span style="color:#ae81ff">5</span> <span style="color:#ae81ff">6</span>
+</span></span><span style="display:flex;"><span>0.4
+</span></span><span style="display:flex;"><span>0.8
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ ./app -a <span style="color:#ae81ff">1</span> -f test -c
+</span></span><span style="display:flex;"><span>test
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>0.003
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ ./app
+</span></span><span style="display:flex;"><span>./app: <span style="color:#e6db74">&#39;--filename&#39;</span> <span style="color:#f92672">(</span><span style="color:#e6db74">&#39;-f&#39;</span><span style="color:#f92672">)</span> option required
+</span></span><span style="display:flex;"><span>./app: <span style="color:#e6db74">&#39;--array&#39;</span> <span style="color:#f92672">(</span><span style="color:#e6db74">&#39;-a&#39;</span><span style="color:#f92672">)</span> option required
+</span></span></code></pre></div><p>Have fun!</p>
 
-    <footer>
-    <div class="container-lg clearfix">
-        <div class="col-12 footer">
-            
-            <span>&copy; 2012-2021
-                <a href="https://bikulov.org">bikulov</a>
-                 | <a href="https://github.com/bikulov/bikulov.github.io">Source code</a> 
-                | Powered by <a href="https://github.com/amzrk2/hugo-theme-fuji/"
-                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
-                                                    target="_blank">Hugo</a> 
-            </span>
-        </div>
-    </div>
-</footer>
+  </div>
+</div>
 
-    
-<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.0/lazysizes.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
-
-
-
-<script defer src="/assets/js/fuji.min.js"></script>
-
-
-</body>
+  </div><div class="container-fluid volukib-footer p-2">
+  <footer class="text-center">
+    <a class="text-decoration-none text-light" href="https://bikulov.org/">Bikulov&#39;s blog 2022</a>
+  </footer>
+</div></body>
 
 </html>

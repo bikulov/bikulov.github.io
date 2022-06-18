@@ -1,1138 +1,179 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<meta name="HandheldFriendly" content="True" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-<meta name="generator" content="Hugo 0.80.0" />
-
-
-<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon.ico" />
-
-
-<title>Install and configure btsync in Ubuntu 12.04 - :) bikulov.ORG</title>
-
-
-<meta name="author" content="bikulov" />
-
-
-<meta name="description" content="Static notes about information technologies." />
-
-
-<meta name="keywords" content="ubuntu, btsync, howto" />
-
-
-<meta property="og:title" content="Install and configure btsync in Ubuntu 12.04" />
-<meta name="twitter:title" content="Install and configure btsync in Ubuntu 12.04" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://bikulov.org/blog/2013/08/26/install-and-configure-btsync-in-ubuntu-12.04/" /><meta property="og:description" content="This note describes installation of Bittorrent Sync on Ubuntu. Tutorial was tested on Ubuntu 12.04, but it must work for all Debian-based systems. Read full btsync  manual for advanced information." />
-<meta name="twitter:description" content="This note describes installation of Bittorrent Sync on Ubuntu. Tutorial was tested on Ubuntu 12.04, but it must work for all Debian-based systems. Read full btsync  manual for advanced information." /><meta property="og:image" content="https://bikulov.org/img/og.png" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://bikulov.org/img/og.png" /><meta property="article:published_time" content="2013-08-26T18:42:00+03:00" /><meta property="article:modified_time" content="2013-08-26T18:42:00+03:00" />
-
-
-<style>
-    @media (prefers-color-scheme: dark) {
-        body[data-theme='auto'] img {
-            filter: brightness(60%);
-        }
-    }
-
-    body[data-theme='dark'] img {
-        filter: brightness(60%);
-    }
-</style>
-
-
-
-<link rel="stylesheet" href="https://bikulov.org/assets/css/fuji.min.css" />
-
-
-
-
-
-</head>
-
-<body data-theme="auto">
-    <script data-cfasync="false">
-  
-  var fujiThemeData = localStorage.getItem('fuji_data-theme');
-  
-  if (!fujiThemeData) {
-    localStorage.setItem('fuji_data-theme', 'auto');
-  } else {
-    
-    if (fujiThemeData !== 'auto') {
-      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
-    }
-  }
-</script>
-    <header>
-    <div class="container-lg clearfix">
-        <div class="col-12 header">
-            <a class="title-main" href="https://bikulov.org">:) bikulov.ORG</a>
-            
-            <span class="title-sub">Static notes about information technologies</span>
-            
-        </div>
+<html><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all">
+  <link href="/css/style.css" rel="stylesheet" type="text/css" media="all">
+  <link href="/css/custom.css" rel="stylesheet" type="text/css" media="all">
+  <script src="/js/bootstrap.bundle.min.js"></script>
+  <link rel="apple-touch-icon" href="/logo.png" type="image/png">
+  <link rel="icon" href="/img/logo.svg" type="image/svg+xml">
+  <link rel="icon" href="/img/logo.png" type="image/png">
+  <title>Bikulov&#39;s blog</title>
+</head><body>
+<header>
+  <nav class="navbar navbar-expand navbar-dark volukib-header">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="https://bikulov.org/"><img src="/img/logo.png" class="volukib-logo" alt="logo"> Bikulov&#39;s blog</a>
+      <ul class="navbar-nav">
+        
+        <li class="nav-item">
+          
+          <a class="nav-link text-uppercase " href="/">Home</a>
+        </li>
+        
+        <li class="nav-item">
+          
+          <a class="nav-link text-uppercase " href="/resume/">Resume</a>
+        </li>
+        
+      </ul>
     </div>
-</header>
-
-    <main>
-        <div class="container-lg clearfix">
-            
-            <div class="col-12 col-md-9 float-left content">
-                
-<article>
-    
-    <h2 class="post-item post-title">
-        <a href="https://bikulov.org/blog/2013/08/26/install-and-configure-btsync-in-ubuntu-12.04/">Install and configure btsync in Ubuntu 12.04</a>
-    </h2>
-    <div class="post-item post-meta">
-        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2013-08-26</span><span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/ubuntu">ubuntu</a>&nbsp;<a href="/tags/btsync">btsync</a>&nbsp;<a href="/tags/howto">howto</a>&nbsp;</span>
-
+  </nav>
+</header><div class="container">
+<div class="row text-center mb-5">
+  <div class="col">
+    <h1>Install and configure btsync in Ubuntu 12.04</h1>
+    <div>2013-08-26</div>
+    <div>
+      
+      <a class="" href="/tags/ubuntu">#ubuntu</a>
+      
+      <a class="" href="/tags/btsync">#btsync</a>
+      
+      <a class="" href="/tags/howto">#howto</a>
+      
     </div>
-    
-    <div class="post-content markdown-body">
-        <p>This note describes installation of Bittorrent Sync on Ubuntu. Tutorial was tested on Ubuntu 12.04, but it must work for all Debian-based systems. Read full btsync  <a href="http://btsync.s3-website-us-east-1.amazonaws.com/BitTorrentSyncUserGuide.pdf" target="_blank">manual</a> for advanced information.</p>
-<h2 id="download-and-install-btsync">Download and install btsync</h2>
-<p>Btsync is provided as single binary file. We will place it into <code>/usr/bin</code> directory. So, download archive with binary file, extract it, remove archive, move binary:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">wget http://btsync.s3-website-us-east-1.amazonaws.com/btsync_x64.tar.gz
-tar xf btsync_x64.tar.gz
-rm btsync_x64.tar.gz
-sudo mv btsync /usr/bin/btsync
-</code></pre></div><h2 id="configure-shared-folder">Configure shared folder</h2>
-<p>We will use configuration file instead of web interface. Create <code>~/.sync/config.json</code> (for <code>&lt;home folder&gt;</code> for user <code>username</code> is <code>/home/username</code>) with content provided below. If you have several users you want to use btsync, create config in their home folders.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
-  <span style="color:#f92672">&#34;device_name&#34;</span>: <span style="color:#e6db74">&#34;&lt;computer name&gt;&#34;</span>,
-  <span style="color:#f92672">&#34;pid_file&#34;</span> : <span style="color:#e6db74">&#34;&lt;home folder&gt;/.sync/btsync.pid&#34;</span>,
-  <span style="color:#f92672">&#34;storage_path&#34;</span>: <span style="color:#e6db74">&#34;&lt;home folder&gt;/.sync&#34;</span>,
-
-  <span style="color:#f92672">&#34;listening_port&#34;</span> : <span style="color:#ae81ff">0</span>,
-  <span style="color:#f92672">&#34;check_for_updates&#34;</span> : <span style="color:#66d9ef">true</span>,
-  <span style="color:#f92672">&#34;use_upnp&#34;</span> : <span style="color:#66d9ef">true</span>,
-  <span style="color:#f92672">&#34;download_limit&#34;</span> : <span style="color:#ae81ff">0</span>,
-  <span style="color:#f92672">&#34;upload_limit&#34;</span> : <span style="color:#ae81ff">0</span>,
-  <span style="color:#f92672">&#34;lan_encrypt_data&#34;</span>: <span style="color:#66d9ef">true</span>,
-
-  <span style="color:#f92672">&#34;shared_folders&#34;</span> :
-  [
-    {
-      <span style="color:#f92672">&#34;secret&#34;</span> : <span style="color:#e6db74">&#34;&lt;secret key&gt;&#34;</span>,
-      <span style="color:#f92672">&#34;dir&#34;</span> : <span style="color:#e6db74">&#34;&lt;dir path&gt;&#34;</span>,
-
-      <span style="color:#f92672">&#34;use_relay_server&#34;</span> : <span style="color:#66d9ef">true</span>,
-      <span style="color:#f92672">&#34;use_tracker&#34;</span> : <span style="color:#66d9ef">true</span>,
-      <span style="color:#f92672">&#34;use_dht&#34;</span> : <span style="color:#66d9ef">false</span>,
-      <span style="color:#f92672">&#34;search_lan&#34;</span> : <span style="color:#66d9ef">true</span>,
-      <span style="color:#f92672">&#34;use_sync_trash&#34;</span> : <span style="color:#66d9ef">true</span>
-    }
-  ]
-}
-</code></pre></div><h2 id="init-script">Init script</h2>
-<p>Create file <code>/etc/init.d/btsync</code> with content (thanks to <a href="https://gist.github.com/MendelGusmao/5398362" target="_blank">Mendel</a>, you need to list users who will use btsync in <code>BTSYNC_USERS</code> variable, every user must have config file from previous section in home folder):</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#!/bin/sh
-</span><span style="color:#75715e"></span><span style="color:#75715e">### BEGIN INIT INFO</span>
-<span style="color:#75715e"># Provides: btsync</span>
-<span style="color:#75715e"># Required-Start: $local_fs $remote_fs</span>
-<span style="color:#75715e"># Required-Stop: $local_fs $remote_fs</span>
-<span style="color:#75715e"># Should-Start: $network</span>
-<span style="color:#75715e"># Should-Stop: $network</span>
-<span style="color:#75715e"># Default-Start: 2 3 4 5</span>
-<span style="color:#75715e"># Default-Stop: 0 1 6</span>
-<span style="color:#75715e"># Short-Description: Multi-user daemonized version of btsync.</span>
-<span style="color:#75715e"># Description: Starts the btsync daemon for all registered users.</span>
-<span style="color:#75715e">### END INIT INFO</span>
-
-<span style="color:#75715e"># Source: https://gist.github.com/MendelGusmao/5398362</span>
-
-<span style="color:#75715e"># Replace with linux users you want to run BTSync clients for</span>
-BTSYNC_USERS<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;kenarius&#34;</span>
-DAEMON<span style="color:#f92672">=</span>/usr/bin/btsync
-
-start<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-  <span style="color:#66d9ef">for</span> btsuser in $BTSYNC_USERS; <span style="color:#66d9ef">do</span>
-    HOMEDIR<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>getent passwd $btsuser | cut -d: -f6<span style="color:#e6db74">`</span>
-    config<span style="color:#f92672">=</span>$HOMEDIR/.sync/config.json
-    <span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> -f $config <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
-      echo <span style="color:#e6db74">&#34;Starting BTSync for </span>$btsuser<span style="color:#e6db74">&#34;</span>
-      start-stop-daemon -b -o -c $btsuser -S -u $btsuser -x $DAEMON -- --config $config
-    <span style="color:#66d9ef">else</span>
-      echo <span style="color:#e6db74">&#34;Couldn&#39;t start BTSync for </span>$btsuser<span style="color:#e6db74"> (no </span>$config<span style="color:#e6db74"> found)&#34;</span>
-    <span style="color:#66d9ef">fi</span>
-  <span style="color:#66d9ef">done</span>
-<span style="color:#f92672">}</span>
-
-stop<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-  <span style="color:#66d9ef">for</span> btsuser in $BTSYNC_USERS; <span style="color:#66d9ef">do</span>
-    dbpid<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>pgrep -fu $btsuser $DAEMON<span style="color:#e6db74">`</span>
-    <span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> ! -z <span style="color:#e6db74">&#34;</span>$dbpid<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
-      echo <span style="color:#e6db74">&#34;Stopping btsync for </span>$btsuser<span style="color:#e6db74">&#34;</span>
-      start-stop-daemon -o -c $btsuser -K -u $btsuser -x $DAEMON
-    <span style="color:#66d9ef">fi</span>
-  <span style="color:#66d9ef">done</span>
-<span style="color:#f92672">}</span>
-
-status<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-  <span style="color:#66d9ef">for</span> btsuser in $BTSYNC_USERS; <span style="color:#66d9ef">do</span>
-    dbpid<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>pgrep -fu $btsuser $DAEMON<span style="color:#e6db74">`</span>
-    <span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> -z <span style="color:#e6db74">&#34;</span>$dbpid<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
-      echo <span style="color:#e6db74">&#34;btsync for USER </span>$btsuser<span style="color:#e6db74">: not running.&#34;</span>
-    <span style="color:#66d9ef">else</span>
-      echo <span style="color:#e6db74">&#34;btsync for USER </span>$btsuser<span style="color:#e6db74">: running (pid </span>$dbpid<span style="color:#e6db74">)&#34;</span>
-    <span style="color:#66d9ef">fi</span>
-  <span style="color:#66d9ef">done</span>
-<span style="color:#f92672">}</span>
-
-<span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;</span>$1<span style="color:#e6db74">&#34;</span> in
- start<span style="color:#f92672">)</span>
-start
-;;
-stop<span style="color:#f92672">)</span>
-stop
-;;
-restart|reload|force-reload<span style="color:#f92672">)</span>
-stop
-start
-;;
-status<span style="color:#f92672">)</span>
-status
-;;
-*<span style="color:#f92672">)</span>
-echo <span style="color:#e6db74">&#34;Usage: /etc/init.d/btsync {start|stop|reload|force-reload|restart|status}&#34;</span>
-exit <span style="color:#ae81ff">1</span>
-<span style="color:#66d9ef">esac</span>
-
-exit <span style="color:#ae81ff">0</span>
-</code></pre></div><p>That&rsquo;s all. Now make btsync executable, register init script with <code>update-rc.d</code> and start service. Issue as <code>root</code>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cd /etc/init.d/
-chmod +x btsync
-update-rc.d btsync defaults
-service btsync start
-</code></pre></div>
-    </div>
-</article>
-
-
-
-
-            </div>
-            <aside class="col-12 col-md-3 float-left sidebar">
-    
-    <div class="sidebar-item sidebar-pages">
-        <h3>Pages</h3>
-        <ul>
-            
-            <li>
-                <a href="/">Home</a>
-            </li>
-            
-            <li>
-                <a href="/resume/">Resume</a>
-            </li>
-            
-            <li>
-                <a href="/index.xml">RSS</a>
-            </li>
-            
-        </ul>
-    </div>
-    
-    <div class="sidebar-item sidebar-links">
-        <h3>Links</h3>
-        <ul>
-            
-            <li>
-                <a href="https://github.com/bikulov" target="_blank"><span>Github</span></a>
-            </li>
-            
-            <li>
-                <a href="https://linkedin.com/in/bikulov" target="_blank"><span>LinkedIn</span></a>
-            </li>
-            
-            <li>
-                <a href="https://twitter.com/volukib" target="_blank"><span>Twitter</span></a>
-            </li>
-            
-        </ul>
-    </div>
-    
-    <div class="sidebar-item sidebar-tags">
-        <h3>Tags</h3>
-        <div>
-            
-            <span>
-                <a href="/tags/awk/">awk</a>
-            </span>
-            
-            <span>
-                <a href="/tags/backup/">backup</a>
-            </span>
-            
-            <span>
-                <a href="/tags/bash/">bash</a>
-            </span>
-            
-            <span>
-                <a href="/tags/blender/">blender</a>
-            </span>
-            
-            <span>
-                <a href="/tags/btsync/">btsync</a>
-            </span>
-            
-            <span>
-                <a href="/tags/c/">c</a>
-            </span>
-            
-            <span>
-                <a href="/tags/c&#43;&#43;/">c&#43;&#43;</a>
-            </span>
-            
-            <span>
-                <a href="/tags/centos/">centos</a>
-            </span>
-            
-            <span>
-                <a href="/tags/cmake/">cmake</a>
-            </span>
-            
-            <span>
-                <a href="/tags/config/">config</a>
-            </span>
-            
-            <span>
-                <a href="/tags/console/">console</a>
-            </span>
-            
-            <span>
-                <a href="/tags/cpp/">cpp</a>
-            </span>
-            
-            <span>
-                <a href="/tags/cron/">cron</a>
-            </span>
-            
-            <span>
-                <a href="/tags/cuda/">cuda</a>
-            </span>
-            
-            <span>
-                <a href="/tags/dd/">dd</a>
-            </span>
-            
-            <span>
-                <a href="/tags/docker/">docker</a>
-            </span>
-            
-            <span>
-                <a href="/tags/dokuwiki/">dokuwiki</a>
-            </span>
-            
-            <span>
-                <a href="/tags/drupal/">drupal</a>
-            </span>
-            
-            <span>
-                <a href="/tags/du/">du</a>
-            </span>
-            
-            <span>
-                <a href="/tags/exceptions/">exceptions</a>
-            </span>
-            
-            <span>
-                <a href="/tags/fatnode/">fatnode</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ffmpeg/">ffmpeg</a>
-            </span>
-            
-            <span>
-                <a href="/tags/firefox/">firefox</a>
-            </span>
-            
-            <span>
-                <a href="/tags/gengetopt/">gengetopt</a>
-            </span>
-            
-            <span>
-                <a href="/tags/heapsort/">heapsort</a>
-            </span>
-            
-            <span>
-                <a href="/tags/howto/">howto</a>
-            </span>
-            
-            <span>
-                <a href="/tags/i3/">i3</a>
-            </span>
-            
-            <span>
-                <a href="/tags/imagemagick/">imagemagick</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ip/">ip</a>
-            </span>
-            
-            <span>
-                <a href="/tags/iptables/">iptables</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ipython/">ipython</a>
-            </span>
-            
-            <span>
-                <a href="/tags/joomla/">joomla</a>
-            </span>
-            
-            <span>
-                <a href="/tags/jupyter/">jupyter</a>
-            </span>
-            
-            <span>
-                <a href="/tags/latex/">latex</a>
-            </span>
-            
-            <span>
-                <a href="/tags/libcheese/">libcheese</a>
-            </span>
-            
-            <span>
-                <a href="/tags/linux/">linux</a>
-            </span>
-            
-            <span>
-                <a href="/tags/lxc/">lxc</a>
-            </span>
-            
-            <span>
-                <a href="/tags/makefile/">makefile</a>
-            </span>
-            
-            <span>
-                <a href="/tags/matplotlib/">matplotlib</a>
-            </span>
-            
-            <span>
-                <a href="/tags/mercurial/">mercurial</a>
-            </span>
-            
-            <span>
-                <a href="/tags/montage/">montage</a>
-            </span>
-            
-            <span>
-                <a href="/tags/mysql/">mysql</a>
-            </span>
-            
-            <span>
-                <a href="/tags/nautilus/">nautilus</a>
-            </span>
-            
-            <span>
-                <a href="/tags/nginx/">nginx</a>
-            </span>
-            
-            <span>
-                <a href="/tags/numpy/">numpy</a>
-            </span>
-            
-            <span>
-                <a href="/tags/openvpn/">openvpn</a>
-            </span>
-            
-            <span>
-                <a href="/tags/openvz/">openvz</a>
-            </span>
-            
-            <span>
-                <a href="/tags/paraview/">paraview</a>
-            </span>
-            
-            <span>
-                <a href="/tags/pcap/">pcap</a>
-            </span>
-            
-            <span>
-                <a href="/tags/pcmanfm/">PCManFM</a>
-            </span>
-            
-            <span>
-                <a href="/tags/pdf/">pdf</a>
-            </span>
-            
-            <span>
-                <a href="/tags/perl/">perl</a>
-            </span>
-            
-            <span>
-                <a href="/tags/plots/">plots</a>
-            </span>
-            
-            <span>
-                <a href="/tags/png/">png</a>
-            </span>
-            
-            <span>
-                <a href="/tags/postgres/">postgres</a>
-            </span>
-            
-            <span>
-                <a href="/tags/postgresql/">postgresql</a>
-            </span>
-            
-            <span>
-                <a href="/tags/programmer-tools/">programmer tools</a>
-            </span>
-            
-            <span>
-                <a href="/tags/python/">python</a>
-            </span>
-            
-            <span>
-                <a href="/tags/quicksort/">quicksort</a>
-            </span>
-            
-            <span>
-                <a href="/tags/research/">research</a>
-            </span>
-            
-            <span>
-                <a href="/tags/rhodecode/">rhodecode</a>
-            </span>
-            
-            <span>
-                <a href="/tags/scan/">scan</a>
-            </span>
-            
-            <span>
-                <a href="/tags/scanimage/">scanimage</a>
-            </span>
-            
-            <span>
-                <a href="/tags/science/">science</a>
-            </span>
-            
-            <span>
-                <a href="/tags/scipy/">scipy</a>
-            </span>
-            
-            <span>
-                <a href="/tags/screen-capture/">screen capture</a>
-            </span>
-            
-            <span>
-                <a href="/tags/script/">script</a>
-            </span>
-            
-            <span>
-                <a href="/tags/scrot/">scrot</a>
-            </span>
-            
-            <span>
-                <a href="/tags/seaborn/">seaborn</a>
-            </span>
-            
-            <span>
-                <a href="/tags/sed/">sed</a>
-            </span>
-            
-            <span>
-                <a href="/tags/selfhosted/">selfhosted</a>
-            </span>
-            
-            <span>
-                <a href="/tags/server/">server</a>
-            </span>
-            
-            <span>
-                <a href="/tags/slurm/">slurm</a>
-            </span>
-            
-            <span>
-                <a href="/tags/snippet/">snippet</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ssh/">ssh</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tcpdump/">tcpdump</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tcptrace/">tcptrace</a>
-            </span>
-            
-            <span>
-                <a href="/tags/template/">template</a>
-            </span>
-            
-            <span>
-                <a href="/tags/terminal/">terminal</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tiff/">tiff</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tips-and-tricks/">tips and tricks</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tpick/">tpick</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tr/">tr</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tshark/">tshark</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tun/">tun</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tutorial/">tutorial</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ubuntu/">ubuntu</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ubuntu-12.04/">ubuntu 12.04</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ubuntu-server/">ubuntu server</a>
-            </span>
-            
-            <span>
-                <a href="/tags/visualization/">visualization</a>
-            </span>
-            
-            <span>
-                <a href="/tags/vpn/">vpn</a>
-            </span>
-            
-            <span>
-                <a href="/tags/yandex.disk/">yandex.disk</a>
-            </span>
-            
-            <span>
-                <a href="/tags/zotero/">zotero</a>
-            </span>
-            
-            <span>
-                <a href="/tags/zotfile/">zotfile</a>
-            </span>
-            
-        </div>
-    </div>
-    <div class="sidebar-item sidebar-toc">
-        <h3>TOC</h3><nav id="TableOfContents">
-  <ul>
-    <li><a href="#download-and-install-btsync">Download and install btsync</a></li>
-    <li><a href="#configure-shared-folder">Configure shared folder</a></li>
-    <li><a href="#init-script">Init script</a></li>
-  </ul>
-</nav></div>
-</aside>
-        </div>
-        <div class="btn">
-    <div class="btn-menu" id="btn-menu">
-        <i class="iconfont icon-grid-sharp"></i>
-    </div>
-    <div class="btn-toggle-mode">
-        <i class="iconfont icon-contrast-sharp"></i>
-    </div>
-    <div class="btn-scroll-top">
-        <i class="iconfont icon-chevron-up-circle-sharp"></i>
-    </div>
-</div>
-<aside class="sidebar-mobile" style="display: none;">
-  <div class="sidebar-wrapper">
-    
-    <div class="sidebar-item sidebar-pages">
-        <h3>Pages</h3>
-        <ul>
-            
-            <li>
-                <a href="/">Home</a>
-            </li>
-            
-            <li>
-                <a href="/resume/">Resume</a>
-            </li>
-            
-            <li>
-                <a href="/index.xml">RSS</a>
-            </li>
-            
-        </ul>
-    </div>
-    
-    <div class="sidebar-item sidebar-links">
-        <h3>Links</h3>
-        <ul>
-            
-            <li>
-                <a href="https://github.com/bikulov" target="_blank"><span>Github</span></a>
-            </li>
-            
-            <li>
-                <a href="https://linkedin.com/in/bikulov" target="_blank"><span>LinkedIn</span></a>
-            </li>
-            
-            <li>
-                <a href="https://twitter.com/volukib" target="_blank"><span>Twitter</span></a>
-            </li>
-            
-        </ul>
-    </div>
-    
-    <div class="sidebar-item sidebar-tags">
-        <h3>Tags</h3>
-        <div>
-            
-            <span>
-                <a href="/tags/awk/">awk</a>
-            </span>
-            
-            <span>
-                <a href="/tags/backup/">backup</a>
-            </span>
-            
-            <span>
-                <a href="/tags/bash/">bash</a>
-            </span>
-            
-            <span>
-                <a href="/tags/blender/">blender</a>
-            </span>
-            
-            <span>
-                <a href="/tags/btsync/">btsync</a>
-            </span>
-            
-            <span>
-                <a href="/tags/c/">c</a>
-            </span>
-            
-            <span>
-                <a href="/tags/c&#43;&#43;/">c&#43;&#43;</a>
-            </span>
-            
-            <span>
-                <a href="/tags/centos/">centos</a>
-            </span>
-            
-            <span>
-                <a href="/tags/cmake/">cmake</a>
-            </span>
-            
-            <span>
-                <a href="/tags/config/">config</a>
-            </span>
-            
-            <span>
-                <a href="/tags/console/">console</a>
-            </span>
-            
-            <span>
-                <a href="/tags/cpp/">cpp</a>
-            </span>
-            
-            <span>
-                <a href="/tags/cron/">cron</a>
-            </span>
-            
-            <span>
-                <a href="/tags/cuda/">cuda</a>
-            </span>
-            
-            <span>
-                <a href="/tags/dd/">dd</a>
-            </span>
-            
-            <span>
-                <a href="/tags/docker/">docker</a>
-            </span>
-            
-            <span>
-                <a href="/tags/dokuwiki/">dokuwiki</a>
-            </span>
-            
-            <span>
-                <a href="/tags/drupal/">drupal</a>
-            </span>
-            
-            <span>
-                <a href="/tags/du/">du</a>
-            </span>
-            
-            <span>
-                <a href="/tags/exceptions/">exceptions</a>
-            </span>
-            
-            <span>
-                <a href="/tags/fatnode/">fatnode</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ffmpeg/">ffmpeg</a>
-            </span>
-            
-            <span>
-                <a href="/tags/firefox/">firefox</a>
-            </span>
-            
-            <span>
-                <a href="/tags/gengetopt/">gengetopt</a>
-            </span>
-            
-            <span>
-                <a href="/tags/heapsort/">heapsort</a>
-            </span>
-            
-            <span>
-                <a href="/tags/howto/">howto</a>
-            </span>
-            
-            <span>
-                <a href="/tags/i3/">i3</a>
-            </span>
-            
-            <span>
-                <a href="/tags/imagemagick/">imagemagick</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ip/">ip</a>
-            </span>
-            
-            <span>
-                <a href="/tags/iptables/">iptables</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ipython/">ipython</a>
-            </span>
-            
-            <span>
-                <a href="/tags/joomla/">joomla</a>
-            </span>
-            
-            <span>
-                <a href="/tags/jupyter/">jupyter</a>
-            </span>
-            
-            <span>
-                <a href="/tags/latex/">latex</a>
-            </span>
-            
-            <span>
-                <a href="/tags/libcheese/">libcheese</a>
-            </span>
-            
-            <span>
-                <a href="/tags/linux/">linux</a>
-            </span>
-            
-            <span>
-                <a href="/tags/lxc/">lxc</a>
-            </span>
-            
-            <span>
-                <a href="/tags/makefile/">makefile</a>
-            </span>
-            
-            <span>
-                <a href="/tags/matplotlib/">matplotlib</a>
-            </span>
-            
-            <span>
-                <a href="/tags/mercurial/">mercurial</a>
-            </span>
-            
-            <span>
-                <a href="/tags/montage/">montage</a>
-            </span>
-            
-            <span>
-                <a href="/tags/mysql/">mysql</a>
-            </span>
-            
-            <span>
-                <a href="/tags/nautilus/">nautilus</a>
-            </span>
-            
-            <span>
-                <a href="/tags/nginx/">nginx</a>
-            </span>
-            
-            <span>
-                <a href="/tags/numpy/">numpy</a>
-            </span>
-            
-            <span>
-                <a href="/tags/openvpn/">openvpn</a>
-            </span>
-            
-            <span>
-                <a href="/tags/openvz/">openvz</a>
-            </span>
-            
-            <span>
-                <a href="/tags/paraview/">paraview</a>
-            </span>
-            
-            <span>
-                <a href="/tags/pcap/">pcap</a>
-            </span>
-            
-            <span>
-                <a href="/tags/pcmanfm/">PCManFM</a>
-            </span>
-            
-            <span>
-                <a href="/tags/pdf/">pdf</a>
-            </span>
-            
-            <span>
-                <a href="/tags/perl/">perl</a>
-            </span>
-            
-            <span>
-                <a href="/tags/plots/">plots</a>
-            </span>
-            
-            <span>
-                <a href="/tags/png/">png</a>
-            </span>
-            
-            <span>
-                <a href="/tags/postgres/">postgres</a>
-            </span>
-            
-            <span>
-                <a href="/tags/postgresql/">postgresql</a>
-            </span>
-            
-            <span>
-                <a href="/tags/programmer-tools/">programmer tools</a>
-            </span>
-            
-            <span>
-                <a href="/tags/python/">python</a>
-            </span>
-            
-            <span>
-                <a href="/tags/quicksort/">quicksort</a>
-            </span>
-            
-            <span>
-                <a href="/tags/research/">research</a>
-            </span>
-            
-            <span>
-                <a href="/tags/rhodecode/">rhodecode</a>
-            </span>
-            
-            <span>
-                <a href="/tags/scan/">scan</a>
-            </span>
-            
-            <span>
-                <a href="/tags/scanimage/">scanimage</a>
-            </span>
-            
-            <span>
-                <a href="/tags/science/">science</a>
-            </span>
-            
-            <span>
-                <a href="/tags/scipy/">scipy</a>
-            </span>
-            
-            <span>
-                <a href="/tags/screen-capture/">screen capture</a>
-            </span>
-            
-            <span>
-                <a href="/tags/script/">script</a>
-            </span>
-            
-            <span>
-                <a href="/tags/scrot/">scrot</a>
-            </span>
-            
-            <span>
-                <a href="/tags/seaborn/">seaborn</a>
-            </span>
-            
-            <span>
-                <a href="/tags/sed/">sed</a>
-            </span>
-            
-            <span>
-                <a href="/tags/selfhosted/">selfhosted</a>
-            </span>
-            
-            <span>
-                <a href="/tags/server/">server</a>
-            </span>
-            
-            <span>
-                <a href="/tags/slurm/">slurm</a>
-            </span>
-            
-            <span>
-                <a href="/tags/snippet/">snippet</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ssh/">ssh</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tcpdump/">tcpdump</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tcptrace/">tcptrace</a>
-            </span>
-            
-            <span>
-                <a href="/tags/template/">template</a>
-            </span>
-            
-            <span>
-                <a href="/tags/terminal/">terminal</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tiff/">tiff</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tips-and-tricks/">tips and tricks</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tpick/">tpick</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tr/">tr</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tshark/">tshark</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tun/">tun</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tutorial/">tutorial</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ubuntu/">ubuntu</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ubuntu-12.04/">ubuntu 12.04</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ubuntu-server/">ubuntu server</a>
-            </span>
-            
-            <span>
-                <a href="/tags/visualization/">visualization</a>
-            </span>
-            
-            <span>
-                <a href="/tags/vpn/">vpn</a>
-            </span>
-            
-            <span>
-                <a href="/tags/yandex.disk/">yandex.disk</a>
-            </span>
-            
-            <span>
-                <a href="/tags/zotero/">zotero</a>
-            </span>
-            
-            <span>
-                <a href="/tags/zotfile/">zotfile</a>
-            </span>
-            
-        </div>
-    </div>
-    
-    
-    
-    <div class="sidebar-item sidebar-toc">
-        <h3>TOC</h3>
-        <nav id="TableOfContents">
-  <ul>
-    <li><a href="#download-and-install-btsync">Download and install btsync</a></li>
-    <li><a href="#configure-shared-folder">Configure shared folder</a></li>
-    <li><a href="#init-script">Init script</a></li>
-  </ul>
-</nav>
-    </div>
-    
-    
   </div>
-</aside>
-    </main>
+</div>
+<div class="row">
+  <div class="col">
+    <p>This note describes installation of Bittorrent Sync on Ubuntu. Tutorial was tested on Ubuntu 12.04, but it must work for all Debian-based systems. Read full btsync  <a href="http://btsync.s3-website-us-east-1.amazonaws.com/BitTorrentSyncUserGuide.pdf">manual</a> for advanced information.</p>
+<h2 id="download-and-install-btsync">
+  <a class="text-decoration-none" href="#download-and-install-btsync">#</a>&nbsp;Download and install btsync
+</h2><p>Btsync is provided as single binary file. We will place it into <code>/usr/bin</code> directory. So, download archive with binary file, extract it, remove archive, move binary:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>wget http://btsync.s3-website-us-east-1.amazonaws.com/btsync_x64.tar.gz
+</span></span><span style="display:flex;"><span>tar xf btsync_x64.tar.gz
+</span></span><span style="display:flex;"><span>rm btsync_x64.tar.gz
+</span></span><span style="display:flex;"><span>sudo mv btsync /usr/bin/btsync
+</span></span></code></pre></div><h2 id="configure-shared-folder">
+  <a class="text-decoration-none" href="#configure-shared-folder">#</a>&nbsp;Configure shared folder
+</h2><p>We will use configuration file instead of web interface. Create <code>~/.sync/config.json</code> (for <code>&lt;home folder&gt;</code> for user <code>username</code> is <code>/home/username</code>) with content provided below. If you have several users you want to use btsync, create config in their home folders.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;device_name&#34;</span>: <span style="color:#e6db74">&#34;&lt;computer name&gt;&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;pid_file&#34;</span> : <span style="color:#e6db74">&#34;&lt;home folder&gt;/.sync/btsync.pid&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;storage_path&#34;</span>: <span style="color:#e6db74">&#34;&lt;home folder&gt;/.sync&#34;</span>,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;listening_port&#34;</span> : <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;check_for_updates&#34;</span> : <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;use_upnp&#34;</span> : <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;download_limit&#34;</span> : <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;upload_limit&#34;</span> : <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;lan_encrypt_data&#34;</span>: <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;shared_folders&#34;</span> :
+</span></span><span style="display:flex;"><span>  [
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;secret&#34;</span> : <span style="color:#e6db74">&#34;&lt;secret key&gt;&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;dir&#34;</span> : <span style="color:#e6db74">&#34;&lt;dir path&gt;&#34;</span>,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;use_relay_server&#34;</span> : <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;use_tracker&#34;</span> : <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;use_dht&#34;</span> : <span style="color:#66d9ef">false</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;search_lan&#34;</span> : <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;use_sync_trash&#34;</span> : <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  ]
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="init-script">
+  <a class="text-decoration-none" href="#init-script">#</a>&nbsp;Init script
+</h2><p>Create file <code>/etc/init.d/btsync</code> with content (thanks to <a href="https://gist.github.com/MendelGusmao/5398362">Mendel</a>, you need to list users who will use btsync in <code>BTSYNC_USERS</code> variable, every user must have config file from previous section in home folder):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/sh
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">### BEGIN INIT INFO</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Provides: btsync</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Required-Start: $local_fs $remote_fs</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Required-Stop: $local_fs $remote_fs</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Should-Start: $network</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Should-Stop: $network</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Default-Start: 2 3 4 5</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Default-Stop: 0 1 6</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Short-Description: Multi-user daemonized version of btsync.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Description: Starts the btsync daemon for all registered users.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">### END INIT INFO</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Source: https://gist.github.com/MendelGusmao/5398362</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Replace with linux users you want to run BTSync clients for</span>
+</span></span><span style="display:flex;"><span>BTSYNC_USERS<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;kenarius&#34;</span>
+</span></span><span style="display:flex;"><span>DAEMON<span style="color:#f92672">=</span>/usr/bin/btsync
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>start<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> btsuser in $BTSYNC_USERS; <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    HOMEDIR<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>getent passwd $btsuser | cut -d: -f6<span style="color:#e6db74">`</span>
+</span></span><span style="display:flex;"><span>    config<span style="color:#f92672">=</span>$HOMEDIR/.sync/config.json
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> -f $config <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>      echo <span style="color:#e6db74">&#34;Starting BTSync for </span>$btsuser<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>      start-stop-daemon -b -o -c $btsuser -S -u $btsuser -x $DAEMON -- --config $config
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>      echo <span style="color:#e6db74">&#34;Couldn&#39;t start BTSync for </span>$btsuser<span style="color:#e6db74"> (no </span>$config<span style="color:#e6db74"> found)&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">fi</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">done</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>stop<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> btsuser in $BTSYNC_USERS; <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    dbpid<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>pgrep -fu $btsuser $DAEMON<span style="color:#e6db74">`</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> ! -z <span style="color:#e6db74">&#34;</span>$dbpid<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>      echo <span style="color:#e6db74">&#34;Stopping btsync for </span>$btsuser<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>      start-stop-daemon -o -c $btsuser -K -u $btsuser -x $DAEMON
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">fi</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">done</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>status<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> btsuser in $BTSYNC_USERS; <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    dbpid<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>pgrep -fu $btsuser $DAEMON<span style="color:#e6db74">`</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> -z <span style="color:#e6db74">&#34;</span>$dbpid<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>      echo <span style="color:#e6db74">&#34;btsync for USER </span>$btsuser<span style="color:#e6db74">: not running.&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>      echo <span style="color:#e6db74">&#34;btsync for USER </span>$btsuser<span style="color:#e6db74">: running (pid </span>$dbpid<span style="color:#e6db74">)&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">fi</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">done</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;</span>$1<span style="color:#e6db74">&#34;</span> in
+</span></span><span style="display:flex;"><span> start<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>start
+</span></span><span style="display:flex;"><span>;;
+</span></span><span style="display:flex;"><span>stop<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>stop
+</span></span><span style="display:flex;"><span>;;
+</span></span><span style="display:flex;"><span>restart|reload|force-reload<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>stop
+</span></span><span style="display:flex;"><span>start
+</span></span><span style="display:flex;"><span>;;
+</span></span><span style="display:flex;"><span>status<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>status
+</span></span><span style="display:flex;"><span>;;
+</span></span><span style="display:flex;"><span>*<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;Usage: /etc/init.d/btsync {start|stop|reload|force-reload|restart|status}&#34;</span>
+</span></span><span style="display:flex;"><span>exit <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">esac</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>exit <span style="color:#ae81ff">0</span>
+</span></span></code></pre></div><p>That&rsquo;s all. Now make btsync executable, register init script with <code>update-rc.d</code> and start service. Issue as <code>root</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cd /etc/init.d/
+</span></span><span style="display:flex;"><span>chmod +x btsync
+</span></span><span style="display:flex;"><span>update-rc.d btsync defaults
+</span></span><span style="display:flex;"><span>service btsync start
+</span></span></code></pre></div>
+  </div>
+</div>
 
-    <footer>
-    <div class="container-lg clearfix">
-        <div class="col-12 footer">
-            
-            <span>&copy; 2012-2021
-                <a href="https://bikulov.org">bikulov</a>
-                 | <a href="https://github.com/bikulov/bikulov.github.io">Source code</a> 
-                | Powered by <a href="https://github.com/amzrk2/hugo-theme-fuji/"
-                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
-                                                    target="_blank">Hugo</a> 
-            </span>
-        </div>
-    </div>
-</footer>
-
-    
-<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.0/lazysizes.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
-
-
-
-<script defer src="/assets/js/fuji.min.js"></script>
-
-
-</body>
+  </div><div class="container-fluid volukib-footer p-2">
+  <footer class="text-center">
+    <a class="text-decoration-none text-light" href="https://bikulov.org/">Bikulov&#39;s blog 2022</a>
+  </footer>
+</div></body>
 
 </html>

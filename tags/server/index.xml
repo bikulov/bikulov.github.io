@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>server on :) bikulov.ORG</title>
+    <title>server on Bikulov&#39;s blog</title>
     <link>https://bikulov.org/tags/server/</link>
-    <description>Recent content in server on :) bikulov.ORG</description>
+    <description>Recent content in server on Bikulov&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <language>ru</language>
+    <copyright>Network Notes 2022</copyright>
     <lastBuildDate>Tue, 02 Feb 2021 09:30:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/server/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>How to setup own selfhosted wiki</title>
@@ -13,15 +14,8 @@
       <pubDate>Tue, 02 Feb 2021 09:30:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2021/02/02/how-to-setup-own-selfhosted-wiki/</guid>
-      <description>&lt;p&gt;Disclaimer: many links in this post are referral. If you are uncomfortable with it, just search for the text in the links and use results from the search engines.&lt;/p&gt;
-&lt;h2 id=&#34;plan&#34;&gt;Plan&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;Spin up a new virtual server (1 CPU + 1 GB RAM is fairly enough) in &lt;a href=&#34;https://www.vultr.com/?ref=7552058&#34; target=&#34;_blank&#34;&gt;Vultr&lt;/a&gt;, &lt;a href=&#34;https://m.do.co/c/8aba7c4cd737&#34; target=&#34;_blank&#34;&gt;Digital Ocean&lt;/a&gt;, etc.&lt;/li&gt;
-&lt;li&gt;Register a new domain name&lt;/li&gt;
-&lt;li&gt;Install Docker and Docker Compose&lt;/li&gt;
-&lt;li&gt;Use docker-compose to deploy a wiki&lt;/li&gt;
-&lt;li&gt;Backups&lt;/li&gt;
-&lt;/ol&gt;</description>
+      <description>Disclaimer: many links in this post are referral. If you are uncomfortable with it, just search for the text in the links and use results from the search engines.
+#&amp;nbsp;Plan  Spin up a new virtual server (1 CPU + 1 GB RAM is fairly enough) in Vultr, Digital Ocean, etc. Register a new domain name Install Docker and Docker Compose Use docker-compose to deploy a wiki Backups  #&amp;nbsp;Virtual server For example, let it be Digital Ocean.</description>
     </item>
     
     <item>
@@ -30,7 +24,10 @@
       <pubDate>Sun, 22 Dec 2019 02:30:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2019/12/22/wireguard-on-ubuntu-server-and-android-client/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;https://www.wireguard.com/&#34; target=&#34;_blank&#34;&gt;WireGuard&lt;/a&gt; is lightweight VPN with extremely simple configuration. All below was tested on Ubuntu 18.04 as server and Anroid 8.0.0 as client.&lt;/p&gt;</description>
+      <description>WireGuard is lightweight VPN with extremely simple configuration. All below was tested on Ubuntu 18.04 as server and Anroid 8.0.0 as client.
+#&amp;nbsp;Server Installation from official ppa:
+apt-add-repository ppa:wireguard/wireguard apt update apt install wireguard Client and server authenticate each other with asymmetric keys (like in SSH). Keys are generated with management utility wg:
+wg genkey This will be server auth key (client auth key can be generated with the same command or in mobile application, you will need public part in config).</description>
     </item>
     
     <item>
@@ -39,7 +36,10 @@
       <pubDate>Fri, 19 Aug 2016 18:26:36 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2016/08/19/tips-for-lxc-2-unprivileged-containers/</guid>
-      <description>&lt;p&gt;LXC containers are great for application isolation and safe deployment. &lt;a href=&#34;http://unix.stackexchange.com/questions/181341/what-are-benefits-and-downsides-of-unprivileged-containers&#34; target=&#34;_blank&#34;&gt;Running unprivileged containers is the safest way to run containers in a production environment&lt;/a&gt;. This note contains enough information to create your own safe container.&lt;/p&gt;</description>
+      <description>LXC containers are great for application isolation and safe deployment. Running unprivileged containers is the safest way to run containers in a production environment. This note contains enough information to create your own safe container.
+Install LXC:
+apt-get install -y lxc Now create non-root system user for lxc:
+useradd --home-dir /srv/lxc --create-home lxc echo &amp;#34;lxc veth lxcbr0 2&amp;#34; | sudo tee -a /etc/lxc/lxc-usernet passwd lxc &amp;lt;type password&amp;gt; I recommend to add autostart as default behaviour:</description>
     </item>
     
     <item>
@@ -48,8 +48,8 @@
       <pubDate>Thu, 09 Oct 2014 10:02:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2014/10/09/tips-for-lxc-creation-autostart-openvpn-and-port-forwarding-to-containers/</guid>
-      <description>&lt;p&gt;I&amp;rsquo;ve completed setting up my comfort set of LXC containers and want to save some points I spent a lot of time for or things for copy-paste.&lt;/p&gt;
-&lt;p&gt;I used the official &lt;a href=&#34;https://help.ubuntu.com/lts/serverguide/lxc.html&#34; target=&#34;_blank&#34;&gt;Ubuntu Server Guide&lt;/a&gt; but &lt;a href=&#34;https://www.digitalocean.com/community/tutorials/getting-started-with-lxc-on-an-ubuntu-13-04-vps&#34; target=&#34;_blank&#34;&gt;note&lt;/a&gt; at Digital Ocean knowledge base also helped me a lot. I created 3 containers: one for vpn, one for site on &lt;a href=&#34;https://bikulov.org/blog/2014/08/09/setup-drupal-7-with-nginx-and-postgresql-on-ubuntu-14-dot-04/&#34;&gt;Drupal&lt;/a&gt; and last one as www proxy for second one with nginx only.&lt;/p&gt;</description>
+      <description>I&amp;rsquo;ve completed setting up my comfort set of LXC containers and want to save some points I spent a lot of time for or things for copy-paste.
+I used the official Ubuntu Server Guide but note at Digital Ocean knowledge base also helped me a lot. I created 3 containers: one for vpn, one for site on Drupal and last one as www proxy for second one with nginx only.</description>
     </item>
     
     <item>
@@ -58,9 +58,9 @@
       <pubDate>Sat, 09 Aug 2014 17:34:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2014/08/09/setup-drupal-7-with-nginx-and-postgresql-on-ubuntu-14.04/</guid>
-      <description>&lt;p&gt;This note is similar to previous &lt;a href=&#34;https://bikulov.org/blog/2013/04/28/ubuntu-server-12-04-drupal-7-nginx-mysql/&#34;&gt;drupal&lt;/a&gt; and &lt;a href=&#34;https://bikulov.org/blog/2013/08/19/setting-up-joomla-3-dot-1-5-with-postgresql-on-ubuntu-13-dot-04/&#34;&gt;joomla&lt;/a&gt; installations. Install requirements (webserver, php5, DB server, DB adapter for php) as root:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;apt-get install -y nginx php5-fpm nginx postgresql php5-pgsql php5-gd
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+      <description>This note is similar to previous drupal and joomla installations. Install requirements (webserver, php5, DB server, DB adapter for php) as root:
+apt-get install -y nginx php5-fpm nginx postgresql php5-pgsql php5-gd Create user and database (replace USER with desired username and HOSTNAME_db with database name, we will need this values in Drupal setup later) for future site:
+sudo -u postgres -i createuser USER --pwprompt --encrypted createdb HOSTNAME_db exit Now setup nginx.</description>
     </item>
     
     <item>
@@ -69,9 +69,9 @@
       <pubDate>Mon, 09 Sep 2013 23:24:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2013/09/09/email-notification-if-ip-is-changed-with-python-and-cron/</guid>
-      <description>&lt;p&gt;This Python script retrieves computer&amp;rsquo;s external IP address (using internet.yandex.ru) and emails message with new IP if IP has been changed since last check. BeautifulSoup module is needed, so install it if you have no installed version:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;sudo pip install beautifulsoup
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+      <description>This Python script retrieves computer&amp;rsquo;s external IP address (using internet.yandex.ru) and emails message with new IP if IP has been changed since last check. BeautifulSoup module is needed, so install it if you have no installed version:
+sudo pip install beautifulsoup Script:
+#!/usr/bin/env python  from BeautifulSoup import BeautifulSoup import urllib2 import re import smtplib from email.mime.text import MIMEText  logFile = &amp;#39;/var/log/ippywatchdog.log&amp;#39;  request = urllib2.urlopen(&amp;#39;http://internet.yandex.ru&amp;#39;)  soup = BeautifulSoup(request) yandexIpResponse = soup.</description>
     </item>
     
     <item>
@@ -80,7 +80,9 @@
       <pubDate>Mon, 19 Aug 2013 16:15:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2013/08/19/setting-up-joomla-3.1.5-with-postgresql-on-ubuntu-13.04/</guid>
-      <description></description>
+      <description>#&amp;nbsp;Installing dependencies Firstly you need to install webserver, php-related stuff and database server (we use PostgreSQL).
+apt-get install -y php5-fpm nginx postgresql php5-pgsql Now download and install Joomla (currently 3.1.5 is the latest). Please, update following lines with latest version if nescessary:
+cd /srv wget http://joomlacode.org/gf/download/frsrelease/18622/83487/Joomla_3.1.5-Stable-Full_Package.zip unzip Joomla_3.1.5-Stable-Full_Package.zip -d joomla chown -R www-data:www-data joomla #&amp;nbsp;Database setup The only two things you need to do is to create user (joomla in example) and database (joomla in example).</description>
     </item>
     
     <item>
@@ -89,11 +91,11 @@
       <pubDate>Sat, 10 Aug 2013 09:14:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2013/08/10/enable-tun-for-openvz-ubuntu-12.04-containers-in-centos-6.4/</guid>
-      <description>&lt;p&gt;To enable tun device in OpenVZ containers tun module&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;needs to be loaded in the host system (in my case CentOS 6.4)&lt;/li&gt;
-&lt;li&gt;containter (in my case Ubuntu Server 12.04) must be allowed to use tun&lt;/li&gt;
-&lt;/ul&gt;</description>
+      <description>To enable tun device in OpenVZ containers tun module
+ needs to be loaded in the host system (in my case CentOS 6.4) containter (in my case Ubuntu Server 12.04) must be allowed to use tun  I&amp;rsquo;ve grabbed container configuration from askbuntu.
+#&amp;nbsp;Load tun after boot automatically Edit tun.modules:
+# vim /etc/sysconfig/modules/tun.modules #!/bin/sh /sbin/modprobe tun Set permissions for tun.modules:
+chmod 755 /etc/sysconfig/modules/tun.modules Reboot host system and test tun module loaded:</description>
     </item>
     
     <item>
@@ -102,7 +104,8 @@
       <pubDate>Thu, 08 Aug 2013 20:54:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2013/08/08/configuring-ubuntu-12.04-in-openvz-on-centos-6.4/</guid>
-      <description>&lt;p&gt;This howto is based on two sources: &lt;a href=&#34;http://openvz.org/Quick_Installation_CentOS_6&#34; target=&#34;_blank&#34;&gt;Official wiki&lt;/a&gt; and Amutu blog &lt;a href=&#34;http://amutu.com/blog/2013/03/centos_bridge_devic/&#34; target=&#34;_blank&#34;&gt;entry&lt;/a&gt;. In short, the main difficulty is in bridge network configuration: correct network configuration doesn&amp;rsquo;t work in CentOS 6.4 while NetworkManager is running. I compiled official documentation and fix found in Amutu blog here in one entry.&lt;/p&gt;</description>
+      <description>This howto is based on two sources: Official wiki and Amutu blog entry. In short, the main difficulty is in bridge network configuration: correct network configuration doesn&amp;rsquo;t work in CentOS 6.4 while NetworkManager is running. I compiled official documentation and fix found in Amutu blog here in one entry.
+I assume you have clean installed CentOS. I tried all on x32 hardware, so you may need to fix container type in container creation section if you use x64 CentOS.</description>
     </item>
     
     <item>
@@ -111,25 +114,32 @@
       <pubDate>Wed, 31 Jul 2013 09:31:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2013/07/31/creating-zip-with-vpn-client-keys-and-configuration-files/</guid>
-      <description>&lt;p&gt;Depends on server configuration, each OpenVPN client needs configuration file (client.conf for *nix and client.ovpn for windows), certificate authority (ca.crt), [optional] tls auth file (ta.key), user crt and key.&lt;/p&gt;</description>
+      <description>Depends on server configuration, each OpenVPN client needs configuration file (client.conf for *nix and client.ovpn for windows), certificate authority (ca.crt), [optional] tls auth file (ta.key), user crt and key.
+Typical OpenVPN client configuration file looks like (ca and ta files in server subdirectory):
+client remote &amp;lt;vpn server address&amp;gt; port 1194 proto udp dev tun dev-type tun ns-cert-type server reneg-sec 86400 comp-lzo yes verb 3 ca server/ca.crt cert &amp;lt;user crt&amp;gt; key &amp;lt;user key&amp;gt; tls-auth server/ta.</description>
     </item>
     
     <item>
       <title>Ubuntu Server 12.04 &#43; Slurm 2.5.7 fatnodes</title>
-      <link>https://bikulov.org/blog/2013/06/18/ubuntu-server-12.04-slurm-2.5.7-fatnodes/</link>
+      <link>https://bikulov.org/blog/2013/06/18/ubuntu-server-12.04--slurm-2.5.7-fatnodes/</link>
       <pubDate>Tue, 18 Jun 2013 09:00:00 +0300</pubDate>
       
-      <guid>https://bikulov.org/blog/2013/06/18/ubuntu-server-12.04-slurm-2.5.7-fatnodes/</guid>
-      <description>&lt;p&gt;SLURM (Simple Linux Utility for Resource Management) — job scheduler and resource manager usually installed on supercomputers. For example, it runs on Lomonosov supercomputer in MSU, Moscow, Russia.&lt;/p&gt;</description>
+      <guid>https://bikulov.org/blog/2013/06/18/ubuntu-server-12.04--slurm-2.5.7-fatnodes/</guid>
+      <description>SLURM (Simple Linux Utility for Resource Management) — job scheduler and resource manager usually installed on supercomputers. For example, it runs on Lomonosov supercomputer in MSU, Moscow, Russia.
+Usually one physical or virtual computer (physical node) is one logical node is SLURM. If one physical node serve more than one logical nodes, it called «fat node». Fat nodes are needed in case you have a lot of memory at physical node or several GPUs on it.</description>
     </item>
     
     <item>
       <title>Ubuntu Server 12.04 &#43; Drupal 7 &#43; nginx &#43; MySQL</title>
-      <link>https://bikulov.org/blog/2013/04/28/ubuntu-server-12.04-drupal-7-nginx-mysql/</link>
+      <link>https://bikulov.org/blog/2013/04/28/ubuntu-server-12.04--drupal-7--nginx--mysql/</link>
       <pubDate>Sun, 28 Apr 2013 09:00:00 +0300</pubDate>
       
-      <guid>https://bikulov.org/blog/2013/04/28/ubuntu-server-12.04-drupal-7-nginx-mysql/</guid>
-      <description>&lt;p&gt;Default Drupal package in Ubuntu installs Apache, but I prefer nginx as a webserver. In this note I’ll describe steps necessary to get Drupal 7 work.&lt;/p&gt;</description>
+      <guid>https://bikulov.org/blog/2013/04/28/ubuntu-server-12.04--drupal-7--nginx--mysql/</guid>
+      <description>Default Drupal package in Ubuntu installs Apache, but I prefer nginx as a webserver. In this note I’ll describe steps necessary to get Drupal 7 work.
+All variables in square brackets must be replaced by your names or passwords.
+Site will be available at url [sitename].
+#&amp;nbsp;Installing packages Install all necessary packages:
+sudo apt-get install -y nginx php5-fpm php-apc php5-mysql mysql-client-core-5.5 mysql-server php5-gd During the installation MySQL will ask you for root password.</description>
     </item>
     
     <item>
@@ -138,24 +148,26 @@
       <pubDate>Mon, 29 Oct 2012 09:00:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2012/10/29/setting-up-rhodecode-on-ubuntu-12.04/</guid>
-      <description>&lt;p&gt;This howto is based on a great guide with modifications. All settings are made for server domain hg.kenarius.org. You can replace it with your one easily.&lt;/p&gt;</description>
+      <description>This howto is based on a great guide with modifications. All settings are made for server domain hg.kenarius.org. You can replace it with your one easily.
+#&amp;nbsp;Preparation #&amp;nbsp;Ubuntu Update Ubuntu with the commands:
+sudo apt-get update sudo apt-get upgrade Install pip and virtualenv with the commands:
+sudo apt-get install python-pip sudo pip install virtualenv #&amp;nbsp;Nginx Install nginx:
+sudo apt-get install nginx Add create ssl certificates:
+sudo openssl req -new -x509 -days 9999 -nodes -out host.</description>
     </item>
     
     <item>
       <title>Daily backups (files &#43; mysql) to yandex.disk in Ubuntu 12.04</title>
-      <link>https://bikulov.org/blog/2012/08/30/daily-backups-files-mysql-to-yandex.disk-in-ubuntu-12.04/</link>
+      <link>https://bikulov.org/blog/2012/08/30/daily-backups-files--mysql-to-yandex.disk-in-ubuntu-12.04/</link>
       <pubDate>Thu, 30 Aug 2012 09:30:00 +0300</pubDate>
       
-      <guid>https://bikulov.org/blog/2012/08/30/daily-backups-files-mysql-to-yandex.disk-in-ubuntu-12.04/</guid>
-      <description>&lt;p&gt;We all do backups. This note is about doing them on Ubuntu 12.04.&lt;/p&gt;
-&lt;p&gt;Tasks:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;archive important folders&lt;/li&gt;
-&lt;li&gt;dump mysql databases&lt;/li&gt;
-&lt;li&gt;upload all to yandex.disk (online web storage with 10GB space)&lt;/li&gt;
-&lt;li&gt;delete old backups&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;I’ll save only backups for last five days.&lt;/p&gt;</description>
+      <guid>https://bikulov.org/blog/2012/08/30/daily-backups-files--mysql-to-yandex.disk-in-ubuntu-12.04/</guid>
+      <description>We all do backups. This note is about doing them on Ubuntu 12.04.
+Tasks:
+ archive important folders dump mysql databases upload all to yandex.disk (online web storage with 10GB space) delete old backups  I’ll save only backups for last five days.
+#&amp;nbsp;Archiving There are many different backup tools, see wiki list. I’ve chosen DAR.
+One can install it in Ubuntu 12.04 by typing
+# apt-get install dar It is a console utility and it can be confusing for beginner.</description>
     </item>
     
   </channel>

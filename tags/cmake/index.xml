@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>cmake on :) bikulov.ORG</title>
+    <title>cmake on Bikulov&#39;s blog</title>
     <link>https://bikulov.org/tags/cmake/</link>
-    <description>Recent content in cmake on :) bikulov.ORG</description>
+    <description>Recent content in cmake on Bikulov&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <language>ru</language>
+    <copyright>Network Notes 2022</copyright>
     <lastBuildDate>Tue, 24 Dec 2013 22:44:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/cmake/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Example of CMake file for CUDA&#43;CPP code</title>
@@ -13,7 +14,10 @@
       <pubDate>Tue, 24 Dec 2013 22:44:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2013/12/24/example-of-cmake-file-for-cuda-cpp-code/</guid>
-      <description>&lt;p&gt;Makefiles are quite straightforward and easy to write (in reasonable situations). But GNU Make is not crossplafrom. CMake is cross-platform, cross-application (it can generate projects for different IDEs and Makefile itself).&lt;/p&gt;</description>
+      <description>Makefiles are quite straightforward and easy to write (in reasonable situations). But GNU Make is not crossplafrom. CMake is cross-platform, cross-application (it can generate projects for different IDEs and Makefile itself).
+It also allows you to split source directory and directory with intermediate files and compiled binary. Now CMake natively supports CUDA.
+Here is CMakeLists.txt example I use (simply place it next to your source files to try yourself):
+CMAKE_MINIMUM_REQUIRED(VERSION 2.</description>
     </item>
     
   </channel>

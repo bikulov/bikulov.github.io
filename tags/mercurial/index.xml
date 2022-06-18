@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>mercurial on :) bikulov.ORG</title>
+    <title>mercurial on Bikulov&#39;s blog</title>
     <link>https://bikulov.org/tags/mercurial/</link>
-    <description>Recent content in mercurial on :) bikulov.ORG</description>
+    <description>Recent content in mercurial on Bikulov&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <language>ru</language>
+    <copyright>Network Notes 2022</copyright>
     <lastBuildDate>Sat, 02 Nov 2013 21:53:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/mercurial/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Set application version in gengetopt config based on Mercurial revision</title>
@@ -13,9 +14,9 @@
       <pubDate>Sat, 02 Nov 2013 21:53:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2013/11/02/set-application-version-in-gengetopt-config-based-on-mercurial-revision/</guid>
-      <description>&lt;p&gt;Previously I wrote about gengetopt tool to parse command line arguments. There was a line about application version.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;version &amp;quot;13.10.25&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;It is important to keep this line up to date every time you compile and deploy binary.&lt;/p&gt;</description>
+      <description>Previously I wrote about gengetopt tool to parse command line arguments. There was a line about application version.
+version &amp;#34;13.10.25&amp;#34; It is important to keep this line up to date every time you compile and deploy binary.
+I suggest to use Python script for this. Preliminaries: hg id -n returns local revision number, hg id -i returns global revision id. Combining date, local revision and global revision I generate version enough to determine source files used to create binary.</description>
     </item>
     
     <item>
@@ -24,7 +25,12 @@
       <pubDate>Mon, 29 Oct 2012 09:00:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2012/10/29/setting-up-rhodecode-on-ubuntu-12.04/</guid>
-      <description>&lt;p&gt;This howto is based on a great guide with modifications. All settings are made for server domain hg.kenarius.org. You can replace it with your one easily.&lt;/p&gt;</description>
+      <description>This howto is based on a great guide with modifications. All settings are made for server domain hg.kenarius.org. You can replace it with your one easily.
+#&amp;nbsp;Preparation #&amp;nbsp;Ubuntu Update Ubuntu with the commands:
+sudo apt-get update sudo apt-get upgrade Install pip and virtualenv with the commands:
+sudo apt-get install python-pip sudo pip install virtualenv #&amp;nbsp;Nginx Install nginx:
+sudo apt-get install nginx Add create ssl certificates:
+sudo openssl req -new -x509 -days 9999 -nodes -out host.</description>
     </item>
     
   </channel>

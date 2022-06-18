@@ -1,1108 +1,157 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<meta name="HandheldFriendly" content="True" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-<meta name="generator" content="Hugo 0.80.0" />
-
-
-<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon.ico" />
-
-
-<title>throw() in function signature in C&#43;&#43; - :) bikulov.ORG</title>
-
-
-<meta name="author" content="bikulov" />
-
-
-<meta name="description" content="Static notes about information technologies." />
-
-
-<meta name="keywords" content="c&#43;&#43;, exceptions" />
-
-
-<meta property="og:title" content="throw() in function signature in C&#43;&#43;" />
-<meta name="twitter:title" content="throw() in function signature in C&#43;&#43;" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://bikulov.org/blog/2013/11/23/throw-in-function-signature-in-c-/" /><meta property="og:description" content="There is base class exception in standard library (header &lt;exception&gt;). It has default constructor, copy constructor, copy operator and destructor and virtual what() function. Latter returns string with additional information about exception." />
-<meta name="twitter:description" content="There is base class exception in standard library (header &lt;exception&gt;). It has default constructor, copy constructor, copy operator and destructor and virtual what() function. Latter returns string with additional information about exception." /><meta property="og:image" content="https://bikulov.org/img/og.png" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://bikulov.org/img/og.png" /><meta property="article:published_time" content="2013-11-23T17:42:00+03:00" /><meta property="article:modified_time" content="2013-11-23T17:42:00+03:00" />
-
-
-<style>
-    @media (prefers-color-scheme: dark) {
-        body[data-theme='auto'] img {
-            filter: brightness(60%);
-        }
-    }
-
-    body[data-theme='dark'] img {
-        filter: brightness(60%);
-    }
-</style>
-
-
-
-<link rel="stylesheet" href="https://bikulov.org/assets/css/fuji.min.css" />
-
-
-
-
-
-</head>
-
-<body data-theme="auto">
-    <script data-cfasync="false">
-  
-  var fujiThemeData = localStorage.getItem('fuji_data-theme');
-  
-  if (!fujiThemeData) {
-    localStorage.setItem('fuji_data-theme', 'auto');
-  } else {
-    
-    if (fujiThemeData !== 'auto') {
-      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
-    }
-  }
-</script>
-    <header>
-    <div class="container-lg clearfix">
-        <div class="col-12 header">
-            <a class="title-main" href="https://bikulov.org">:) bikulov.ORG</a>
-            
-            <span class="title-sub">Static notes about information technologies</span>
-            
-        </div>
+<html><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all">
+  <link href="/css/style.css" rel="stylesheet" type="text/css" media="all">
+  <link href="/css/custom.css" rel="stylesheet" type="text/css" media="all">
+  <script src="/js/bootstrap.bundle.min.js"></script>
+  <link rel="apple-touch-icon" href="/logo.png" type="image/png">
+  <link rel="icon" href="/img/logo.svg" type="image/svg+xml">
+  <link rel="icon" href="/img/logo.png" type="image/png">
+  <title>Bikulov&#39;s blog</title>
+</head><body>
+<header>
+  <nav class="navbar navbar-expand navbar-dark volukib-header">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="https://bikulov.org/"><img src="/img/logo.png" class="volukib-logo" alt="logo"> Bikulov&#39;s blog</a>
+      <ul class="navbar-nav">
+        
+        <li class="nav-item">
+          
+          <a class="nav-link text-uppercase " href="/">Home</a>
+        </li>
+        
+        <li class="nav-item">
+          
+          <a class="nav-link text-uppercase " href="/resume/">Resume</a>
+        </li>
+        
+      </ul>
     </div>
-</header>
-
-    <main>
-        <div class="container-lg clearfix">
-            
-            <div class="col-12 col-md-9 float-left content">
-                
-<article>
-    
-    <h2 class="post-item post-title">
-        <a href="https://bikulov.org/blog/2013/11/23/throw-in-function-signature-in-c-/">throw() in function signature in C&#43;&#43;</a>
-    </h2>
-    <div class="post-item post-meta">
-        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2013-11-23</span><span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/c&#43;&#43;">c&#43;&#43;</a>&nbsp;<a href="/tags/exceptions">exceptions</a>&nbsp;</span>
-
+  </nav>
+</header><div class="container">
+<div class="row text-center mb-5">
+  <div class="col">
+    <h1>throw() in function signature in C&#43;&#43;</h1>
+    <div>2013-11-23</div>
+    <div>
+      
+      <a class="" href="/tags/c&#43;&#43;">#c&#43;&#43;</a>
+      
+      <a class="" href="/tags/exceptions">#exceptions</a>
+      
     </div>
-    
-    <div class="post-content markdown-body">
-        <p><a href="http://www.cplusplus.com/doc/tutorial/exceptions/" target="_blank">There is</a> base class <code>exception</code> in standard library (header <code>&lt;exception&gt;</code>). It <a href="http://en.cppreference.com/w/cpp/error/exception" target="_blank">has</a> default constructor, copy constructor, copy operator and destructor and virtual <code>what()</code> function. Latter returns string with additional information about exception.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;exception&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyException</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> std<span style="color:#f92672">::</span>exception
-{
-    <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> <span style="color:#a6e22e">what</span>() <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">throw</span>()
-    {
-        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;My Exception happened&#34;</span>;
-    }
-}
-</code></pre></div><p>The most confusing part in the above code is <code>throw()</code>. It assures no exception will be thrown from the <code>what()</code> function. For example, if you want to allow exception <code>int</code> and <code>float</code> to be raised in this function, you must write <code>throw(int,float)</code> (you can not do it in the above example, this fucntion definition is fixed in base class). Ok, this example is mostly unchangable, so let&rsquo;s write own <code>MyException</code> class without derivation from any standard library class.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyException</span>
-{
-<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
-    std<span style="color:#f92672">::</span>string what()
-    {
-        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;MyException happened&#34;</span>;
-    }
-};
-
-<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>argv)
-{
-    MyException a;
-    <span style="color:#66d9ef">try</span> {
-        <span style="color:#66d9ef">throw</span> a;
-    } <span style="color:#66d9ef">catch</span> (MyException <span style="color:#f92672">&amp;</span>e) {
-        std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> e.what() <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
-    } <span style="color:#66d9ef">catch</span> (<span style="color:#66d9ef">int</span> a) {
-        std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;int thrown &#34;</span> <span style="color:#f92672">&lt;&lt;</span> a <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
-    }
-
-    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
-}
-</code></pre></div><p>Ok, if you copy source code, compile and run it, you&rsquo;ll see:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ g++ main.cpp -o throw
-$ ./throw
-MyException happened
-</code></pre></div><p>This behaviour is predictable. Exception thrown and caught by <code>catch (MyException &amp;e)</code>. No special modifiers is presented.</p>
-<p>Lets change example a little (throwing exception from <code>what()</code>):</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyException</span>
-{
-<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
-    std<span style="color:#f92672">::</span>string what()
-    {
-        <span style="color:#66d9ef">throw</span> <span style="color:#ae81ff">10</span>;
-        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;MyException happened&#34;</span>;
-    }
-};
-
-<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>argv)
-{
-    <span style="color:#66d9ef">try</span> {
-        MyException a;
-        <span style="color:#66d9ef">throw</span> a;
-    } <span style="color:#66d9ef">catch</span> (MyException <span style="color:#f92672">&amp;</span>e) {
-        std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> e.what() <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
-    }
-    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
-}
-</code></pre></div><p>Throwing exception from <code>what()</code> causes unhandled exception:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ./throw
-terminate called after throwing an instance of <span style="color:#e6db74">&#39;int&#39;</span>
-Aborted <span style="color:#f92672">(</span>core dumped<span style="color:#f92672">)</span>
-</code></pre></div><p>Usage of throw() in function declaration is considered as a <a href="http://stackoverflow.com/questions/1055387/throw-keyword-in-functions-signature-c" target="_blank">bad idea</a>. But in this particular situation it is allowed: <code>what()</code> returns additional description, it must not send any other exception, as there is no guarantee this exception will behandled. Restrict exceptions from <code>what()</code>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyException</span>
-{
-<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
-    std<span style="color:#f92672">::</span>string what() <span style="color:#66d9ef">throw</span>()
-    {
-        <span style="color:#66d9ef">throw</span> <span style="color:#ae81ff">10</span>;
-        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;MyException happened&#34;</span>;
-    }
-};
-
-<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>argv)
-{
-    <span style="color:#66d9ef">try</span> {
-        MyException a;
-        a.what();
-    } <span style="color:#66d9ef">catch</span> (...) {
-        std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;exception handled&#34;</span> <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
-    }
-    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
-}
-</code></pre></div><p>Finally we get what we came from: this class is pretty like std::exception, isn&rsquo;t it? <code>throw()</code> ensures no exceptions can be sent from <code>show()</code> function. So, compiler will fail? No! Compiler reports no errors. But an error occures in runtime:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ./throw
-terminate called after throwing an instance of <span style="color:#e6db74">&#39;int&#39;</span>
-Aborted <span style="color:#f92672">(</span>core dumped<span style="color:#f92672">)</span>
-</code></pre></div><p>There is a little information why the code have failed. No exception (even raised in functions called from <code>show()</code>) will pass through <code>show() throw()</code>. Error will appear only at runtime.</p>
-<p>So, <code>throw()</code> is used to ensure no additional exceptions will be raised from <code>show()</code> function and will escape <code>catch()</code>. But in general case such behaviour is difficult to predict and <em>is</em> a bad practice. Try not to use <code>throw()</code> in function signature without high necessity. Try not to use throw with particular allowed exceptions (like <code>throw(A, B)</code>) in any situation. Standart <code>std::exception</code> is very good to derive your exceptions in huge amount of sutuations.</p>
-    </div>
-</article>
-
-
-
-
-            </div>
-            <aside class="col-12 col-md-3 float-left sidebar">
-    
-    <div class="sidebar-item sidebar-pages">
-        <h3>Pages</h3>
-        <ul>
-            
-            <li>
-                <a href="/">Home</a>
-            </li>
-            
-            <li>
-                <a href="/resume/">Resume</a>
-            </li>
-            
-            <li>
-                <a href="/index.xml">RSS</a>
-            </li>
-            
-        </ul>
-    </div>
-    
-    <div class="sidebar-item sidebar-links">
-        <h3>Links</h3>
-        <ul>
-            
-            <li>
-                <a href="https://github.com/bikulov" target="_blank"><span>Github</span></a>
-            </li>
-            
-            <li>
-                <a href="https://linkedin.com/in/bikulov" target="_blank"><span>LinkedIn</span></a>
-            </li>
-            
-            <li>
-                <a href="https://twitter.com/volukib" target="_blank"><span>Twitter</span></a>
-            </li>
-            
-        </ul>
-    </div>
-    
-    <div class="sidebar-item sidebar-tags">
-        <h3>Tags</h3>
-        <div>
-            
-            <span>
-                <a href="/tags/awk/">awk</a>
-            </span>
-            
-            <span>
-                <a href="/tags/backup/">backup</a>
-            </span>
-            
-            <span>
-                <a href="/tags/bash/">bash</a>
-            </span>
-            
-            <span>
-                <a href="/tags/blender/">blender</a>
-            </span>
-            
-            <span>
-                <a href="/tags/btsync/">btsync</a>
-            </span>
-            
-            <span>
-                <a href="/tags/c/">c</a>
-            </span>
-            
-            <span>
-                <a href="/tags/c&#43;&#43;/">c&#43;&#43;</a>
-            </span>
-            
-            <span>
-                <a href="/tags/centos/">centos</a>
-            </span>
-            
-            <span>
-                <a href="/tags/cmake/">cmake</a>
-            </span>
-            
-            <span>
-                <a href="/tags/config/">config</a>
-            </span>
-            
-            <span>
-                <a href="/tags/console/">console</a>
-            </span>
-            
-            <span>
-                <a href="/tags/cpp/">cpp</a>
-            </span>
-            
-            <span>
-                <a href="/tags/cron/">cron</a>
-            </span>
-            
-            <span>
-                <a href="/tags/cuda/">cuda</a>
-            </span>
-            
-            <span>
-                <a href="/tags/dd/">dd</a>
-            </span>
-            
-            <span>
-                <a href="/tags/docker/">docker</a>
-            </span>
-            
-            <span>
-                <a href="/tags/dokuwiki/">dokuwiki</a>
-            </span>
-            
-            <span>
-                <a href="/tags/drupal/">drupal</a>
-            </span>
-            
-            <span>
-                <a href="/tags/du/">du</a>
-            </span>
-            
-            <span>
-                <a href="/tags/exceptions/">exceptions</a>
-            </span>
-            
-            <span>
-                <a href="/tags/fatnode/">fatnode</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ffmpeg/">ffmpeg</a>
-            </span>
-            
-            <span>
-                <a href="/tags/firefox/">firefox</a>
-            </span>
-            
-            <span>
-                <a href="/tags/gengetopt/">gengetopt</a>
-            </span>
-            
-            <span>
-                <a href="/tags/heapsort/">heapsort</a>
-            </span>
-            
-            <span>
-                <a href="/tags/howto/">howto</a>
-            </span>
-            
-            <span>
-                <a href="/tags/i3/">i3</a>
-            </span>
-            
-            <span>
-                <a href="/tags/imagemagick/">imagemagick</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ip/">ip</a>
-            </span>
-            
-            <span>
-                <a href="/tags/iptables/">iptables</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ipython/">ipython</a>
-            </span>
-            
-            <span>
-                <a href="/tags/joomla/">joomla</a>
-            </span>
-            
-            <span>
-                <a href="/tags/jupyter/">jupyter</a>
-            </span>
-            
-            <span>
-                <a href="/tags/latex/">latex</a>
-            </span>
-            
-            <span>
-                <a href="/tags/libcheese/">libcheese</a>
-            </span>
-            
-            <span>
-                <a href="/tags/linux/">linux</a>
-            </span>
-            
-            <span>
-                <a href="/tags/lxc/">lxc</a>
-            </span>
-            
-            <span>
-                <a href="/tags/makefile/">makefile</a>
-            </span>
-            
-            <span>
-                <a href="/tags/matplotlib/">matplotlib</a>
-            </span>
-            
-            <span>
-                <a href="/tags/mercurial/">mercurial</a>
-            </span>
-            
-            <span>
-                <a href="/tags/montage/">montage</a>
-            </span>
-            
-            <span>
-                <a href="/tags/mysql/">mysql</a>
-            </span>
-            
-            <span>
-                <a href="/tags/nautilus/">nautilus</a>
-            </span>
-            
-            <span>
-                <a href="/tags/nginx/">nginx</a>
-            </span>
-            
-            <span>
-                <a href="/tags/numpy/">numpy</a>
-            </span>
-            
-            <span>
-                <a href="/tags/openvpn/">openvpn</a>
-            </span>
-            
-            <span>
-                <a href="/tags/openvz/">openvz</a>
-            </span>
-            
-            <span>
-                <a href="/tags/paraview/">paraview</a>
-            </span>
-            
-            <span>
-                <a href="/tags/pcap/">pcap</a>
-            </span>
-            
-            <span>
-                <a href="/tags/pcmanfm/">PCManFM</a>
-            </span>
-            
-            <span>
-                <a href="/tags/pdf/">pdf</a>
-            </span>
-            
-            <span>
-                <a href="/tags/perl/">perl</a>
-            </span>
-            
-            <span>
-                <a href="/tags/plots/">plots</a>
-            </span>
-            
-            <span>
-                <a href="/tags/png/">png</a>
-            </span>
-            
-            <span>
-                <a href="/tags/postgres/">postgres</a>
-            </span>
-            
-            <span>
-                <a href="/tags/postgresql/">postgresql</a>
-            </span>
-            
-            <span>
-                <a href="/tags/programmer-tools/">programmer tools</a>
-            </span>
-            
-            <span>
-                <a href="/tags/python/">python</a>
-            </span>
-            
-            <span>
-                <a href="/tags/quicksort/">quicksort</a>
-            </span>
-            
-            <span>
-                <a href="/tags/research/">research</a>
-            </span>
-            
-            <span>
-                <a href="/tags/rhodecode/">rhodecode</a>
-            </span>
-            
-            <span>
-                <a href="/tags/scan/">scan</a>
-            </span>
-            
-            <span>
-                <a href="/tags/scanimage/">scanimage</a>
-            </span>
-            
-            <span>
-                <a href="/tags/science/">science</a>
-            </span>
-            
-            <span>
-                <a href="/tags/scipy/">scipy</a>
-            </span>
-            
-            <span>
-                <a href="/tags/screen-capture/">screen capture</a>
-            </span>
-            
-            <span>
-                <a href="/tags/script/">script</a>
-            </span>
-            
-            <span>
-                <a href="/tags/scrot/">scrot</a>
-            </span>
-            
-            <span>
-                <a href="/tags/seaborn/">seaborn</a>
-            </span>
-            
-            <span>
-                <a href="/tags/sed/">sed</a>
-            </span>
-            
-            <span>
-                <a href="/tags/selfhosted/">selfhosted</a>
-            </span>
-            
-            <span>
-                <a href="/tags/server/">server</a>
-            </span>
-            
-            <span>
-                <a href="/tags/slurm/">slurm</a>
-            </span>
-            
-            <span>
-                <a href="/tags/snippet/">snippet</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ssh/">ssh</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tcpdump/">tcpdump</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tcptrace/">tcptrace</a>
-            </span>
-            
-            <span>
-                <a href="/tags/template/">template</a>
-            </span>
-            
-            <span>
-                <a href="/tags/terminal/">terminal</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tiff/">tiff</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tips-and-tricks/">tips and tricks</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tpick/">tpick</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tr/">tr</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tshark/">tshark</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tun/">tun</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tutorial/">tutorial</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ubuntu/">ubuntu</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ubuntu-12.04/">ubuntu 12.04</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ubuntu-server/">ubuntu server</a>
-            </span>
-            
-            <span>
-                <a href="/tags/visualization/">visualization</a>
-            </span>
-            
-            <span>
-                <a href="/tags/vpn/">vpn</a>
-            </span>
-            
-            <span>
-                <a href="/tags/yandex.disk/">yandex.disk</a>
-            </span>
-            
-            <span>
-                <a href="/tags/zotero/">zotero</a>
-            </span>
-            
-            <span>
-                <a href="/tags/zotfile/">zotfile</a>
-            </span>
-            
-        </div>
-    </div>
-    <div class="sidebar-item sidebar-toc">
-        <h3>TOC</h3><nav id="TableOfContents"></nav></div>
-</aside>
-        </div>
-        <div class="btn">
-    <div class="btn-menu" id="btn-menu">
-        <i class="iconfont icon-grid-sharp"></i>
-    </div>
-    <div class="btn-toggle-mode">
-        <i class="iconfont icon-contrast-sharp"></i>
-    </div>
-    <div class="btn-scroll-top">
-        <i class="iconfont icon-chevron-up-circle-sharp"></i>
-    </div>
-</div>
-<aside class="sidebar-mobile" style="display: none;">
-  <div class="sidebar-wrapper">
-    
-    <div class="sidebar-item sidebar-pages">
-        <h3>Pages</h3>
-        <ul>
-            
-            <li>
-                <a href="/">Home</a>
-            </li>
-            
-            <li>
-                <a href="/resume/">Resume</a>
-            </li>
-            
-            <li>
-                <a href="/index.xml">RSS</a>
-            </li>
-            
-        </ul>
-    </div>
-    
-    <div class="sidebar-item sidebar-links">
-        <h3>Links</h3>
-        <ul>
-            
-            <li>
-                <a href="https://github.com/bikulov" target="_blank"><span>Github</span></a>
-            </li>
-            
-            <li>
-                <a href="https://linkedin.com/in/bikulov" target="_blank"><span>LinkedIn</span></a>
-            </li>
-            
-            <li>
-                <a href="https://twitter.com/volukib" target="_blank"><span>Twitter</span></a>
-            </li>
-            
-        </ul>
-    </div>
-    
-    <div class="sidebar-item sidebar-tags">
-        <h3>Tags</h3>
-        <div>
-            
-            <span>
-                <a href="/tags/awk/">awk</a>
-            </span>
-            
-            <span>
-                <a href="/tags/backup/">backup</a>
-            </span>
-            
-            <span>
-                <a href="/tags/bash/">bash</a>
-            </span>
-            
-            <span>
-                <a href="/tags/blender/">blender</a>
-            </span>
-            
-            <span>
-                <a href="/tags/btsync/">btsync</a>
-            </span>
-            
-            <span>
-                <a href="/tags/c/">c</a>
-            </span>
-            
-            <span>
-                <a href="/tags/c&#43;&#43;/">c&#43;&#43;</a>
-            </span>
-            
-            <span>
-                <a href="/tags/centos/">centos</a>
-            </span>
-            
-            <span>
-                <a href="/tags/cmake/">cmake</a>
-            </span>
-            
-            <span>
-                <a href="/tags/config/">config</a>
-            </span>
-            
-            <span>
-                <a href="/tags/console/">console</a>
-            </span>
-            
-            <span>
-                <a href="/tags/cpp/">cpp</a>
-            </span>
-            
-            <span>
-                <a href="/tags/cron/">cron</a>
-            </span>
-            
-            <span>
-                <a href="/tags/cuda/">cuda</a>
-            </span>
-            
-            <span>
-                <a href="/tags/dd/">dd</a>
-            </span>
-            
-            <span>
-                <a href="/tags/docker/">docker</a>
-            </span>
-            
-            <span>
-                <a href="/tags/dokuwiki/">dokuwiki</a>
-            </span>
-            
-            <span>
-                <a href="/tags/drupal/">drupal</a>
-            </span>
-            
-            <span>
-                <a href="/tags/du/">du</a>
-            </span>
-            
-            <span>
-                <a href="/tags/exceptions/">exceptions</a>
-            </span>
-            
-            <span>
-                <a href="/tags/fatnode/">fatnode</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ffmpeg/">ffmpeg</a>
-            </span>
-            
-            <span>
-                <a href="/tags/firefox/">firefox</a>
-            </span>
-            
-            <span>
-                <a href="/tags/gengetopt/">gengetopt</a>
-            </span>
-            
-            <span>
-                <a href="/tags/heapsort/">heapsort</a>
-            </span>
-            
-            <span>
-                <a href="/tags/howto/">howto</a>
-            </span>
-            
-            <span>
-                <a href="/tags/i3/">i3</a>
-            </span>
-            
-            <span>
-                <a href="/tags/imagemagick/">imagemagick</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ip/">ip</a>
-            </span>
-            
-            <span>
-                <a href="/tags/iptables/">iptables</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ipython/">ipython</a>
-            </span>
-            
-            <span>
-                <a href="/tags/joomla/">joomla</a>
-            </span>
-            
-            <span>
-                <a href="/tags/jupyter/">jupyter</a>
-            </span>
-            
-            <span>
-                <a href="/tags/latex/">latex</a>
-            </span>
-            
-            <span>
-                <a href="/tags/libcheese/">libcheese</a>
-            </span>
-            
-            <span>
-                <a href="/tags/linux/">linux</a>
-            </span>
-            
-            <span>
-                <a href="/tags/lxc/">lxc</a>
-            </span>
-            
-            <span>
-                <a href="/tags/makefile/">makefile</a>
-            </span>
-            
-            <span>
-                <a href="/tags/matplotlib/">matplotlib</a>
-            </span>
-            
-            <span>
-                <a href="/tags/mercurial/">mercurial</a>
-            </span>
-            
-            <span>
-                <a href="/tags/montage/">montage</a>
-            </span>
-            
-            <span>
-                <a href="/tags/mysql/">mysql</a>
-            </span>
-            
-            <span>
-                <a href="/tags/nautilus/">nautilus</a>
-            </span>
-            
-            <span>
-                <a href="/tags/nginx/">nginx</a>
-            </span>
-            
-            <span>
-                <a href="/tags/numpy/">numpy</a>
-            </span>
-            
-            <span>
-                <a href="/tags/openvpn/">openvpn</a>
-            </span>
-            
-            <span>
-                <a href="/tags/openvz/">openvz</a>
-            </span>
-            
-            <span>
-                <a href="/tags/paraview/">paraview</a>
-            </span>
-            
-            <span>
-                <a href="/tags/pcap/">pcap</a>
-            </span>
-            
-            <span>
-                <a href="/tags/pcmanfm/">PCManFM</a>
-            </span>
-            
-            <span>
-                <a href="/tags/pdf/">pdf</a>
-            </span>
-            
-            <span>
-                <a href="/tags/perl/">perl</a>
-            </span>
-            
-            <span>
-                <a href="/tags/plots/">plots</a>
-            </span>
-            
-            <span>
-                <a href="/tags/png/">png</a>
-            </span>
-            
-            <span>
-                <a href="/tags/postgres/">postgres</a>
-            </span>
-            
-            <span>
-                <a href="/tags/postgresql/">postgresql</a>
-            </span>
-            
-            <span>
-                <a href="/tags/programmer-tools/">programmer tools</a>
-            </span>
-            
-            <span>
-                <a href="/tags/python/">python</a>
-            </span>
-            
-            <span>
-                <a href="/tags/quicksort/">quicksort</a>
-            </span>
-            
-            <span>
-                <a href="/tags/research/">research</a>
-            </span>
-            
-            <span>
-                <a href="/tags/rhodecode/">rhodecode</a>
-            </span>
-            
-            <span>
-                <a href="/tags/scan/">scan</a>
-            </span>
-            
-            <span>
-                <a href="/tags/scanimage/">scanimage</a>
-            </span>
-            
-            <span>
-                <a href="/tags/science/">science</a>
-            </span>
-            
-            <span>
-                <a href="/tags/scipy/">scipy</a>
-            </span>
-            
-            <span>
-                <a href="/tags/screen-capture/">screen capture</a>
-            </span>
-            
-            <span>
-                <a href="/tags/script/">script</a>
-            </span>
-            
-            <span>
-                <a href="/tags/scrot/">scrot</a>
-            </span>
-            
-            <span>
-                <a href="/tags/seaborn/">seaborn</a>
-            </span>
-            
-            <span>
-                <a href="/tags/sed/">sed</a>
-            </span>
-            
-            <span>
-                <a href="/tags/selfhosted/">selfhosted</a>
-            </span>
-            
-            <span>
-                <a href="/tags/server/">server</a>
-            </span>
-            
-            <span>
-                <a href="/tags/slurm/">slurm</a>
-            </span>
-            
-            <span>
-                <a href="/tags/snippet/">snippet</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ssh/">ssh</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tcpdump/">tcpdump</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tcptrace/">tcptrace</a>
-            </span>
-            
-            <span>
-                <a href="/tags/template/">template</a>
-            </span>
-            
-            <span>
-                <a href="/tags/terminal/">terminal</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tiff/">tiff</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tips-and-tricks/">tips and tricks</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tpick/">tpick</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tr/">tr</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tshark/">tshark</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tun/">tun</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tutorial/">tutorial</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ubuntu/">ubuntu</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ubuntu-12.04/">ubuntu 12.04</a>
-            </span>
-            
-            <span>
-                <a href="/tags/ubuntu-server/">ubuntu server</a>
-            </span>
-            
-            <span>
-                <a href="/tags/visualization/">visualization</a>
-            </span>
-            
-            <span>
-                <a href="/tags/vpn/">vpn</a>
-            </span>
-            
-            <span>
-                <a href="/tags/yandex.disk/">yandex.disk</a>
-            </span>
-            
-            <span>
-                <a href="/tags/zotero/">zotero</a>
-            </span>
-            
-            <span>
-                <a href="/tags/zotfile/">zotfile</a>
-            </span>
-            
-        </div>
-    </div>
-    
-    
-    
-    <div class="sidebar-item sidebar-toc">
-        <h3>TOC</h3>
-        <nav id="TableOfContents"></nav>
-    </div>
-    
-    
   </div>
-</aside>
-    </main>
+</div>
+<div class="row">
+  <div class="col">
+    <p><a href="http://www.cplusplus.com/doc/tutorial/exceptions/">There is</a> base class <code>exception</code> in standard library (header <code>&lt;exception&gt;</code>). It <a href="http://en.cppreference.com/w/cpp/error/exception">has</a> default constructor, copy constructor, copy operator and destructor and virtual <code>what()</code> function. Latter returns string with additional information about exception.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;exception&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyException</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> std<span style="color:#f92672">::</span>exception
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> <span style="color:#a6e22e">what</span>() <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">throw</span>()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;My Exception happened&#34;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The most confusing part in the above code is <code>throw()</code>. It assures no exception will be thrown from the <code>what()</code> function. For example, if you want to allow exception <code>int</code> and <code>float</code> to be raised in this function, you must write <code>throw(int,float)</code> (you can not do it in the above example, this fucntion definition is fixed in base class). Ok, this example is mostly unchangable, so let&rsquo;s write own <code>MyException</code> class without derivation from any standard library class.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyException</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>string what()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;MyException happened&#34;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>argv)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    MyException a;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">throw</span> a;
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">catch</span> (MyException <span style="color:#f92672">&amp;</span>e) {
+</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> e.what() <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">catch</span> (<span style="color:#66d9ef">int</span> a) {
+</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;int thrown &#34;</span> <span style="color:#f92672">&lt;&lt;</span> a <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Ok, if you copy source code, compile and run it, you&rsquo;ll see:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ g++ main.cpp -o throw
+</span></span><span style="display:flex;"><span>$ ./throw
+</span></span><span style="display:flex;"><span>MyException happened
+</span></span></code></pre></div><p>This behaviour is predictable. Exception thrown and caught by <code>catch (MyException &amp;e)</code>. No special modifiers is presented.</p>
+<p>Lets change example a little (throwing exception from <code>what()</code>):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyException</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>string what()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">throw</span> <span style="color:#ae81ff">10</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;MyException happened&#34;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>argv)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>        MyException a;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">throw</span> a;
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">catch</span> (MyException <span style="color:#f92672">&amp;</span>e) {
+</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> e.what() <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Throwing exception from <code>what()</code> causes unhandled exception:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ ./throw
+</span></span><span style="display:flex;"><span>terminate called after throwing an instance of <span style="color:#e6db74">&#39;int&#39;</span>
+</span></span><span style="display:flex;"><span>Aborted <span style="color:#f92672">(</span>core dumped<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>Usage of throw() in function declaration is considered as a <a href="http://stackoverflow.com/questions/1055387/throw-keyword-in-functions-signature-c">bad idea</a>. But in this particular situation it is allowed: <code>what()</code> returns additional description, it must not send any other exception, as there is no guarantee this exception will behandled. Restrict exceptions from <code>what()</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyException</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>string what() <span style="color:#66d9ef">throw</span>()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">throw</span> <span style="color:#ae81ff">10</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;MyException happened&#34;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>argv)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>        MyException a;
+</span></span><span style="display:flex;"><span>        a.what();
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">catch</span> (...) {
+</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;exception handled&#34;</span> <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Finally we get what we came from: this class is pretty like std::exception, isn&rsquo;t it? <code>throw()</code> ensures no exceptions can be sent from <code>show()</code> function. So, compiler will fail? No! Compiler reports no errors. But an error occures in runtime:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ ./throw
+</span></span><span style="display:flex;"><span>terminate called after throwing an instance of <span style="color:#e6db74">&#39;int&#39;</span>
+</span></span><span style="display:flex;"><span>Aborted <span style="color:#f92672">(</span>core dumped<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>There is a little information why the code have failed. No exception (even raised in functions called from <code>show()</code>) will pass through <code>show() throw()</code>. Error will appear only at runtime.</p>
+<p>So, <code>throw()</code> is used to ensure no additional exceptions will be raised from <code>show()</code> function and will escape <code>catch()</code>. But in general case such behaviour is difficult to predict and <em>is</em> a bad practice. Try not to use <code>throw()</code> in function signature without high necessity. Try not to use throw with particular allowed exceptions (like <code>throw(A, B)</code>) in any situation. Standart <code>std::exception</code> is very good to derive your exceptions in huge amount of sutuations.</p>
 
-    <footer>
-    <div class="container-lg clearfix">
-        <div class="col-12 footer">
-            
-            <span>&copy; 2012-2021
-                <a href="https://bikulov.org">bikulov</a>
-                 | <a href="https://github.com/bikulov/bikulov.github.io">Source code</a> 
-                | Powered by <a href="https://github.com/amzrk2/hugo-theme-fuji/"
-                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
-                                                    target="_blank">Hugo</a> 
-            </span>
-        </div>
-    </div>
-</footer>
+  </div>
+</div>
 
-    
-<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.0/lazysizes.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
-
-
-
-<script defer src="/assets/js/fuji.min.js"></script>
-
-
-</body>
+  </div><div class="container-fluid volukib-footer p-2">
+  <footer class="text-center">
+    <a class="text-decoration-none text-light" href="https://bikulov.org/">Bikulov&#39;s blog 2022</a>
+  </footer>
+</div></body>
 
 </html>

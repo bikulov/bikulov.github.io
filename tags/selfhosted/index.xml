@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>selfhosted on :) bikulov.ORG</title>
+    <title>selfhosted on Bikulov&#39;s blog</title>
     <link>https://bikulov.org/tags/selfhosted/</link>
-    <description>Recent content in selfhosted on :) bikulov.ORG</description>
+    <description>Recent content in selfhosted on Bikulov&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <language>ru</language>
+    <copyright>Network Notes 2022</copyright>
     <lastBuildDate>Tue, 02 Feb 2021 09:30:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/selfhosted/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>How to setup own selfhosted wiki</title>
@@ -13,15 +14,8 @@
       <pubDate>Tue, 02 Feb 2021 09:30:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2021/02/02/how-to-setup-own-selfhosted-wiki/</guid>
-      <description>&lt;p&gt;Disclaimer: many links in this post are referral. If you are uncomfortable with it, just search for the text in the links and use results from the search engines.&lt;/p&gt;
-&lt;h2 id=&#34;plan&#34;&gt;Plan&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;Spin up a new virtual server (1 CPU + 1 GB RAM is fairly enough) in &lt;a href=&#34;https://www.vultr.com/?ref=7552058&#34; target=&#34;_blank&#34;&gt;Vultr&lt;/a&gt;, &lt;a href=&#34;https://m.do.co/c/8aba7c4cd737&#34; target=&#34;_blank&#34;&gt;Digital Ocean&lt;/a&gt;, etc.&lt;/li&gt;
-&lt;li&gt;Register a new domain name&lt;/li&gt;
-&lt;li&gt;Install Docker and Docker Compose&lt;/li&gt;
-&lt;li&gt;Use docker-compose to deploy a wiki&lt;/li&gt;
-&lt;li&gt;Backups&lt;/li&gt;
-&lt;/ol&gt;</description>
+      <description>Disclaimer: many links in this post are referral. If you are uncomfortable with it, just search for the text in the links and use results from the search engines.
+#&amp;nbsp;Plan  Spin up a new virtual server (1 CPU + 1 GB RAM is fairly enough) in Vultr, Digital Ocean, etc. Register a new domain name Install Docker and Docker Compose Use docker-compose to deploy a wiki Backups  #&amp;nbsp;Virtual server For example, let it be Digital Ocean.</description>
     </item>
     
   </channel>

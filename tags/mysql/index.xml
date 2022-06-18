@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>mysql on :) bikulov.ORG</title>
+    <title>mysql on Bikulov&#39;s blog</title>
     <link>https://bikulov.org/tags/mysql/</link>
-    <description>Recent content in mysql on :) bikulov.ORG</description>
+    <description>Recent content in mysql on Bikulov&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <language>ru</language>
+    <copyright>Network Notes 2022</copyright>
     <lastBuildDate>Sun, 28 Apr 2013 09:00:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Ubuntu Server 12.04 &#43; Drupal 7 &#43; nginx &#43; MySQL</title>
-      <link>https://bikulov.org/blog/2013/04/28/ubuntu-server-12.04-drupal-7-nginx-mysql/</link>
+      <link>https://bikulov.org/blog/2013/04/28/ubuntu-server-12.04--drupal-7--nginx--mysql/</link>
       <pubDate>Sun, 28 Apr 2013 09:00:00 +0300</pubDate>
       
-      <guid>https://bikulov.org/blog/2013/04/28/ubuntu-server-12.04-drupal-7-nginx-mysql/</guid>
-      <description>&lt;p&gt;Default Drupal package in Ubuntu installs Apache, but I prefer nginx as a webserver. In this note I’ll describe steps necessary to get Drupal 7 work.&lt;/p&gt;</description>
+      <guid>https://bikulov.org/blog/2013/04/28/ubuntu-server-12.04--drupal-7--nginx--mysql/</guid>
+      <description>Default Drupal package in Ubuntu installs Apache, but I prefer nginx as a webserver. In this note I’ll describe steps necessary to get Drupal 7 work.
+All variables in square brackets must be replaced by your names or passwords.
+Site will be available at url [sitename].
+#&amp;nbsp;Installing packages Install all necessary packages:
+sudo apt-get install -y nginx php5-fpm php-apc php5-mysql mysql-client-core-5.5 mysql-server php5-gd During the installation MySQL will ask you for root password.</description>
     </item>
     
   </channel>

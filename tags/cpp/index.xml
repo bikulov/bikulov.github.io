@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>cpp on :) bikulov.ORG</title>
+    <title>cpp on Bikulov&#39;s blog</title>
     <link>https://bikulov.org/tags/cpp/</link>
-    <description>Recent content in cpp on :) bikulov.ORG</description>
+    <description>Recent content in cpp on Bikulov&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <language>ru</language>
+    <copyright>Network Notes 2022</copyright>
     <lastBuildDate>Thu, 07 Nov 2013 18:27:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/cpp/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Randomized quicksort implementation in C&#43;&#43;</title>
@@ -13,7 +14,9 @@
       <pubDate>Thu, 07 Nov 2013 18:27:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2013/11/07/randomized-quicksort-implementation-in-c-/</guid>
-      <description>&lt;p&gt;Quicksort has $O(N\log(N))$ computational complexity in best and average cases, $O(N^{2})$ for bad case. Extremely bad cases may be avoided by using randomized Quicksort.&lt;/p&gt;</description>
+      <description>Quicksort has $O(N\log(N))$ computational complexity in best and average cases, $O(N^{2})$ for bad case. Extremely bad cases may be avoided by using randomized Quicksort.
+Qucksort algorithm consists of three steps:
+ Choose reference element called pivot (in randomized version pivot choise is random) Rearrange array so that all elements smaller than pivot are placed before the pivot in array, all elements bigger than pivot are placed after the pivot Call Quicksort for elements before the pivot and Quicksort for elements after the pivot recursively (stop if array size is one or less)  My implementation of Quicksort in C++ is provided below.</description>
     </item>
     
     <item>
@@ -22,7 +25,9 @@
       <pubDate>Mon, 04 Nov 2013 21:33:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2013/11/04/heapsort-implementation-in-c-/</guid>
-      <description>&lt;p&gt;Heapsort is one of the fastest sorting algorithms. The best and the worst cases for heapsort have same $O(n\log(n))$ performance.&lt;/p&gt;</description>
+      <description>Heapsort is one of the fastest sorting algorithms. The best and the worst cases for heapsort have same $O(n\log(n))$ performance.
+At first heapsort creates heap from data with buildHeap function. Heap is organized in linear array as follows. Every $i$-th element has two children: $(2i)$-th element and $(2i+1)$-th one. The biggest element of the array is placed on the top of the heap.
+After heap building top element is swapped with the latest in the array, then heap is rebuilt for the array with size decreased by one.</description>
     </item>
     
     <item>
@@ -31,7 +36,7 @@
       <pubDate>Sat, 26 Oct 2013 00:03:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2013/10/26/command-line-arguments-in-c-and-c-with-gengetopt/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;http://www.gnu.org/software/gengetopt/gengetopt.html&#34; target=&#34;_blank&#34;&gt;Gengetopt&lt;/a&gt; is a tool for parsing command line arguments in C and C++ applications. It generates &lt;code&gt;cmdline.c&lt;/code&gt; and &lt;code&gt;cmdline.h&lt;/code&gt; files in pure C, which contain parser, helper functions, error handling and structure to store argument values. Arguments to be included in auto-generated file are defined in config. I usually gengetopt config file as &lt;code&gt;cmdline.ggo&lt;/code&gt;. In this note I provide an example of gengetopt config file and arguments usage in code.&lt;/p&gt;</description>
+      <description>Gengetopt is a tool for parsing command line arguments in C and C++ applications. It generates cmdline.c and cmdline.h files in pure C, which contain parser, helper functions, error handling and structure to store argument values. Arguments to be included in auto-generated file are defined in config. I usually gengetopt config file as cmdline.ggo. In this note I provide an example of gengetopt config file and arguments usage in code.</description>
     </item>
     
   </channel>

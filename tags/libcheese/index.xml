@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>libcheese on :) bikulov.ORG</title>
+    <title>libcheese on Bikulov&#39;s blog</title>
     <link>https://bikulov.org/tags/libcheese/</link>
-    <description>Recent content in libcheese on :) bikulov.ORG</description>
+    <description>Recent content in libcheese on Bikulov&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <language>ru</language>
+    <copyright>Network Notes 2022</copyright>
     <lastBuildDate>Sat, 28 Feb 2015 08:54:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/libcheese/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Install CUDA 6.5 on clean Ubuntu 14.04</title>
@@ -13,7 +14,10 @@
       <pubDate>Sat, 28 Feb 2015 08:54:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2015/02/28/install-cuda-6.5-on-clean-ubuntu-14.04/</guid>
-      <description>&lt;p&gt;Lately NVIDIA added repository for Ubuntu 12.04 and Ubuntu 14.04. Recently I hit problem with missing dependencies for &lt;code&gt;libcheese-gtk23&lt;/code&gt; and &lt;code&gt;libcheese7&lt;/code&gt; libraries while installing latest CUDA 6.5 on clean Ubuntu 14.04. Remedy to this can be found on &lt;a href=&#34;http://askubuntu.com/questions/587977/unmet-dependences-when-install-cuda-6-5-on-a-freshly-installed-ubuntu-14-04&#34; target=&#34;_blank&#34;&gt;askubuntu&lt;/a&gt;. So, the complete set of commands is below.&lt;/p&gt;</description>
+      <description>Lately NVIDIA added repository for Ubuntu 12.04 and Ubuntu 14.04. Recently I hit problem with missing dependencies for libcheese-gtk23 and libcheese7 libraries while installing latest CUDA 6.5 on clean Ubuntu 14.04. Remedy to this can be found on askubuntu. So, the complete set of commands is below.
+At first, add CUDA repository package:
+wget http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1404/x86_64/cuda-repo-ubuntu1404_6.5-14_amd64.deb sudo dpkg -i cuda-repo-ubuntu1404_6.5-14_amd64.deb Now, install CUDA:
+sudo apt-get update &amp;amp;&amp;amp; sudo apt-get upgrade  # install nvidia driver sudo apt-get install nvidia-current # at this point you need to reboot computer  # remove broken packages, beware: some GUI parts of your system will be broken or removed sudo apt-get remove libcheese*  # install CUDA sudo apt-get install cuda  # restore broken GUI parts sudo apt-get install ubuntu-desktop By the way, libcheese is library for video and photo capturing, including enumeration of capturing devices.</description>
     </item>
     
   </channel>

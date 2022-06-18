@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>tiff on :) bikulov.ORG</title>
+    <title>tiff on Bikulov&#39;s blog</title>
     <link>https://bikulov.org/tags/tiff/</link>
-    <description>Recent content in tiff on :) bikulov.ORG</description>
+    <description>Recent content in tiff on Bikulov&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <language>ru</language>
+    <copyright>Network Notes 2022</copyright>
     <lastBuildDate>Sat, 26 Sep 2015 20:05:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/tiff/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Scan images from command line in Linux</title>
@@ -13,7 +14,9 @@
       <pubDate>Sat, 26 Sep 2015 20:05:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2015/09/26/scan-images-from-command-line-in-linux/</guid>
-      <description>&lt;p&gt;Console utilities in Linuxes are cool: &lt;a href=&#34;https://mcabber.com/&#34; target=&#34;_blank&#34;&gt;mcabber&lt;/a&gt; for jabber, &lt;a href=&#34;http://www.mutt.org/&#34; target=&#34;_blank&#34;&gt;mutt&lt;/a&gt; for mail, &lt;a href=&#34;http://moc.daper.net/&#34; target=&#34;_blank&#34;&gt;mocp&lt;/a&gt; for music, &lt;a href=&#34;http://www.vim.org/&#34; target=&#34;_blank&#34;&gt;vim&lt;/a&gt; to rule them all! This note is about scaning from the console (I assume your scanner is already set-up). Aim is to scan document with good quality into pdf with reasonable size.&lt;/p&gt;</description>
+      <description>Console utilities in Linuxes are cool: mcabber for jabber, mutt for mail, mocp for music, vim to rule them all! This note is about scaning from the console (I assume your scanner is already set-up). Aim is to scan document with good quality into pdf with reasonable size.
+Scanning is done by scanimage utility:
+scanimage --resolution 300 --mode Color --format tiff &amp;gt; document.tiff If there is more than one scanner in your system, list them all by scanimage -L commant and use specify name with --device-name argument.</description>
     </item>
     
   </channel>

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>vpn on :) bikulov.ORG</title>
+    <title>vpn on Bikulov&#39;s blog</title>
     <link>https://bikulov.org/tags/vpn/</link>
-    <description>Recent content in vpn on :) bikulov.ORG</description>
+    <description>Recent content in vpn on Bikulov&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <language>ru</language>
+    <copyright>Network Notes 2022</copyright>
     <lastBuildDate>Sun, 22 Dec 2019 02:30:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/vpn/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>WireGuard on Ubuntu (server) and Android (client)</title>
@@ -13,7 +14,10 @@
       <pubDate>Sun, 22 Dec 2019 02:30:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2019/12/22/wireguard-on-ubuntu-server-and-android-client/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;https://www.wireguard.com/&#34; target=&#34;_blank&#34;&gt;WireGuard&lt;/a&gt; is lightweight VPN with extremely simple configuration. All below was tested on Ubuntu 18.04 as server and Anroid 8.0.0 as client.&lt;/p&gt;</description>
+      <description>WireGuard is lightweight VPN with extremely simple configuration. All below was tested on Ubuntu 18.04 as server and Anroid 8.0.0 as client.
+#&amp;nbsp;Server Installation from official ppa:
+apt-add-repository ppa:wireguard/wireguard apt update apt install wireguard Client and server authenticate each other with asymmetric keys (like in SSH). Keys are generated with management utility wg:
+wg genkey This will be server auth key (client auth key can be generated with the same command or in mobile application, you will need public part in config).</description>
     </item>
     
     <item>
@@ -22,11 +26,11 @@
       <pubDate>Sat, 10 Aug 2013 09:14:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2013/08/10/enable-tun-for-openvz-ubuntu-12.04-containers-in-centos-6.4/</guid>
-      <description>&lt;p&gt;To enable tun device in OpenVZ containers tun module&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;needs to be loaded in the host system (in my case CentOS 6.4)&lt;/li&gt;
-&lt;li&gt;containter (in my case Ubuntu Server 12.04) must be allowed to use tun&lt;/li&gt;
-&lt;/ul&gt;</description>
+      <description>To enable tun device in OpenVZ containers tun module
+ needs to be loaded in the host system (in my case CentOS 6.4) containter (in my case Ubuntu Server 12.04) must be allowed to use tun  I&amp;rsquo;ve grabbed container configuration from askbuntu.
+#&amp;nbsp;Load tun after boot automatically Edit tun.modules:
+# vim /etc/sysconfig/modules/tun.modules #!/bin/sh /sbin/modprobe tun Set permissions for tun.modules:
+chmod 755 /etc/sysconfig/modules/tun.modules Reboot host system and test tun module loaded:</description>
     </item>
     
     <item>
@@ -35,7 +39,9 @@
       <pubDate>Wed, 31 Jul 2013 09:31:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2013/07/31/creating-zip-with-vpn-client-keys-and-configuration-files/</guid>
-      <description>&lt;p&gt;Depends on server configuration, each OpenVPN client needs configuration file (client.conf for *nix and client.ovpn for windows), certificate authority (ca.crt), [optional] tls auth file (ta.key), user crt and key.&lt;/p&gt;</description>
+      <description>Depends on server configuration, each OpenVPN client needs configuration file (client.conf for *nix and client.ovpn for windows), certificate authority (ca.crt), [optional] tls auth file (ta.key), user crt and key.
+Typical OpenVPN client configuration file looks like (ca and ta files in server subdirectory):
+client remote &amp;lt;vpn server address&amp;gt; port 1194 proto udp dev tun dev-type tun ns-cert-type server reneg-sec 86400 comp-lzo yes verb 3 ca server/ca.crt cert &amp;lt;user crt&amp;gt; key &amp;lt;user key&amp;gt; tls-auth server/ta.</description>
     </item>
     
   </channel>

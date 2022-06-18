@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>matplotlib on :) bikulov.ORG</title>
+    <title>matplotlib on Bikulov&#39;s blog</title>
     <link>https://bikulov.org/tags/matplotlib/</link>
-    <description>Recent content in matplotlib on :) bikulov.ORG</description>
+    <description>Recent content in matplotlib on Bikulov&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <language>ru</language>
+    <copyright>Network Notes 2022</copyright>
     <lastBuildDate>Thu, 03 Oct 2013 10:37:00 +0300</lastBuildDate><atom:link href="https://bikulov.org/tags/matplotlib/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Creation of paper-ready plots with matlotlib</title>
@@ -13,7 +14,8 @@
       <pubDate>Thu, 03 Oct 2013 10:37:00 +0300</pubDate>
       
       <guid>https://bikulov.org/blog/2013/10/03/creation-of-paper-ready-plots-with-matlotlib/</guid>
-      <description>&lt;p&gt;I used to utilize gnuplot for creation of plots with arbitrary data. The main problem was to postprocess data before plotting: I had to integrate postprocess into calculation code itself or to write additional script to do so. I&amp;rsquo;d like to provide an example of good-looking plotting with Python and matplotlib. Python has bataries included, so there will be no problem with preparation of data to be plotted.&lt;/p&gt;</description>
+      <description>I used to utilize gnuplot for creation of plots with arbitrary data. The main problem was to postprocess data before plotting: I had to integrate postprocess into calculation code itself or to write additional script to do so. I&amp;rsquo;d like to provide an example of good-looking plotting with Python and matplotlib. Python has bataries included, so there will be no problem with preparation of data to be plotted.
+Example script plot_example.</description>
     </item>
     
   </channel>
